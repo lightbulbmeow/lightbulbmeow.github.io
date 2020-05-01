@@ -1,0 +1,46 @@
+ Level ideas:
+1. Let box fall on you where box is push
+2. Deactivate/activate a rule using gravity
+3. text stacking
+4. deactivate rule but not really separate text
+5. wall is box is wall (infinite loop?)
+6. prison trick
+7. use the borders/ceiling of the level as "walls"
+8. change the "you" object
+9. Make a defeat object and "you" text fall at the same time to avoid defeat
+10. alternate jumping with two "you" objects
+11. Push two text upward at once
+12. move faster with you&move
+13. move faster with you&you2
+14. window is bounce
+
+Bugs:
+1. Make BABA IS ALL less laggy
+2. FIX RULE PRIORITIES/RULE ORDER
+3. BABA AND BABA IS MOVE only interprets once
+4. BABA IS YOU AND SWAP completely destroys everything, and also BABA IS YOU AND MOVE
+5. OPen and shut for zawarudo, and also all other effects for zawarudo
+6. weak when pushed against a border
+7. BABA ON KEKE AND KEKE does not work, BABA FACING KEKE AND KEKE and BABA NEAR KEKE AND KEKE as well
+
+Implementation:
+1. Baba is Baba should do rule cancelling (those red X's)
+2. What does "Baba is Box is Baba" do? (infinite loop?)
+3. Death/Sink/Open-Shut/Sleep particle effects
+4. Smoke particles for hot?
+5. make tilegrid more efficient
+6. rewrite rule interpreter's code to accept conditions and prefix
+7. make BEST a raycast?
+8. Textismove must be fixed for optimization
+9. UNDO SYSTEM!!!!!!!
+10. window is bounce
+11. window is hide
+12. Make ON more efficient
+13. BABA ON KEKE IS FLAG must be cancelled by BABA IS BABA
+14. BABA IS NOT BABA and NOT KEKE IS NOT BABA
+
+To-do:
+EMPTY GROUP
+MAKE FEAR NOT
+TELE WORD BEST
+BACKWARD WAS CHASE ANTIGRAV
