@@ -23,6 +23,8 @@ Bugs:
 6. weak when pushed against a border
 7. BABA ON KEKE AND KEKE does not work, BABA FACING KEKE AND KEKE and BABA NEAR KEKE AND KEKE as well
 8. GHOST IS BABA IS YOU makes the game crash
+9. BABA IS YOU and BOX IS STOP AND MOVE, hold right towards the box should not ride it
+10. bug as in #9: "they can climb the moving wall if they are fast enough"
 
 Implementation:
 1. Baba is Baba should do rule cancelling (those red X's)
