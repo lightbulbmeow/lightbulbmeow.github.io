@@ -22,6 +22,7 @@ Bugs:
 5. OPen and shut for zawarudo, and also all other effects for zawarudo
 6. weak when pushed against a border
 7. BABA ON KEKE AND KEKE does not work, BABA FACING KEKE AND KEKE and BABA NEAR KEKE AND KEKE as well
+8. GHOST IS BABA IS YOU makes the game crash
 
 Implementation:
 1. Baba is Baba should do rule cancelling (those red X's)
