@@ -417,6 +417,10 @@ function updatelvl(condition,not){
         }
         if(a.rules.includes("you") || a.rules.includes("you2") & (a.rules.includes(condition) ^ not)){
             youexist = true;
+            if(a.rules.includes("win")){
+                alert("Congratulations!");
+                window.close();
+            }
             var idinside = a.idinside();
             for(var j = 0; j < idinside.length; j ++){
                 var b = tiles[idinside[j]];
