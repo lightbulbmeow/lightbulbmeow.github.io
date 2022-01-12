@@ -25,7 +25,6 @@ Bugs:
 8. GHOST IS BABA IS YOU makes the game crash
 9. BABA IS YOU and BOX IS STOP AND MOVE, hold right towards the box should not ride it
 10. bug as in #9: "they can climb the moving wall if they are fast enough"
-11. BABA IS YOU and BABA IS WIN does not make win
 
 Implementation:
 1. Baba is Baba should do rule cancelling (those red X's)

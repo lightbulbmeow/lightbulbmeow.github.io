@@ -234,12 +234,12 @@ function draw(){
             }else{
                 ctx.globalAlpha = 1;
             }
-            if(a.name == "baba" || a.name == "skull" || a.name == "ghost" || a.name == "belt"){
+            if(a.name == "baba" || a.name == "skull" || a.name == "ghost" || a.name == "belt" || a.name == "keke"){
                 spritename = a.name
                 if(a.direction == 0){
                     spritename += "_l"
                 }
-                if(a.rules.includes("sleep") & (a.name == "baba" || a.name == "skull" || a.name == "ghost")){
+                if(a.rules.includes("sleep") & (a.name == "baba" || a.name == "skull" || a.name == "ghost" || a.name == "keke")){
                     spritename += "_s"
                 }
                 make_base(spritename,a.x,a.y);
