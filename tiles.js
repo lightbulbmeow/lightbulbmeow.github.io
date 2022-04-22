@@ -21,6 +21,7 @@ class tile{
         this.eatrules = [];
         this.followrules = [];
         this.converts = [];
+        this.antigrav = false;
     }
     idaround(){ //not including itself
         var tilex = Math.floor(this.x / 24);
@@ -69,17 +70,31 @@ class tile{
         return tileinside;
     }
     isonfloor(){
-        if(this.y >= 24*(lh - 1)){
-            return true;
-        }
-        var idaround = this.idaround();
-        for(var i = 0; i < idaround.length; i ++){
-            var a = tiles[idaround[i]];
-            if((a.rules.includes("stop") || a.rules.includes("push") || a.rules.includes("pull") || a.rules.includes("platform")) & this.x > a.x-24 & this.x < a.x + 24 & this.y >= a.y-24 & this.y < a.y){
+        if(!this.antigrav){
+            if(this.y >= 24*(lh - 1)){
                 return true;
             }
+            var idaround = this.idaround();
+            for(var i = 0; i < idaround.length; i ++){
+                var a = tiles[idaround[i]];
+                if((a.rules.includes("stop") || a.rules.includes("push") || a.rules.includes("pull") || a.rules.includes("platform")) & this.x > a.x-24 & this.x < a.x + 24 & this.y >= a.y-24 & this.y < a.y){
+                    return true;
+                }
+            }
+            return false;
+        }else{
+            if(this.y <= 0){
+                return true;
+            }
+            var idaround = this.idaround();
+            for(var i = 0; i < idaround.length; i ++){
+                var a = tiles[idaround[i]];
+                if((a.rules.includes("stop") || a.rules.includes("push") || a.rules.includes("pull") || a.rules.includes("platform")) & this.x > a.x-24 & this.x < a.x + 24 & this.y <= a.y+24 & this.y > a.y){
+                    return true;
+                }
+            }
+            return false;
         }
-        return false;
     }
     isinside(a){
         if(this.x > a.x-24 & this.x < a.x + 24 & this.y > a.y-24 & this.y < a.y + 24){

@@ -48,9 +48,11 @@ function updatelvl(condition,not){
                 if(a.converts[j].startsWith("text_")){
                     texthasmoved = true;
                 }
-                var b = new tile(a.converts[j],a.x,a.y,0,a.direction);
-                tiles.push(b);
-                b.yspeed = a.yspeed;
+                if(a.converts[j] != "empty"){
+                    var b = new tile(a.converts[j],a.x,a.y,0,a.direction);
+                    tiles.push(b);
+                    b.yspeed = a.yspeed;
+                }
             }
             a.rules = [];
             a.converts = [];
@@ -112,6 +114,16 @@ function updatelvl(condition,not){
             a.direction = 1;
         }
     }
+
+    //antigrav
+    for(var i = 0; i < tilecount; i ++){
+        var a = tiles[i];
+        if(a == null){
+            continue;
+        }
+        if(a.rules.includes("antigrav")){ a.antigrav = true; }
+        else{ a.antigrav = false; }
+    }
     
     //each tiles movement: gravity and you(2) objects
     if(!windowrules.includes("sleep") & (windowrules.includes(condition) ^ not)){
@@ -135,19 +147,22 @@ function updatelvl(condition,not){
         if(!a.rules.includes("sleep")){
             if(a.rules.includes("you") & a.rules.includes("you2")){
                 if(movejump & a.isonfloor() & !a.rules.includes("stop") & !a.rules.includes("float")){
-                    a.yspeed = -8;
+                    if(!a.antigrav){ a.yspeed = -8 }
+                    else{ a.yspeed = 8 }
                 }else if(a.rules.includes("stop") || a.rules.includes("float")){
                     a.yspeed = movedown - moveup + movedown2 - moveup2;
                 }
             }else if(a.rules.includes("you")){
                 if(movejump & a.isonfloor() & !a.rules.includes("stop") & !a.rules.includes("float")){
-                    a.yspeed = -8;
+                    if(!a.antigrav){ a.yspeed = -8 }
+                    else{ a.yspeed = 8 }
                 }else if(a.rules.includes("stop") || a.rules.includes("float")){
                     a.yspeed = movedown - moveup;
                 }
             }else if(a.rules.includes("you2")){
                 if(movejump2 & a.isonfloor() & !a.rules.includes("stop") & !a.rules.includes("float")){
-                    a.yspeed = -8;
+                    if(!a.antigrav){ a.yspeed = -8 }
+                    else{ a.yspeed = 8 }
                 }else if(a.rules.includes("stop") || a.rules.includes("float")){
                     a.yspeed = movedown2 - moveup2;
                 }
@@ -156,7 +171,8 @@ function updatelvl(condition,not){
         //
         
         if(!a.isonfloor() & !a.rules.includes("stop") & !a.rules.includes("float")){
-            a.yspeed += 0.5;
+            if(!a.antigrav){ a.yspeed += 0.5 }
+            else{ a.yspeed += -0.5 }
         }
         a.movetoy(a.yspeed);
         
@@ -223,7 +239,8 @@ function updatelvl(condition,not){
                 var b = tiles[idinside[j]];
                 if(b.rules.includes(condition) ^ not){
                     b.yspeed = - b.yspeed;
-                    b.y = a.y - 24
+                    if(!b.antigrav){ b.y = a.y - 24 }
+                    else{ b.y = a.y + 24 }
                     b.movetoy(b.yspeed);
                 }
             }
