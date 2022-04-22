@@ -43,8 +43,7 @@ function updatelvl(condition,not){
             if(a.name.startsWith("text_") || a.converts[0].startsWith("text_")){
                 texthasmoved = true;
             }
-            a.name = a.converts[0];
-            for(var j = 1; j < a.converts.length; j ++){
+            for(var j = 0; j < a.converts.length; j ++){
                 if(a.converts[j].startsWith("text_")){
                     texthasmoved = true;
                 }
@@ -54,10 +53,7 @@ function updatelvl(condition,not){
                     b.yspeed = a.yspeed;
                 }
             }
-            a.rules = [];
-            a.converts = [];
-            a.hasrules = [];
-            a.eatrules = [];
+            tiles[i] = null;
         }
     }
     
