@@ -43,11 +43,15 @@
     <style>@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@700&display=swap');</style> <!-- Google font "Josefin Sans" -->
 
     <!-- Latex stuff -->
-    <script type="text/x-mathjax-config">
-    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+    <script>
+        MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+        }
+        };
     </script>
-    <script type="text/javascript"
-    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
     </script>
 </head>
 <body>
@@ -61,7 +65,7 @@
 
         <h1>Entry #1</h1>
 
-        <p class="date">June 25, 2023. 7:????? pm</p>
+        <p class="date">June 25, 2023. 8:25pm</p>
 
         <p>Hello! Welcome to my... erm... empty blog (for now). <img src="koishibaka.png" width=24 /></p>
 
@@ -69,9 +73,11 @@
 
         <p>I'm still deciding how I want my blog to look like, while trying to learn HTML, CSS, and JavaScript. I should try coding up something to make blog entry writing easier for me. Maybe I'll try to store all my blog entries as markdown files, then use JavaScript to automate it into HTML code.</p>
 
-        <p>I should also try making $\LaTeX$ work somehow, because I want to write math stuffs too. (<b>Update</b>: I made it work! It's super easy. (<span style="transform: rotate(90deg); display: inline-block;">:P</span>) )
+        <p>I should also try making $\LaTeX$ work somehow, because I want to write math stuffs too. (<b>Update</b>: I made it work! It's super easy. (<span style="transform: rotate(90deg); display: inline-block;">:P</span>) )</p>
+
         $$\displaystyle\sum_{n=1}^\infty\frac1{n^2}=\frac{\pi^2}6$$
-        I should also make it so that I can type Discord emojis, like <span class="code">:niko:</span> automatically turns into <img src="niko.png" width=24 /></p>
+
+        <p>I should also make it so that I can type Discord emojis, like <span class="code">:niko:</span> automatically turns into <img src="niko.png" width=24 /></p>
 
         <p>I think those are the only features I need for now... (I just hope this blog doesn't end up as another abandoned project. <img src="nanacry.webp" width=24 />)</p>
     </div>
