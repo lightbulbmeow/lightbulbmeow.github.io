@@ -114,6 +114,26 @@
         document.cookie = "freecookie='Heres your free cookie!!! Enjoy ~ヾ(・ω・)';";
     </script>
 
+    <script>
+    (function(){
+
+    var parallax = document.querySelectorAll("body"),
+        speed = 0.5;
+
+    window.onscroll = function(){
+        [].slice.call(parallax).forEach(function(el,i){
+
+        var windowYOffset = window.pageYOffset,
+            elBackgrounPos = "50% " + (windowYOffset * speed) + "px";
+
+        el.style.backgroundPosition = elBackgrounPos;
+
+        });
+    };
+
+    })();
+    </script>
+
     <audio id="player" autoplay controls>
         <source src="EleventhHour.mp3" type="audio/mp3">
     </audio>
@@ -126,8 +146,8 @@
 
 <img src="reimuhoi.gif" /><img src="chikawow.gif" /><img src="wingdings.gif" /></center>
 
-<span style="position: absolute; top:69%; left:75%; font-size:72px; transform:rotate(69deg); color:red; text-shadow: white 2px 2px 10px;">ඞ amogus</span>
-<span style="position: absolute; top:75%; left:69%; transform:rotate(-420deg); "><img src="reimuhoi.gif" /><img src="miku.webp" class="miku"/></span>
+<span style="position: absolute; top:696px; left:75%; font-size:72px; transform:rotate(69deg); color:red; text-shadow: white 2px 2px 10px;">ඞ amogus</span>
+<span style="position: absolute; top:696px; left:69%; transform:rotate(-420deg); "><img src="reimuhoi.gif" /><img src="miku.webp" class="miku"/></span>
 
 <marquee scrollamount="24" style="color:magenta; font-size:18px; font-weight:bold;"><p>Hai!!! ＼(＾▽＾)／<br />(I'm surprised this HTML tag still exists...,)</p></marquee>
 
@@ -146,7 +166,7 @@
     <td>1. <a href="baba/index.html">I Wanna Baba Is You</a> <img height=24 src="baba.gif" /></td>
 </tr>
 <tr>
-    <td>2. <a href="blog/index.html">Blog</a> (doesn't exist yet) <img src="mafufrown.png" width=24 /></td>
+    <td>2. <a href="blog/index.html">My blog</a> <img src="mikuexcited.png" width=24 /></td>
 </tr>
 <tr>
     <td>3. uh...</td>
