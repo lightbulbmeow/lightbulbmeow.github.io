@@ -1,0 +1,44 @@
+<style>
+    body{
+        background-color: black;
+        color: white;
+    }
+</style>
+<script>
+
+function buttonpress(){
+
+    var x = document.getElementById("presscounter");
+    x.innerHTML = "loading...";
+
+    var readpayload = JSON.stringify({
+        "collection": "button_press",
+        "database": "my_database_website",
+        "dataSource": "Cluster0",
+        "projection": {
+            "presses": 1
+        }
+    });
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "https://ap-southeast-1.aws.data.mongodb-api.com/app/data-yzeun/endpoint/data/v1/action/findOne", true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.setRequestHeader('api-key', 'wcLYvfVrz0EyHPlMZl8JsuJ4pM12tKpcXsJBuH9t9IM9651G5cREB7LSfcHBN7mm');
+    xhr.send(readpayload);
+    console.log(xhr.responseText);
+    console.log("TEST");
+
+
+}
+
+
+
+
+</script>
+<body>
+
+Welcome to my game. The goal is to press this button 1,000,000,000 times. Good luck!<br><br>
+
+<button onclick="buttonpress()">Click here!</button> Button press count: <label id="presscounter">0</label>
+
+</body>
