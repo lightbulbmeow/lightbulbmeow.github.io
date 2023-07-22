@@ -59,6 +59,13 @@
     .date {
         font-size: 12px;
     }
+    .image {
+        padding: 5px;
+    }
+    .image:hover {
+        background-color: rgb(255,255,255,0.3);
+        border-radius: 5px;
+    }
     </style>
 
     <style>@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@700&display=swap');</style> <!-- Google font "Josefin Sans" -->
@@ -101,19 +108,19 @@
         <p>Here is what it looks like right now, there's not much:</p>
 
         <center>
-            <img src="paint-1.png" width="50%" />
+            <img src="paint-1.png" width="50%"/>
         </center>
 
-        <p>Currently, it has a Layers system, a color picker, and some tools. The most useful feature I have here so far is the background removal tool. Basically, it allows you to click on an area on an image and make it transparent.</p>
+        <p>Currently, it has a Layers system, a color picker, and some tools. The most useful feature I have here so far is the background removal tool. Basically, it allows you to click on an area on an image and make it transparent. <span style="color:rgb(255,128,255); font-style:italic">(Hover on the image to make it easier to see.)</span></p>
 
         <center>
-            <img src="paint-2.png" width="33%" />
+            <img src="paint-2.png" width="33%" class="image" />
         </center>
 
         <p>The algorithm is more complicated than it seems. I have to account for anti-aliased edges so I don't get weird gray pixels around the edge. Look at the image below to see what I mean.</p>
 
         <center>
-            <img src="paint-3.png" width="25%" />
+            <img src="paint-3.png" width="25%" class="image" />
         </center>
 
         <p>The first one is the original image. The second one simply changes the alpha values of each pixel depending on how 'white' that pixel is. This leaves some pixels gray-colored, which is bad. The third one fixes this by changing the RGB value of the pixel to also match its surroundings.</p>
@@ -121,7 +128,7 @@
         <p>There's one issue with this approach. The image I showed above is very simple; there's only a single black object on a white background, so we can easily just set all RGB values as black and be done. Unfortunately, most images aren't so simple. Consider for example,</p>
 
         <center>
-            <img src="paint-4.png" width="50%" />
+            <img src="paint-4.png" width="50%" class="image" />
         </center>
 
         <p>The original image contains three objects: a black one, a gray one, and a light gray one. We expect the background removal tool to give the image on the right. How would we determine the RGB values for each pixel in this image?</p>
@@ -157,7 +164,7 @@
         <p>This a lot of steps to implement, so I tested it out with a grayscale image first. It worked surprisingly better than I expected! <img src="ikuwow.png" width=24 /></p>
 
         <center>
-            <img src="paint-8.png" width="75%" />
+            <img src="paint-8.png" width="75%" class="image" />
 
             <p><b>Left image:</b> original; &nbsp; &nbsp; &nbsp; <b>Middle image:</b> "Voronoi" version; &nbsp; &nbsp; &nbsp; <b>Right image:</b> Final output</p>
         </center>
@@ -165,7 +172,7 @@
         <p>The final output has a couple of issues. When you zoom in on the image, you can see some of the "Voronoi" artifacts. It should be easily fixable by adjusting the threshold. After a couple of tweaks and making it work for RGB, here is the result I got:</p>
 
         <center>
-            <img src="paint-9.png" width="50%" />
+            <img src="paint-9.png" width="50%" class="image" />
         </center>
 
         <p>I think I'm satisfied with this result. It still feels pretty trial-and-error-y to find the perfect threshold for the tool. All that's left for me to implement for this tol is a slider to easily change the threshold and feather radius.</p>
