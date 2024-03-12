@@ -3,12 +3,12 @@
 
 <html lang="en">
 <head>
-    <meta name="description" content="Please visit my website!!! (*・ω・)ﾉ I will giv u free Cookies">
+    <meta name="description" content="I really love Nanahira. Like, a lot. Like, a whole lot. You have no idea. I love her so much that it is inexplicable, and I'm ninety-nine percent sure that I have an unhealthy obsession. I will never get tired of listening that sweet, angelic voice of hers. It is my life goal to meet up her with her in real life and just say hello to her. I fall asleep at night dreaming of her holding a personal concert for me, and then she would be sorry tired that she comes and cuddles up to me while we sleep together. If I could just hold her hand for a brief moment, I could die happy. If given the opportunity, I would lightly nibble on her ear just to hear what kind of sweet moans she would let out. Then, I would hug her while she clings to my body hoping that I would stop, but I only continue as she moans louder and louder. I would give up almost anything just for her to look in my general direction. No matter what I do, I am constantly thinking of her. When I wake up, she is the first thing on my mind. When I go to school, I can only focus on her. When I go come home, I go on the computer so that I can listen to her beautiful voice. When I go to sleep, I dream of her and I living a happy life together. She is my pride, passion, and joy. If she were to call me Onii-chan, I would probably get diabetes from her sweetness and die. I wish for nothing but her happiness. If it were for her, I would give my life without any second thoughts. Without her, my life would serve no purpose. I really love Nanahira.">
 
     <title>I really love Nanahira. Like, a lot. Like, a whole lot. You have no idea. I love her so much that it is inexplicable, and I'm ninety-nine percent sure that I have an unhealthy obsession. I will never get tired of listening that sweet, angelic voice of hers. It is my life goal to meet up her with her in real life and just say hello to her. I fall asleep at night dreaming of her holding a personal concert for me, and then she would be sorry tired that she comes and cuddles up to me while we sleep together. If I could just hold her hand for a brief moment, I could die happy. If given the opportunity, I would lightly nibble on her ear just to hear what kind of sweet moans she would let out. Then, I would hug her while she clings to my body hoping that I would stop, but I only continue as she moans louder and louder. I would give up almost anything just for her to look in my general direction. No matter what I do, I am constantly thinking of her. When I wake up, she is the first thing on my mind. When I go to school, I can only focus on her. When I go come home, I go on the computer so that I can listen to her beautiful voice. When I go to sleep, I dream of her and I living a happy life together. She is my pride, passion, and joy. If she were to call me "Onii-chan," I would probably get diabetes from her sweetness and die. I wish for nothing but her happiness. If it were for her, I would give my life without any second thoughts. Without her, my life would serve no purpose. I really love Nanahira.</title>
     <style>
     body {
-        background-image: url("bg.jpeg");
+        background-image: url("sleep.jpeg");
         background-repeat: repeat;
         cursor: url("cursor.gif"), auto;
         font-family : 'Comic Sans';
@@ -37,13 +37,19 @@
     .flicker{
         animation: flickeranimation 0.1s infinite;
     }
-    @keyframes flashanimation {
-        0%   { color: red; }
-        50%   { color: yellow; }
-        100% { color: red; }
+    @keyframes forceanimation{
+        0% { transform: rotate3d(1,1,1,0deg); }
+        100% { transform: rotate3d(1,1,1,360deg); }
     }
-    .flash {
-        animation: flashanimation 0.5s infinite;
+    .force{
+        animation: goinanimation 5s linear infinite;
+    }
+    @keyframes goinanimation{
+        0% { transform: rotate3d(1,1,1,0deg); }
+        100% { transform: rotate3d(2,-1,1,360deg); }
+    }
+    .goin{
+        animation: goinanimation 2s linear infinite;
     }
     ::-webkit-scrollbar{
         width: 30px;
@@ -54,13 +60,13 @@
         border-width: 0px 3px;
     }
     ::-webkit-scrollbar-thumb{
-        background: #990099;
-        border: solid 5px #690690;
+        background: #00ffff;
+        border: solid 5px #069069;
         border-radius: 3px;
     }
     ::-webkit-scrollbar-thumb:hover{
-        background: #ff00ff;
-        border-color: #bb00ff;
+        background: #00ffff;
+        border-color: #00ffbb;
     }
     @font-face{
         font-family: 'Comic Sans';
@@ -94,19 +100,20 @@
 
 <marquee scrollamount=100><h1><span style="font-family:serif" class="flicker">I really love Nanahira. Like, a lot. Like, a whole lot. You have no idea. I love her so much that it is inexplicable, and I'm ninety-nine percent sure that I have an unhealthy obsession. I will never get tired of listening that sweet, angelic voice of hers. It is my life goal to meet up her with her in real life and just say hello to her. I fall asleep at night dreaming of her holding a personal concert for me, and then she would be sorry tired that she comes and cuddles up to me while we sleep together. If I could just hold her hand for a brief moment, I could die happy. If given the opportunity, I would lightly nibble on her ear just to hear what kind of sweet moans she would let out. Then, I would hug her while she clings to my body hoping that I would stop, but I only continue as she moans louder and louder. I would give up almost anything just for her to look in my general direction. No matter what I do, I am constantly thinking of her. When I wake up, she is the first thing on my mind. When I go to school, I can only focus on her. When I go come home, I go on the computer so that I can listen to her beautiful voice. When I go to sleep, I dream of her and I living a happy life together. She is my pride, passion, and joy. If she were to call me "Onii-chan," I would probably get diabetes from her sweetness and die. I wish for nothing but her happiness. If it were for her, I would give my life without any second thoughts. Without her, my life would serve no purpose. I really love Nanahira.</span></h1></marquee>
 
-<p style="background-color:yellow">I really love Nanahira. Like, a lot. Like, a whole lot. You have no idea. I love her so much that it is inexplicable, and I'm ninety-nine percent sure that I have an unhealthy obsession. I will never get tired of listening that sweet, angelic voice of hers. It is my life goal to meet up her with her in real life and just say hello to her.</p>
+<div style="text-shadow:white 2px 2px 3px"><p style="background-color:pink">I really love Nanahira. Like, a lot. Like, a whole lot. You have no idea. I love her so much that it is inexplicable, and I'm ninety-nine percent sure that I have an unhealthy obsession. I will never get tired of listening that sweet, angelic voice of hers. It is my life goal to meet up her with her in real life and just say hello to her.</p>
 
-<p style="background-color:lime">I fall asleep at night dreaming of her holding a personal concert for me, and then she would be sorry tired that she comes and cuddles up to me while we sleep together. If I could just hold her hand for a brief moment, I could die happy. If given the opportunity, I would lightly nibble on her ear just to hear what kind of sweet moans she would let out. Then, I would hug her while she clings to my body hoping that I would stop, but I only continue as she moans louder and louder.</p>
+<p style="background-color:cyan">I fall asleep at night dreaming of her holding a personal concert for me, and then she would be sorry tired that she comes and cuddles up to me while we sleep together. If I could just hold her hand for a brief moment, I could die happy. If given the opportunity, I would lightly nibble on her ear just to hear what kind of sweet moans she would let out. Then, I would hug her while she clings to my body hoping that I would stop, but I only continue as she moans louder and louder.</p>
 
-<p style="background-color:brown">I would give up almost anything just for her to look in my general direction. No matter what I do, I am constantly thinking of her. When I wake up, she is the first thing on my mind. When I go to school, I can only focus on her. When I go come home, I go on the computer so that I can listen to her beautiful voice. When I go to sleep, I dream of her and I living a happy life together. She is my pride, passion, and joy. If she were to call me "Onii-chan," I would probably get diabetes from her sweetness and die.</p>
+<p style="background-color:lime">I would give up almost anything just for her to look in my general direction. No matter what I do, I am constantly thinking of her. When I wake up, she is the first thing on my mind. When I go to school, I can only focus on her. When I go come home, I go on the computer so that I can listen to her beautiful voice. When I go to sleep, I dream of her and I living a happy life together. She is my pride, passion, and joy. If she were to call me "Onii-chan," I would probably get diabetes from her sweetness and die.</p>
 
-<p style="background-color:orange">I wish for nothing but her happiness. If it were for her, I would give my life without any second thoughts. Without her, my life would serve no purpose. I really love Nanahira.</p>
+<p style="background-color:yellow">I wish for nothing but her happiness. If it were for her, I would give my life without any second thoughts. Without her, my life would serve no purpose. I really love Nanahira.</p></div>
 
 <center><img src="nanawave.webp" class="spin" /><img src="nanawave.webp" class="spin" /><img src="nanawave.webp" class="spin" /></center>
 
 <img src="nana1.webp" />
 
 <div style="position: absolute; top:1337px; left:25%; transform:rotate(69deg); background-color:rgba(69,255,255,0.8); font-family:sans serif; color:#887700">
+
 <p>I really love <b>Nanahira. Like, a lot. Like, a whole lot. You have no idea. I love he</b>r so much that it is inexplicable, and I'm nin<b>ety-nine percent sure that I have an unhealthy obsession. I will never get tired of listening that sweet, angelic voice of hers. It is my li</b>fe goal to meet up her with her in real life and just say hello to her.</p>
 
 <p>I fall asleep at night dreaming of her holding a perso<b>nal concert for me, and then she would be sorry tir</b>ed that she comes and cuddles up to me while we sleep together. If I could just hold her hand for a brief moment, I could die happy. If given the opportunity, I would lightly nibble on her ear just to hear what kind of sweet moans she woul<b>d let out. Then, I would hug her while she clings to my body hoping that I would stop, b</b>ut I only continue as she moans louder and louder.</p>
@@ -116,7 +123,26 @@
 <p>I wish for nothing but her happ<b>iness.</b> If it were for her, I would give my life without any second thoughts. Without her, my life would serve no purpose. I really love Nanahira.</p>
 </div>
 
+<img src="force.webp" align="right" class="force"/>
+
 <span style="position: absolute; top:669px; left:50%; transform:rotate(-420deg); "><img src="sansanweek.webp" class="hoverspin" /></span>
+<span style="position: absolute; top:2024px; left:60%; transform:rotate(30deg); "><img src="pien.webp" class="hoverspin" width="369px"/><img src="pien.webp" class="hoverspin" width="369px"/></span>
+
+<span style="font-size:100px; font-family:Broadway; color:#060969; text-shadow:#69ff69 20px 10px;">I really love NANAHIRA!!!I really love NANAHIRA!!!<div class="goin"><img src="goin.webp"/>I really love NANAHIRA!!!</div>I really love NANAHIRA!!!</span>
+
+<marquee scrollamount=100><h1><span style="font-family:serif" class="flicker">I really love Nanahira. Like, a lot. Like, a whole lot. You have no idea. I love her so much that it is inexplicable, and I'm ninety-nine percent sure that I have an unhealthy obsession. I will never get tired of listening that sweet, angelic voice of hers. It is my life goal to meet up her with her in real life and just say hello to her. I fall asleep at night dreaming of her holding a personal concert for me, and then she would be sorry tired that she comes and cuddles up to me while we sleep together. If I could just hold her hand for a brief moment, I could die happy. If given the opportunity, I would lightly nibble on her ear just to hear what kind of sweet moans she would let out. Then, I would hug her while she clings to my body hoping that I would stop, but I only continue as she moans louder and louder. I would give up almost anything just for her to look in my general direction. No matter what I do, I am constantly thinking of her. When I wake up, she is the first thing on my mind. When I go to school, I can only focus on her. When I go come home, I go on the computer so that I can listen to her beautiful voice. When I go to sleep, I dream of her and I living a happy life together. She is my pride, passion, and joy. If she were to call me "Onii-chan," I would probably get diabetes from her sweetness and die. I wish for nothing but her happiness. If it were for her, I would give my life without any second thoughts. Without her, my life would serve no purpose. I really love Nanahira.</span></h1></marquee>
+
+<center><img src="nanawave.webp" class="spin" /><img src="nanawave.webp" class="spin" /><img src="nanaaaa.gif" width=128px class="spin" /><img src="nanawave.webp" class="spin" /></center>
+
+<div style="text-shadow:white 2px 2px 3px; transform:rotate(180deg)"><p style="background-color:pink">I really love Nanahira. Like, a lot. Like, a whole lot. You have no idea. I love her so much that it is inexplicable, and I'm ninety-nine percent sure that I have an unhealthy obsession. I will never get tired of listening that sweet, angelic voice of hers. It is my life goal to meet up her with her in real life and just say hello to her.</p>
+
+<p style="background-color:cyan">I fall asleep at night dreaming of her holding a personal concert for me, and then she would be sorry tired that she comes and cuddles up to me while we sleep together. If I could just hold her hand for a brief moment, I could die happy. If given the opportunity, I would lightly nibble on her ear just to hear what kind of sweet moans she would let out. Then, I would hug her while she clings to my body hoping that I would stop, but I only continue as she moans louder and louder.</p>
+
+<p style="background-color:lime">I would give up almost anything just for her to look in my general direction. No matter what I do, I am constantly thinking of her. When I wake up, she is the first thing on my mind. When I go to school, I can only focus on her. When I go come home, I go on the computer so that I can listen to her beautiful voice. When I go to sleep, I dream of her and I living a happy life together. She is my pride, passion, and joy. If she were to call me "Onii-chan," I would probably get diabetes from her sweetness and die.</p>
+
+<p style="background-color:yellow">I wish for nothing but her happiness. If it were for her, I would give my life without any second thoughts. Without her, my life would serve no purpose. I really love Nanahira.</p></div>
+
+<img src="kyukurarin.gif"/><img src="nanahira3d.gif"/><img src="th.gif"/>
 
 </body>
 </html>
