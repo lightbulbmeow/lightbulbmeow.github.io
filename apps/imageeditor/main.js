@@ -37,8 +37,8 @@ const inputcode = document.getElementById('inputcode')
 function pixel(x,y){
   x = Math.round(x)
   y = Math.round(y)
-  if(x < 0 || x >= w || y < 0 || y >= h) return [0,0,0,0] // pixel is out of bounds
-  coord = (x + y * canvas.width) * 4
+  if(x < 0 || x >= imgData.width || y < 0 || y >= imgData.height) return [0,0,0,0] // pixel is out of bounds
+  coord = (x + y * imgData.width) * 4
   return [imgData.data[coord], imgData.data[coord+1], imgData.data[coord+2], imgData.data[coord+3]]
 }
 
@@ -48,7 +48,7 @@ function applyCode(){
 }
 
 function runCode(){
-  eval(inputcode.value);
+  eval(inputcode.value)
   w = Math.trunc(w)
   h = Math.trunc(h)
   newimgData = new ImageData(w,h)
@@ -75,9 +75,9 @@ function runCode(){
 // image saving
 
 function saveImage(){
-    const createEl = document.createElement('a');
-    createEl.href = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
-    createEl.download = "image.png";
-    createEl.click();
-    createEl.remove();
+    const createEl = document.createElement('a')
+    createEl.href = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream")
+    createEl.download = "image.png"
+    createEl.click()
+    createEl.remove()
 }

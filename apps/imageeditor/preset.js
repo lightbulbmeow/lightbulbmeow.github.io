@@ -1,4 +1,4 @@
-// file handling
+// list of example codes
 
 const examplecodes = document.getElementById('examplecodes')
 
@@ -32,7 +32,7 @@ function setpixel(x,y){
 }`,
 
 'Light mode': `function setpixel(x,y){
-    y = 0.2126*r + 0.7152*g + 0.0722*b
+    y = (0.2126*r + 0.7152*g + 0.0722*b) * a/255
     return [255,255,255,y]
 }`,
 
