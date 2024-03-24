@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+<!-- Source: https://hackernoon.com/understanding-basic-image-processing-algorithms-a-hands-on-javascript-tutorial-8r3u32qk -->
+<!-- Save button: https://fjolt.com/article/html-canvas-save-as-image -->
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Image Editor</title>
+    <style>
+        body{
+            background-color: black;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<h1>Image Editor</h1>
+<input type="file" accept="image/*" id="fileinput" />
+<div>
+    <label for="red">Red</label>
+    <input type="range" min="-255" max="255" value="0" id="red">
+
+    <label for="green">Green</label>
+    <input type="range" min="-255" max="255" value="0" id="green">
+
+    <label for="blue">Blue</label>
+    <input type="range" min="-255" max="255" value="0" id="blue">
+
+    <label for="brightness">Brightness</label>
+    <input type="range" min="-255" max="255" value="0" id="brightness">
+
+    <label for="contrast">Contrast</label>
+    <input type="range" min="-255" max="255" value="0" id="contrast">
+
+    <label for="grayscale">Grayscale</label>
+    <input type="checkbox" id="grayscale">
+
+    <br/>
+    <canvas id="canvas" width="0" height="0"></canvas>
+
+    <br/>
+    <button onclick="saveImage()">Save Image</button>
+</div>
+<script src="main.js"></script>
+</body>
+</html>
