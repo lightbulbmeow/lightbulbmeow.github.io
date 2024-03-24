@@ -5,43 +5,64 @@
 
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Image Editor</title>
+    <meta name="description" content="Edit your image using JavaScript (*・ω・)ﾉ">
+    <title>JavaScript Image Editor</title>
     <style>
         body{
             background-color: black;
             color: white;
         }
+        textarea{
+            font-family: "Comic Mono";
+        }
+        code{
+            font-family: "Comic Mono";
+        }
+        @font-face{
+            font-family: 'Comic Mono';
+            src: url("../../fonts/ComicMono.ttf");
+        }
     </style>
 </head>
 <body>
-<h1>Image Editor</h1>
-<input type="file" accept="image/*" id="fileinput" />
-<div>
-    <label for="red">Red</label>
-    <input type="range" min="-255" max="255" value="0" id="red">
+<h1>JavaScript Image Editor</h1>
 
-    <label for="green">Green</label>
-    <input type="range" min="-255" max="255" value="0" id="green">
+To create a new image, you will write a function called <code>setpixel(x,y)</code>. It should return an array of length 4, <code>[r,g,b,a]</code>, containing the RGBA values of pixel (x,y) in the new image.
 
-    <label for="blue">Blue</label>
-    <input type="range" min="-255" max="255" value="0" id="blue">
+<p>Parameters:</p>
 
-    <label for="brightness">Brightness</label>
-    <input type="range" min="-255" max="255" value="0" id="brightness">
+<code>x</code> → x-coordinate of the pixel<br/>
+<code>y</code> → y-coordinate of the pixel<br/>
 
-    <label for="contrast">Contrast</label>
-    <input type="range" min="-255" max="255" value="0" id="contrast">
+<p>Available functions:</p>
 
-    <label for="grayscale">Grayscale</label>
-    <input type="checkbox" id="grayscale">
+<code>pixel(x,y)</code> → returns the RGBA value of the pixel at position (x,y) as an array <code>[r,g,b,a]</code><br/>
 
-    <br/>
-    <canvas id="canvas" width="0" height="0"></canvas>
+<p>Extra variables:</p>
 
-    <br/>
-    <button onclick="saveImage()">Save Image</button>
-</div>
+<code>r</code> → R value of <code>pixel(x,y)</code><br/>
+<code>g</code> → G value of <code>pixel(x,y)</code><br/>
+<code>b</code> → B value of <code>pixel(x,y)</code><br/>
+<code>a</code> → A value of <code>pixel(x,y)</code><br/>
+<br/>
+<code>w</code> → image width</code><br/>
+<code>h</code> → image height</code><br/>
+
+<hr>
+
+<input type="file" accept="image/*" id="fileinput" /><p/>
+<label for="inputcode">Input your JavaScript below</label><br/>
+<textarea id="inputcode" name="inputcode" rows="4" cols="50">function setpixel(x,y){
+    return [r,g,b,a]
+}</textarea>
+<button onclick="applyCode()">Apply</button>
+<button onclick="resetImage()">Reset</button>
+
+<br/>
+<canvas id="canvas" width="0" height="0"></canvas>
+
+<br/>
+<button onclick="saveImage()">Save Image</button>
 <script src="main.js"></script>
 </body>
 </html>
