@@ -27,7 +27,9 @@
 <body>
 <h1>JavaScript Image Editor</h1>
 
-To create a new image, you will write a function called <code>setpixel(x,y)</code>. It should return an array of length 4, <code>[r,g,b,a]</code>, containing the RGBA values of pixel (x,y) in the new image.
+To create a new image, you will write a function called <code><b>setpixel(x,y)</b></code>. It should return an array of length 4, <code>[r,g,b,a]</code>, containing the RGBA values of pixel (x,y) in the new image (or length 3 for just RGB).<br/>
+
+Note: RGBA values are from 0 to 255.
 
 <p>Parameters:</p>
 
@@ -58,11 +60,18 @@ To create a new image, you will write a function called <code>setpixel(x,y)</cod
 <button onclick="applyCode()">Apply</button>
 <button onclick="resetImage()">Reset</button>
 
-<br/>
+<div id="loading"></div>
+
 <canvas id="canvas" width="0" height="0"></canvas>
 
 <br/>
 <button onclick="saveImage()">Save Image</button>
+
+<hr>
+
+<div id="examplecodes"><p>Example codes:</p></div> <!-- will be filled in by preset.js -->
+
 <script src="main.js"></script>
+<script src="preset.js"></script>
 </body>
 </html>
