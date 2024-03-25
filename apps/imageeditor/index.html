@@ -39,6 +39,9 @@ Note: RGBA values are from 0 to 255.
 <p>Available functions:</p>
 
 <code>pixel(x,y)</code> → returns the RGBA value of the pixel at position (x,y) as an array <code>[r,g,b,a]</code><br/>
+<br/>
+<code>rgb_to_hsv(r,g,b)</code> → converts from RGB to HSV and returns it as an array <code>[h,s,v]</code> (ranges are 0 ≤ h &lt; 360, 0 ≤ s ≤ 1, 0 ≤ v ≤ 1)<br/>
+<code>hsv_to_rgb(h,s,v)</code> → converts from HSV to RGB and returns it as an array <code>[r,g,b]</code><br/>
 
 <p>Extra variables:</p>
 
@@ -60,9 +63,10 @@ Note: RGBA values are from 0 to 255.
 <button onclick="applyCode()">Apply</button>
 <button onclick="resetImage()">Reset</button>
 
+<div id="mouseinfo"></div>
 <div id="loading"></div>
 
-<canvas id="canvas" width="0" height="0"></canvas>
+<canvas id="canvas" width="0" height="0" onmousemove="mouseMove(event)"></canvas>
 
 <br/>
 <button onclick="saveImage()">Save Image</button>

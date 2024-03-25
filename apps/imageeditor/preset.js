@@ -2,7 +2,7 @@
 
 const examplecodes = document.getElementById('examplecodes')
 
-const codelist = {
+const codelist = [{
 
 'Flip horizontal': `function setpixel(x,y){
     return pixel(w-1-x,y)
@@ -18,6 +18,23 @@ h /= 2
 function setpixel(x,y){
     return pixel(2*x,2*y)
 }`,
+
+'Crop': `w /= 2
+h /= 2
+function setpixel(x,y){
+    return pixel(x+w/2, y+h/2)
+}`,
+
+'Swirl': `function setpixel(x,y){
+    x -= w/2
+    y -= h/2
+    dist = Math.sqrt(x*x + y*y)
+    angle = Math.atan2(y,x) + dist/100
+    return pixel(w/2 + dist * Math.cos(angle), h/2 + dist * Math.sin(angle))
+}`,
+
+},
+{
 
 'Invert colors': `function setpixel(x,y){
     return [255-r,255-g,255-b]
@@ -36,18 +53,19 @@ function setpixel(x,y){
     return [255,255,255,y]
 }`,
 
-'Swirl': `function setpixel(x,y){
-    x -= w/2
-    y -= h/2
-    dist = Math.sqrt(x*x + y*y)
-    angle = Math.atan2(y,x) + dist/100
-    return pixel(w/2 + dist * Math.cos(angle), h/2 + dist * Math.sin(angle))
+'Rainbow': `function setpixel(x,y){
+    let h,s,v
+    [h,s,v] = rgb_to_hsv(r,g,b)
+    return hsv_to_rgb(h + x/w * 360, s, v)
 }`,
 
-}
+}]
 
-for(const [key, value] of Object.entries(codelist)){
-  examplecodes.innerHTML += '<button onclick="presetCode(`' + value + '`)">' + key + '</button> '
+for(const line of codelist){
+    for(const [key, value] of Object.entries(line)){
+        examplecodes.innerHTML += '<button onclick="presetCode(`' + value + '`)">' + key + '</button> '
+    }
+    examplecodes.innerHTML += '<p/>'
 }
 
 function presetCode(value){
