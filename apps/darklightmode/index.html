@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta name="description" content="Edit your image using JavaScript (*・ω・)ﾉ">
+    <title>Dark/Light Mode Image Generator</title>
+    <style>
+        body{
+            background-color: #333333;
+            color: white;
+        }
+        textarea{
+            font-family: "Comic Mono";
+        }
+        code{
+            font-family: "Comic Mono";
+        }
+        @font-face{
+            font-family: 'Comic Mono';
+            src: url("../../fonts/ComicMono.ttf");
+        }
+    </style>
+</head>
+<body>
+<h1>Dark/Light Mode Image Generator</h1>
+
+This creates an image where, you see one image when you look at it in dark mode, and you see a different image when you look at it in light mode!<p/>
+
+For the best results, upload two images with the same dimensions.<p/>
+
+<label for="fileinput1">Image 1: </label>
+<input type="file" accept="image/*" id="fileinput1" /><p/>
+<label for="fileinput2">Image 2: </label>
+<input type="file" accept="image/*" id="fileinput2" /><p/>
+<button onclick="buttonClick()">Generate</button>
+
+<div id="loading"></div>
+<canvas id="canvas" width="0" height="0"></canvas>
+
+<br/>
+<button onclick="saveImage()">Save Image</button>
+
+<hr>
+
+To see it in action, save the image then upload it to Discord. Then, the image will change depending on whether you are in dark mode or light mode!<p/>
+
+For convenience, you can also change the theme of this webpage.<p/>
+
+<b>Theme:</b>
+<input type="radio" name="theme" onclick="changeTheme('Dark')"><label for="dark">Dark</label>
+<input type="radio" name="theme" onclick="changeTheme('Light')"><label for="light">Light</label>
+<input type="radio" name="theme" onclick="changeTheme('Magenta')"><label for="magenta">Magenta</label>
+
+<script src="main.js"></script>
+<script src="theme.js"></script>
+</body>
+</html>
