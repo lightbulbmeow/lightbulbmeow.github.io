@@ -28,10 +28,14 @@ This creates an image where, you see one image when you look at it in dark mode,
 
 For the best results, upload two images with the same dimensions.<p/>
 
-<label for="fileinput1">Image 1: </label>
+<label for="fileinput1">Dark mode image: </label>
 <input type="file" accept="image/*" id="fileinput1" /><p/>
-<label for="fileinput2">Image 2: </label>
+<label for="colorinput1">Dark mode color:</label>
+<input type="color" id="colorinput1" value="#333333" onchange="changeDarkColor(this.value)" /><p/>
+<label for="fileinput2">Light mode image: </label>
 <input type="file" accept="image/*" id="fileinput2" /><p/>
+<label for="colorinput1">Light mode color:</label>
+<input type="color" id="colorinput2" value="#ffffff" onchange="changeLightColor(this.value)" /><p/>
 <button onclick="buttonClick()">Generate</button>
 
 <div id="loading"></div>
@@ -49,7 +53,8 @@ For convenience, you can also change the theme of this webpage.<p/>
 <b>Theme:</b>
 <input type="radio" name="theme" onclick="changeTheme('Dark')"><label for="dark">Dark</label>
 <input type="radio" name="theme" onclick="changeTheme('Light')"><label for="light">Light</label>
-<input type="radio" name="theme" onclick="changeTheme('Magenta')"><label for="magenta">Magenta</label>
+<input type="radio" name="theme" onclick="changeTheme('Custom')"><label for="custom">Custom</label>
+<input type="color" id="colorinput3" value="#ff00ff" onchange="changeCustomColor(this.value)" /><p/>
 
 <script src="main.js"></script>
 <script src="theme.js"></script>

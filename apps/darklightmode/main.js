@@ -5,6 +5,8 @@ const fileinput2 = document.getElementById('fileinput2')
 const canvas = document.getElementById('canvas')
 const ctx = canvas.getContext('2d')
 
+const loading = document.getElementById('loading')
+
 const tempcanvas = document.createElement("canvas")
 const tempctx = tempcanvas.getContext('2d')
 
@@ -13,11 +15,12 @@ let imgData1, imgData2
 const tempsrcImage1 = new Image
 const tempsrcImage2 = new Image
 
-function extractImageData(srcImage,w,h){ //also attempts to resize if different sizes
-  tempcanvas.width = w
-  tempcanvas.height = h
+function extractImageData(srcImage){ //also attempts to resize if different sizes
+  var h = tempcanvas.height
+  var w = Math.round(h * srcImage.width / srcImage.height)
+  tempctx.clearRect(0, 0, tempcanvas.width, tempcanvas.height)
   tempctx.drawImage(srcImage, 0, 0, w, h)
-  return tempctx.getImageData(0, 0, w, h)
+  return tempctx.getImageData(0, 0, tempcanvas.width, tempcanvas.height)
 }
 
 fileinput1.onchange = function (e) {
@@ -30,11 +33,6 @@ fileinput2.onchange = function (e) {
   if (e.target.files && e.target.files.item(0)) {
     tempsrcImage2.src = URL.createObjectURL(e.target.files[0])
   }
-}
-
-function buttonClick(){
-  loading.innerText = "Loading..."
-  setTimeout(generateImage)
 }
 
 function darkgray(r,g,b,a){
@@ -50,14 +48,19 @@ function pixel(img,x,y){
   return [img.data[coord], img.data[coord+1], img.data[coord+2], img.data[coord+3]]
 }
 
-const DARKCOLOR = 51
-const LIGHTCOLOR = 255
+function buttonClick(){
+  loading.innerText = "Loading..."
+  setTimeout(generateImage)
+}
 
 function generateImage(){
-  w = tempsrcImage1.width
-  h = tempsrcImage1.height
-  imgData1 = extractImageData(tempsrcImage1,w,h)
-  imgData2 = extractImageData(tempsrcImage2,w,h)
+  // take the image with bigger height, then scale the other image to that height
+  h = Math.max(tempsrcImage1.height, tempsrcImage2.height)
+  w = Math.round(Math.max(h * tempsrcImage1.width / tempsrcImage1.height, h * tempsrcImage2.width / tempsrcImage2.height))
+  tempcanvas.width = w
+  tempcanvas.height = h
+  imgData1 = extractImageData(tempsrcImage1)
+  imgData2 = extractImageData(tempsrcImage2)
 
   newimgData = new ImageData(w,h)
 
@@ -68,19 +71,19 @@ function generateImage(){
       [r,g,b,a] = pixel(imgData2,x,y)
       y2 = lightgray(r,g,b,a);
 
-      // system of equations:
-      // r*a/255 + DARKCOLOR*(1-a/255) = y1
-      // r*a/255 + LIGHTCOLOR*(1-a/255) = y2
+      y1 = y1/2
+      y2 = y2/2 + 255/2
 
-      y1 = (y1/2)/255*(LIGHTCOLOR-DARKCOLOR) + DARKCOLOR
-      y2 = (y2/2)/255*(LIGHTCOLOR-DARKCOLOR) + DARKCOLOR + (LIGHTCOLOR-DARKCOLOR)/2
-
-      a = 255*(LIGHTCOLOR-DARKCOLOR-y2+y1)/(LIGHTCOLOR-DARKCOLOR)
+      a = 255-y2+y1
       if(a == 0) r = 0
-      else r = (LIGHTCOLOR*y1-DARKCOLOR*y2)/(LIGHTCOLOR-DARKCOLOR-y2+y1)
+      else r = y1/a
 
       coord = (x + y*w)*4
-      for(const i of [0,1,2]) newimgData.data[coord+i] = r
+      for(const i of [0,1,2]){
+        dark = Number("0x" + darkColor[2*i+1] + darkColor[2*i+2])
+        light = Number("0x" + lightColor[2*i+1] + lightColor[2*i+2])
+        newimgData.data[coord+i] = dark*(1-r) + light*r
+      }
       newimgData.data[coord+3] = a
     }
   }
