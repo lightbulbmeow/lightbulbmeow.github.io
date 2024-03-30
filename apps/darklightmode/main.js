@@ -16,8 +16,8 @@ const tempsrcImage1 = new Image
 const tempsrcImage2 = new Image
 
 function extractImageData(srcImage){ //also attempts to resize if different sizes
-  var h = tempcanvas.height
-  var w = Math.round(h * srcImage.width / srcImage.height)
+  let h = tempcanvas.height
+  let w = Math.round(h * srcImage.width / srcImage.height)
   tempctx.clearRect(0, 0, tempcanvas.width, tempcanvas.height)
   tempctx.drawImage(srcImage, 0, 0, w, h)
   return tempctx.getImageData(0, 0, tempcanvas.width, tempcanvas.height)

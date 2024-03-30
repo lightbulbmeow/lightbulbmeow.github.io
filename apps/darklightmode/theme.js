@@ -1,6 +1,6 @@
 let darkColor = "#333333";
 let lightColor = "#ffffff";
-let customColor = "#ff00ff";
+let customColor = "#cc66cc";
 let selectedTheme = "Dark";
 
 function changeTheme(theme){
