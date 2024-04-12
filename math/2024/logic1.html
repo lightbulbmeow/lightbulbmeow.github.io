@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="description" content="Hello! Welcome to my blog (*・ω・)ﾉ I will giv u free Cookies">
+    <title>My... blog... I guess?</title>
+    <style>
+    body {
+        background-image: url("bg.png");
+        background-repeat: repeat;
+        background-color: black;
+        background-attachment: fixed;
+    }
+    a {
+        color: rgba(255,128,255);
+        text-decoration: none;
+    }
+    s {
+        opacity: 0.4;
+    }
+    h1, h2 {
+        font-family: 'Josefin Sans'
+    }
+    .entry {
+        margin: 50px 200px 50px 200px;
+        padding: 10px 10px 10px 10px;
+        background-color: rgba(20,10,20,0.9);
+        border: 1px solid white;
+        border-radius: 5px;
+        color: white;
+        font-family: 'Comic Sans';
+    }
+    @font-face{
+        font-family: 'Comic Mono';
+        src: url("../../fonts/ComicMono.ttf");
+    }
+    @font-face{
+        font-family: 'Comic Sans';
+        src: url("../../fonts/ComicSans.ttf");
+    }
+    @font-face{
+        font-family: 'Comic Sans';
+        src: url("../../fonts/ComicSansBold.ttf");
+        font-weight: bold;
+    }
+    @font-face{
+        font-family: 'Comic Sans';
+        src: url("../../fonts/ComicSansItalic.ttf");
+        font-style: italic;
+    }
+    @font-face{
+        font-family: 'Comic Sans';
+        src: url("../../fonts/ComicSansBoldItalic.ttf");
+        font-weight: bold;
+        font-style: italic;
+    }
+    .code {
+        font-family: 'Comic Mono';
+        background-color: rgb(10,5,10,0.95);
+    }
+    .date {
+        font-size: 12px;
+    }
+    .image {
+        padding: 5px;
+    }
+    .image:hover {
+        background-color: rgb(255,255,255,0.3);
+        border-radius: 5px;
+    }
+    </style>
+
+    <style>@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@700&display=swap');</style> <!-- Google font "Josefin Sans" -->
+
+    <!-- Latex stuff -->
+    <script>
+        MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+        }
+        };
+    </script>
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+
+    <script>
+        document.cookie = "freecookie=Heres your free cookie!!! Enjoy ~ヾ(・ω・);";
+    </script>
+</head>
+<body>
+    <a href="../index.html"><img src="../back.png" style="position: fixed; top: 20px; left: 20px;" /></a>
+
+    <div class="entry">
+
+        <h1>"The Hardest Logic Puzzle Ever" - Part 1</h1>
+
+        <p class="date">April 12, 2024. 10:40am</p>
+
+        <p>The other day, I read an <a href="https://mathwithbaddrawings.com/2024/04/03/the-puzzle-of-the-prankster-twins/">interesting blog post</a> by Ben Orlin. He posted an interesting logic puzzle, which can be summarized as follows:
+
+        <br/>
+
+        <div style="margin-left: 25px">There are two twins, Daniel and Henrik. They are identical, so you couldn't tell the difference between the two. One of them always tells the truth, while the other always tells a lie. You came across one of the twins, and he told you, "I am Daniel". Was that Daniel telling the truth, or was that actually Henrik telling a lie?</div>
+
+        <br/>
+
+        We can't tell for sure who is speaking, but we can logically deduce that Henrik was the liar:<br/><br/>
+
+        If the one who spoke that sentence was Daniel, then we know he's telling the truth, so his brother Henrik must be lying.<br/>
+
+        If the one who spoke that sentence was Henrik, then him saying "I am Daniel" was a lie.<br/>
+
+        In both cases, we can deduce that Henrik must be the liar.
+
+        <br/><br/>
+
+        The blog post then asks the same question again multiple times, but with a different sentence for each scenario. Among them are:
+
+        <ol>
+        <li>“Henrik tells the truth.”</li>
+        <li>“My brother would say that I’m Daniel.”</li>
+        <li>“I’m Daniel or I’m a liar.”</li>
+        <li>“Only Henrik can say these words.”</li>
+        </ol>
+
+        Check out the original blog post if you want try it out yourself! It's quite head-scratching.<br/><br/><br/>
+
+        One of the ways you could go about this is by carefully checking every possibility, seeing if it's consistent with the statement.<br/><br/>
+
+        For example, let's go through the first statement by going through all four possibilities, and see how much we can deduce from it.<br/><br/>
+
+        <div style="margin-left: 25px">“Henrik tells the truth.”</div>
+
+        <ul>
+        <li><b>Is it Daniel telling the truth?</b> Daniel being the truth-teller means his brother Henrik is the liar, contradicting what he just said.</li>
+        <li><b>Is it Daniel lying?</b> This would mean Henrik is the truth-teller. This makes his statement true, which is a contradiction because Daniel can only tell lies.</li>
+        <li><b>Is it Henrik telling the truth?</b> It could be.</li>
+        <li><b>Is it Henrik lying?</b> That means the actual statement would be "Henrik tells a lie", which is consistent. So this is also a possibility.</li>
+        </ul>
+
+        After exhausting all four possible cases, we can conclude that Henrik must be the one speaking, but we can't logically deduce whether he is lying or not.<br/><br/>
+
+        We could also do this for all the other questions, but I think this method might be too time consuming. It's very prone to errors too, what if we get a single case wrong? Surely, there must be a faster way to do this than case bashing, right?<br/><br/><br/>
+
+        One thing we could do is imagine how a computer would do it: to translate this into a rigorized mathematical problem. Let's imagine what we are actually doing here. When we're doing the case bashing, we assign the speaker to either "honest" or "lying". Then, we assign Daniel to be either "honest" or "lying", and Henrik has to be the opposite of Daniel.<br/><br/>
+
+        We can let $s$ be the speaker. Assign it a value $s=0$ if the speaker is telling the truth, and $s=1$ if the speaker is telling a lie. Similarly, define $d$ for Daniel and $h$ for Henrik. We can encode Henrik being the opposite of Daniel as $h=\lnot d$, where $\lnot$ denotes the NOT operator.<br/><br/>
+
+        Let's go back to our opening question:<br/><br/>
+
+        <div style="margin-left: 25px">“I am Daniel.”</div><br/> For now, let's assume this statement is always true. How can we encode this piece of info?<br/><br/>
+
+        "I am Daniel" is equivalent to saying "The speaker is Daniel", which would be encoded as $s=d$. We can rewrite this as $s\oplus d=0$ where $\oplus$ is the XOR operator, just so all the variables are on one side.<br/><br/>
+
+        Now, what if the sentence "I am Daniel" <i>could</i> be lying? Its truth value would now depend on whether the speaker is honest or lying. If the speaker tells the truth, then the equation is still $s\oplus d=0$. But if the speaker now tells a lie, it should now be $\lnot(s\oplus d)=0$. This can be expressed compactly as:
+        $$(s\oplus d)\oplus s=0$$
+        That's all the information we can get from that single statement, encoded as a single equation! Now we just have to solve the following system:
+        $$\begin{cases}h=\lnot d\\(s\oplus d)\oplus s=0\end{cases}$$
+        This should be easy. In the second equation, the two $s$'s cancel out to give $d=0$. This means Daniel is a truth-teller. In the first equation, $h=\lnot d=1$. This means Henrik is the liar.<br/><br/>
+
+        Notice how we didn't get any information on the speaker because the $s$'s cancelled out. This is the same conclusion we arrived at when we did the case bash earlier!
+
+        <br/><br/><br/>
+
+        Now let's try the second question.<br/><br/>
+
+        <div style="margin-left: 25px">“My brother would say that I’m Daniel.”</div><br/>
+
+        This seems complicated, but we can break this down into parts:<br/><br/>
+
+        "I'm Daniel" would be encoded as $s\oplus d=0$.<br/>
+        “My brother would say that I’m Daniel” would be encoded as $\lnot s\oplus(s\oplus d)=0$, because "my brother" is $\lnot s$, the opposite of the speaker.<br/>
+        Finally, since speaker could be lying, it should be encoded as $(\lnot s\oplus(s\oplus d))\oplus s=0$.<br/><br/>
+
+        We can simplify this equation:
+        $$(\lnot s\oplus(s\oplus d))\oplus s=0\quad\implies\quad1\oplus s\oplus s\oplus d\oplus s=0\quad\implies\quad d\oplus s=1$$
+        Therefore, Daniel is not the speaker. The conclusion we get is that Henrik is the speaker!
+
+        <br/><br/><br/>
+
+        The third one is a bit tricky, and probably my favorite one to work out,<br/><br/>
+
+        <div style="margin-left: 25px">“I’m Daniel or I’m a liar.”</div><br/>
+
+        For this one, we'll require the OR operator $\lor$. "I'm Daniel" encodes to $s\oplus d=0$, and "I'm a liar" encodes to $s=1$. This combines to:
+        $$((s\oplus d=0)\lor(s=1))\oplus s=0$$
+        Those equal signs are ugly, so let's eliminate them. If you've been paying attention so far, we've been assigning true statements a value of 0, and false statements a value of 1. (This may be contrary to the convention, where True=1 and False=0.)<br/><br/>
+
+        So, the <i>equation</i> $(s\oplus d=0)$ would have value 0 if its true, and value 1 if its false, the same as the value of $s\oplus d$ itself.<br/>
+        The equation $s=1$ can be rewritten as $s\oplus1=0$, which would have the value of $s\oplus1$ itself.
+        $$((s\oplus d)\lor(s\oplus1))\oplus s=0$$
+        The question now is... how do we go about simplifying this? We should get rid of that $\lor$ somehow.<br/><br/>
+
+        Let's write down the truth table for $\lor$. (Because of how we defined True=0 and False=1, this would be a bit different from what we're used to)
+        $$0\lor0=0\quad 0\lor1=0\quad 1\lor0=0\quad 1\lor1=1$$
+        There's an easy way to compactly write this truth table in terms of <i>multiplication</i>:
+        $$a\lor b=ab$$
+        Finally, notice that the XOR operation, $a\oplus b$, is essentially the same as doing <i>addition mod 2</i>. This means... we can solve the equation by working with integers mod 2! Our equation is now<br/><br/>
+        $$(s+d)(s+1)+s\equiv0\pmod2$$
+        Let's go and simplify this. (Recall that $s^2\equiv s\pmod 2$.)
+        \begin{align*}
+        (s+d)(s+1)+s&\equiv0\\
+        s^2+ds+s+d+s&\equiv0\\
+        ds+d+s&\equiv0
+        \end{align*}
+        For the final step, notice that we can apply <a href="https://artofproblemsolving.com/wiki/index.php/Simon%27s_Favorite_Factoring_Trick">Simon's Favorite Factoring Technique</a>.
+        \begin{align*}
+        ds+d+s+1&\equiv1\\
+        (d+1)(s+1)&\equiv1\\
+        \end{align*}
+        This equation can only be true if $d=0$ and $s=0$. This means, the speaker is Daniel, and he is telling the truth!
+        <br/><br/>
+
+        The AND operator, $\land$, can also be written purely algebraically too. Its truth table is
+        $$0\land0=0 \quad 0\land1=1 \quad 1\land0=1 \quad 1\land1=1$$
+        A way to derive a formula for this would be to use De Morgan's Law, $a\land b = \lnot(\lnot a\lor\lnot b)$. Therefore,
+        $$a\land b=\big((a\oplus1)(b\oplus1)\big)\oplus1$$
+        I think this proves that we can encode <i>any</i> logical formula into some equation in integers mod 2.
+
+        <br/><br/><br/>
+
+        The fourth question is probably the most evil of them all, which is why I saved it for last:<br/><br/>
+
+        <div style="margin-left: 25px">“Only Henrik can say these words.”</div><br/>
+
+        I will talk about this in <a href="logic2.html">Part 2</a>, but see if you can figure out how to deal it using the methods I've shown above!
+    </div>
+</body>
