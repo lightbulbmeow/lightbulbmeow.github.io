@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="description" content="Hello! Welcome to my blog (*・ω・)ﾉ I will giv u free Cookies">
+    <title>My... blog... I guess?</title>
+    <style>
+    body {
+        background-image: url("logic4.png");
+        background-repeat: repeat;
+        background-color: black;
+        background-attachment: fixed;
+    }
+    a {
+        color: rgba(255,128,255);
+        text-decoration: none;
+    }
+    s {
+        opacity: 0.4;
+    }
+    h1, h2, h3 {
+        font-family: 'Josefin Sans'
+    }
+    .entry {
+        margin: 50px 200px 50px 200px;
+        padding: 10px 10px 10px 10px;
+        background-color: rgba(20,10,20,0.9);
+        border: 1px solid white;
+        border-radius: 5px;
+        color: white;
+        font-family: 'Comic Sans';
+    }
+    @font-face{
+        font-family: 'Comic Mono';
+        src: url("../../fonts/ComicMono.ttf");
+    }
+    @font-face{
+        font-family: 'Comic Sans';
+        src: url("../../fonts/ComicSans.ttf");
+    }
+    @font-face{
+        font-family: 'Comic Sans';
+        src: url("../../fonts/ComicSansBold.ttf");
+        font-weight: bold;
+    }
+    @font-face{
+        font-family: 'Comic Sans';
+        src: url("../../fonts/ComicSansItalic.ttf");
+        font-style: italic;
+    }
+    @font-face{
+        font-family: 'Comic Sans';
+        src: url("../../fonts/ComicSansBoldItalic.ttf");
+        font-weight: bold;
+        font-style: italic;
+    }
+    .code {
+        font-family: 'Comic Mono';
+        background-color: rgb(10,5,10,0.95);
+    }
+    .date {
+        font-size: 12px;
+    }
+    .image {
+        padding: 5px;
+    }
+    .image:hover {
+        background-color: rgb(255,255,255,0.3);
+        border-radius: 5px;
+    }
+    </style>
+
+    <style>@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@700&display=swap');</style> <!-- Google font "Josefin Sans" -->
+
+    <!-- Latex stuff -->
+    <script>
+        MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+        }
+        };
+    </script>
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+
+    <script>
+        document.cookie = "freecookie=Heres your free cookie!!! Enjoy ~ヾ(・ω・);";
+    </script>
+</head>
+<body>
+    <a href="../index.html"><img src="../back.png" style="position: fixed; top: 20px; left: 20px;" /></a>
+
+    <div class="entry">
+
+        <h1>"The Hardest Logic Puzzle Ever" - Part 4</h1>
+
+        <p class="date">April 13, 2024. 8:00pm</p>
+
+        <p>In the <a href="logic3.html">previous part</a>, we solved the so-called "The Hardest Logic Puzzle Ever." Now, we have an <i><b>even harder</b></i> variation of that puzzle! Should we call it "The Hardest-er Logic Puzzle Ever"?
+
+        <div style="margin-left: 25px">There are three identical cats in front of you, their names are <i>Maa</i>, <i>Shii</i>, and <i>Rou</i>, but you don't know which is which. Maa always responds truthfully, Shii always lies, and Rou just picks "<i>yes</i>" or "<i>no</i>" at random. You are allowed to ask a single yes-or-no question to a single cat one at a time. <b>If you ever ask a question that can never be answered by "<i>yes</i>" or "<i>no</i>", all three of them will scratch you to death</b>. Your task is to determine their identities by asking only <b>two</b> questions.</div><br/>
+
+        To clarify, <i>you don't need to survive</i> after deducing their identities. (You'll die a heroic death.)<br/><br/>
+
+        <center><img src="nyankoevil.jpg"/></center><br/>
+
+        What now? Previously, we just said that only two questions weren't enough right? How would the 'paradox' response help us in any way?<br/><br/>
+
+        <h3>The deadly observation:</h3>
+
+        It's actually the 'paradox' response that could let us solve this puzzle in just two questions. Yes, that's right. A question has three possible responses: "yes", "no", and <b><i>death</i></b>.<br/><br/>
+
+        This gives $1+2\cdot3=7$ possible responses in total. 1 is if we die in the first question, $2\cdot3$ is if we survive and get to ask the second question. This is just barely enough to distinguish from all 6 possibilities! We need to somehow use our <i>death</i> to our advantage.<br/><br/>
+
+        Another thing we can take advantage of is that, Rou now gives a <i>tiny bit</i> of potential info. Her "yes/no" response is completely indistinguishable, but she now has the additional option to <i>scratch us to death</i>. Here's why: Suppose we try to ask Rou the following question.<br/><br/>
+
+        <div style="margin-left: 25px">"Is the answer to this question 'no'?"</div>
+
+        <ul>
+        <li>The answer can't be "yes", because then it would have to be "no".</li>
+        <li>The answer can't be "no" either, as that would be saying the answer to the question <i>is not</i> "no".</li>
+        </ul>
+
+        This question is unanswerable with neither "yes" nor "no". If we asked Rou this question, all the cats will come and scratch us to death! In a way, Rou gives two possible responses: an indistinguishable "<i>yes/no</i>" response, or <i>death</i>.<br/><br/>
+
+        <h3>Attempt #1</h3>
+
+        Just to see if it would work, let's see what happens if we let the first question remain the same as in the original puzzle,<br/><br/>
+
+        <div style="margin-left: 25px">Q1: "If I asked you whether the middle cat's name is Rou, what would you respond?"</div><br/>
+
+        This would let us determine a cat who doesn't respond randomly. For now, let's assume the answer to this is "yes", meaning the right cat is not Rou. There are 4 remaining possibilities:<br/><br/>
+
+        <center>(Rou,Maa,Shii), (Rou,Shii,Maa), (Maa,Rou,Shii), (Shii,Rou,Maa)</center><br/>
+
+        Unfortunately, our second question is not enough to distinguish all of these, because we only get to have 3 different responses. Our first question can't be right.<br/><br/>
+
+        <center><img src="tree3.png"></center>
+
+        <h3>Attempt #2</h3>
+
+        The issue with our first attempt is that there is no way to distinguish between (Rou,Maa,Shii) and (Rou,Shii,Maa) from all the other the possibilities with just the first question. If we get a "yes/no" response from the first question, it wouldn't eliminate any of the 'Rou' cases. No matter how we ask the first question, we'll always be left with 4 remaining cases in the second question.<br/><br/>
+
+        But that's only if the first question always gives a "yes/no" response. What if we incorporate a paradox in it? This might reduce the number of cases in the second question!<br/><br/>
+
+        Here's the plan. Our first question would do two things at the same time:
+
+        <ol>
+        <li>If the cats are (Rou,Maa,Shii) in that order, the question should trigger a paradox.</li>
+        <li>Otherwise, it should let us determine a cat who doesn't respond randomly.</li>
+        </ol>
+
+        The second question should let us determine the identities of all three cats. Visually, it looks like the diagram below:<br/><br/>
+
+        <center><img src="tree4.png"></center><br/>
+
+        If Rou is the first cat, we have no way of distinguishing between "yes" or "no". That's why (Rou,Shii,Maa) is forced to be duplicated among the cases in the second question. By eliminating the (Rou,Maa,Shii) case early on, we leave just enough 'space' for the remaining 4 possibilities to fit in the responses we could have. All 6 possibilities fit exactly into our 7 possible responses!<br/><br/>
+
+        <h3>Constructing the solution</h3>
+
+        Now that we have a plan, let's begin writing the questions. Our only issue is, how exactly do a force a paradox in our solution? Given some variables $a,b$, we wish to construct a question $q$ such that
+        $$q=\begin{cases}\text{paradox} & \text{if $a=0$}\\0 & \text{if $a\ne1$ and $b=0$}\\1 & \text{if $a\ne1$ and $b=1$}\end{cases}$$
+        <br/>
+
+        Here is one possible way: Recall that paradoxes can only happen if we get something like $q=\lnot q$ in the equation. That means, we want the right hand side to be $\lnot q$ if $a=0$, and $b$ if $a=1$.
+        $$q=\begin{cases}\lnot q & \text{if $a=0$}\\b & \text{if $a=1$}\end{cases}$$
+        This can be translated to English using some fancy wording:<br/><br/>
+
+        <div style="margin-left: 25px">"If $a$ is true, answer the first question. Otherwise, answer the second one: 1) Is the answer to this question 'no'; 2) Is $b$ true?"</div><br/>
+
+        and... we're done! Just don't forget to enclose it with the "If I asked ____, what would you respond?" format to force Maa and Shii to answer truthfully.<br/><br/>
+
+        <div style="margin-left: 25px">"If I asked you the following question:
+        <div style="margin-left: 25px">'If $a$ is true, answer the first question. Otherwise, answer the second one: 1) Is the answer to this question 'no'; 2) Is $b$ true?'</div>
+        what would you respond?</div><br/>
+
+        (If you don't like the fact that we're <i>technically</i> asking <i>two</i> questions in one here, we can just rephrase it in such a way that it's not using if-else conditionals. For example, by expanding out the formula for $q$,
+        $$q=(\lnot q\land a)\lor(b\land\lnot a)$$
+        then translating it to English.)
+
+        <br/><br/><br/>
+
+        Now, all we have to do is substitute $a$ and $b$ with the values we want. That last tree diagram will come in handy. For the first question, we have<br/><br/>
+
+        <div style="margin-left: 25px">$a$ = the cats are (Rou,Maa,Shii) in that order<br/>
+        $b$ = the middle cat is Rou</div><br/>
+
+        This guarantees us a non-random cat and eliminates a single case, assuming we didn't die yet. For the second question, we have<br/><br/>
+
+        <div style="margin-left: 25px">$a$ = the left cat is Rou<br/>
+        $b$ = the left cat is Maa</div><br/>
+
+        This tells us the identity of the left cat. Together with the answer to first question, we can deduce remaining two cats.<br/><br/>
+
+        <h3>Putting it all together</h3>
+
+        The two questions we have to ask are:<br/><br/>
+
+        <div style="margin-left: 25px">Q1: "If I asked you the following question:
+        <div style="margin-left: 25px">'If the cats are (Rou,Maa,Shii) in that order, answer the first question. Otherwise, answer the second one: 1) Is the answer to this question 'no'; 2) Is middle cat's name Rou?'</div>
+        what would you respond?</div><br/>
+
+        <div style="margin-left: 25px">Q2: "If I asked you the following question:
+        <div style="margin-left: 25px">'If the left cat is Rou, answer the first question. Otherwise, answer the second one: 1) Is the answer to this question is 'no'; 2) Is the left cat's name Maa?'</div>
+        what would you respond?</div><br/>
+
+        Q1 will be asked to the left cat. If we're still alive, then depending on the answer to Q1, we ask Q2 to the non-random cat and deduce the identities of all the cats! It's an exercise to the reader to verify that this solution works.<br/><br/>
+
+        There are probably much better ways to phrase the two questions above, but at least we've shown that there is <i>a</i> solution to this puzzle!<br/><br/>
+
+        <h2>Final words</h2>
+
+        The puzzle doesn't end here! We could ask even more variations about it. Some I could think of are:
+
+        <ul>
+        <li>Is it somehow possible for a question to have neither a "yes" nor a "no" answer, <i>yet also</i> not cause them to scratch you to death? Could there be a <i>fourth</i> possible response to a question?</li>
+        <li>Instead of just three cats, what if there are multiple truth-tellers, multiple liars, and multiple random cats? What is the least number of questions you'd need to ask to determine their identities?</li>
+        <li>Suppose the three cats are identical. Everytime you ask a question, the cats will shuffle their positions so you couldn't tell who is who anymore. Is it still possible to determine their identities?</li>
+        </ul>
+
+        As much as I'd like to discuss all of these, I think this blog post is getting too long. So, I will leave these as an <i><b>exercise to the reader!</b></i><br/><br/>
+
+        Thank you for reading through my first math blog post! &nbsp; &nbsp; ᡣ𐭩⸜(｡˃ ᵕ ˂ )⸝♡
+
+    </div>
+</body>

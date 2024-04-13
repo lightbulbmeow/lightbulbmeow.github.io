@@ -94,11 +94,11 @@
 
         <h1>"The Hardest Logic Puzzle Ever" - Part 3</h1>
 
-        <p class="date">April ???????, 2024. ??????am</p>
+        <p class="date">April 13, 2024. 5:00pm</p>
 
         <p>In the parts <a href="logic1.html">one</a> and <a href="logic2.html">two</a>, we developed a system which would let us easily convert any English logic statement into a rigorized mathematical one. It also allowed us to easily handle confusing cases such as anti-paradoxes, and create statements that behave exactly how we want. To put this to the test, let's begin tackling "<a href="https://en.wikipedia.org/wiki/The_Hardest_Logic_Puzzle_Ever">The Hardest Logic Puzzle Ever.</a>" Here it is: (paraphrased to include cats)
 
-        <div style="margin-left: 25px">There are three identical cats in front of you, their names are <i>Maa</i>, <i>Shii</i>, and <i>Rou</i>, but you don't know which is which. Maa always responds truthfully, Shii always lies, and Rou just picks "<i>yes</i>" or "<i>no</i>" at random. You allowed to ask a single yes-or-no question to a single cat one at a time. Your task is to determine their identities by asking only three questions.</div><br/>
+        <div style="margin-left: 25px">There are three identical cats in front of you, their names are <i>Maa</i>, <i>Shii</i>, and <i>Rou</i>, but you don't know which is which. Maa always responds truthfully, Shii always lies, and Rou just picks "<i>yes</i>" or "<i>no</i>" at random. You are allowed to ask a single yes-or-no question to a single cat one at a time. Your task is to determine their identities by asking only three questions.</div><br/>
 
         (Some elements from the original puzzle are omitted here, like the part where they're supposed to say "<i>da</i>" or "<i>ja</i>", but I think it just unnecessarily obfuscates the puzzle.)<br/><br/>
 
@@ -108,7 +108,7 @@
 
         First, notice that 3 questions is kinda tight. We only get $2^3=8$ possible responses to distinguish from all $3!=6$ possibilities for the cats' identities. Asking only 2 questions is not enough because then we'll only get $2^2=4$ possible responses. This means every question we ask has to count!<br/><br/>
 
-        Let's say we have some statement $q$ which we wish to know the truth value of. If it is true, then we assign it a value $q=0$. If it is false, we assign it a value of $q=1$. Just like what we did in the previous parts.<br/><br/>
+        Let's say we have some statement $q$ which we wish to know the truth value of. If it is true, we assign it a value $q=0$. If it is false, we assign it a value of $q=1$, just like what we did in the previous parts. Let's define Yes=0 and No=1 too.<br/><br/>
 
         If we ask Maa the question "Is $q$ true?", she would respond with $q$.<br/>
         If we asked Shii the question "Is $q$ true?", she would respond with the opposite, $\lnot q$.<br/>
@@ -135,9 +135,9 @@
 
         <h3>Key Observation #2:</h3>
 
-        We've managed to get two of the cats to always tell the truth. Unfortunately, this doesn't really help with Rou because she always answers randomly. We'll never be able to extract anything meaningful from her.<br/><br/>
+        We've managed to get two of the cats to always tell the truth. Unfortunately, this doesn't really help with Rou because she always answers randomly.<br/><br/>
 
-        This leads to the second key observation: We need to find <i>any</i> cat who isn't Rou. It's the only way to get any meaningful info. To do this, we'll need to ask about the identities of the other cats.<br/><br/>
+        This leads to the second key observation: We need to find <i>any</i> cat who isn't Rou. To do this, we'll need to ask about the identities of the other cats.<br/><br/>
 
         Let's ask the left cat,<br/><br/>
 
@@ -154,7 +154,7 @@
 
         <center><img src="tree1.png"></center><br/>
 
-        Finally, the rest is straightforward. Since we're sure this cat won't respond randomly, we can freely use the remaining two questions to ask the identities of all the cats.<br/><br/>
+        Finally, the rest is straightforward. Since we're sure this cat won't respond randomly, we can freely use the remaining two questions to inquire about the identities of all the cats.<br/><br/>
 
         <div style="margin-left: 25px">Q2': "Is the left cat's name Rou?"<br/>Q3': "Is your name Maa?"</div><br/>
 
@@ -171,76 +171,24 @@
 
         The "If I asked ____, what would you respond?" format are there to force Maa and Shii to both give truthful responses.<br/><br/>
 
-        Q1 will be asked to the left cat. Then depending on the answer to Q1, we ask the non-random cat Q2 and Q3 to deduce the identities of all the cats. Puzzle solved!<br/><br/>
+        Q1 will be asked to the left cat. Then depending on the answer to Q1, we ask Q2 and Q3 to the non-random cat and deduce the identities of all the cats. Puzzle solved!<br/><br/>
 
         <center><img src="tree2.png"></center><br/>
 
         <h2>A "deadly" variation</h2>
 
-        What if a response can be more than just a "yes" or "no"? Consider the following variation:<br/><br/>
+        Consider the following variation:<br/><br/>
 
-        <div style="margin-left: 25px">There are three identical cats in front of you, their names are <i>Maa</i>, <i>Shii</i>, and <i>Rou</i>, but you don't know which is which. Maa always responds truthfully, Shii always lies, and Rou just picks "<i>yes</i>" or "<i>no</i>" at random. You allowed to ask a single yes-or-no question to a single cat one at a time. <b>If you ever ask a question that can never be answered by "<i>yes</i>" or "<i>no</i>", all three of them will scratch you to death</b>. Your task is to determine their identities by asking only <b>two</b> questions.</div><br/>
+        <div style="margin-left: 25px">There are three identical cats in front of you, their names are <i>Maa</i>, <i>Shii</i>, and <i>Rou</i>, but you don't know which is which. Maa always responds truthfully, Shii always lies, and Rou just picks "<i>yes</i>" or "<i>no</i>" at random. You are allowed to ask a single yes-or-no question to a single cat one at a time. <u><b>If you ever ask a question that can never be answered by "<i>yes</i>" or "<i>no</i>", all three of them will scratch you to death</b></u>. Your task is to determine their identities by asking only <u><b>two</b></u> questions.</div><br/>
 
         To clarify, <i>you don't need to survive</i> after deducing their identities. (You'll die a heroic death.)<br/><br/>
 
         <center><img src="nyankoevil.jpg"/></center><br/>
 
-        So what now? We just said that two questions wasn't enough right? How would the 'paradox' response help us in any way?<br/><br/>
+        This variation is <b><i>much harder</i></b> than the puzzle we just did. This time, you get two ask only <b>two</b> yes-or-no questions! Use them wisely.<br/><br/>
 
-        <h3>The deadly observation:</h3>
-
-        It's actually the 'paradox' response that could let us solve this puzzle in just two questions. Now, a question has three possible responses: "yes", "no", or <b><i>death</i></b>.<br/><br/>
-
-        This gives $1+2\cdot3=7$ possible responses. 1 is if we die in the first question, $2\cdot3$ is if we survive and get to ask the second question. This is just barely enough to distinguish from all 6 possibilities! We need to somehow use our <i>death</i> to our advantage.<br/><br/>
-
-        Another thing we can take advantage of in this variation, Rou now gives a <i>tiny bit</i> of potential info. Her "yes/no" response is completely indistinguishable, but she now has the additional option to <i>scratch us to death</i>. Here's why: Suppose we try to ask Rou the following question.<br/><br/>
-
-        <div style="margin-left: 25px">"Is the answer to this question 'no'?"</div>
-
-        <ul>
-        <li>The answer can't be "yes", because then it would have to be "no".</li>
-        <li>The answer can't be "no" either, as that would be saying the answer to the question <i>is not</i> "no".</li>
-        </ul>
-
-        This question is unanswerable with neither "yes" nor "no". So, if we asked Rou this question, all the cats will come and scratch us to death! In a way, Rou gives two possible responses: an indistinguishable "<i>yes/no</i>" response, or <i>death</i>.<br/><br/>
-
-        <h3>Attempt #1</h3>
-
-        Just to see if it would work, let's see what happens if we let the first question remain the same,<br/><br/>
-
-        <div style="margin-left: 25px">Q1: "If I asked you whether the middle cat's name is Rou, what would you respond?"</div><br/>
-
-        This would let us determine a cat who doesn't respond randomly. For now, let's assume the answer to this is "yes", meaning the right cat is not Rou. There are 4 remaining possibilities:<br/><br/>
-
-        <center>(Rou,Maa,Shii), (Rou,Shii,Maa), (Maa,Rou,Shii), (Shii,Rou,Maa)</center><br/>
-
-        Unfortunately, our second question is not enough to distinguish all of these, because we only get to have 3 different responses. Our first question is wrong.<br/><br/>
-
-        <center><img src="tree3.png"></center>
-
-        <h3>Attempt #2</h3>
-
-        The issue with our first attempt is that there is no way to distinguish between (Rou,Maa,Shii) and (Rou,Shii,Maa) from all the other the possibilities with just the first question. If we get a "yes/no" response from the first question, then it wouldn't eliminate any of the 'Rou' cases. No matter how we ask the first question, we'll always be left with 4 remaining cases in the second question.<br/><br/>
-
-        But that's only if the first question always gives a "yes/no" response. What if we incorporate a paradox in it? This might reduce the number of cases in the second question!<br/><br/>
-
-        Here's the plan. Our first question would do two things at the same time:
-
-        <ol>
-        <li>If the cats' are (Rou,Maa,Shii) in that order, the question should trigger a paradox.</li>
-        <li>Otherwise, it should let us determine a cat who doesn't respond randomly.</li>
-        </ol>
-
-        The second question should let us determine the identities of all three cats. Visually, it looks like the diagram below:<br/><br/>
-
-        <center><img src="tree4.png"></center><br/>
-
-        If Rou is the first cat, we have no way of distinguishing between "yes" or "no". That's why (Rou,Shii,Maa) is forced to be duplicated among the cases in the second question. By eliminating the (Rou,Maa,Shii) case early on, we leave just enough 'space' for the remaining 4 possibilities to fit in the responses we could have. All 6 possibilities fit exactly into our 7 possible responses!<br/><br/>
-
-        <h3>Constructing the solution</h3>
-
-        Now that we have a plan, let's begin writing the questions. Our only issue is, how exactly do a force a paradox in our solution? Given some variables $a,b$, we wish to construct a question $q$ such that
-        $$q=\begin{cases}\text{paradox} & \text{if $a=0$}\\0 & \text{if $a\ne1$ and $b=0$}\\1 & \text{if $a\ne1$ and $b=1$}\end{cases}$$
+        If you want to try out this puzzle yourself, now might be a good chance to do so before proceeding to <a href="logic4.html">Part 4</a>.<br/>
+        Here's a hint: In this variant, its important to know that "yes" and "no" aren't the only possible responses you get when asking a question. You must use that to your advantage!<br/><br/>
 
     </div>
 </body>
