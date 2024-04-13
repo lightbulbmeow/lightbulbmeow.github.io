@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="description" content="Hello! Welcome to my blog (*・ω・)ﾉ I will giv u free Cookies">
+    <title>My... blog... I guess?</title>
+    <style>
+    body {
+        background-image: url("logic2.png");
+        background-repeat: repeat;
+        background-color: black;
+        background-attachment: fixed;
+    }
+    a {
+        color: rgba(255,128,255);
+        text-decoration: none;
+    }
+    s {
+        opacity: 0.4;
+    }
+    h1, h2 {
+        font-family: 'Josefin Sans'
+    }
+    .entry {
+        margin: 50px 200px 50px 200px;
+        padding: 10px 10px 10px 10px;
+        background-color: rgba(20,10,20,0.9);
+        border: 1px solid white;
+        border-radius: 5px;
+        color: white;
+        font-family: 'Comic Sans';
+    }
+    @font-face{
+        font-family: 'Comic Mono';
+        src: url("../../fonts/ComicMono.ttf");
+    }
+    @font-face{
+        font-family: 'Comic Sans';
+        src: url("../../fonts/ComicSans.ttf");
+    }
+    @font-face{
+        font-family: 'Comic Sans';
+        src: url("../../fonts/ComicSansBold.ttf");
+        font-weight: bold;
+    }
+    @font-face{
+        font-family: 'Comic Sans';
+        src: url("../../fonts/ComicSansItalic.ttf");
+        font-style: italic;
+    }
+    @font-face{
+        font-family: 'Comic Sans';
+        src: url("../../fonts/ComicSansBoldItalic.ttf");
+        font-weight: bold;
+        font-style: italic;
+    }
+    .code {
+        font-family: 'Comic Mono';
+        background-color: rgb(10,5,10,0.95);
+    }
+    .date {
+        font-size: 12px;
+    }
+    .image {
+        padding: 5px;
+    }
+    .image:hover {
+        background-color: rgb(255,255,255,0.3);
+        border-radius: 5px;
+    }
+    </style>
+
+    <style>@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@700&display=swap');</style> <!-- Google font "Josefin Sans" -->
+
+    <!-- Latex stuff -->
+    <script>
+        MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+        }
+        };
+    </script>
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+
+    <script>
+        document.cookie = "freecookie=Heres your free cookie!!! Enjoy ~ヾ(・ω・);";
+    </script>
+</head>
+<body>
+    <a href="../index.html"><img src="../back.png" style="position: fixed; top: 20px; left: 20px;" /></a>
+
+    <div class="entry">
+
+        <h1>"The Hardest Logic Puzzle Ever" - Part 2</h1>
+
+        <p class="date">April 12, 2024. 5:10pm</p>
+
+        <p>In the <a href="logic1.html">previous part</a>, we developed a system which would let us easily convert any English logic statement into a rigorized mathematical one. For example, we turned the following statement:
+
+        <div style="margin-left: 25px">“I’m Daniel or I’m a liar.”</div><br/>
+
+        into something like
+        $$((s\oplus d=0)\lor(s=1))\oplus s=0$$
+        which allowed us to use algebraic methods to solve the riddle.
+
+        <br/><br/>
+
+        The question we'll be tackling now is the following:<br/><br/>
+
+        <div style="margin-left: 25px">“Only Henrik can say these words.”</div><br/>
+
+        The reason why I think this is so evil is because, its a statement that seemingly refers to itself. For now, let's try to solve it like how we would intuitively.<br/>
+
+        <ul>
+        <li><b>Is it Daniel telling the truth?</b> It can't, because Daniel had just said those words too, making it a false statement.</li>
+        <li><b>Is it Daniel lying?</b> It could be. Daniel had just said those words, making it a false statement. This case is possible.</li>
+        <li><b>Is it Henrik telling the truth?</b> Then Daniel is the liar, and we've just shown in the previous case that Daniel is capable of saying those words. Therefore, Henrik is not the only one who can say those words, contradiction.</li>
+        <li><b>Is it Henrik lying?</b> It can't be. It would mean Daniel also has to be able to say those words, but he wouldn't because he's the truth-teller.</li>
+        </ul>
+
+        After exhausting all four possible cases, we can conclude that <b>Daniel is speaking, and is lying</b>... right?<br/><br/>
+
+        <h2>A different answer</h2>
+
+        Now let's try different approach by converting it into a math equation instead. Since the sentence is self-referential, we'll have to do something clever.<br/><br/>
+
+        Let $x$ be the value of the statement “Only Henrik can say these words.” This means, Henrik can say statement $x$, but Daniel cannot. This gives us the equation:
+        $$x=(h\oplus x)\land\lnot(d\oplus x)$$
+        Then, we have an additional equation that depends on whether the speaker is telling the truth or not,
+        $$x\oplus s=0$$
+        So we end up with a system of three equations, including the condition where Henrik and Daniel are opposite of each other:
+        $$\begin{cases}h=\lnot d\\x=(h\oplus x)\land\lnot(d\oplus x)\\x\oplus s=0\end{cases}$$
+        Let's convert each of these into an equation in integers mod 2.
+        $$\begin{cases}h\equiv d+1\\x\equiv(h+x+1)(d+x)+1\\x+s\equiv0\end{cases}$$
+        Substitute $h=d+1$ into the second equation to get
+        \begin{align*}
+        x&\equiv\big((d+1)+x+1)\big(d+x)+1\\
+        x&\equiv(d+x)^2+1\\
+        x&\equiv d+x+1\\
+        0&\equiv d+1
+        \end{align*}
+        Therefore, $d=1$. <b>Daniel is the liar</b>, and Henrik is the truth-teller.<br/><br/>
+
+        But then... what now? The first two equations gave us $d=1$ and $h=0$, and that's all we could get. The third equation doesn't really give us any new info. Shouldn't we be able to deduce the speaker as well? What went wrong?<br/><br/>
+
+        <h2>Unraveling the paradox</h2>
+
+        Hmm... the solution we just did seems to suggest that its possible for $s=0$. It's trying to tell us that Henrik being the speaker is a possibility. Let's try asking ourselves again.<br/><br/>
+
+        <div style="margin-left: 25px"><b>Is it Henrik telling the truth?</b></div><br/>
+
+        If we really want to disprove this, we need to reach a contradiction using the assumption that Henrik is telling the truth.<br/><br/>
+
+        Let's see. First, I'll refer to the words “Only Henrik can say these words.” as statement $x$. Since Henrik is telling the truth, we know for a fact that <i>only Henrik can say statement $x$</i>. Next, since Henrik is the truth-teller, Daniel has to be the liar. Only Henrik can say $x$, which implies Daniel cannot say $x$.<br/><br/>
+
+        Since Daniel is the liar, he cannot say any true statement. $x$ is a true statement, so that means... Daniel cannot say $x$. So it seems like there was no contradiction after all? Everything seems to be consistent.<br/><br/>
+
+        Hmm... Did we actually do something wrong the first time, then?
+
+        <br/><br/><br/>
+
+        Let's ask this question again:<br/><br/>
+
+        <div style="margin-left: 25px"><b>Can Daniel say “Only Henrik can say these words”?</b></div><br/>
+
+        Well, he <i>can</i>, right? After all, we've shown that there <i>is a possibility</i> where Daniel is speaking and is lying:<br/><br/>
+
+        If Daniel said “Only Henrik can say these words”, then that means Daniel is the liar, because Henrik wouldn't be the only one who can say $x$ anymore. Furthermore, everything is consistent: Daniel being able to say $x$ is enough of a counterexample to disprove $x$. We no longer have to worry about whether Henrik can say $x$ or not.<br/><br/>
+
+        So that means $x$ should <i> definitely</i> be false, right? But how have we been able to show that Henrik saying $x$ truthfully is a consistent possibility?
+
+        <br/><br/><br/>
+
+        Hmm... I think I see the issue now.<br/><br/>
+
+        The statement “Only Henrik can say these words” can be both either true or false. If it turns out to be true, then Henrik could speak it but Daniel cannot. If it turns out to be false, then Henrik could not speak it, but Daniel can. Neither of these lead to a contradiction.<br/><br/>
+
+        Notice that in both of the 'proofs' we did above, we didn't really prove anything. We assumed the truth value of the statement “Only Henrik can say these words” at the very start, and then use <i>that</i> to prove itself. It's kind of like circular reasoning.<br/><br/>
+
+        Statements like these are called '<i>anti-paradoxes</i>'. For example, consider the statement "This sentence is true." It can be both either true or false, and we can’t determine its truth value. You can think of it as like, an "independent axiom".
+
+        <br/><br/><br/>
+
+        The anti-paradox happened because we had a free variable $x$ in our system. When we solved the system,
+        $$\begin{cases}h=\lnot d\\x=(h\oplus x)\land\lnot(d\oplus x)\\x\oplus s=0\end{cases}$$
+        we ended up with a single unused equation, $x\oplus s=0$. The value of $s$ depends on the value of $x$, and there's no way to deduce its value any further.<br/><br/>
+
+        <h2>Creating our own paradox</h2>
+
+        Anti-paradoxes arise when we have a free variable $x$, and an equation simplifies to something like $x=x$. Similarly, paradoxes arise when we have a free variable $x$, and an eqation simplifies to something like $x=\lnot x$. For example, take the statement<br/><br/>
+
+        <div style="margin-left: 25px">"This sentence is false."</div>
+
+        <ul>
+        <li>It cannot be true. Otherwise, it would be telling itself it is false.</li>
+        <li>It cannot be false. Otherwise, it would be also be telling itself it is true.</li>
+        </ul>
+
+        Therefore, it can be neither true nor false. It's a classic example of a paradox. Mathematically, the resulting equation would be $x=\lnot x$, which has no solution.<br/><br/>
+
+        Using statements like these, we can construct our own Henrik-Daniel-flavored statement in which no consistent scenario is possible. Let's start with an equation with no solutions, then convert it into English afterwards. One possible equation could be
+        $$x=h\oplus d\oplus x$$
+        Since $h=\lnot d$, this would simplify to be $x=x\oplus1$ which has no solution. In English, statement $x$ translates to be:<br/><br/>
+
+        <div style="margin-left: 25px">"Henrik can say that Daniel can say this entire sentence is true."</div><br/>
+
+        You can verify that there is no consistent scenario exists where this statement is told by Henrik or Daniel.<br/><br/>
+
+        <h2>Conclusion</h2>
+
+        The method of converting logical statements into math equations is really powerful. Not only that it lets us skip most of the casework, it also lets us flawlessly handle confusing stuff like anti-paradoxes and paradoxes! We can even use this tool to create <i>our own</i> statements which 'behave' in however way we want.<br/><br/>
+
+        We could even do something silly like, forcing the reader to solve a series of equations in $\mathbb Z/2\mathbb Z$. For example, this system of equations:
+        $$\begin{cases}h+x(s+1)\equiv0\\sh+x+1\equiv0\\(x+1)(s+h)\equiv0\end{cases}$$
+        can be translated into an equivalent (and ridiculous) English statement:<br/><br/>
+
+        <div style="margin-left: 25px">"My brother would never say that all the following statements are true:
+        <ol>
+        <li>Henrik can say: Niko is a cat or I am lying.
+        <li>At least one of I or Henrik is telling the truth, if and only if Niko is not a cat.
+        <li>Niko is not a cat, or Henrik would say I am telling the truth."
+        </ol></div><br/>
+
+        In the <a href="logic3.html">next part</a> of this blog post, we will try to solve the "<a href="https://en.wikipedia.org/wiki/The_Hardest_Logic_Puzzle_Ever">The Hardest Logic Puzzle Ever</a>"! Here it is: (paraphrased to include cats)<br/><br/>
+
+        <div style="margin-left: 25px">There are three identical cats in front of you, their names are <i>Maa</i>, <i>Shii</i>, and <i>Rou</i>, but you don't know which is which. Maa always responds truthfully, Shii always lies, and Rou just picks "<i>yes</i>" or "<i>no</i>" at random. You allowed to ask a single yes-or-no question to a single cat one at a time. Your task is to determine their identities by asking only three questions.</div><br/>
+
+        (Some elements from the original puzzle are omitted here, like the part where they're supposed to say "<i>da</i>" or "<i>ja</i>", but I think it just unnecessarily obfuscates the puzzle.)<br/><br/>
+
+        <center><img src="nyanko.jpg"/></center><br/>
+
+        If you want to try out this puzzle yourself, now might be a good chance to do so before proceeding to the <a href="logic3.html">next part!</a><br/><br/>
+    </div>
+</body>

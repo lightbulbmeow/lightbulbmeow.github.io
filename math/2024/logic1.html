@@ -5,7 +5,7 @@
     <title>My... blog... I guess?</title>
     <style>
     body {
-        background-image: url("bg.png");
+        background-image: url("logic1.png");
         background-repeat: repeat;
         background-color: black;
         background-attachment: fixed;
@@ -17,7 +17,7 @@
     s {
         opacity: 0.4;
     }
-    h1, h2 {
+    h1, h2, h3 {
         font-family: 'Josefin Sans'
     }
     .entry {
@@ -123,7 +123,9 @@
         <li>“Only Henrik can say these words.”</li>
         </ol>
 
-        Check out the original blog post if you want try it out yourself! It's quite head-scratching.<br/><br/><br/>
+        Check out the original blog post if you want try it out yourself! It's quite head-scratching.<br/><br/>
+
+        <h2>A slow method</h2>
 
         One of the ways you could go about this is by carefully checking every possibility, seeing if it's consistent with the statement.<br/><br/>
 
@@ -138,9 +140,11 @@
         <li><b>Is it Henrik lying?</b> That means the actual statement would be "Henrik tells a lie", which is consistent. So this is also a possibility.</li>
         </ul>
 
-        After exhausting all four possible cases, we can conclude that Henrik must be the one speaking, but we can't logically deduce whether he is lying or not.<br/><br/>
+        After exhausting all four possible cases, we can conclude that <b>Henrik must be the one speaking</b>, but we can't logically deduce whether he is lying or not.<br/><br/>
 
-        We could also do this for all the other questions, but I think this method might be too time consuming. It's very prone to errors too, what if we get a single case wrong? Surely, there must be a faster way to do this than case bashing, right?<br/><br/><br/>
+        We could also do this for all the other questions, but I think this method might be too time consuming. It's very prone to errors too, what if we get a single case wrong? Surely, there must be a faster way to do this than case bashing, right?<br/><br/>
+
+        <h2>A faster method</h2>
 
         One thing we could do is imagine how a computer would do it: to translate this into a rigorized mathematical problem. Let's imagine what we are actually doing here. When we're doing the case bashing, we assign the speaker to either "honest" or "lying". Then, we assign Daniel to be either "honest" or "lying", and Henrik has to be the opposite of Daniel.<br/><br/>
 
@@ -156,11 +160,11 @@
         $$(s\oplus d)\oplus s=0$$
         That's all the information we can get from that single statement, encoded as a single equation! Now we just have to solve the following system:
         $$\begin{cases}h=\lnot d\\(s\oplus d)\oplus s=0\end{cases}$$
-        This should be easy. In the second equation, the two $s$'s cancel out to give $d=0$. This means Daniel is a truth-teller. In the first equation, $h=\lnot d=1$. This means Henrik is the liar.<br/><br/>
+        This should be easy. In the second equation, the two $s$'s cancel out to give $d=0$. This means Daniel is a truth-teller. In the first equation, $h=\lnot d=1$. This means <b>Henrik is the liar</b>.<br/><br/>
 
-        Notice how we didn't get any information on the speaker because the $s$'s cancelled out. This is the same conclusion we arrived at when we did the case bash earlier!
+        Notice how we didn't get any information on the speaker because the $s$'s cancelled out. This is the same conclusion we arrived at when we did the case bash earlier!<br/><br/>
 
-        <br/><br/><br/>
+        <h3>Question 2</h3>
 
         Now let's try the second question.<br/><br/>
 
@@ -174,9 +178,9 @@
 
         We can simplify this equation:
         $$(\lnot s\oplus(s\oplus d))\oplus s=0\quad\implies\quad1\oplus s\oplus s\oplus d\oplus s=0\quad\implies\quad d\oplus s=1$$
-        Therefore, Daniel is not the speaker. The conclusion we get is that Henrik is the speaker!
+        Therefore, Daniel is not the speaker. The conclusion we get is that Henrik is the speaker!<br/><br/>
 
-        <br/><br/><br/>
+        <h3>Question 3</h3>
 
         The third one is a bit tricky, and probably my favorite one to work out,<br/><br/>
 
@@ -208,20 +212,20 @@
         ds+d+s+1&\equiv1\\
         (d+1)(s+1)&\equiv1\\
         \end{align*}
-        This equation can only be true if $d=0$ and $s=0$. This means, the speaker is Daniel, and he is telling the truth!
+        This equation can only be true if $d=0$ and $s=0$. This means, <b>the speaker is Daniel, and he is telling the truth!</b>
         <br/><br/>
 
         The AND operator, $\land$, can also be written purely algebraically too. Its truth table is
         $$0\land0=0 \quad 0\land1=1 \quad 1\land0=1 \quad 1\land1=1$$
         A way to derive a formula for this would be to use De Morgan's Law, $a\land b = \lnot(\lnot a\lor\lnot b)$. Therefore,
         $$a\land b=\big((a\oplus1)(b\oplus1)\big)\oplus1$$
-        I think this proves that we can encode <i>any</i> logical formula into some equation in integers mod 2.
+        I think this proves that we can encode <i>any</i> logical formula into some equation in integers mod 2.<br/><br/>
 
-        <br/><br/><br/>
+        <h3>Question 4</h3>
 
         The fourth question is probably the most evil of them all, which is why I saved it for last:<br/><br/>
 
-        <div style="margin-left: 25px">“Only Henrik can say these words.”</div><br/>
+        <div style="margin-left: 25px">“Henrik would never say these words.”</div><br/>
 
         I will talk about this in <a href="logic2.html">Part 2</a>, but see if you can figure out how to deal it using the methods I've shown above!
     </div>
