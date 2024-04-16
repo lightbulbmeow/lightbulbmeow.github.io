@@ -1,5 +1,5 @@
 function writeMessage(canvas, message, xx, yy, xxx, yyy) {
-  var context = canvas.getContext('2d');
+  let context = canvas.getContext('2d');
 
   context.beginPath();
   context.lineWidth = Math.sin((xx+yy)/50)*30+30;
@@ -10,21 +10,21 @@ function writeMessage(canvas, message, xx, yy, xxx, yyy) {
   context.stroke();
 }
 function getMousePos(canvas, evt) {
-  var rect = canvas.getBoundingClientRect();
+  let rect = canvas.getBoundingClientRect();
   return {
     x: evt.clientX - rect.left,
     y: evt.clientY - rect.top
   };
 }
-var canvas = document.getElementById('canvasthing');
-var context = canvas.getContext('2d');
+let canvas = document.getElementById('canvasthing');
+let context = canvas.getContext('2d');
 
-var prevx=0;
-var prevy=0;
+let prevx=0;
+let prevy=0;
 
 canvas.addEventListener('mousemove', function(evt) {
-  var mousePos = getMousePos(canvas, evt);
-  var message = 'Mouse position: ' + mousePos.x + ',' + mousePos.y;
+  let mousePos = getMousePos(canvas, evt);
+  let message = 'Mouse position: ' + mousePos.x + ',' + mousePos.y;
   writeMessage(canvas, message, mousePos.x, mousePos.y, prevx, prevy);
   prevx = mousePos.x;
   prevy = mousePos.y;

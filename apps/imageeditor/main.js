@@ -29,6 +29,7 @@ function resetImage(){
   canvas.height = h
   ctx.drawImage(srcImage, 0, 0, w, h)
   imgData = ctx.getImageData(0, 0, w, h) // the data is given as an array of 4*w*h bytes [r,g,b,a,r,g,b,a,...]
+  showDimensions()
 }
 
 srcImage.src = "manunchan.png"
@@ -47,6 +48,10 @@ function getMousePos(canvas, evt) {
 function mouseMove(e){
   [mx,my] = getMousePos(canvas, e)
   mouseinfo.innerText = "Mouse position: [" + [mx,my] + "], RGBA: [" + pixel(mx,my) + "]"
+}
+
+function showDimensions(){
+  mouseinfo.innerText = "Image dimensions: [" + [w,h] + "]"
 }
 
 
@@ -120,6 +125,7 @@ function runCode(){
   ctx.putImageData(imgData, 0, 0, 0, 0, w, h)
 
   loading.innerText = "Done!"
+  showDimensions()
 }
 
 
