@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="description" content="Hello! Welcome to my blog (*・ω・)ﾉ I will giv u free Cookies">
+    <title>What's the fewest buttons needed on a scientific calculator?</title>
+    <link rel="stylesheet" href="../blog.css">
+    <style>@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@700&display=swap');</style> <!-- Google font "Josefin Sans" -->
+
+    <style> body{ background-image: url("casiobg.png"); }</style>
+
+    <!-- Latex stuff -->
+    <script>
+        MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+        }
+        };
+    </script>
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+
+    <script>
+        document.cookie = "freecookie=Heres your free cookie!!! Enjoy ~ヾ(・ω・);";
+    </script>
+</head>
+<body>
+    <a href="../index.html"><img src="../back.png" style="position: fixed; top: 20px; left: 20px;" /></a>
+
+    <div class="entry">
+
+        <h1>What's the fewest buttons needed on a scientific calculator?</h1>
+
+        <p class="date">April 27, 2024. 5:10pm</p>
+
+        This question originated when one of my friends asked the following question:<br/><br/>
+
+        <div style="margin-left: 25px">"Does a scientific calculator have the product function?"</div><br/>
+
+        <center><img src="casio.jpg" height="500" /></center><br/>
+
+        Unfortunately, most scientific calculators (especially CASIO ones) don't have that function. However, there is a way to get around this missing button!<br/><br/>
+
+        If we had a function $f(x)$, and we wish to calculate its product from $x=a$ to $b$, then we can "simulate" the product button using a summation, present on most scientific calculators:
+        $$\prod_{x=a}^bf(x)=\exp\left(\sum_{x=a}^b\ln(f(x))\right)$$
+        (Note: This only works if $f(x)>0$, because most calculators can't compute $\ln(x)$ for negative $x$.)<br/><br/>
+
+        I then realized the summation function isn't needed either. If we already have the integral function, then we can simply "simulate" a summation using floor functions:
+        $$\sum_{x=a}^bf(x)=\int_{a}^{b+1}f(\lfloor x\rfloor)\mathrm dx$$
+        Now you might be asking,<br/><br/>
+
+        <div style="margin-left: 25px">"But there's no floor function on the calculator!"</div><br/>
+
+        That's right. But, we can simulate the floor function in terms of other functions present on the calculator:
+        $$\lfloor x\rfloor=x-\frac12-\frac{\tan^{-1}(\tan(\pi x-\frac\pi2))}\pi$$
+        (Although this formula is undefined exactly when $x$ is an integer, that's not a problem for the integral. The calculator skips the "gaps" in the function and still computes the integral correctly.)<br/><br/>
+
+        We can plug in this (very ugly) expression into the summation formula to get something that's entirely expressible with functions in the calculator!
+        $$\sum_{x=a}^bf(x)=\int_{a}^{b+1}f\left(x-\frac12-\frac{\tan^{-1}(\tan(\pi x-\frac\pi2))}\pi\right)\mathrm dx$$
+
+        <h2>The main question</h2>
+
+        This brings us back to the main topic of this post. We've seen that we can remove the sum function from the calculator, and it would still have exactly the same functions it originally had. What's the fewest buttons we need that still allows us to simulate everything the calculator has?<br/><br/>
+
+        Let's call a button "<i>removable</i>" if we can write an equivalent expression for it using any of the other available functions (finitely many times). As we've seen above, the summation button is removable. What other buttons can we remove?<br/><br/>
+
+        The calculator we'll be looking at is CASIO fx-991EX Classwiz, the same one I used back in high school. This calculator has 106 buttons, including the arrow keys and the ones that require pressing SHIFT or ALPHA.<br/><br/>
+
+        <center><img src="casio.jpg" height="500" /></center><br/>
+
+        Let's start with those big white buttons at the bottom. Do we really need all those digits? We can express any positive integer using just the digit 0, plus symbol, and cosine:
+        \begin{align*}
+        1 &= \cos(0)\\
+        2 &= \cos(0)+\cos(0)\\
+        3 &= \cos(0)+\cos(0)+\cos(0)\\
+        &\vdots\\
+        n &= \underbrace{\cos(0)+\cdots+\cos(0)}_{n\text{ times}}
+        \end{align*}
+        We can express any negative integer by appending a minus symbol at the beginning, and every number with decimals can be found by dividing it with the appropriate power of 10:
+        $$1.234 = \frac{1234}{1000} = \frac{\underbrace{\cos(0)+\cdots+\cos(0)}_{1234\text{ times}}}{\underbrace{\cos(0)+\cdots+\cos(0)}_{1000\text{ times}}}\\$$
+        This means, we can get rid of the digits 1-9 and the decimal point.<br/><br/>
+
+        We can go even further and get rid of digit 0 too. Instead, we use the $x$ variable on the upper-right corner, since can write $x-x$ to get 0. Let's look at all the other white buttons:<br/>
+
+        <ul>
+        <li>The $+$ is removable since we can write $a+b=a--b$.</li>
+        <li>The $\times$ is removable since we can use implicit multiplication with parenthesis, $a\times b=(a)(b)$.</li>
+        <li>The $\div$ is removable since we can write it as $a\div b=(a)(b^{-1})$.</li>
+        <li>The $\times10^x$ button is redundant since we can just use the $x^\blacksquare$ button to compute exponents.</li>
+        <li>Who needs Ans? Just remember the result you got.
+        </ul>
+
+        After all that, this is what our calculator looks like right now:<br/><br/>
+
+        <center><img src="casio1.png" height="500" /></center><br/>
+
+        That's already 16 buttons removed. Now the lower half of the calculator is mostly empty! :zonelmao: Next, let's remove buttons whose functions are just subsets of some other button's functions.<br/><br/>
+
+        <h2>Redundant buttons</h2>
+
+        Look at $x^2$, $x^3$, $x^{-1}$, $10^\blacksquare$, $e^\blacksquare$. They all just do the same thing as $x^\blacksquare$ but for specific exponents or bases. We can safely remove these ones.<br/>
+        For the same reason, $\sqrt\blacksquare$ and $\sqrt[3]\blacksquare$ do the same thing as $\sqrt[\square]\blacksquare$ for specific indices.
+        In fact, $\sqrt[n]{x}$ can be written as a rational exponent $x^{\frac1n}$, so we can remove that too.<br/><br/>
+
+        We don't need $\log$ or $\ln$. Those are just $\log_{10}$ and $\log_e$ respectively, which are both handled by $\log_\blacksquare\square$.<br/><br/>
+
+        For trigonometric functions, we have $\sin(x)=\cos(\frac\pi2-x)$ and $\tan(x)=\frac{\cos(\frac\pi2-x)}{\cos(x)}$. That means we can rid of $\sin$ and $\tan$, only keeping $\cos$.<br/>
+        We can do the same thing with the inverse functions. Trigonometry tells us that $\cos^{-1}(x)=\frac\pi2-\sin^{-1}(x)$, and $\tan^{-1}(x)=\sin^{-1}(\frac x{\sqrt{x^2+1}})$, so we can safely remove $\cos^{-1}$ and $\tan^{-1}$, leaving only $\sin^{-1}$.<br/><br/>
+
+        Some other redundant buttons we can remove are:<br/>
+
+        <ul>
+        <li>Those two fraction buttons, $\blacksquare\frac{\square}{\square}$ and $\frac{\blacksquare}{\square}$, which are essentially just the $\div$ button. We can already write fractions $\frac ab$ as $ab^{-1}$.</li>
+        <li>That (-) button on the left is just the minus symbol. Why does that exist?</li>
+        <li>What's that red : above the integral button? Is that just another division symbol?</li>
+        </ul>
+
+        <center><img src="casio2.png" height="500" /></center><br/>
+
+        That's a lot of buttons removed! :chokodestroy: Yet, we are still far from done.<br/><br/>
+
+        <h2>Extraneous features</h2>
+
+        This calculator is capable of doing so many things: It can solve equations, factorize integers, linear regression, matrix multiplication, and more. That's a bunch of features most people with the calculator haven't even heard of! So, for this next step, I want to keep things simple:<br/><br/>
+
+        We only care about evaluating math expressions. Basically, our goal is to type some expression, then ask the calculator to compute its value. If a button doesn't ultimately lead us to pressing = in the end, it's useless for us. With that in mind, most of the buttons on this calculator are stuff we don't need:<br/>
+
+        <ul>
+        <li>Let's get rid of the MENU, SETUP, and OPTN. Who needs options?</li>
+        <li>The ENG, S⇔D, $a\frac bc\Leftrightarrow\frac cd$, Rnd, and ≈ buttons are only there for rounding or changing the format. They don't affect the value of the final answer.</li>
+        <li>Get rid of DEL, AC, RESET, INS, UNDO. Mistakes aren't allowed here, just use the ON button to reset.</li>
+        <li>Remove the OFF button. Just wait until the battery dies out to "turn it off"!</li>
+        <li>We don't need STO, M+, M-, and RECALL. All those letters, A, B, C, D, E, F, M, <i>x</i>, <i>y</i>, we don't need those. Just store the results in your brain!<br/>
+        (In fact, we have two $x$ buttons. One of them is for inputting into an integral (which is what we need), while the other is only used for storing in memory.)</li>
+        <li>Why is QR a thing?</li>
+        <li>Pol and Rec are for converting between polar and rectangular coordinates. For that, we can just De Moivre's formula instead.</li>
+        <li>As much as SOLVE, FACT, CONV, and base conversion buttons are cool, they're not useful for our goal.</li>
+        </ul>
+
+        <center><img src="casio3.png" height="500" /></center><br/>
+
+        This calculator looks massacred... From 106 buttons, down to just 34 left. What else can we remove?<br/><br/>
+
+        Those $_nP_r$ and $_nC_r$ buttons are permutation and combination respectively. They're given by the formulas $_nP_r=\frac{n!}{(n-r)!}$ and $_nC_r=\frac{n!}{r!(n-r)!}$, so we only need the factorial.<br/><br/>
+
+        The percent button % is just a fancier way to say "divide by 100". Similarly, there's the °'" button, which is just a fancy way of saying "divide by 60".<br/><br/>
+
+        The $\angle$ button is used to get the polar form of complex numbers. We could always use De Moivre's formula for that, $r\angle\theta=r(\cos\theta+i\sin\theta)$, and since we still have $\cos$, this is possible. Next to it is $i$, which is just $\sqrt{-1}$.<br/><br/>
+
+        Let's check the CONST button. It opens up a menu that lets us choose any math or physics constant to insert. All of those are just numbers we could just manually type in, so we don't need that CONST button. This means $\pi$ and $e$ gets removed too. Since they're constants, one could just type 3.141592653589793...<br/><br/>
+
+        <div style="margin-left: 25px">"But how can we type them if we already removed all the digits?"</div><br/>
+
+        Oh... Then just write them as like $\frac{\underbrace{\cos(x-x)+\cdots+\cos(x-x)}_{3141592653589793\text{ times}}}{\underbrace{\cos(x-x)+\cdots+\cos(x-x)}_{10^{15}\text{ times}}}$. Constants are only stored as finitely in the calculator anyway, so this is okay. They take a bajillion button presses to enter, but the important part is its only finitely many!<br/>
+        Luckily, we can still write $\pi$ as $2\sin^{-1}(\cos(0))$. But for all the other constants... not so much luck for them.<br/><br/>
+
+        <center><img src="casio4.png" height="500" /></center><br/>
+
+        <h2>The Final 24</h2>
+
+        Only 24 left. These final ones won't be so easy to remove.<br/><br/>
+
+        First of all, that summation button is removable. In the beginning of the blog post, I explained how every summation can be expressed using an integral and a floor function, and that floor function is composed to $\tan^{-1}$ and $\tan$, which in turn can be expressed using $\sin^{-1}$ and $\cos$. Just so you could see how <b><i>awful</i></b> it looks like right now using our remaining buttons, let's see it in action!!!<br/><br/>
+
+        We started with
+        $$\sum_{x=a}^bf(x)=\int_{a}^{b+1}f(\lfloor x\rfloor)\mathrm dx$$
+        which then after replacing the floor function with $\tan^{-1}$ and $\tan$ became
+        $$\sum_{x=a}^bf(x)=\int_{a}^{b+1}f\left(x-\frac12-\frac{\tan^{-1}(\tan(\pi x-\frac\pi2))}\pi\right)\mathrm dx$$
+        then the trig functions are replaced with $\tan^{-1}(x)=\sin^{-1}(\frac x{\sqrt{x^2+1}})$ and $\tan(x)=\frac{\cos(\frac\pi2-x)}{\cos(x)}$, constants such as $\frac12=(\cos(0)+\cos(0))^{-\cos(0)}$, and finally addition $a+b$ replaced with $a--b$, gives this absolute monstrosity of a formula:
+        \begin{align*}
+        \sum_{x=a}^bf(x)=&
+        \int_{a}^{b--\cos(x-x)}f\Big(x-(\cos(x-x)--\cos(x-x))^{-\cos(x-x)}-\sin^{-1}\big(\cos(\sin^{-1}(\cos(x-x))-\sin^{-1}(\cos(x-x))(x--x-\cos(x-x)))\\
+        &\cos(\sin^{-1}(\cos(x-x))(x--x-\cos(x-x)))^{-\cos(x-x)}((\cos(\sin^{-1}(\cos(x-x))-\sin^{-1}(\cos(x-x))(x--x-\cos(x-x)))\\
+        &\cos(\sin^{-1}(\cos(x-x))(x--x-\cos(x-x)))^{-\cos(x-x)})^{\cos(x-x)--\cos(x-x)}--\cos(x-x))^{-(\cos(x-x)--\cos(x-x))^{-\cos(x-x)}}\big)\\
+        &((\cos(x-x)--\cos(x-x))\sin^{-1}(\cos(x-x)))^{-\cos(x-x)}\Big)\mathrm dx
+        \end{align*}
+        It's a huge relief that our modern calculators aren't limited to just 24 buttons :heh:<br/><br/>
+
+        Anyways, with that we can safely tick off the summation button from our list. Now, let's go through each remaining button one by one.<br/><br/>
+
+        Can we remove the SHIFT button? Not yet. We still have a couple of buttons that require us to press SHIFT.<br/>
+        How about the ALPHA button? There's only one button left that requires it: RanInt. Let's take a look at it!<br/><br/>
+
+        <h3>Ran# and RanInt</h3>
+
+        Most people probably never heard of these two functions, Ran# and RanInt. They stand for "Random number" and "Random integer". Ran# chooses a random 3-digit decimal number between 0 and 0.999, while RanInt(a,b) chooses <i>any</i> integer between $a$ and $b$. Nonetheless, they still fall under our criteria of "useful" buttons, because they can be part of a math expression.<br/><br/>
+
+        At first glance, it would seem like RanInt is the better option, because it's just a subset of Ran#: It can be written as $\mathrm{RanInt}(0,999)=\frac{\mathrm{Ran}\#}{1000}$, which <i>should</i> let us to tick off Ran# from the list.<br/>
+        But not so fast! RanInt actually depends on <i>two other buttons</i>. First, you need the ALPHA button just to be able to press RanInt. Second, you need the <b>comma</b> button to specify the range! In reality, RanInt is actually <b><i>three</i></b> buttons instead of one: RanInt, ALPHA, and comma. :nanableh:<br/><br/>
+
+        How about we try doing it the other way, simulating RanInt <i>using</i> Ran# instead? One idea we could do is like: (Recall that we can express the floor function)
+        $$\mathrm{RanInt}(a,b)=\lfloor a+(b-a+1)\mathrm{Ran\#}\rfloor$$
+        Ran# generates something from the set {0, 0.001, 0.002, ..., 0.999}, so the inside of floor picks from the set
+        $$\{a, 0.999a + 0.001(b+1), 0.998a + 0.002(b+1), ..., 0.001a + 0.999(b+1)\}$$
+        This ranges from $[a,b+1)$, and because of the floor function, this becomes just integers from $a$ to $b$.<br/><br/>
+
+        One problem with this is that if $[a,b+1)$ is too "wide". For example, if $a=0$ and $b=1000000$, then, because the set only has 1000 numbers to choose from, most integers between $a$ and $b$ will never be chosen! To fix this, we simply just have to make Ran# "more precise" by adding more instances of it.
+        $$\mathrm{RanInt}(a,b)=\left\lfloor a+(b-a+1)\left(\mathrm{Ran\#}+\frac{\mathrm{Ran\#}}{10^3}+\frac{\mathrm{Ran\#}}{10^6}+\frac{\mathrm{Ran\#}}{10^9}+\frac{\mathrm{Ran\#}}{10^{12}}\right)\right\rfloor$$
+        Each Ran# acts independently of each other, so this is good. You can add more terms if you want the probabilities to be more precise. Not only do we get to tick off RanInt, we get to tick off ALPHA and the comma buttons too! 20 buttons left.<br/><br/>
+
+        <h3>Factorial and absolute value</h3>
+
+        Remember at the very beginning of the post when we said products are possible? Factorial is a kind of product, so we can write it as a summation:
+        $$n!=\prod_{k=1}^nk=\exp\left(\sum_{k=1}^n\ln(k)\right)$$
+        Since we can express summations, we don't need the factorial button anymore.<br/><br/>
+
+        Absolute value can be written as $(x^2)^{\frac12}$, which looks a bit silly. Only 18 left!<br/><br/>
+
+        <h3>$\log_\blacksquare\square$ and $\sin^{-1}$</h3>
+
+        This is a funny one. These two buttons are actually just a subset of the integral button.<br/><br/>
+
+        Recall that $\log_b(a)=\frac{\ln(a)}{\ln(b)}$, so we only need to express $\ln(a)$, which can exactly be expressed with an integral:
+        $$\ln(a)=\int_0^a\frac1x\mathrm dx$$
+        The same goes for $\sin^{-1}$. It can be expressed as:
+        $$\sin^{-1}(a)=\int_0^a\frac1{\sqrt{1-x^2}}\mathrm dx$$
+        We've gotten rid of $\log_\blacksquare\square$ and $\sin^{-1}$, leaving us with 16 left.<br/><br/>
+
+        <h3>Parenthesis</h3>
+
+        To simulate parenthesis, all we need is some button that acts as "grouping". Guess what... the integral can do it too!
+        $$(a)(b)=\int_0^a1\mathrm dx\int_0^b1\mathrm dx$$
+        But the question now is, where do we get 0 and 1? Getting 0 is still no problem, since $x-x=0$.<br/>
+        How about 1? To write 1, we had to do $\cos(x-x)=1$, but since we removed parenthesis, we can no longer write $x-x$ as a single argument for cosine!<br/><br/>
+
+        The solution is to use the remaining button we haven't used at all yet: The derivative operation. Using d/dx, we can extract 1 out of $x$:
+        $$1=\frac{\mathrm d}{\mathrm dx}x\Big|_{x=x}$$
+        The $x=x$ there at the bottom looks a bit silly. Its because $x$ is used for two different things: The first $x$ is used as a <i>variable</i> for the derivative operation, while the second $x$ is used as a <i>number</i>, the one stored in the calculator's memory. With that out of the way, we can rewrite the integral again:
+        $$(a)(b)=\int_{x-x}^a\frac{\mathrm d}{\mathrm dx}x\Big|_{x=x}\mathrm dx\int_{x-x}^b\frac{\mathrm d}{\mathrm dx}x\Big|_{x=x}\mathrm dx$$
+        Since we changed the way we wrote 1, we have to also change the way we write numbers, replacing every instance of $\cos(x-x)$ with the d/dx operators.
+        \begin{align*}
+        1 &= \frac{\mathrm d}{\mathrm dx}x\Big|_{x=x}\\
+        2 &= \frac{\mathrm d}{\mathrm dx}x\Big|_{x=x}--\frac{\mathrm d}{\mathrm dx}x\Big|_{x=x}\\
+        3 &= \frac{\mathrm d}{\mathrm dx}x\Big|_{x=x}--\frac{\mathrm d}{\mathrm dx}x\Big|_{x=x}--\frac{\mathrm d}{\mathrm dx}x\Big|_{x=x}\\
+        n &=\underbrace{\frac{\mathrm d}{\mathrm dx}x\Big|_{x=x}--\cdots--\frac{\mathrm d}{\mathrm dx}x\Big|_{x=x}}_{n\text{ times}}
+        \end{align*}
+        Eliminating the parenthesis reduces our button count to 14!<br/><br/>
+
+        <h3>Subtraction</h3>
+
+        And you thought subtraction was safe? The integral can simulate it too:
+        $$a-b=\int_b^a1\mathrm dx$$
+        Now, since we can't use $x-x$ to write 0 anymore, we'll have to replace that with an integral too:
+        $$0=\int_x^xx\mathrm dx$$
+        That means, the way we wrote $(a)(b)$ previously should be adjusted to not include any minus symbols:
+        $$(a)(b)=\int_{\int_x^xx\mathrm dx}^a\frac{\mathrm d}{\mathrm dx}x\Big|_{x=x}\mathrm dx\int_{\int_x^xx\mathrm dx}^b\frac{\mathrm d}{\mathrm dx}x\Big|_{x=x}\mathrm dx$$
+        Nested integrals... yuck! Does our calculator even allow that? Anyways, removing the minus button, we're left with just 13.<br/><br/>
+
+        <h3>Cosine</h3>
+
+        The reason why cosine stayed for so long is because we needed it to obtain 1 from 0. Now that we have a different way of getting 1, the $\cos$ function is no longer as important as we think. It should be safe to remove it if we find a way to express it using other functions. Using the complex definition of $\cos$,
+        $$\cos(x)=\frac{e^{ix}+e^{-ix}}{2}$$
+        We know how to express constants such as <i>e</i>, <i>i</i>, and 2 without needing the $\cos$ function anymore. It means $\cos$ should be safe to remove, leaving us with just 12 buttons left.<br/><br/>
+
+        <h3>Arrow keys</h3>
+
+        Lastly, we haven't looked at the arrow keys yet. Unfortunately, we still need at least one arrow key to navigate through the integral sign. Without it, there's no way to move the cursor out the integral once we insert one. Good news is, we don't need <i>all four</i> arrow keys. We only need one: the right arrow key! That's 3 more buttons removed.<br/><br/>
+
+        What does our calculator look like now?<br/><br/>
+
+        <center><img src="casio5.png" height="500" /></center><br/>
+
+        <b><i>Nine buttons.</i></b> It barely even looks like a calculator anymore. To see it in action, let's try typing something as trivial as $(1+2)\div3$.<br/><br/>
+
+        First, we rewrite the division operator into multiplication, and the plus operator into minus:
+        $$(1--2)(3)^{-1}$$
+        All the numbers should be converted to d/dx operators:
+        $$\Big(\frac{\mathrm d}{\mathrm dx}x\Big|_{x=x}--\Big(\frac{\mathrm d}{\mathrm dx}x\Big|_{x=x}--\frac{\mathrm d}{\mathrm dx}x\Big|_{x=x}\Big)\Big)\Big(\frac{\mathrm d}{\mathrm dx}x\Big|_{x=x}--\frac{\mathrm d}{\mathrm dx}x\Big|_{x=x}--\frac{\mathrm d}{\mathrm dx}x\Big|_{x=x}\Big)^{-\frac{\mathrm d}{\mathrm dx}x\Big|_{x=x}}$$
+        Next, get rid of all the parenthesis:
+        $$\int_{\int_x^xx\mathrm dx}^{
+            \frac{\mathrm d}{\mathrm dx}x\Big|_{x=x}--\int_{\int_x^xx\mathrm dx}^{
+                \frac{\mathrm d}{\mathrm dx}x\Big|_{x=x}--\frac{\mathrm d}{\mathrm dx}x\Big|_{x=x}
+            }\frac{\mathrm d}{\mathrm dx}x\Big|_{x=x}\mathrm dx
+        }\frac{\mathrm d}{\mathrm dx}x\Big|_{x=x}\mathrm dx\int_{\int_x^xx\mathrm dx}^{
+            \frac{\mathrm d}{\mathrm dx}x\Big|_{x=x}--\frac{\mathrm d}{\mathrm dx}x\Big|_{x=x}--\frac{\mathrm d}{\mathrm dx}x\Big|_{x=x}
+        }\frac{\mathrm d}{\mathrm dx}x\Big|_{x=x}\mathrm dx^{-\frac{\mathrm d}{\mathrm dx}x\Big|_{x=x}}$$
+        Then finally, all minus symbols should be converted to integrals. The final expression is:
+        $$\int_{\int_x^xx\mathrm dx}^{
+    \int_{\int_{\int_{\int_x^xx\mathrm dx}^{
+        \int_{\int_{\frac{\mathrm d}{\mathrm dx}x\Big|_{x=x}}^{\int_x^xx\mathrm dx}\frac{\mathrm d}{\mathrm dx}x\Big|_{x=x}\mathrm dx}^{\frac{\mathrm d}{\mathrm dx}x\Big|_{x=x}}\frac{\mathrm d}{\mathrm dx}x\Big|_{x=x}\mathrm dx
+    }\frac{\mathrm d}{\mathrm dx}x\Big|_{x=x}\mathrm dx}^{\int_x^xx\mathrm dx}\frac{\mathrm d}{\mathrm dx}x\Big|_{x=x}\mathrm dx}^{\frac{\mathrm d}{\mathrm dx}x\Big|_{x=x}}\frac{\mathrm d}{\mathrm dx}x\Big|_{x=x}\mathrm dx
+}\frac{\mathrm d}{\mathrm dx}x\Big|_{x=x}\mathrm dx\int_{\int_x^xx\mathrm dx}^{
+    \int_{\int_{\frac{\mathrm d}{\mathrm dx}x\Big|_{x=x}}^{\int_x^xx\mathrm dx}\frac{\mathrm d}{\mathrm dx}x\Big|_{x=x}\mathrm dx}^{\int_{\int_{\frac{\mathrm d}{\mathrm dx}x\Big|_{x=x}}^{\int_x^xx\mathrm dx}\frac{\mathrm d}{\mathrm dx}x\Big|_{x=x}\mathrm dx}^{\frac{\mathrm d}{\mathrm dx}x\Big|_{x=x}}\frac{\mathrm d}{\mathrm dx}x\Big|_{x=x}\mathrm dx}\frac{\mathrm d}{\mathrm dx}x\Big|_{x=x}\mathrm dx
+}\frac{\mathrm d}{\mathrm dx}x\Big|_{x=x}\mathrm dx^{\int_{\frac{\mathrm d}{\mathrm dx}x\Big|_{x=x}}^{\int_x^xx\mathrm dx}\frac{\mathrm d}{\mathrm dx}x\Big|_{x=x}\mathrm dx}$$
+
+        Yuck :nanableh: It doesn't even render properly anymore. At least we know it works.<br/><br/>
+
+        <h2>Final answer</h2>
+
+        Nine buttons. These buttons are:
+
+        <ol>
+        <li>ON button</li>
+        <li>SHIFT button</li>
+        <li>Right arrow button</li>
+        <li>Integral button</li>
+        <li>Derivative button</li>
+        <li>Variable $x$</li>
+        <li>Exponentiation, $x^\blacksquare$</li>
+        <li>Ran# button</li>
+        <li>Equals button</li>
+        </ol>
+
+        <center><img src="casiotiny.png" height="500" /></center><br/>
+
+        If I hand you this calculator, you could <b><i>theoretically</i></b> do anything on it as if you had a normal scientific calculator! Practicality is a different concern...<br/><br/>
+
+        As an additional challenge to the reader, do you think we can go any lower than 9 buttons? If not, can you prove that 9 is already the minimum?<br/><br/>
+
+        Thank you for reading through my silly math blog post! &nbsp; &nbsp; ヾ(๑╹◡╹)ﾉ"
+    </div>
+</body>
+
+<script src="../../emojis/script.js"></script>
