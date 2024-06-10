@@ -31,7 +31,7 @@
 
         <h1>Counting trees</h1>
 
-        <p class="date">June 10, 2024. 8:20pm</p>
+        <p class="date">June 10, 2024. 9:00pm</p>
 
         Let's count trees!<br/><br/>
 
@@ -256,7 +256,7 @@ def g(n):<br/>
 
         Here's what went wrong:<br/><br/>
 
-        Back in Case 1, we included subtrees with size $n/2$, which was already counted in Case 2. So, we overcounted. To fix this, we just need to not include the trees with exactly $n/2$ vertices in Case 1.<br/><br/>
+        Back in Case 1, we included subtrees with size $n/2$, which was already counted in Case 2. So, we overcounted. To fix this, we just need to not include the trees with exactly $n/2$ vertices in Case 1. All we have to do is change <span class="code">n//2</span> to <span class="code">(n-1)//2</span> in our code.<br/><br/>
 
 <div class="code">def f(n):<br/>
 &nbsp; &nbsp; # case 1: only one centroid<br/>
@@ -289,13 +289,13 @@ def g(n):<br/>
 
         To compute $g(n)$, we needed to extract the coefficient of $x^n$ from
         $$\frac1{(1-x)^{g(1)}(1-x^2)^{g(2)}(1-x^3)^{g(3)}\cdots}$$
-        In our code, this required multiplying together $n$ different $n$-degree polynomials. I used a naive $O(n^2)$ for multiplication, so in total I needed $O(n^3)$ to compute $g(n)$. Getting $f(n)$ requires computing each of $g(1),g(2),\ldots,g(n/2)$, so in total, our code runs in $O(n^4)$ time. However, there are some easy ways we could improve the runtime:<br/><br/>
+        In our code, this required multiplying together $n$ different $n$-degree polynomials. I used a naive $O(n^2)$ for multiplication, so in total I needed $O(n^3)$ to compute $g(n)$. Getting $f(n)$ requires computing each of $g(1),g(2),\ldots,g(n/2)$, so in total, our code runs in $O(n^4)$ time. However, there are some easy ways we could improve the runtime.<br/><br/>
 
         <h3>Faster polynomial multiplication</h3>
 
-        We can speed up <span class="code">polymul</span> by a lot without having to resort to FFT. A simple but effective optimization we could make is to just skip all the zeros in the polynomial.<br/><br/>
+        We can speed up <span class="code">polymul</span> by a lot without having to resort to FFT. A simple but effective optimization is to just skip all the zeros in the polynomial.<br/><br/>
 
-        The key idea is to notice that $(1-x^k)^{g(k)}$ has a ton of zero coefficients. Since we only care about the coefficient of $x^n$, this factor actually only has $\lfloor n/k\rfloor$ nonzero terms, so multiplying this should only take $O(n^2/k)$ time.<br/><br/>
+        The key idea is noticing that $(1-x^k)^{g(k)}$ has a ton of zero coefficients. Since we only care about coefficients of terms at most $x^n$, this factor actually only has $\lfloor n/k\rfloor$ nonzero terms, so multiplying this should only take $O(n^2/k)$ time.<br/><br/>
 
         <div class="code">def polymul(A,B): # multiplies two polynomials A and B<br/>
 &nbsp; &nbsp; n = len(A)<br/>
@@ -312,7 +312,7 @@ def g(n):<br/>
 
         Notice that when we computed $g(1),g(2),g(3),\ldots$, we're just using the exact same generating function for all of them,
         $$\frac1{(1-x)^{g(1)}(1-x^2)^{g(2)}(1-x^3)^{g(3)}\cdots}$$
-        Furthermore, $f(n)$ also uses the exact same generating function! To avoid recomputing the same generating function again and again, we can just try to compute $g(1),g(2),g(3),\ldots$ and $f(n)$ all using just a single polynomial. We can to merge $g(n)$ and $f(n)$ in our code into a single function.<br/><br/>
+        Furthermore, $f(n)$ also uses the exact same generating function! To avoid recomputing the same generating function again and again, we can just try to compute $g(1),g(2),g(3),\ldots$ and $f(n)$ all using just a single polynomial. We can merge $g(n)$ and $f(n)$ in our code into a single function.<br/><br/>
 
 <div class="code">def f(n):<br/>
 &nbsp; &nbsp; # case 1: only one centroid<br/>
