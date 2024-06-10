@@ -5,8 +5,8 @@ let scripts = document.getElementsByTagName('script');
 let path = scripts[scripts.length-1].src;
 let mydir = path.split('/').slice(0, -1).join('/')+'/';
 
-let webpemojis = /:(bebelove|chokodestroy|hacker|heh|ikuwow|kanadecry|kanaderamen|koishibaka|menheranerdglasses|mikuexcited|nanaadmire|nanabday|nanableh|nanacry|nanakiss|nanasmirk|nanawave|nanaxd|neko|niko|pomihappy|serikalong|tere|vodkahug|zoneadmire|zonelmao|zonepeek):/g
-let gifemojis = /:(bocchihide|nanaaaa|nanayay):/g
+let webpemojis = /:(bebelove|chokodestroy|hacker|heh|ikuwow|kanadecry|kanaderamen|koishibaka|menheranerdglasses|mikuexcited|nanaadmire|nanabday|nanableh|nanacry|nanakiss|nanasmirk|nanawave|nanaxd|neko|niko|pomihappy|pominervous|serikalong|tere|vodkahug|zoneadmire|zonelmao|zonepeek):/g
+let gifemojis = /:(bocchihide|nanaaaa|nanaclap|nanayay):/g
 
 document.body.innerHTML = document.body.innerHTML.replace(webpemojis, '<img src="' + mydir + '$1.webp" height="24" />');
 document.body.innerHTML = document.body.innerHTML.replace(gifemojis, '<img src="' + mydir + '$1.gif" height="24" />');

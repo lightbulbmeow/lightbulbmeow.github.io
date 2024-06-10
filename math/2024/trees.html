@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="description" content="Hello! Welcome to my blog (*・ω・)ﾉ I will giv u free Cookies">
+    <title>Counting trees</title>
+    <link rel="stylesheet" href="../blog.css">
+    <style>@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@700&display=swap');</style> <!-- Google font "Josefin Sans" -->
+
+    <style> body{ background-image: url("treebg.jpg"); background-size: 100% auto; }</style>
+
+    <!-- Latex stuff -->
+    <script>
+        MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+        }
+        };
+    </script>
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+
+    <script>
+        document.cookie = "freecookie=Heres your free cookie!!! Enjoy ~ヾ(・ω・);";
+    </script>
+</head>
+<body>
+    <a href="../index.html"><img src="../back.png" style="position: fixed; top: 20px; left: 20px;" /></a>
+
+    <div class="entry">
+
+        <h1>Counting trees</h1>
+
+        <p class="date">June 10, 2024. 8:20pm</p>
+
+        Let's count trees!<br/><br/>
+
+        <center><img src="realtree.png"/></center><br/>
+
+        No, not <i>that</i> kind of tree. I mean <i>trees</i>, in graph theory.<br/><br/>
+
+        <center><img src="graphtree.png" /></center><br/>
+
+        The question we'll be answering today is: <b>How many trees have exactly $n$ vertices?</b><br/><br/>
+
+        <center><img src="cayley.png" /></center><br/>
+
+        If the vertices of the trees are <b><i>labeled</i></b>, there's an easy answer. According to <a href="https://en.wikipedia.org/wiki/Cayley%27s_formula">Cayley's formula</a>, the number of <b>labeled</b> trees with $n$ vertices is exactly $n^{n-2}$.<br/><br/>
+
+        But, what if the vertices of the trees are <b><i>unlabeled</i></b>? Let's say that two trees are "the same" if one can move the vertices of one tree around to get the other. This is called an <i>isomorphism</i>.<br/><br/>
+
+        In the diagram above, there are 16 different <i>labeled</i> trees with 4 vertices, but only two distinct <i>unlabeled</i> trees: The first four are isomorphic to each other, and the last 12 are isomorphic to each other.<br/><br/>
+
+        Let $f(n)$ be the number of <i>distinct</i> unlabeled trees. The diagram below shows the first few values of $f(n)$.<br/><br/>
+
+        <center><img src="functionf.png" /></center><br/>
+
+        In this blog post, we'll try to find an algorithm that could let us quickly compute $f(n)$ for relatively large values of $n$.<br/><br/>
+
+        <h2>Easier version: Counting rooted trees</h2>
+
+        Before we jump to counting $f(n)$ directly, let's try an easier version. Let $g(n)$ be the number of distinct <b><i>rooted</i></b> trees. A rooted tree is just the same as an unrooted tree, except that one of its vertices is marked and called the "root" node. The diagram below shows the first few values of $g(n)$.<br/><br/>
+
+        <center><img src="functiong.png" /></center><br/>
+
+        To see why this version is easier, let's look at an example of a tree with $n$ vertices.<br/><br/>
+
+        <center><img src="treeabcd.png"/></center><br/>
+
+        A rooted tree is simply made up of smaller rooted trees, all connected to the root node. In any such tree, we'd need $a+b+c+d=n-1$. This tells us we could somehow be able to compute $g(n)$ in terms of smaller values.<br/><br/>
+
+        <h3>Counting partitions</h3>
+
+        So, we want to consider every possible way to partition $n-1$, then count how many ways we can choose each subtree. Your first thought might be:<br/><br/>
+
+        <div style="margin-left: 25px">"Just get the sum of $g(a)g(b)g(c)\cdots$ over all partitions $(a,b,c\ldots)$ that sum to $n-1$."</div><br/>
+
+        Sadly, this does not really work, because what if $a=b$? Then we overcounted some trees, because we can switch around the two trees. For example, if we just added $g(3)g(3)g(6)g(2)$ to the sum, then we'd be treating the two trees shown below as different, when really they should be counted as the same.<br/><br/>
+
+        <center><img src="g3g3g6g2.png"/></center><br/>
+
+        This means, when enumerating over all possible partitions of $n-1$, we have to also take note of how many of each number appears in the partition, and what specific subtree we assigned each number.<br/><br/>
+
+        There's an easy way around this. Just treat each possible tree as its "own separate number" in the partition. For example, label the two trees with 3 vertices as $3_|$ and $3_\land$.<br/><br/>
+
+        <center><img src="3label.png" /></center><br/>
+
+        Then, if we iterate over all partitions of $n-1$ again, but this time each number having that sort of label, then we successfully count $3_|+3_|$ differently from $3_|+3_\land$ and $3_\land+3_\land$. Hence, we can say the following:<br/><br/>
+
+        <div style="margin-left: 25px">$g(n)$ is the number of ways to partition $n-1$ into $a+b+c+\cdots$, where $a,b,c,\ldots\in\{1,2,3_|,3_\land,\ldots\}$.</div><br/>
+
+        For example, $g(4)=4$, because there are four different ways to partition 3:
+        $$1+1+1,\qquad 1+2,\qquad 3_|,\qquad 3_\land$$
+
+        <center><img src="g4.png" /></center><br/>
+
+        The set $\{1,2,3_|,3_\land,\ldots\}$ correspond to the set of all the different possible rooted trees with at most $n-1$ vertices. For each $k$, the number of different labels for $k$ is given by $g(k)$.<br/><br/>
+
+        <h3>Counting $p(n)$: Introducing generating functions</h3>
+
+        Let's recall how to count the number of partitions of any integer. Let $p(n)$ be the number of ways to partition $n$ into positive integers. The standard way to compute $p(n)$ is by using a generating function.<br/><br/>
+
+        $p(n)$ is given by the coefficient of $x^n$ in the expansion of:
+        $$(1+x+x^2+x^3+\cdots)(1+x^2+x^4+\cdots)(1+x^3+x^6+\cdots)$$
+        The reason why this works is because the first factor tells how many 1's to include in the partition. The second factor tells how many 2's to include, the third tells how many 3's, and so on. This can be simplifed to
+        $$\frac1{(1-x)(1-x^2)(1-x^3)\cdots}$$
+        We can essentially treat computing $p(n)$ as extracting a specific coefficient of this infinite power series. Since we only care about the coefficient of $x^n$, we can ignore all the terms with higher degree. We only care about the first $n$ factors of the product, as all the other terms will go beyond $x^n$:
+        $$\frac1{(1-x)(1-x^2)(1-x^3)\cdots(1-x^n)}$$
+        This is how it would look like if we programmed this in Python:<br/><br/>
+
+        <div class="code">def polymul(A,B): # multiplies two polynomials A and B<br/>
+&nbsp; &nbsp; n = len(A)<br/>
+&nbsp; &nbsp; C = [0]*n<br/>
+&nbsp; &nbsp; for i in range(n):<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; for j in range(n-i):<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; C[i+j] += A[i]*B[j]<br/>
+&nbsp; &nbsp; return C<br/>
+<br/>
+def p(n):<br/>
+&nbsp; &nbsp; poly = [1] + [0]*n<br/>
+&nbsp; &nbsp; for k in range(1,n+1):<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; factor = [0]*(n+1)<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; for i in range(n//k+1):<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; factor[k*i] = 1<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; poly = polymul(factor,poly)<br/>
+&nbsp; &nbsp; return poly[n]</div><br/>
+
+        The <span class="code">polymul</span> function can be replaced with any polynomial multiplication algorithm of your choice, but for now I'll use a naive $O(n^2)$. Running this code in Python, the first few terms match <a href="https://oeis.org/A000041">A000041</a> in OEIS, so this method is correct.<br/><br/>
+
+        <div class="code">>>> [p(n) for n in range(1,11)]<br/>
+[1, 2, 3, 5, 7, 11, 15, 22, 30, 42]</div><br/>
+
+        <center><img src="a000041.png" height=120/></center><br/>
+
+        <h3>Counting $g(n)$</h3>
+
+        Now, we will adapt this method to make it compute $g(n)$. The only difference is that now, we have to account for the different "labels" we gave each number. The number of different 3's is just $g(3)$, the number of different 4's is $g(4)$, etc. So the new generating function should be
+        $$\frac1{(1-x)^{g(1)}(1-x^2)^{g(2)}(1-x^3)^{g(3)}\cdots}$$
+        Using that, it should be possible to compute $g(n)$ like before. Before we do that, let's figure out how to turn those factors into polynomials.<br/><br/>
+
+        We know that $\frac1{1-x}=1+x+x^2+x^3+\cdots$, but what is $\frac1{(1-x)^2}$ or $\frac1{(1-x)^3}$? We use the extended binomial theorem:<br/><br/>
+        \begin{align*}
+        \frac1{(1-x)^n}&=\sum_{i\ge0}\binom{-n}i(-x)^i\\
+        &=\sum_{i\ge0}\frac{(-n)(-n-1)\cdots(-n-i+1)}{i!}(-x)^i\\
+        &=\sum_{i\ge0}\frac{(n+i-1)(n+i-2)\cdots n}{i!}(-1)^i(-x)^i\\
+        &=\sum_{i\ge0}\binom{n+i-1}ix^i
+        \end{align*}
+        We see that this formula works: $\frac1{(1-x)^2}=1+2x+3x^2+4x^3+\cdots$, and $\frac1{(1-x)^3}=1+\binom32x+\binom42x^2+\binom52x^3+\cdots$, and so on.<br/><br/>
+
+        Now its time to code, memoizing smaller values of $g(k)$ so we aren't redoing any computations. Just don't forget that we're looking for <b>the coefficient of $x^{n-1}$</b>, because $g(n)$ counts the number of partitions of $n-1$, not $n$!<br/><br/>
+
+        <div class="code">from math import comb<br/>
+<br/>
+mem = {}<br/>
+<br/>
+def g(n):<br/>
+&nbsp; &nbsp; if n in mem: return mem[n]<br/>
+&nbsp; &nbsp; poly = [1] + [0]*(n-1)<br/>
+&nbsp; &nbsp; for k in range(1,n):<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; factor = [0]*n<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; for i in range((n-1)//k+1):<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; factor[k*i] = comb(g(k)+i-1,g(k)-1)<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; poly = polymul(factor,poly)<br/>
+&nbsp; &nbsp; mem[n] = poly[n-1]<br/>
+&nbsp; &nbsp; return poly[n-1]</div><br/>
+
+        Running this code in Python, the first few terms match <a href="https://oeis.org/A000081">A000081</a> in OEIS. Nice! We did everything correctly.<br/><br/>
+
+        <div class="code">>>> [g(n) for n in range(1,11)]<br/>
+[1, 1, 2, 4, 9, 20, 48, 115, 286, 719]</div><br/>
+
+<center><img src="a000081.png" height=120/></center><br/>
+
+        And with that, we've successfully computed $g(n)$! Now we're ready for the harder version.<br/><br/>
+
+        <h2>Main problem: Counting unrooted trees</h2>
+
+        Trying to count $f(n)$ might seem really hard at first glance. Since a rooted tree is basically just an unrooted tree with one marked node, one of the first thoughts you might have is:<br/><br/>
+
+        <div style="margin-left: 25px">"Just divide $g(n)$ by $n$ to get $f(n)$."</div><br/>
+
+        Sadly, this already fails for $f(2)$. Unlike rooted trees, there is no obvious way to break down <i>unrooted</i> trees into smaller subtrees. The main difficulty lies in figuring out whether two trees are isomorphic to each other: This is called the "tree isomorphism problem".<br/><br/>
+
+        Fortunately, there is a quick way to solve this. A <a href="https://codeforces.com/blog/entry/101010">blog post from CodeForces</a> outlines a method to determine whether two trees are isomorphic. Although this method is intended to be for cp problems, the core ideas from the post are still applicable here:<br/>
+
+        <ol>
+        <li>Solve the problem for rooted trees</li>
+        <li>Solve the problem for unrooted trees by rooting them at their centroids</li>
+        </ol>
+
+        The <i>centroid</i> is a node of the tree such that if that node is removed, all the remaining branches each have at most $n/2$ nodes.<br/><br/>
+
+        Luckily, we already know how to do the first part! The number of distinct rooted trees is just $g(n)$, which we already know how to compute. For the second part, there's a minor problem: A tree's centroid is not necessarily unique... kind of.<br/><br/>
+
+<center><img src="centroid.png" height=300/></center><br/>
+
+        Every tree has either one or two centroids, and the latter case only happens when these centroid nodes are adjacent and separated by an edge! This only happens when $n$ is even, both sides need to have exactly $n/2$ nodes.<br/><br/>
+
+        So, we have to handle two cases, depending on whether there is one or two centroids.<br/><br/>
+
+        <h3>Case 1: Only one centroid</h3>
+
+        Our plan is to root the tree on its centroid node, then use that to count $f(n)$. In the example below, the root node happens to be the centroid of the tree, because every subtree has $\le n/2$ nodes.<br/><br/>
+
+        <center><img src="treeabcd.png"/></center><br/>
+
+        How do we count the number of trees using a given centroid? We can just do the exact same thing as earlier, except, we only need to consider the trees with $\le n/2$ nodes. Our generating function from earlier has to stop at the $\lfloor n/2\rfloor$th factor.
+        $$\frac1{(1-x)^{g(1)}(1-x^2)^{g(2)}(1-x^3)^{g(3)}\cdots(1-x^{\lfloor n/2\rfloor})^{g(\lfloor n/2\rfloor)}}$$
+        The only thing we have to change from our previous code is the range of $k$. I just changed <span class="code">range(1,n)</span> to <span class="code">range(1,n//2+1)</span>.<br/><br/>
+
+<div class="code">def f(n):<br/>
+&nbsp; &nbsp; # case 1: only one centroid<br/>
+&nbsp; &nbsp; poly = [1] + [0]*(n-1)<br/>
+&nbsp; &nbsp; for k in range(1,n//2+1):<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; factor = [0]*n<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; for i in range((n-1)//k+1):<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; factor[k*i] = comb(g(k)+i-1,g(k)-1)<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; poly = polymul(factor,poly)<br/>
+&nbsp; &nbsp; mem[n] = poly[n-1]<br/>
+&nbsp; &nbsp; return poly[n-1]</div><br/>
+
+        Well... that was easy. That's only the first case, let's proceed to the next one.<br/><br/>
+
+        <h3>Case 2: Two centroids</h3>
+
+        If the graph had two centroids, it's actually much easier. The tree would be like conjoined twins: two rooted trees that each have $n/2$ vertices.<br/><br/>
+
+        <center><img src="treetwins.png"/></center><br/>
+
+        How do we count it? Well, each subtree has $g(n/2)$ possibilities, giving $g(n/2)^2$ ways. We also have to account for the $g(n/2)$ ways when the two subtrees might identical. The number of ways is just:
+        $$\frac{g(n/2)^2+g(n/2)}{2}$$
+        and this case only occurs when $n$ is even. So, this is our final code for counting the number of <b>unrooted</b> trees!<br/><br/>
+
+<div class="code">def f(n):<br/>
+&nbsp; &nbsp; # case 1: only one centroid<br/>
+&nbsp; &nbsp; poly = [1] + [0]*(n-1)<br/>
+&nbsp; &nbsp; for k in range(1,n//2+1):<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; factor = [0]*n<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; for i in range((n-1)//k+1):<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; factor[k*i] = comb(g(k)+i-1,g(k)-1)<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; poly = polymul(factor,poly)<br/>
+&nbsp; &nbsp; ans = poly[n-1]<br/>
+&nbsp; &nbsp; # case 2: only two centroids<br/>
+&nbsp; &nbsp; if n % 2 == 0:<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; ans += (g(n//2)**2 + g(n//2))//2<br/>
+&nbsp; &nbsp; return ans</div><br/>
+
+        Let's see if it works... :pominervous:<br/><br/>
+
+        <div class="code">>>> [f(n) for n in range(1,11)]<br/>
+[1, 2, 1, 3, 3, 10, 11, 39, 47, 187]</div><br/>
+
+        Oh no! That doesn't seem right... We're supposed to be seeing $f(2)=1$ and $f(4)=2$...<br/><br/>
+
+        Exercise to the reader: What went wrong?<br/><br/><br/>
+
+        Here's what went wrong:<br/><br/>
+
+        Back in Case 1, we included subtrees with size $n/2$, which was already counted in Case 2. So, we overcounted. To fix this, we just need to not include the trees with exactly $n/2$ vertices in Case 1.<br/><br/>
+
+<div class="code">def f(n):<br/>
+&nbsp; &nbsp; # case 1: only one centroid<br/>
+&nbsp; &nbsp; poly = [1] + [0]*(n-1)<br/>
+&nbsp; &nbsp; for k in range(1,(n-1)//2+1):<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; factor = [0]*n<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; for i in range((n-1)//k+1):<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; factor[k*i] = comb(g(k)+i-1,g(k)-1)<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; poly = polymul(factor,poly)<br/>
+&nbsp; &nbsp; ans = poly[n-1]<br/>
+&nbsp; &nbsp; # case 2: only two centroids<br/>
+&nbsp; &nbsp; if n % 2 == 0:<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; ans += (g(n//2)**2 + g(n//2))//2<br/>
+&nbsp; &nbsp; return ans</div><br/>
+
+        Running this again for one last time...<br/><br/>
+
+        <div class="code">>>> [f(n) for n in range(1,11)]<br/>
+[1, 1, 1, 2, 3, 6, 11, 23, 47, 106]</div><br/>
+
+        It works! And it even matches the terms of <a href="https://oeis.org/A000081">A000055</a> in OEIS.<br/><br/>
+
+        <center><img src="a000055.png" height=120/></center><br/>
+
+        And with that, we've successfully found an algorithm that lets us count the number of <i>unlabeled unrooted</i> trees with exactly $n$ vertices! :nanaclap:<br/><br/>
+
+        <h2>Complexity and some small optimizations</h2>
+
+        We've successfully coded an algorithm that can count the number of trees with $n$ vertices! Let's think about how fast this algorithm is.<br/><br/>
+
+        To compute $g(n)$, we needed to extract the coefficient of $x^n$ from
+        $$\frac1{(1-x)^{g(1)}(1-x^2)^{g(2)}(1-x^3)^{g(3)}\cdots}$$
+        In our code, this required multiplying together $n$ different $n$-degree polynomials. I used a naive $O(n^2)$ for multiplication, so in total I needed $O(n^3)$ to compute $g(n)$. Getting $f(n)$ requires computing each of $g(1),g(2),\ldots,g(n/2)$, so in total, our code runs in $O(n^4)$ time. However, there are some easy ways we could improve the runtime:<br/><br/>
+
+        <h3>Faster polynomial multiplication</h3>
+
+        We can speed up <span class="code">polymul</span> by a lot without having to resort to FFT. A simple but effective optimization we could make is to just skip all the zeros in the polynomial.<br/><br/>
+
+        The key idea is to notice that $(1-x^k)^{g(k)}$ has a ton of zero coefficients. Since we only care about the coefficient of $x^n$, this factor actually only has $\lfloor n/k\rfloor$ nonzero terms, so multiplying this should only take $O(n^2/k)$ time.<br/><br/>
+
+        <div class="code">def polymul(A,B): # multiplies two polynomials A and B<br/>
+&nbsp; &nbsp; n = len(A)<br/>
+&nbsp; &nbsp; C = [0]*n<br/>
+&nbsp; &nbsp; for i in range(n):<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; <b>if A[i] == 0: continue  # A has a bunch of zeros</b><br/>
+&nbsp; &nbsp; &nbsp; &nbsp; for j in range(n-i):<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; C[i+j] += A[i]*B[j]<br/>
+&nbsp; &nbsp; return C</div><br/>
+
+        That single line alone is enough to bring down the $g(n)$ runtime from $O(n^3)$ down to $n^2+n^2/2+n^2/3+\ldots+n^2/n=O(n^2\log n)$.<br/><br/>
+
+        <h3>Avoid redoing work</h3>
+
+        Notice that when we computed $g(1),g(2),g(3),\ldots$, we're just using the exact same generating function for all of them,
+        $$\frac1{(1-x)^{g(1)}(1-x^2)^{g(2)}(1-x^3)^{g(3)}\cdots}$$
+        Furthermore, $f(n)$ also uses the exact same generating function! To avoid recomputing the same generating function again and again, we can just try to compute $g(1),g(2),g(3),\ldots$ and $f(n)$ all using just a single polynomial. We can to merge $g(n)$ and $f(n)$ in our code into a single function.<br/><br/>
+
+<div class="code">def f(n):<br/>
+&nbsp; &nbsp; # case 1: only one centroid<br/>
+&nbsp; &nbsp; poly = [1] + [0]*(n-1)<br/>
+&nbsp; &nbsp; g = [0,1] # g(0) = 0, g(1) = 1<br/>
+&nbsp; &nbsp; for k in range(1,(n-1)//2+1): # compute g(k+1)<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; factor = [0]*n<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; for i in range((n-1)//k+1):<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; factor[k*i] = comb(g[k]+i-1,g[k]-1)<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; poly = polymul(factor,poly)<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; g.append(poly[k])<br/>
+&nbsp; &nbsp; ans = poly[n-1]<br/>
+&nbsp; &nbsp; # case 2: only two centroids<br/>
+&nbsp; &nbsp; if n % 2 == 0:<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; ans += (g[n//2]**2 + g[n//2])//2<br/>
+&nbsp; &nbsp; return ans</div><br/>
+
+        This brings down the runtime of the overall algorithm down to just $O(n^2\log n)$!<br/><br/>
+
+        <h2>Conclusion</h2>
+
+        We are able to devise an algorithm that can compute the number of trees with $n$ nodes, which runs in $O(n^2\log n)$ time. To summarize what we did:<br/><br/>
+
+        To compute $f(n)$, we defined the generating function,
+        $$F(x):=\frac1{(1-x)^{g(1)}(1-x^2)^{g(2)}(1-x^3)^{g(3)}\cdots(1-x^{\lfloor (n-1)/2\rfloor})^{g(\lfloor(n-1)/2\rfloor)}}$$
+        where $g(k)$ is defined (recursively) to be the coefficient of $x^{k-1}$ in $F(x)$. Then, $f(n)$ is equal to
+        $$f(n)=[x^{n-1}]F(x)+\begin{cases}\frac{g(n/2)^2+g(n/2)}2&(n\text{ is even})\\0&(n\text{ is odd})\end{cases}$$
+
+        What's nice is that this method can be modified to count trees if we are given some properties it needs to satisfy. Here are some exercises for the reader: Write a program that can count the number of trees with $n$ vertices, such that... (each item is separate)
+
+        <ol>
+        <li>...every vertex has degree at most 3. [<a href="https://oeis.org/A000672">A000672</a>]
+        <li>...every vertex can be either red or blue. [<a href="https://oeis.org/A038056">A038056</a>]
+        <li>...every vertex can be either red or blue, and there are an even number of red vertices.
+        <li>...every vertex can be either red, blue, or yellow, and no edge connects two same-colored vertices.
+        <li>...it has at most 10 leaf nodes.
+        <li><a href="https://projecteuler.net/problem=677">Project Euler 677: Coloured Graphs</a>
+        </ol>
+
+        Hint: For each of these, try to come up with a generating function that counts rooted trees, then use that to count unrooted trees.<br/><br/>
+
+        Thank you for reading through my tutorial blog post! (˶ˆᗜˆ˵)
+
+    </div>
+</body>
+
+<script src="../../emojis/script.js"></script>
