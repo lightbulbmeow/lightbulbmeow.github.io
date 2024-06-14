@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="description" content="Let's learn Groups!">
+    <title>Groups</title>
+
+    <!-- Latex stuff -->
+    <script>
+        MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+        }
+        };
+    </script>
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+
+    <style>
+    body{
+        background-color: black;
+        color: white;
+        font-family: Comic Sans;
+    }
+    div{
+        background-attachment: fixed;
+        padding: 10px 10px 10px 10px;
+    }
+    a{
+        color: rgb(255,128,255);
+        font-weight: bold;
+
+    }
+    a:hover{
+        color: #ff9999;
+        font-style: italic;
+    }
+    u{
+        color: yellow;
+        font-weight: bold;
+        font-style: italic;
+    }
+    .example{
+        margin: 50px 200px 50px 200px;
+        padding: 10px 10px 10px 10px;
+        border-radius: 25px;
+        color: white;
+    }
+    .nonexample{
+        padding: 10px 10px 10px 10px;
+        color: white;
+        background-color: rgba(69,0,0,0.75);
+        border: 7px ridge rgba(255,0,0);
+    }
+    .blue{
+        background-color: rgba(0,22,69,0.75);
+        border: 7px ridge rgba(0,55,255);
+        transform: rotate(1deg);
+    }
+    .green{
+        background-color: rgba(22,69,0,0.75);
+        border: 7px ridge rgba(55,255,0);
+        transform: rotate(-1deg);
+    }
+    .yellow{
+        background-color: rgba(69,69,0,0.75);
+        border: 7px ridge rgba(255,255,0);
+        transform: rotate(1deg);
+    }
+    @font-face{
+        font-family: 'Comic Mono';
+        src: url("../../fonts/ComicMono.ttf");
+    }
+    @font-face{
+        font-family: 'Comic Sans';
+        src: url("../../fonts/ComicSans.ttf");
+    }
+    @font-face{
+        font-family: 'Comic Sans';
+        src: url("../../fonts/ComicSansBold.ttf");
+        font-weight: bold;
+    }
+    @font-face{
+        font-family: 'Comic Sans';
+        src: url("../../fonts/ComicSansItalic.ttf");
+        font-style: italic;
+    }
+    @font-face{
+        font-family: 'Comic Sans';
+        src: url("../../fonts/ComicSansBoldItalic.ttf");
+        font-weight: bold;
+        font-style: italic;
+    }
+    td {
+        vertical-align: top;
+        padding: 5px;
+    }
+    @keyframes flashanimation {
+        0%   { color: red; }
+        50%   { color: yellow; }
+        100% { color: red; }
+    }
+    @keyframes brickanimation {
+        0%   { background-position: top left;}
+        100% { background-position: top right;}
+    }
+    .flash {
+        animation: flashanimation 0.1s infinite;
+    }
+    </style>
+
+</head>
+<body>
+    <a href="../index.html"><img src="../back.png" style="position: fixed; top: 20px; left: 20px;" /></a>
+
+    <div style="background-image: url('1/brick.jpg'); animation: brickanimation 20s linear infinite;">
+    "<center><img src="1/butterfly.gif"> <img src="1/title.gif" alt="Groups"> <img src="1/butterfly.gif"></center>
+    </div>
+
+    <div style="background-image: url('1/bg1.jpg');">
+
+    Before I give the definition of a group, I want to introduce an example first.<br/>
+
+    <hr>
+
+    <h2>Image transformations <img src="1/email.gif"></h2>
+
+    Let's say you took some image, and you wanted to transform it. You open your favorite image editor, and you have some options: <u>rotate</u> the image however you want, or <u>flip</u> it across any axis.<br/><br/>
+
+    <center><img src="1/d4_intro.png"></center><br/>
+
+    You can press some sequence of these buttons, and the computer will apply these operations on the image.<br/><br/>
+
+    <center><img src="1/d4_intro2.png"></center><br/>
+
+    Now, what if you had a <i><b>looong</b></i> sequence of operations? Performing a single image operation can already be quite expensive, let alone performing lots of them in quick succession.<br/><br/>
+
+    <center><img src="1/d4_intro3.png"></center><br/>
+
+    We could always imagine what the image looks like after each step, but that seems time consuming. Given some sequence of operations, can you quickly determine what the final output image should be?<br/><br/>
+
+    One thing we could do is <u>composing</u> the intermediate operations together. It means, we combine those operations into just a single one.<br/>
+    For example, suppose we wanted to rotate an image 90° clockwise after flipping it horizontally. Then that's the same as just flipping it over a diagonal!<br/><br/>
+
+    <center><img src="1/d4_compose.png"></center><br/>
+
+    These symbols are a bit hard to read, so instead I'll start using letters. Let $r$ denote a rotation 90° clockwise, and $s$ denote horizontal flip.<br/>
+    It turns out, we can represent every image operation in terms of just <font color="cyan">$r$</font> and <font color="cyan">$s$</font>!<br/><br/>
+
+    <center><img src="1/d4_intro_rs.png"></center><br/>
+
+    We use the symbol <font color="cyan">1</font> for the "nothing" operation.<br/><br/>
+
+    <b>You can check for yourself:</b><br/>
+    A rotation 270° is really just three 90° rotations applied three times in a row.<br/>
+    A vertical flip is really just a 180° rotation followed by a horizontal flip!<br/><br/>
+
+    One thing you might realize is that this representation is not unique. For example, while a diagonal flip is written <font color="cyan">$rrrs$</font>, we can also do a flip then rotate, <font color="cyan">$sr$</font>. So, <font color="cyan">$rrrs$</font> is actually the same as <font color="cyan">$sr$</font>.<br/><br/>
+
+    <center><img src="1/d4_intro2_rs.png"></center><br/>
+
+    Let's go back to that looong sequence of operations I give earlier, and lets convert them to letters!<br/><br/>
+
+    <center><img src="1/d4_intro3_rs.png"></center><br/>
+
+    Now we have to figure out what <font color="cyan">$rrssrsrrrrrrsrrs$</font> means.<br/>
+    There are some things that could help us here:<br/><br/>
+
+    If we have <font color="cyan">$ss$</font>, then we're just doing two horizontal flips, making no change at all! In reality, <font color="cyan">$ss=1$</font>.<br/>
+    If we have <font color="cyan">$rrrr$</font>, then we're performing a 360° rotation, also the same as no change. $rrrr=1$.<br/>
+    As we saw before, we also have <font color="cyan">$rrrs=sr$</font>.<br/><br/>
+
+    We have our three "simplification rules":
+    $$\begin{cases}ss=1\\rrrr=1\\rrrs=sr\end{cases}$$
+    Using this, we can simplify a decent chunk of our string:
+
+    <center><img src="1/d4_simplify.png"></center><br/>
+
+    As it turns out, the looong string <font color="cyan">$rrssrsrrrrrrsrrs$</font> is all just equal to <font color="cyan">$sr$</font>, which is a single diagonal flip!<br/><br/>
+
+    <center><img src="1/d4_intro4_rs.png"></center><br/>
+
+    Basically, we've turned out problem about image transformations into one about algebraic manipulations.<br/><br/>
+    It turns out, the set of all image transformations form a <u>group</u> under the composition operation.
+
+    </div>
+
+    <hr>
+
+    <div style="background-image: url('1/bg0.jpg');">
+
+    <h1><img src="1/question.gif"> What is a <b><i>group</i></b>? <img src="1/question.gif"></h2>
+
+    When we say <b><i>group</i></b>, it consists of a set $X$ and a binary operation $\star$ on the set, which satisfies the following properties:<br/>
+
+    <ol>
+    <li><img src="1/associativity.gif" alt="Associativity" height=24> <img src="1/right_arrow.gif" height=24> For any elements $a,b,c\in X$, we have $(a\star b)\star c=a\star(b\star c)$.</li>
+    <li><img src="1/identity_element.gif" alt="Identity Element" height=24> <img src="1/right_arrow.gif" height=24> There is an <i>identity element</i> $e\in X$. It satisfies $a\star e=a$ and $e\star a=e$ for every $a\in X$.</li>
+    <li><img src="1/inverse_element.gif" alt="Inverse Element" height=20> <img src="1/right_arrow.gif" height=24> For every element $a\in X$, it has an <i>inverse element</i> $a^{-1}$. It satisfies $a\star a^{-1}=e$ and $a^{-1}\star a=e$.</li>
+    </ol>
+
+    If these properties are satisfied, we say that "$X$ is a group under the $\star$ operation". This group commonly notated as $(X,\star)$.<br/><br/>
+
+    Here are two examples of groups which might be more familiar to you:
+
+    <div class="example blue">
+        <h2>$(\mathbb Z,+)$ is a group</h2>
+
+        Let $\mathbb Z=\{\ldots,-3,-2,-1,0,1,2,3,\ldots\}$ be the set of all integers, and $+$ be the <b><i>addition</i></b> operation. Then $\mathbb Z$ is a group under addition because it has these properties:<br/><br/>
+
+        <table><colgroup><col style="width: 33%"><col style="width: 33%"><col style="width: 33%"></colgroup><tr>
+        <td><h4><img src="1/associativity.gif" alt="Associativity"></h4>
+
+        <center><img src="1/integers_associative.png"></center><br/>
+
+        Addition is <u>associative</u>: no matter how we group together the terms of a sum, we always get the same result!</td>
+
+        <td><h4><img src="1/identity_element.gif" alt="Identity Element"></h4>
+
+        <center><img src="1/integers_identity.png"></center><br/>
+
+        Among all the integers, 0 is a very special: Whatever we try to add with 0, the number won't change! We could say that 0 <b><i>preserved the <u>identity</u></i></b> of the original number.</td>
+
+        <td><h4><img src="1/inverse_element.gif" alt="Inverse Element"></h4>
+
+        <center><img src="1/integers_inverse.png"></center></center><br/>
+
+        Finally, every integer has its additive inverse, also called its <u>inverse element</u>. Whatever number we choose, there's always some number that can "cancel" it out to 0.</td>
+        </tr></table>
+    </div>
+
+    <div class="example green">
+        <h2>$(\mathbb Q^\times,\times)$ is a group</h2>
+
+        Let $\mathbb Q^\times$ be the set of all <b><i>nonzero</i></b> rational numbers. Anything of the form $\dfrac ab$ where $a,b$ are <b><i>nonzero</i></b> integers.<br/>
+        Let $\times$ be the <b><i>multiplication</i></b> operation. Then $\mathbb Q^\times$ is another example of a group:<br/><br/>
+
+        <table><colgroup><col style="width: 33%"><col style="width: 33%"><col style="width: 33%"></colgroup><tr>
+        <td><h4><img src="1/associativity.gif" alt="Associativity"></h4>
+
+        <center><img src="1/rationals_associative.png"></center><br/>
+
+        Like before, multiplication is also <u>associative</u></font>.</td>
+
+        <td><h4><img src="1/identity_element.gif" alt="Identity Element"></h4>
+
+        <center><img src="1/rationals_identity.png"></center><br/>
+
+        This time, the special <u>identity element</u></font> is 1. Whatever we try to multiply with 1, the number won't change!</td>
+
+        <td><h4><img src="1/inverse_element.gif" alt="Inverse Element"></h4>
+
+        <center><img src="1/rationals_inverse.png"></center><br/>
+
+        Every positive number has its <b><i>reciprocal</i></b>. When multiplied to the original number, it "cancels" out to our special number, 1! The reciprocal of a number is its <u>inverse element</u></font>.</td>
+        </tr></table>
+    </div>
+
+    Earlier, we also had an example of a group! This one is quite different because it is <u>not commutative</u>:
+
+    <div class="example yellow">
+        <h2>$D_8$ is a group</h2>
+
+        We defined some set of image transformations which form a group under composition:<br/><br/>
+        <center><img src="1/d4.png"></center><br/>
+        This group is more commonly known as the <u>dihedral group</u> of order 8, denoted as $D_8$.<br/><br/>
+
+        <table><colgroup><col style="width: 50%"><col style="width: 25%"><col style="width: 25%"></colgroup><tr>
+        <td><h4><img src="1/associativity.gif" alt="Associativity"></h4>
+
+        Intuitively, composing transformations is <u>associative</u></font>.<br/><br/>
+        <center><img src="1/d4_associative.png"></center><br/>
+        If we compose the first two, then compose with the third, the result is a 90° clockwise rotation.<br/>
+        If we instead do the first operation, then the composition of the other two, the result is still the same!<br/><br/>
+
+        We can view composition as a sort of "shortcut" obtained from combining multiple operations together.</td>
+
+        <td><h4><img src="1/identity_element.gif" alt="Identity Element"></h4>
+
+        This group has an <u>identity element</u></font>. Can you guess what it is?<br/><br/>
+        <center><img src="1/d4_identity.png"></center><br/>
+        Yep, its just the transformation that does nothing.<br/><br/></td>
+
+        <td><h4><img src="1/inverse_element.gif" alt="Inverse Element"></h4>
+
+        Every single image transformation can be <u>inverted</u></font>.<br/><br/>
+        <center><img src="1/d4_inverse.png"></center><br/>
+        If we rotate by 90° clockwise, we can apply a 90° counterclockwise rotation to put the image back to normal.<br/>
+        If we flipped horizontally, we can flip it again to put it back to normal.<br/><br/></td>
+        </tr></table>
+    </div>
+
+    <h3>Abelian and non-abelian groups</h3>
+
+    You might notice that the first two examples are commutative, while the last one is not.<br/><br/>
+
+    A group is called <u>abelian</u> if the operation is commutative: $a\star b=b\star a$ for all $a,b\in G$.<br/>
+    If it is not commutative, the group is called <u>non-abelian</u>.<br/><br/>
+
+    <h3>Non-examples</h3>
+
+    Now that we've seen three different examples, let me give some <b><i>non-examples</i></b> of groups.<br/><br/>
+
+    <table><colgroup><col style="width: 45%"><col style="width: 5%"><col style="width: 45%"></colgroup><tr>
+    <td class="nonexample"><h2>$(\mathbb N,+)$ is <span class="flash">NOT</span> a group. <img src="1/wrong.webp"></h2>
+    Let $\mathbb N=\{1,2,3,\ldots\}$ be the set of all positive integers, and $+$ be addition.<br/><br/>
+
+    $\mathbb N$ does NOT form a group under addition because there is no <u>identity element</u> from that set.<br/><br/>
+
+    <center><img src="1/naturals_not.png"></center><br/>
+
+    0 <i>would</i> fit the equation, but it's not part of $\mathbb N$.<br/><br/>
+
+    <table>
+    <tr><td><img src="1/associativity.gif" alt="Associativity" height=24></td><td><img src="1/correct.webp" height=24></td></tr>
+    <tr><td><img src="1/identity_element.gif" alt="Identity Element" height=24></td><td><img src="1/wrong.webp" height=24></td></tr>
+    <tr><td><img src="1/inverse_element.gif" alt="Inverse Element" height=20></td><td><img src="1/wrong.webp" height=24></td></tr>
+    </table></td>
+    <td></td>
+    <td class="nonexample"><h2>$(\mathbb Q,\times)$ is <span class="flash">NOT</span> a group . <img src="1/wrong.webp"></h2>
+    Let $\mathbb Q$ be the set of all rational numbers, and $\times$ be multiplication.<br/><br/>
+
+    Although 1 is an identity element, $\mathbb Q$ does NOT form a group under $\times$ because 0 has no <u>inverse element</u> from that set.<br/><br/>
+
+    <center><img src="1/rationals_not.png"></center><br/>
+
+    This is why in our example earlier, 0 had to be removed in $\mathbb Q^\times$.<br/><br/>
+
+    <table>
+    <tr><td><img src="1/associativity.gif" alt="Associativity" height=24></td><td><img src="1/correct.webp" height=24></td></tr>
+    <tr><td><img src="1/identity_element.gif" alt="Identity Element" height=24></td><td><img src="1/correct.webp" height=24></td></tr>
+    <tr><td><img src="1/inverse_element.gif" alt="Inverse Element" height=20></td><td><img src="1/wrong.webp" height=24></td></tr>
+    </table></td>
+    </tr></table><br/>
+
+    Let's resume with giving a couple more examples of groups to let you be more familiar with them! You should try to verify that all of the following are also groups.<br/><br/>
+
+    <h3>Abelian groups</h3>
+
+    These are groups where the operation is <u>commutative</u>.<br/><br/>
+
+    <center><table>
+    <tr><td class="example yellow"><h2>Modulo arithmetic <img src="1/clock.gif"></h2>
+
+    Let $C_n=\{0,1,2,\ldots,n-1\}$. In this group, the operation is adding two numbers $a+b$ modulo $n$.<br/><br/>
+
+    <center><img src="1/modulo_arithmetic.png"></center><br/>
+
+    This is also known as the <u>cyclic group</u> of order $n$.<br/><br/>
+    Instead of $C_n$, most people would also denote it by $\mathbb Z/n\mathbb Z$.</td>
+    <td class="example green" style="position:relative;top:-50px"><h2>Unit circle <img src="1/circle.gif"></h2>
+
+    Let $S^1=\{z\in\mathbb C:|z|=1\}$ be the set of all complex numbers on the unit circle, and $\times$ be multiplication.<br/><br/>
+
+    You should verify that for any $z_1,z_2\in S^1$, it is true that $z_1z_2\in S^1$.<br/><br/>
+
+    $(S^1,\times)$ forms the <u>circle group</u>.<br/><br/>
+
+    <center><img src="1/unit_circle.png"></center></td>
+    <td class="example blue"><h2>Trivial group</h2>
+
+    This group only has one element: $\{1\}$, and an operation $\cdot$ where $1\cdot1=1$.<br/><br/>
+
+    It is the <u>trivial group</u>.<br/><br/>
+
+    <center><img src="1/one.gif"></center></td>
+
+    </tr>
+    </table></center>
+
+    <h3>Non-abelian groups</h3>
+
+    These are groups where the operation is <u>not commutative</u>.<br/><br/>
+
+    <center><table>
+    <tr>
+    <td class="example blue"><h2>Symmetric group <img src="1/hex.gif"></h2>
+
+    Let $S_n$ be the set of all permutations on $n$ objects.<br/>
+    $S_n$ forms a group under the composition operation.<br/><br/>
+
+    <center><img src="1/symmetric.png"></center><br/>
+
+    This is also known as the <u>symmetric group</u> of order $n$.</td>
+    <td class="example yellow" style="position:relative;top:50px"><h2>Rubik's Cube <img src="1/rubiks.gif"></h2>
+
+    Let $G$ be the set of moves you could do on a Rubik's Cube, and $\cdot$ be the composition of cube moves.<br/><br/>
+
+    Then, $(G,\cdot)$ forms the <u>Rubiks Cube group</u>.<br/><br/>
+
+    <center><img src="1/rubiks.webp"></center></td>
+    <td class="example green"><h2>Matrix multiplication</h2>
+
+    Let $M_n$ be the set of all <b><i>invertible</i></b> $n\times n$ matrices.<br/>
+    $M_n$ forms a group under matrix multiplication.
+
+    $$\begin{pmatrix}0&1\\2&3\end{pmatrix}\cdot\begin{pmatrix}4&-5\\1&2\end{pmatrix}=\begin{pmatrix}1&2\\11&-4\end{pmatrix}$$
+
+    It has the fancy name of <u>general linear group</u> of degree $n$.</td>
+    </tr>
+    </table></center>
+
+    <h3>Product group</h3>
+
+    Another important example comes from combining groups together, <i>like a Frankenstein monster</i>.<br/><br/>
+
+    Let $(G,\star)$ and $(H,*)$ be two groups. Then a <u>product group</u> $(G\times H,\cdot)$ is defined as follows:<br/><br/>
+
+    The elements of the group are ordered pairs $(g,h)\in G\times H$. The group operation is
+    $$(g_1,h_1)\cdot(g_2,h_2)=(g_1\star g_2,h_1\star h_2)$$
+    </div>
+
+<hr>
+
+<div style="background-image: url('1/bg2.jpg');">
+<h1><img src="1/cross.gif"> Isomorphism <img src="1/cross.gif"></h1>
+
+Sometimes, we'll encounter two different groups which happen to "behave exactly the same way". Here are some examples:
+
+:todo:explain
+<ol>
+<li>even integers <-> integers</li>
+<li>mod 12 is isomorphic to mod 3 * mod 4</li>
+<li>complex unit circle, reals mod 1, are all isomorphic</li>
+<li>addition in reals <-> multiplication in positive reals</li>
+<li>primitive roots modulo</li>
+</ol>
+
+If two groups happen to behave in exactly the same way, we say that these two groups are <u>isomorphic</u> to each other! The elements behave exactly the same, and the only difference between these two groups is the <i>labelling</i> of these elements.<br/><br/>
+
+Okay, but how do we <i>rigorize</i> this notion of "isomorphism"? Well, we only need to look what the group operation does to these elements! If a relabelling of elements exists between the two groups, such that the underlying "structure" of that operation is preserved, then we know they are isomorphic.<br/><br/>
+
+An isomorphism between two groups $(G,\star)$ and $(H,*)$ is defined to be a <b><u>bijection</u></b> $\phi:G\to H$ satisfying
+$$\phi(g_1\star g_2)=\phi(g_1)*\phi(g_2)\quad\text{for all }g_1,g_2\in G$$
+Essentially, this is just a fancy way of saying that $\phi$ is a "relabeling" of elements in $G$ to be those of $H$, so that every interaction between elements are preserved.<br/><br/>
+</div>
+
+<hr>
+
+<div style="background-image: url('1/bg3.jpg');">
+<h1><img src="1/order.gif"> Order of a group, and Lagrange's theorem <img src="1/order.gif"></h1>
+
+The <u>order of a group</u> refers to how many elements it has. The order of a group $G$ is commonly denoted as $|G|$.<br/>
+I prefer to call it the <b><i>cardinality</i></b> instead, because "order" is so <b>CONFUSING</b>!!!<br/><br/>
+
+
+</div>
+
+<hr>
+
+<div style="background-image: url('1/bg4.jpg');">
+<h1>Subgroups</h1>
+
+cayley's theorem
+</div>
+
+<hr>
+
+<div>
+<h1>EXERCISE TIME!!! <img src="1/exercise.gif"></h1>
+
+put a bunch of exercising gifs
+
+... post the solutions in a separate page.
+add some hint buttons too.
+</body>
+</div>
+
+<script src="../../emojis/script.js"></script>
