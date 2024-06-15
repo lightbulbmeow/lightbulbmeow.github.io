@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta name="description" content="Braille">
+    <title>Braille</title>
+    <style>
+        body{
+            background-color: black;
+            color: white;
+        }
+        textarea, code, #output{
+            font-family: "Comic Mono";
+        }
+        @font-face{
+            font-family: 'Comic Mono';
+            src: url("../../fonts/ComicMono.ttf");
+        }
+    </style>
+</head>
+<body>
+<h1>Braille</h1>
+
+<p>Possible formats:</p>
+
+<b>6 digit code:</b> Letter M corresponds to 101100<br/><br/>
+<b>3x2 grid code:</b> Letter M corresponds to &nbsp; <img src="braille_m.png" height=48><br/><br/>
+
+<p>Use "?" for unknown dot.<br/>
+For example, "1?101?" will match the letters [orz].</p>
+
+<p>For black dots, use "1" or "o"<br/>
+For white dots, use "0" or "."<br/>
+All other characters will be ignored.</p>
+
+<hr>
+
+<p>Input text to decode:</p>
+
+<textarea id="inputcode" name="inputcode" rows="4" cols="50">.o o. .o .o .. .o .o .. o. o. o. .o o. o. o.
+oo oo o. o. .. o. o. .. o. oo .. o. o. o. .o
+o. .. .. o. .. .. o. .. .. o. .. .. o. o. ..</textarea>
+<button onclick="decode()">Decode</button>
+
+<p id="malformed">Decoded text:</p>
+
+<div id="output"></div><br/>
+
+<hr>
+
+Braille alphabet:<br/><br/>
+
+<img src="braille.jpg" height=600><br/><br/>
+
+</body>
+</html>
+
+<script src="braille.js"></script>
