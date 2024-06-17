@@ -54,6 +54,7 @@ h1, h2, h3 {
 .code {
     font-family: 'Comic Mono';
     background-color: rgb(10,5,10,0.95);
+    white-space: pre;
 }
 .date {
     font-size: 12px;
