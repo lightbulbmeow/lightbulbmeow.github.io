@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <title>Puzzles!</title>
+    <link rel="stylesheet" href="puzzle.css">
+</head>
+<body>
+
+<a href="../index.html"><img src="back.png" /></a>
+
+<h1>Puzzles!</h1>
+
+<p>Here are some puzzles I made. Click on an image to view that puzzle! It will also let you confirm your answer.</p>
+
+<p>Usually with these puzzles, there's some English word or phrase that you have to figure out.</p>
+
+<center>
+<table style="width: 80%;">
+    <colgroup>
+        <col style="width: 20%"><col style="width: 20%"><col style="width: 20%"><col style="width: 20%"><col style="width: 20%">
+    </colgroup>
+    <tr>
+        <td class="thumb">1</td><td class="thumb">2</td>
+    </tr>
+</table>
+</center>
+
+<p>And... that's all for now. :bebelove:
+
+<script>
+    let thumbnails = document.getElementsByClassName("thumb");
+    for(a of thumbnails){
+        let index = a.innerText
+        a.innerHTML = index + "<br/><a href='" + index + ".html'><img src='" + index + ".png' width=225></a>";
+    }
+</script>
+<script src="../emojis/script.js"></script>
+</body>
+</html>
