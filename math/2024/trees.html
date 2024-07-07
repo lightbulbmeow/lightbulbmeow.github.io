@@ -4,6 +4,7 @@
     <meta name="description" content="Hello! Welcome to my blog (*・ω・)ﾉ I will giv u free Cookies">
     <title>Counting trees</title>
     <link rel="stylesheet" href="../blog.css">
+    <link rel="stylesheet" href="../pygments.css">
     <style>@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@700&display=swap');</style> <!-- Google font "Josefin Sans" -->
 
     <style> body{ background-image: url("treebg.jpg"); background-size: 100% auto; }</style>
@@ -106,24 +107,25 @@
         $$\frac1{(1-x)(1-x^2)(1-x^3)\cdots}$$
         We can essentially treat computing $p(n)$ as extracting a specific coefficient of this infinite power series. Since we only care about the coefficient of $x^n$, we can ignore all the terms with higher degree. We only care about the first $n$ factors of the product, as all the other terms will go beyond $x^n$:
         $$\frac1{(1-x)(1-x^2)(1-x^3)\cdots(1-x^n)}$$
-        This is how it would look like if we programmed this in Python:<br/><br/>
+        This is how it would look like if we programmed this in Python:<br/>
 
-        <div class="code">def polymul(A,B): # multiplies two polynomials A and B
-    n = len(A)
-    C = [0]*n
-    for i in range(n):
-        for j in range(n-i):
-            C[i+j] += A[i]*B[j]
-    return C
+        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">polymul</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">):</span> <span class="c1"># multiplies two polynomials A and B</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+    <span class="n">C</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">n</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="n">i</span><span class="p">):</span>
+            <span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="n">j</span><span class="p">]</span> <span class="o">+=</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">B</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">C</span>
 
-def p(n):
-    poly = [1] + [0]*n
-    for k in range(1,n+1):
-        factor = [0]*(n+1)
-        for i in range(n//k+1):
-            factor[k*i] = 1
-        poly = polymul(factor,poly)
-    return poly[n]</div><br/>
+<span class="k">def</span> <span class="nf">p</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">poly</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">n</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">factor</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="o">//</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">factor</span><span class="p">[</span><span class="n">k</span><span class="o">*</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">poly</span> <span class="o">=</span> <span class="n">polymul</span><span class="p">(</span><span class="n">factor</span><span class="p">,</span><span class="n">poly</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">poly</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
+</pre></div>
 
         The <span class="code">polymul</span> function can be replaced with any polynomial multiplication algorithm of your choice, but for now I'll use a naive $O(n^2)$. Running this code in Python, the first few terms match <a href="https://oeis.org/A000041">A000041</a> in OEIS, so this method is correct.<br/><br/>
 
@@ -147,22 +149,23 @@ def p(n):
         \end{align*}
         We see that this formula works: $\frac1{(1-x)^2}=1+2x+3x^2+4x^3+\cdots$, and $\frac1{(1-x)^3}=1+\binom32x+\binom42x^2+\binom52x^3+\cdots$, and so on.<br/><br/>
 
-        Now its time to code, memoizing smaller values of $g(k)$ so we aren't redoing any computations. Just don't forget that we're looking for <b>the coefficient of $x^{n-1}$</b>, because $g(n)$ counts the number of partitions of $n-1$, not $n$!<br/><br/>
+        Now its time to code, memoizing smaller values of $g(k)$ so we aren't redoing any computations. Just don't forget that we're looking for <b>the coefficient of $x^{n-1}$</b>, because $g(n)$ counts the number of partitions of $n-1$, not $n$!<br/>
 
-        <div class="code">from math import comb
+        <div class="code"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">comb</span>
 
-mem = {}
+<span class="n">mem</span> <span class="o">=</span> <span class="p">{}</span>
 
-def g(n):
-    if n in mem: return mem[n]
-    poly = [1] + [0]*(n-1)
-    for k in range(1,n):
-        factor = [0]*n
-        for i in range((n-1)//k+1):
-            factor[k*i] = comb(g(k)+i-1,g(k)-1)
-        poly = polymul(factor,poly)
-    mem[n] = poly[n-1]
-    return poly[n-1]</div><br/>
+<span class="k">def</span> <span class="nf">g</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">mem</span><span class="p">:</span> <span class="k">return</span> <span class="n">mem</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
+    <span class="n">poly</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">):</span>
+        <span class="n">factor</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">n</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">((</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">//</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">factor</span><span class="p">[</span><span class="n">k</span><span class="o">*</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">comb</span><span class="p">(</span><span class="n">g</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="o">+</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">g</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">poly</span> <span class="o">=</span> <span class="n">polymul</span><span class="p">(</span><span class="n">factor</span><span class="p">,</span><span class="n">poly</span><span class="p">)</span>
+    <span class="n">mem</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="n">poly</span><span class="p">[</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">poly</span><span class="p">[</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</pre></div></div>
 
         Running this code in Python, the first few terms match <a href="https://oeis.org/A000081">A000081</a> in OEIS. Nice! We did everything correctly.<br/><br/>
 
@@ -206,18 +209,19 @@ def g(n):
 
         How do we count the number of trees using a given centroid? We can just do the exact same thing as earlier, except, we only need to consider the trees with $\le n/2$ nodes. Our generating function from earlier has to stop at the $\lfloor n/2\rfloor$th factor.
         $$\frac1{(1-x)^{g(1)}(1-x^2)^{g(2)}(1-x^3)^{g(3)}\cdots(1-x^{\lfloor n/2\rfloor})^{g(\lfloor n/2\rfloor)}}$$
-        The only thing we have to change from our previous code is the range of $k$. I just changed <span class="code">range(1,n)</span> to <span class="code">range(1,n//2+1)</span>.<br/><br/>
+        The only thing we have to change from our previous code is the range of $k$. I just changed <span class="code">range(1,n)</span> to <span class="code">range(1,n//2+1)</span>.<br/>
 
-<div class="code">def f(n):
-    # case 1: only one centroid
-    poly = [1] + [0]*(n-1)
-    for k in range(1,n//2+1):
-        factor = [0]*n
-        for i in range((n-1)//k+1):
-            factor[k*i] = comb(g(k)+i-1,g(k)-1)
-        poly = polymul(factor,poly)
-    mem[n] = poly[n-1]
-    return poly[n-1]</div><br/>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="c1"># case 1: only one centroid</span>
+    <span class="n">poly</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="o">//</span><span class="mi">2</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">factor</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">n</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">((</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">//</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">factor</span><span class="p">[</span><span class="n">k</span><span class="o">*</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">comb</span><span class="p">(</span><span class="n">g</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="o">+</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">g</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">poly</span> <span class="o">=</span> <span class="n">polymul</span><span class="p">(</span><span class="n">factor</span><span class="p">,</span><span class="n">poly</span><span class="p">)</span>
+    <span class="n">mem</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="n">poly</span><span class="p">[</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">poly</span><span class="p">[</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
 
         Well... that was easy. That's only the first case, let's proceed to the next one.<br/><br/>
 
@@ -229,21 +233,22 @@ def g(n):
 
         How do we count it? Well, each subtree has $g(n/2)$ possibilities, giving $g(n/2)^2$ ways. We also have to account for the $g(n/2)$ ways when the two subtrees might identical. The number of ways is just:
         $$\frac{g(n/2)^2+g(n/2)}{2}$$
-        and this case only occurs when $n$ is even. So, this is our final code for counting the number of <b>unrooted</b> trees!<br/><br/>
+        and this case only occurs when $n$ is even. So, this is our final code for counting the number of <b>unrooted</b> trees!<br/>
 
-<div class="code">def f(n):
-    # case 1: only one centroid
-    poly = [1] + [0]*(n-1)
-    for k in range(1,n//2+1):
-        factor = [0]*n
-        for i in range((n-1)//k+1):
-            factor[k*i] = comb(g(k)+i-1,g(k)-1)
-        poly = polymul(factor,poly)
-    ans = poly[n-1]
-    # case 2: only two centroids
-    if n % 2 == 0:
-        ans += (g(n//2)**2 + g(n//2))//2
-    return ans</div><br/>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="c1"># case 1: only one centroid</span>
+    <span class="n">poly</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="o">//</span><span class="mi">2</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">factor</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">n</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">((</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">//</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">factor</span><span class="p">[</span><span class="n">k</span><span class="o">*</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">comb</span><span class="p">(</span><span class="n">g</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="o">+</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">g</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">poly</span> <span class="o">=</span> <span class="n">polymul</span><span class="p">(</span><span class="n">factor</span><span class="p">,</span><span class="n">poly</span><span class="p">)</span>
+    <span class="n">ans</span> <span class="o">=</span> <span class="n">poly</span><span class="p">[</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="c1"># case 2: only two centroids</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">ans</span> <span class="o">+=</span> <span class="p">(</span><span class="n">g</span><span class="p">(</span><span class="n">n</span><span class="o">//</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">g</span><span class="p">(</span><span class="n">n</span><span class="o">//</span><span class="mi">2</span><span class="p">))</span><span class="o">//</span><span class="mi">2</span>
+    <span class="k">return</span> <span class="n">ans</span>
+</pre></div>
 
         Let's see if it works... :pominervous:<br/><br/>
 
@@ -256,21 +261,22 @@ def g(n):
 
         Here's what went wrong:<br/><br/>
 
-        Back in Case 1, we included subtrees with size $n/2$, which was already counted in Case 2. So, we overcounted. To fix this, we just need to not include the trees with exactly $n/2$ vertices in Case 1. All we have to do is change <span class="code">n//2</span> to <span class="code">(n-1)//2</span> in our code.<br/><br/>
+        Back in Case 1, we included subtrees with size $n/2$, which was already counted in Case 2. So, we overcounted. To fix this, we just need to not include the trees with exactly $n/2$ vertices in Case 1. All we have to do is change <span class="code">n//2</span> to <span class="code">(n-1)//2</span> in our code.<br/>
 
-<div class="code">def f(n):
-    # case 1: only one centroid
-    poly = [1] + [0]*(n-1)
-    for k in range(1,(n-1)//2+1):
-        factor = [0]*n
-        for i in range((n-1)//k+1):
-            factor[k*i] = comb(g(k)+i-1,g(k)-1)
-        poly = polymul(factor,poly)
-    ans = poly[n-1]
-    # case 2: only two centroids
-    if n % 2 == 0:
-        ans += (g(n//2)**2 + g(n//2))//2
-    return ans</div><br/>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="c1"># case 1: only one centroid</span>
+    <span class="n">poly</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">//</span><span class="mi">2</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">factor</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">n</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">((</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">//</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">factor</span><span class="p">[</span><span class="n">k</span><span class="o">*</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">comb</span><span class="p">(</span><span class="n">g</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="o">+</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">g</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">poly</span> <span class="o">=</span> <span class="n">polymul</span><span class="p">(</span><span class="n">factor</span><span class="p">,</span><span class="n">poly</span><span class="p">)</span>
+    <span class="n">ans</span> <span class="o">=</span> <span class="n">poly</span><span class="p">[</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="c1"># case 2: only two centroids</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">ans</span> <span class="o">+=</span> <span class="p">(</span><span class="n">g</span><span class="p">(</span><span class="n">n</span><span class="o">//</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">g</span><span class="p">(</span><span class="n">n</span><span class="o">//</span><span class="mi">2</span><span class="p">))</span><span class="o">//</span><span class="mi">2</span>
+    <span class="k">return</span> <span class="n">ans</span>
+</pre></div>
 
         Running this again for one last time...<br/><br/>
 
@@ -295,16 +301,17 @@ def g(n):
 
         We can speed up <span class="code">polymul</span> by a lot without having to resort to FFT. A simple but effective optimization is to just skip all the zeros in the polynomial.<br/><br/>
 
-        The key idea is noticing that $(1-x^k)^{g(k)}$ has a ton of zero coefficients. Since we only care about coefficients of terms at most $x^n$, this factor actually only has $\lfloor n/k\rfloor$ nonzero terms, so multiplying this should only take $O(n^2/k)$ time.<br/><br/>
+        The key idea is noticing that $(1-x^k)^{g(k)}$ has a ton of zero coefficients. Since we only care about coefficients of terms at most $x^n$, this factor actually only has $\lfloor n/k\rfloor$ nonzero terms, so multiplying this should only take $O(n^2/k)$ time.<br/>
 
-        <div class="code">def polymul(A,B): # multiplies two polynomials A and B
-    n = len(A)
-    C = [0]*n
-    for i in range(n):
-        <b>if A[i] == 0: continue  # A has a bunch of zeros</b>
-        for j in range(n-i):
-            C[i+j] += A[i]*B[j]
-    return C</div><br/>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">polymul</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">):</span> <span class="c1"># multiplies two polynomials A and B</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+    <span class="n">C</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">n</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="k">continue</span>  <span class="c1"># A has a bunch of zeros</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="n">i</span><span class="p">):</span>
+            <span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="n">j</span><span class="p">]</span> <span class="o">+=</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">B</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">C</span>
+</pre></div>
 
         That single line alone is enough to bring down the $g(n)$ runtime from $O(n^3)$ down to $n^2+n^2/2+n^2/3+\ldots+n^2/n=O(n^2\log n)$.<br/><br/>
 
@@ -312,23 +319,24 @@ def g(n):
 
         Notice that when we computed $g(1),g(2),g(3),\ldots$, we're just using the exact same generating function for all of them,
         $$\frac1{(1-x)^{g(1)}(1-x^2)^{g(2)}(1-x^3)^{g(3)}\cdots}$$
-        Furthermore, $f(n)$ also uses the exact same generating function! To avoid recomputing the same generating function again and again, we can just try to compute $g(1),g(2),g(3),\ldots$ and $f(n)$ all using just a single polynomial. We can merge $g(n)$ and $f(n)$ in our code into a single function.<br/><br/>
+        Furthermore, $f(n)$ also uses the exact same generating function! To avoid recomputing the same generating function again and again, we can just try to compute $g(1),g(2),g(3),\ldots$ and $f(n)$ all using just a single polynomial. We can merge $g(n)$ and $f(n)$ in our code into a single function.<br/>
 
-<div class="code">def f(n):
-    # case 1: only one centroid
-    poly = [1] + [0]*(n-1)
-    g = [0,1] # g(0) = 0, g(1) = 1
-    for k in range(1,(n-1)//2+1): # compute g(k+1)
-        factor = [0]*n
-        for i in range((n-1)//k+1):
-            factor[k*i] = comb(g[k]+i-1,g[k]-1)
-        poly = polymul(factor,poly)
-        g.append(poly[k])
-    ans = poly[n-1]
-    # case 2: only two centroids
-    if n % 2 == 0:
-        ans += (g[n//2]**2 + g[n//2])//2
-    return ans</div><br/>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="c1"># case 1: only one centroid</span>
+    <span class="n">poly</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="c1"># g(0) = 0, g(1) = 1</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">//</span><span class="mi">2</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span> <span class="c1"># compute g(k+1)</span>
+        <span class="n">factor</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">n</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">((</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">//</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">factor</span><span class="p">[</span><span class="n">k</span><span class="o">*</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">comb</span><span class="p">(</span><span class="n">g</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">+</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">g</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">poly</span> <span class="o">=</span> <span class="n">polymul</span><span class="p">(</span><span class="n">factor</span><span class="p">,</span><span class="n">poly</span><span class="p">)</span>
+        <span class="n">g</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">poly</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+    <span class="n">ans</span> <span class="o">=</span> <span class="n">poly</span><span class="p">[</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="c1"># case 2: only two centroids</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">ans</span> <span class="o">+=</span> <span class="p">(</span><span class="n">g</span><span class="p">[</span><span class="n">n</span><span class="o">//</span><span class="mi">2</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">g</span><span class="p">[</span><span class="n">n</span><span class="o">//</span><span class="mi">2</span><span class="p">])</span><span class="o">//</span><span class="mi">2</span>
+    <span class="k">return</span> <span class="n">ans</span>
+</pre></div>
 
         This brings down the runtime of the overall algorithm down to just $O(n^2\log n)$!<br/><br/>
 

@@ -4,6 +4,7 @@
     <meta name="description" content="Hello! Welcome to my blog (*・ω・)ﾉ I will giv u free Cookies">
     <title>My... blog... I guess?</title>
     <link rel="stylesheet" href="blog.css">
+    <link rel="stylesheet" href="pygments.css">
     <style>@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@700&display=swap');</style> <!-- Google font "Josefin Sans" -->
 
     <!-- Latex stuff -->
@@ -166,9 +167,11 @@
             <li><b>Blending options and layer merging.</b> I tried this once but it seems pretty slow for large images, I should find a way to optimize this.</li>
             <li><b>Scripting for draw tools.</b> For example, I want to be able to type something like this to quickly draw a grid:<br />
 
-            <div class="code" style="margin:5px">for i in range(10):
-    draw_line((0, i), (10, i))
-    draw_line((i, 0), (i, 10))</div>
+            <div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">draw_line</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">),</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">i</span><span class="p">))</span>
+    <span class="n">draw_line</span><span class="p">((</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+</pre></div>
+
             <li><b>Image filters,</b> such as adjusting the vibrance of an image. I still don't know how exactly my phone's image editor does this.
         </ul>
 

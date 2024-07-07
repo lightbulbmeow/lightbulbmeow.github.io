@@ -1,0 +1,15 @@
+def f(n):
+    # case 1: only one centroid
+    poly = [1] + [0]*(n-1)
+    g = [0,1] # g(0) = 0, g(1) = 1
+    for k in range(1,(n-1)//2+1): # compute g(k+1)
+        factor = [0]*n
+        for i in range((n-1)//k+1):
+            factor[k*i] = comb(g[k]+i-1,g[k]-1)
+        poly = polymul(factor,poly)
+        g.append(poly[k])
+    ans = poly[n-1]
+    # case 2: only two centroids
+    if n % 2 == 0:
+        ans += (g[n//2]**2 + g[n//2])//2
+    return ans
