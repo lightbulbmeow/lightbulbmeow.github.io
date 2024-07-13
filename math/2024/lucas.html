@@ -315,13 +315,13 @@
         \end{align*}
         Therefore, the remainder when $\binom{46654}{5648}$ is divided by 17<sup>2</sup> is $\boxed{136}$.</div><br/>
 
-        In practice, I don't see anyone would actually try to compute these formulas by hand. It's way too tedious and error-prone. The real application of this is when programming, where we're computing <i>large</i> binomial coefficients with a <i>large</i> prime power modulo.<br/><br/>
+        In practice, I don't see anyone would actually try to compute the answer using these formulas by hand. It's way too tedious and error-prone. However, this is useful in programming, where we compute <i>large</i> binomial coefficients with a <i>large</i> prime power modulo.<br/><br/>
 
         <h2>Complexity</h2>
 
-        The complexity of the algorithm solely depends on the prime $p$. In the formulas above, we only needed factorials $n!\bmod p^2$ and harmonic numbers $H_n\bmod p$ for all $n=0,1,\ldots,p-1$. Precomputing all of this takes $O(p)$ time.<br/><br/>
+        The complexity of the algorithm solely depends on the prime $p$. In the formulas above, we only needed factorials $n!\bmod p^2$ and harmonic numbers $H_n\bmod p$ for each $n=0,1,\ldots,p-1$. Precomputing all this takes $O(p)$ time.<br/><br/>
 
-        Meanwhile, iterating through all the digits of $m$ and $n$ only takes $O(\log n)$. In total, this algorithm runs in $O(p+\log n)$ time and $O(p)$ memory.
+        Meanwhile, iterating through the base-$p$ digits of $m$ and $n$ only takes $O(\log n)$. In total, this algorithm runs in $O(p+\log n)$ time and $O(p)$ memory.
 
         Here's Python code which implements the formulas we derived:
 
@@ -387,9 +387,9 @@
 
         In the end, we managed to extend Lucas's theorem to work for mod $p^2$, but the formula was pretty complicated! It's not practical to use for pen and paper, but it may come in helpful when writing a program for computing binomial coefficients. The algorithm works in $O(p+\log n)$ time and $O(p)$ memory.<br/><br/>
 
-        The next question is naturally, whether Lucas's theorem also exists for mod $p^3$, mod $p^4$, or mod $p^k$ in general. I'm not sure if they do, but if they are, they'll certainly be even messier!<br/><br/>
+        The next question is naturally, whether an extension for Lucas's theorem also exists for mod $p^3$, mod $p^4$, or mod $p^k$ in general. I'm not sure if they do, but if they are, the formulas will certainly be even messier!<br/><br/>
 
-         Deriving the formula for mod $p^3$ might still be doable by hand, but anything beyond will just be way too messy using our current method. It all boils down to how you choose to simplify the product $\textstyle\prod_{i=1}^r(ap+i)$ mod $p^3$.<br/><br/>
+         Deriving the formula for mod $p^3$ might still be doable by hand, but anything beyond will just be way too messy using our current method. It all boils down to how you choose to simplify the product $\textstyle\prod_{i=1}^r(ap+i)$ mod $p^k$.<br/><br/>
 
         Credits to Eric Rowland who wrote the paper <a href="https://arxiv.org/abs/2006.11701">Lucas' theorem modulo $p^2$</a>, which is what most of this blog post is based off of.<br/>
         Below are some other resources for learning how to compute $\binom mn\bmod p^k$ in general that you may find useful:
