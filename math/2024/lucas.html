@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="description" content="Hello! Welcome to my blog (*・ω・)ﾉ I will giv u free Cookies">
+    <title>Extending Lucas's theorem: What is (m choose n) mod p²?</title>
+    <link rel="stylesheet" href="../blog.css">
+    <link rel="stylesheet" href="../pygments.css">
+    <style>@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@700&display=swap');</style> <!-- Google font "Josefin Sans" -->
+
+    <style> body{ background-image: url("lucas.png"); background-size: 100% auto; }</style>
+
+    <!-- Latex stuff -->
+    <script>
+        MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+        }
+        };
+    </script>
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+
+    <script>
+        document.cookie = "freecookie=Heres your free cookie!!! Enjoy ~ヾ(・ω・);";
+    </script>
+</head>
+<body>
+    <a href="../index.html"><img src="../back.png" style="position: fixed; top: 20px; left: 20px;" /></a>
+
+    <div class="entry">
+
+        <h1>Extending Lucas's theorem: What is $\binom mn\bmod p^2$?</h1>
+
+        <p class="date">July 12, 2024. 5:30pm</p>
+
+        Question of the day:<br/><br/>
+
+        <div class="problem">What is the remainder when $\dbinom{46654}{5546}$ is divided by 17?</div><br/>
+
+        Those of you who've been in a lot of math contests might already know how to solve these kinds of problems. They use a certain theorem that comes up quite often in these contests:<br/><br/>
+
+        <div class="theorem"><h3>Lucas's theorem</h3>
+
+        Let $p$ be a prime, and $m=\overline{m_km_{k-1}\cdots m_1m_0}$ and $n=\overline{n_kn_{k-1}\cdots n_1n_0}$ be the base-$p$ representations of $m$ and $n$. Then:
+        $$\binom mn\equiv\binom{m_k}{n_k}\binom{m_{k-1}}{n_{k-1}}\cdots\binom{m_1}{n_1}\binom{m_0}{n_0}\pmod p$$</div><br/>
+
+        Essentially, what this means is that in order to find the remainder when $\binom mn$ is divided by some prime $p$, we only need to take the binomial coefficients of their base-$p$ digits individually. For example, here is the solution to the problem above:<br/><br/>
+
+        <div class="proof"><b>Solution.</b><br/>
+
+        Expressing 46654 and 5546 in base 17, we get $46654=9\cdot17^3+8\cdot17^2+7\cdot17+6$ and $5546=1\cdot17^3+2\cdot17^2+3\cdot17+4$.<br/> Applying Lucas's theorem,
+        $$\binom{46654}{5546}\equiv\binom91\binom82\binom73\binom64\equiv9\cdot28\cdot35\cdot15\equiv6\pmod{17}$$
+        Therefore, the remainder when $\binom{46654}{5546}$ is divided by 17 is $\boxed6$.</div><br/>
+
+        This method always works as long as our modulo is prime. But what if the modulo is no longer prime?<br/><br/>
+
+        <i>Second</i> question of the day:<br/><br/>
+
+        <div class="problem">What is the remainder when $\dbinom{46654}{5546}$ is divided by 17<sup>2</sup>?</div><br/>
+
+        Unfortunately Lucas's theorem no longer works for this one. Can we extend the theorem so that it also works for square prime modulo?<br/><br/>
+
+        <h2>Warm up: Proving Lucas's theorem</h2>
+
+        To see how we would generalize Lucas's theorem to square prime modulo, let's try looking at how we might prove the theorem first. Lucas's theorem is equivalent to showing the following holds for all $0\le r,s\le p-1$ and $a,b\ge0$.
+        $$\binom{pa+r}{pb+s}\equiv\binom ab\binom rs\pmod p$$
+        Now, what we're about to do is really messy, so please bear with me here. The method we'll be doing for the proof is... <i>expanding everything</i>. Expand the binomial coefficient, expand all the factorials!
+        $$\binom{pa+r}{pb+s}=\frac{(pa+r)!}{(pb+s)!(pa-pb+r-s)!}$$
+
+        <h3>Special case: $r=s=0$</h3>
+
+        As practice, let's just do a simpler case first, when $r=s=0$. We wish to prove that
+        $$\binom{pa}{pb}\equiv\binom ab\pmod p$$
+        If $a\lt b$, then trivially, both sides are equal to 0. Let's suppose $a\ge b$. We have
+        $$\binom{pa}{pb}=\frac{(pa)!}{(pb)!(pa-pb)!}$$
+        We'll first expand the numerator and extract all the $p$ factors from it. For brevity, let us denote $\textstyle S_k=\prod_{i=1}^{p-1}(kp+i)$.
+        \begin{align*}
+        (pa)!&=\textstyle(\prod_{i=1}^{p-1}i)\cdot p\cdot(\prod_{i=1}^{p-1}(p+i))\cdot 2p\cdot(\prod_{i=1}^{p-1}(2p+i))\cdot 3p\cdots(\prod_{i=1}^{p-1}(ap-p+i))\cdot ap\\
+        &=S_0S_1S_2\cdots S_{a-1}\cdot(p\cdot2p\cdot3p\cdots ap)\\
+        &=S_0S_1S_2\cdots S_{a-1}\cdot a!\cdot p^a
+        \end{align*}
+        Similarly, can get an expression for $(pb)!$ and $(pa-pb)!$.
+        \begin{align*}
+        (pb)!&=S_0S_1S_2\cdots S_{b-1}\cdot b!\cdot p^b\\
+        (pa-pb)!&=S_0S_1S_2\cdots S_{a-b-1}\cdot (a-b)!\cdot p^{a-b}
+        \end{align*}
+        Therefore,
+        \begin{align*}
+        \binom{pa}{pb}&=\frac{S_0\cdots S_{a-1}\cdot a!\cdot p^a}{(S_0\cdots S_{b-1}\cdot b!\cdot p^b)(S_0\cdots S_{a-b-1}\cdot(a-b)!\cdot p^{a-b})}\\
+        &=\binom ab\cdot\frac{S_0\cdots S_{a-1}}{(S_0\cdots S_{b-1})(S_0\cdots S_{a-b-1})}
+        \end{align*}
+        Now notice this. We can simplify every $S_k$ mod $p$,
+        \begin{align*}
+        S_k&\equiv(kp+1)(kp+2)(kp+3)\cdots(kp+p-1)\\
+        &\equiv 1\cdot2\cdot3\cdots(p-1)\\
+        &\equiv(p-1)!\\
+        &\equiv-1
+        \end{align*}
+        (That last step is using <a href="https://en.wikipedia.org/wiki/Wilson%27s_theorem">Wilson's theorem</a>.)<br/><br/>
+
+        Therefore, $S_k\equiv-1\pmod p$ regardless of what $k$ is! Substituting this to our equation from earlier, we finally get
+        \begin{align*}
+        \binom{pa}{pb}&\equiv\binom ab\cdot\frac{S_0\cdots S_{a-1}}{(S_0\cdots S_{b-1})(S_0\cdots S_{a-b-1})}\\
+        &\equiv\binom ab\cdot\frac{(-1)^a}{(-1)^b(-1)^{a-b}}\\
+        &\equiv\binom ab
+        \end{align*}
+        and this proves Lucas's theorem for the special case $r=s=0$.<br/><br/>
+
+        <h3>General case</h3>
+
+        Now let's move on to the general case where $r,s$ could be anything. This time, we have a couple extra factors in the numerator and denominator.
+        $$\binom{pa+r}{pb+s}=\frac{(pa+r)!}{(pb+s)!(pa-pb+r-s)!}$$
+        The numerator is equal to
+        $$(pa+r)!=\textstyle(pa)!\cdot\prod_{i=1}^r(pa+i)$$
+        For the denominator, wish to express $(pb+s)!$ and $(pa-pb+r-s)!$.
+        $$(pb+s)!=\textstyle(pb)!\cdot\prod_{i=1}^s(pb+i)$$
+        The factor $(pa-pb+r-s)!$ is slightly problematic, since it depends on whether $r-s$ is negative or not.<br/>
+        If $r-s\ge0$, then we get a few extra terms on top of $(pa-pb)!$
+        $$(pa-pb+r-s)!=\textstyle(pa-pb)!\cdot\prod_{i=1}^{r-s}(pa-pb+i)$$
+        If $r-s\lt0$, then we're <i>removing</i> terms from $(pa-pb)!$.
+        $$(pa-pb+r-s)!=\frac{\textstyle(pa-pb)!}{(pa-pb)\prod_{i=1}^{s-r-1}(pa-pb-i)}$$
+        So, let's handle the cases $r\ge s$ and $r\lt s$ separately.<br/><br/>
+
+        <h3>Case 1: $r\ge s$</h3>
+        \begin{align*}
+        \binom{pa+r}{pb+s}&=\frac{(pa+r)!}{(pb+s)!(pa-pb+r-s)!}\\
+        &=\frac{\textstyle(pa)!\cdot\prod_{i=1}^r(pa+i)}{(\textstyle(pb)!\cdot\prod_{i=1}^s(pb+i))\cdot(\textstyle(pa-pb)!\cdot\prod_{i=1}^{r-s}(pa-pb+i))}\\
+        &=\binom{pa}{pb}\cdot\frac{\prod_{i=1}^r(pa+i)}{\prod_{i=1}^s(pb+i)\cdot\prod_{i=1}^{r-s}(pa-pb+i)}
+        \end{align*}
+        Then, we can take this mod $p$. Previously, we already showed that $\binom{pa}{pb}\equiv\binom ab\pmod p$.
+        \begin{align*}
+        \binom{pa+r}{pb+s}&\equiv\binom{pa}{pb}\cdot\frac{\prod_{i=1}^ri}{\prod_{i=1}^si\cdot\prod_{i=1}^{r-s}i}\\
+        &\equiv\binom{pa}{pb}\cdot\frac{r!}{s!(r-s)!}\\
+        &\equiv\binom{a}{b}\binom rs
+        \end{align*}
+        This proves Lucas's theorem for $r\ge s$.<br/><br/>
+
+        <h3>Case 2: $r\lt s$</h3>
+
+        This one is a bit simpler.
+        \begin{align*}
+        \binom{pa+r}{pb+s}&=\frac{(pa+r)!}{(pb+s)!(pa-pb+r-s)!}\\
+        &=\frac{\textstyle(pa)!\cdot\prod_{i=1}^r(pa+i)}{(\textstyle(pb)!\cdot\prod_{i=1}^s(pb+i))\cdot(\tfrac{(pa-pb)!}{(pa-pb)\prod_{i=1}^{s-r-1}(pa-pb-i)})}\\
+        &=(pa-pb)\cdot\binom{pa}{pb}\cdot\frac{\prod_{i=1}^r(pa+i)\cdot\prod_{i=1}^{s-r-1}(pa-pb-i)}{\prod_{i=1}^s(pb+i)}
+        \end{align*}
+        The factor $(pa-pb)$ there tells us that the entire thing is divisible by $p$. Therefore, $\binom{pa+r}{pb+s}\equiv0\pmod p$, which is conistent with the theorem because $\binom rs=0$ when $r\lt s$.<br/>
+        Thus, we have proven Lucas's theorem!<br/><br/>
+
+        <h2>Deriving Lucas's theorem for mod $p^2$</h2>
+
+        Now that we've warmed up, let's try to derive the value of $\binom mn\bmod p^2$. We still use the exact same method as before, just in mod $p^2$. We start off the same way: let $0\le r,s\le p-1$ and $a,b\ge0$.
+        $$\binom{pa+r}{pb+s}\equiv\,???\pmod{p^2}$$
+
+        <h3>A specific case $r=s=0$</h3>
+
+        Like before, let's look at the case $r=s=0$. Recall that we defined $S_k=\textstyle\prod_{i=1}^{p-1}(kp+i)$, and twe got the expression
+        $$\binom{pa}{pb}=\binom ab\cdot\frac{S_0\cdots S_{a-1}}{(S_0\cdots S_{b-1})(S_0\cdots S_{a-b-1})}$$
+        So far, no mods yet. When we proved the theorem earlier, we found that $S_k\bmod p$ simplified very nicely. However, in mod $p^2$, things are a bit different. We can't just get rid of all the $p$ terms right off the bat.
+        $$S_k=(kp+1)(kp+2)(kp+3)\cdots(kp+p-1)$$
+        To simplify this, we need to expand the product. If we pretend that this is a polynomial in terms of $p$, we get something like
+        $$S_k=a_np^n+a_{n-1}p^{n-1}+\cdots+a_2p^2+a_1p+a_0$$
+        We only care about this value mod $p^2$, so we can safely get rid of all the terms beyond $p^2$. We only need the terms $a_1p$ and $a_0$.<br/><br/>
+
+        The $a_0$ term is easy,
+        $$a_0=1\cdot2\cdot3\cdots(p-1)=(p-1)!$$
+        The $a_1$ term is a bit trickier, but still easy to extract,
+        \begin{align*}
+        a_1&=(1\cdot2\cdot3\cdots(p-1))\left(\frac k1+\frac k2+\frac k3+\cdots+\frac k{p-1}\right)\\
+        &=(p-1)!\cdot k\cdot\left(1+\frac12+\frac13+\cdots+\frac1{p-1}\right)
+        \end{align*}
+        Since we want $a_1p\bmod p^2$, we only care about the value of $a_1\bmod p$. If $p$ is <b><i>odd</i></b>, then that harmonic sum would have its terms cancel out to 0:
+        $$1+\frac12+\frac13+\cdots+\frac1{p-1}\equiv0\pmod p$$
+        Therefore, $a_1\equiv0\pmod p$, giving us
+        $$S_k\equiv a_1p+a_0\equiv(p-1)!\pmod{p^2}$$
+        which is only true for <b><i>odd</i></b> $p$. Otherwise, if $p$ is 2, then $S_k=2k+1$. This is different from the odd case, so we'll have to treat them separately.<br/><br/>
+
+        <h3>Case 1: $p$ is an odd prime</h3>
+
+        Substituting $S_k\equiv(p-1)!\pmod{p^2}$,
+        \begin{align*}
+        \binom{pa}{pb}&\equiv\binom ab\cdot\frac{S_0\cdots S_{a-1}}{(S_0\cdots S_{b-1})(S_0\cdots S_{a-b-1})}\\
+        &\equiv\binom ab\cdot\frac{(p-1)!^a}{(p-1)!^b\cdot(p-1)!^{a-b}}\\
+        &\equiv\binom ab
+        \end{align*}
+        It all cancels out nicely! It turns out, we have the following identity for all odd primes $p$:
+        $$\binom{pa}{pb}\equiv\binom ab\pmod{p^2}$$
+
+        <h3>Case 2: $p$ is 2</h3>
+
+        We want to evaluate this thing mod 4.
+        \begin{align*}
+        \binom{2a}{2b}&\equiv\binom ab\cdot\frac{S_0\cdots S_{a-1}}{(S_0\cdots S_{b-1})(S_0\cdots S_{a-b-1})}\\
+        &\equiv\binom ab\cdot\frac{1\cdot3\cdot5\cdots(2a-1)}{(1\cdot3\cdot5\cdots(2b-1))(1\cdot3\cdot5\cdots(2a-2b-1))}\\
+        &\equiv\binom ab\cdot\frac{(-1)^{\lfloor a/2\rfloor}}{(-1)^{\lfloor b/2\rfloor}(-1)^{\lfloor(a-b)/2\rfloor}}\\
+        &\equiv\binom ab\cdot(-1)^{\lfloor a/2\rfloor-\lfloor b/2\rfloor-\lfloor(a-b)/2\rfloor}
+        \end{align*}
+        That $(-1)^{whatever}$ thing looks ugly, and I want to get rid of it so it matches our formula for odd primes $p$. Let's simplify it some more. We can express the $(-1)^{whatever}$ thing compactly as
+        $$\binom{2a}{2b}=\binom ab\cdot\begin{cases}-1&(\text{when $a$ is even and $b$ is odd})\\1&(\text{otherwise})\end{cases}$$
+        If $a$ is even and $b$ is odd, then we know from Lucas's theorem that $\binom ab$ becomes even, meaning the $(-1)^{whatever}$ thing won't affect the value of $\binom{2a}{2b}$ mod 4. In all other cases of $a$ and $b$, the $(-1)^{whatever}$ is just 1, so $\binom{2a}{2b}\equiv\binom ab\pmod 4$.<br/><br/>
+
+        Thus, we've proven a useful lemma which will come in handy for the general case!
+        $$\boxed{\binom{pa}{pb}\equiv\binom ab\pmod{p^2}\quad\text{for all primes }p}$$
+        I think we're ready to tackle the more general case.<br/><br/>
+
+        <h2>General case</h2>
+
+        Just like how we proved Lucas's theorem previously, we handle two separate cases.
+
+        <h3>Case 1: $r\ge s$</h3>
+
+        Previously, we derived that
+        \begin{align*}
+        \binom{pa+r}{pb+s}&=\binom{pa}{pb}\cdot\frac{\prod_{i=1}^r(pa+i)}{\prod_{i=1}^s(pb+i)\cdot\prod_{i=1}^{r-s}(pa-pb+i)}
+        \end{align*}
+        From our "lemma", we have $\binom{pa}{pb}\equiv\binom ab\pmod{p^2}$. How about the products? Just like how we simplified $S_k\bmod p^2$, we can do the same thing. We expand the polynomial...
+        $$\prod_{i=1}^r(pa+i)=a_np^n+a_{n-1}p^{n-1}+\cdots+a_2p^2+a_1p+a_0$$
+        and only extract the terms $a_1p$ and $a_0$. The $a_0$ term is easy,
+        $$a_0=1\cdot2\cdot3\cdots r=r!$$
+        The $a_1$ term is similar as before,
+        \begin{align*}
+        a_1&=(1\cdot2\cdot3\cdots r)\left(\frac k1+\frac k2+\frac k3+\cdots+\frac kr\right)\\
+        &=r!\cdot k\cdot\left(1+\frac12+\frac13+\cdots+\frac1r\right)\\
+        &=r!\cdot kH_r
+        \end{align*}
+        where $H_r$ is the $r$th harmonic number. Therefore,
+        $$\prod_{i=1}^r(pa+i)\equiv a_1p+a_0\equiv r!(1+apH_r)\pmod{p^2}$$
+        Similarly, we have
+        \begin{align*}
+        \prod_{i=1}^s(pb+i)&\equiv s!(1+bpH_s)\pmod{p^2}\\
+        \prod_{i=1}^{r-s}(pa-pb+i)&\equiv(r-s)!(1+(a-b)pH_{r-s})\pmod{p^2}
+        \end{align*}
+        Putting this all together,
+        \begin{align*}
+        \binom{pa+r}{pb+s}&\equiv\binom{pa}{pb}\cdot\frac{\prod_{i=1}^r(pa+i)}{\prod_{i=1}^s(pb+i)\cdot\prod_{i=1}^{r-s}(pa-pb+i)}\\
+        &\equiv\binom ab\cdot\frac{r!(1+apH_r)}{s!(1+bpH_s)\cdot(r-s)!(1+(a-b)pH_{r-s})}\\
+        &\equiv\binom ab\binom rs\frac{1+apH_r}{(1+bpH_s)(1+(a-b)pH_{r-s})}
+        \end{align*}
+        Then, using the fact that $(1+pk)^{-1}\equiv 1-pk\pmod{p^2}$,
+        \begin{align*}
+        \binom{pa+r}{pb+s}&\equiv\binom ab\binom rs(1+apH_r)(1-bpH_s)(1-(a-b)pH_{r-s})\\
+        &\equiv\binom ab\binom rs(1+apH_r-bpH_s-(a-b)pH_{r-s})
+        \end{align*}
+        Well... there you have it. It's not quite elegant, but well, it is <i>a</i> formula. This also matches the formula from <a href="https://arxiv.org/abs/2006.11701">Eric Rowland's paper</a>.<br/><br/>
+
+        <h3>Case 2: $r\lt s$</h3>
+
+        Previously, we derived that
+        $$\binom{pa+r}{pb+s}=(pa-pb)\cdot\binom{pa}{pb}\cdot\frac{\prod_{i=1}^r(pa+i)\cdot\prod_{i=1}^{s-r-1}(pa-pb-i)}{\prod_{i=1}^s(pb+i)}$$
+        Notice that the whole thing is divisible by $p$. This makes things simpler for us, since we only have to care about mod $p$ of everything else!
+        \begin{align*}
+        \binom{pa+r}{pb+s}&\equiv p(a-b)\cdot\binom{pa}{pb}\cdot\frac{\prod_{i=1}^ri\cdot\prod_{i=1}^{s-r-1}(-i)}{\prod_{i=1}^si}\\
+        &\equiv p(a-b)\cdot\binom ab\cdot\frac{r!\cdot(s-r-1)!\cdot(-1)^{s-r-1}}{s!}\\
+        &\equiv p\binom ab\cdot\frac{a-b}{(s-r)\binom sr}(-1)^{s-r-1}
+        \end{align*}
+
+        <h3>The final formula</h3>
+
+        Thus, we end up with two formulas depending on whether $r\ge s$ or $r\lt s$:
+        $$\boxed{\begin{array}{ll}
+        \text{If }r\ge s,\\
+        \quad\displaystyle\binom{pa+r}{pb+s}\equiv\binom ab\binom rs(1+apH_r-bpH_s-(a-b)pH_{r-s})&\pmod{p^2}\\
+        \text{If }r\lt s,\\
+        \quad\displaystyle\binom{pa+r}{pb+s}\equiv p\binom ab\frac{a-b}{(s-r)\binom sr}(-1)^{s-r-1}&\pmod{p^2}
+        \end{array}}$$
+        These formulas aren't exactly the nicest to use, and I guess now you see why you never see Lucas's theorem being generalized for higher prime powers. Here's my attempt at making the formula slightly cleaner to use:<br/><br/>
+
+        <div class="theorem"><h3>Extension of Lucas's theorem for mod $p^2$</h3>
+
+        Let $p$ be a prime, and $m=\overline{m_km_{k-1}\cdots m_1m_0}$ and $n=\overline{n_kn_{k-1}\cdots n_1n_0}$ be the base-$p$ representations of $m$ and $n$. Then:<br/>
+
+        If $m_i\ge n_i$ for all $i$, then $\binom mn$ is not divisible by $p$, and
+        $$\binom mn\equiv\binom{m_k}{n_k}\cdots\binom{m_0}{n_0}\left(1+p\sum_{i=0}^{k-1}(m_{i+1}H_{m_i}-n_{i+1}H_{n_i}-(m_{i+1}-n_{i+1})H_{m_i-n_i})\right)\pmod{p^2}$$
+        If there is exactly one $i$ such that $m_i\lt n_i$, then $\binom mn$ is divisible by $p$, and
+        $$\binom mn\equiv p\binom{m_k}{n_k}\cdots\binom{m_{i+1}}{n_{i+1}}\cdot\binom{m_{i-1}}{n_{i-1}}\cdots\binom{m_0}{n_0}\cdot\frac{m_{i+1}-n_{i+1}}{(n_i-m_i)\binom{n_i}{m_i}}(-1)^{n_i-m_i-1}\pmod{p^2}$$
+        If there is more than one such $i$, then $\binom mn$ is divisible by $p^2$.</div><br/>
+
+        Still pretty ugly, but that's the best I could do to write it down. Let's try applying it to some problems.<br/><br/>
+
+        <div class="problem">What is the remainder when $\dbinom{46654}{5546}$ is divided by 17<sup>2</sup>?</div>
+        <div class="proof"><b>Solution.</b><br/>
+
+        Expressing 46654 and 5546 in base 17, we get $46654=9\cdot17^3+8\cdot17^2+7\cdot17+6$ and $5546=1\cdot17^3+2\cdot17^2+3\cdot17+4$.<br/> Applying the extension of Lucas's theorem for $p^2$,
+        $$\binom{46654}{5546}\equiv\binom91\binom82\binom73\binom64\left(1+17\left((9H_8-1H_2-8H_6)+(8H_7-2H_3-6H_4)+(7H_6-3H_4-4H_2)\right)\right)$$
+        To compute harmonic numbers mod 17, we need all those inverses.
+        $$\begin{array}{cccccccc}
+        1^{-1} & 2^{-1} & 3^{-1} & 4^{-1} & 5^{-1} & 6^{-1} & 7^{-1} & 8^{-1}\\
+        1 & 9 & 6 & 13 & 7 & 3 & 5 & 15
+        \end{array}$$
+        From here, we can compute all the harmonic numbers. For example, $H_8$ is
+        \begin{align*}
+        H_8&\equiv1^{-1}+2^{-1}+3^{-1}+4^{-1}+5^{-1}+6^{-1}+7^{-1}+8^{-1}\\
+        &\equiv1+9+6+13+7+3+5+15\\
+        &\equiv8
+        \end{align*}
+        Putting this all together, we get
+        \begin{align*}
+        \binom{46654}{5546}&\equiv\binom91\binom82\binom73\binom64\left(1+17\left((9H_8-1H_2-8H_6)+(8H_7-2H_3-6H_4)+(7H_6-3H_4-4H_2)\right)\right)\\
+        &\equiv9\cdot28\cdot35\cdot15\cdot\left(1+17\left((9\cdot8-1\cdot10-8\cdot5)+(8\cdot10-2\cdot16-6\cdot12)+(7\cdot5-3\cdot12-4\cdot10)\right)\right)\\
+        &\equiv176
+        \end{align*}
+        Therefore, the remainder when $\binom{46654}{5546}$ is divided by 17<sup>2</sup> is $\boxed{176}$.</div><br/>
+
+        Here's an example for the second case, where $\binom mn$ is divisible by $p$.<br/><br/>
+
+        <div class="problem">What is the remainder when $\dbinom{46654}{5648}$ is divided by 17<sup>2</sup>?</div>
+        <div class="proof"><b>Solution.</b><br/>
+
+        Expressing 46654 and 5648 in base 17, we get $46654=9\cdot17^3+8\cdot17^2+7\cdot17+6$ and $5648=1\cdot17^3+2\cdot17^2+9\cdot17+4$.<br/>
+        We see that the third digit of $\overline{9876}$ is less than the third digit of $\overline{1294}$, so we use the second part of the fotmula.
+        \begin{align*}
+        \binom{46654}{5648}&\equiv17\cdot\binom91\binom82\cdot\binom64\cdot\frac{8-2}{(9-7)\binom97}(-1)^{9-7-1}\\
+        &\equiv17\cdot(9\cdot28\cdot15)\cdot\frac6{2\cdot36}(-1)\\
+        &\equiv136
+        \end{align*}
+        Therefore, the remainder when $\binom{46654}{5648}$ is divided by 17<sup>2</sup> is $\boxed{136}$.</div><br/>
+
+        In practice, I don't see anyone would actually try to compute these formulas by hand. It's way too tedious and error-prone. The real application of this is when programming, where we're computing <i>large</i> binomial coefficients with a <i>large</i> prime power modulo.<br/><br/>
+
+        <h2>Complexity</h2>
+
+        The complexity of the algorithm solely depends on the prime $p$. In the formulas above, we only needed factorials $n!\bmod p^2$ and harmonic numbers $H_n\bmod p$ for all $n=0,1,\ldots,p-1$. Precomputing all of this takes $O(p)$ time.<br/><br/>
+
+        Meanwhile, iterating through all the digits of $m$ and $n$ only takes $O(\log n)$. In total, this algorithm runs in $O(p+\log n)$ time and $O(p)$ memory.
+
+        Here's Python code which implements the formulas we derived:
+
+        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">precompute</span><span class="p">(</span><span class="n">p</span><span class="p">):</span> <span class="c1"># precompute all factorials mod p^2, and harmonic numbers mod p</span>
+    <span class="k">global</span> <span class="n">fact</span><span class="p">,</span><span class="n">invfact</span><span class="p">,</span><span class="n">harmonic</span>
+
+    <span class="c1"># factorial mod p^2</span>
+    <span class="n">fact</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">p</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">p</span><span class="p">):</span> <span class="n">fact</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">fact</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">i</span> <span class="o">%</span> <span class="n">p</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">invfact</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">p</span>
+    <span class="n">invfact</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">pow</span><span class="p">(</span><span class="n">fact</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">p</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">p</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span> <span class="n">invfact</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">invfact</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">i</span> <span class="o">%</span> <span class="n">p</span><span class="o">**</span><span class="mi">2</span>
+
+    <span class="c1"># inverses mod p</span>
+    <span class="n">inv</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">p</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">p</span><span class="p">):</span> <span class="n">inv</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">p</span><span class="o">-</span><span class="n">p</span><span class="o">//</span><span class="n">i</span><span class="p">)</span><span class="o">*</span><span class="n">inv</span><span class="p">[</span><span class="n">p</span><span class="o">%</span><span class="n">i</span><span class="p">]</span> <span class="o">%</span> <span class="n">p</span>
+
+    <span class="c1"># harmonic numbers mod p</span>
+    <span class="n">harmonic</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">p</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">p</span><span class="p">):</span> <span class="n">harmonic</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">harmonic</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">inv</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">%</span> <span class="n">p</span>
+
+
+<span class="k">def</span> <span class="nf">lucas</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">p</span><span class="p">):</span> <span class="c1"># compute comb(m,n) mod p^2</span>
+    <span class="k">if</span> <span class="n">m</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span> <span class="k">return</span> <span class="mi">0</span>
+
+    <span class="c1"># get base-p digits of m and n</span>
+    <span class="n">M</span><span class="p">,</span><span class="n">N</span> <span class="o">=</span> <span class="p">[],[]</span>
+    <span class="n">pcount</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">m</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">m</span> <span class="o">%</span> <span class="n">p</span> <span class="o">&lt;</span> <span class="n">n</span> <span class="o">%</span> <span class="n">p</span><span class="p">:</span>
+            <span class="n">pcount</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">pcount</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span> <span class="k">return</span> <span class="mi">0</span>  <span class="c1"># comb(m,n) is divisible by p^2</span>
+        <span class="n">M</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">m</span> <span class="o">%</span> <span class="n">p</span><span class="p">)</span>
+        <span class="n">N</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">n</span> <span class="o">%</span> <span class="n">p</span><span class="p">)</span>
+        <span class="n">m</span> <span class="o">//=</span> <span class="n">p</span>
+        <span class="n">n</span> <span class="o">//=</span> <span class="n">p</span>
+
+    <span class="c1"># main loop</span>
+    <span class="k">if</span> <span class="n">pcount</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">product</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">psum</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">M</span><span class="p">)):</span>
+            <span class="n">product</span> <span class="o">*=</span> <span class="n">fact</span><span class="p">[</span><span class="n">M</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">*</span><span class="n">invfact</span><span class="p">[</span><span class="n">N</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">*</span><span class="n">invfact</span><span class="p">[</span><span class="n">M</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="n">N</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">M</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">psum</span> <span class="o">+=</span> <span class="n">M</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">harmonic</span><span class="p">[</span><span class="n">M</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">-</span> <span class="n">N</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">harmonic</span><span class="p">[</span><span class="n">N</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">-</span> <span class="p">(</span><span class="n">M</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">N</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span><span class="o">*</span><span class="n">harmonic</span><span class="p">[</span><span class="n">M</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="n">N</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+        <span class="k">return</span> <span class="n">product</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">p</span><span class="o">*</span><span class="n">psum</span><span class="p">)</span> <span class="o">%</span> <span class="n">p</span><span class="o">**</span><span class="mi">2</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">product</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">M</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">M</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">N</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+                <span class="n">product</span> <span class="o">*=</span> <span class="n">fact</span><span class="p">[</span><span class="n">M</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">*</span><span class="n">invfact</span><span class="p">[</span><span class="n">N</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">*</span><span class="n">invfact</span><span class="p">[</span><span class="n">M</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="n">N</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">product</span> <span class="o">*=</span> <span class="p">(</span><span class="n">M</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">N</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span><span class="o">*</span><span class="n">fact</span><span class="p">[</span><span class="n">M</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">*</span><span class="n">fact</span><span class="p">[</span><span class="n">N</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="n">M</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">invfact</span><span class="p">[</span><span class="n">N</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">*</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="n">N</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="n">M</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">p</span><span class="o">*</span><span class="n">product</span> <span class="o">%</span> <span class="n">p</span><span class="o">**</span><span class="mi">2</span>
+
+
+<span class="n">precompute</span><span class="p">(</span><span class="mi">17</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">lucas</span><span class="p">(</span><span class="mi">46654</span><span class="p">,</span><span class="mi">5546</span><span class="p">,</span><span class="mi">17</span><span class="p">))</span>  <span class="c1"># comb(46654,5546) mod 17^2 = 176</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">lucas</span><span class="p">(</span><span class="mi">46654</span><span class="p">,</span><span class="mi">5648</span><span class="p">,</span><span class="mi">17</span><span class="p">))</span>  <span class="c1"># comb(46654,5648) mod 17^2 = 136</span>
+</pre></div><br/>
+
+        <h2>Conclusion</h2>
+
+        In the end, we managed to extend Lucas's theorem to work for mod $p^2$, but the formula was pretty complicated! It's not practical to use for pen and paper, but it may come in helpful when writing a program for computing binomial coefficients. The algorithm works in $O(p+\log n)$ time and $O(p)$ memory.<br/><br/>
+
+        The next question is naturally, whether Lucas's theorem also exists for mod $p^3$, mod $p^4$, or mod $p^k$ in general. I'm not sure if they do, but if they are, they'll certainly be even messier!<br/><br/>
+
+         Deriving the formula for mod $p^3$ might still be doable by hand, but anything beyond will just be way too messy using our current method. It all boils down to how you choose to simplify the product $\textstyle\prod_{i=1}^r(ap+i)$ mod $p^3$.<br/><br/>
+
+        Credits to Eric Rowland who wrote the paper <a href="https://arxiv.org/abs/2006.11701">Lucas' theorem modulo $p^2$</a>, which is what most of this blog post is based off of.<br/>
+        Below are some other resources for learning how to compute $\binom mn\bmod p^k$ in general that you may find useful:
+
+        <ul>
+        <li><a href="https://cp-algorithms.com/combinatorics/binomial-coefficients.html">Binomial Coefficients</a> - a page on cp-algorithms.com</li>
+        <li><a href="https://codeforces.com/blog/entry/116681">Computing n! modulo p<sup>k</sup> for small p</a> - a blog post by adamant</li>
+        <li><a href="https://www.sciencedirect.com/science/article/pii/S0195669813801229?via%3Dihub">Lucas' Theorem for Prime Powers</a> - a paper by Kenneth S. Davis and William A. Webb</li>
+        <li><a href="https://web.archive.org/web/20170202003812/http://www.dms.umontreal.ca/~andrew/PDF/BinCoeff.pdf">Binomial coefficients modulo prime powers</a> - a paper by Andrew Granville</li>
+        </ul>
+
+        Thank you for reading! ٩(◕‿◕｡)۶
+
+    </div>
+</body>
+
+<script src="../../emojis/script.js"></script>

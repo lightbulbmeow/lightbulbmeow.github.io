@@ -16,7 +16,8 @@ s {
     opacity: 0.4;
 }
 h1, h2, h3 {
-    font-family: 'Josefin Sans'
+    font-family: 'Josefin Sans';
+    text-shadow: 2px 2px 5px purple;
 }
 .entry {
     margin: 50px 200px 50px 200px;
@@ -26,6 +27,24 @@ h1, h2, h3 {
     border-radius: 5px;
     color: white;
     font-family: 'Comic Sans';
+}
+.theorem {
+    border-radius: 5px;
+    border: 2px solid rgba(0,100,200);
+    background-color: rgba(0,10,20,0.69);
+    padding: 10px 10px 10px 10px;
+}
+.proof {
+    border-radius: 5px;
+    border: 2px solid rgba(0,200,100);
+    background-color: rgba(0,20,10,0.69);
+    padding: 10px 10px 10px 10px;
+}
+.problem {
+    border-radius: 5px;
+    border: 2px solid rgba(200,100,0);
+    background-color: rgba(20,10,0,0.69);
+    padding: 10px 10px 10px 10px;
 }
 @font-face{
     font-family: 'Comic Mono';
