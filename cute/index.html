@@ -5,7 +5,7 @@
 <head>
     <meta name="description" content="Please visit my website!!! (*・ω・)ﾉ I will giv u free Cookies">
 
-    <title>Meow (⌒▽⌒)☆</title>
+    <title>lightbulbMEOW's Cute Images Gallery (⌒▽⌒)☆</title>
     <style>
     body {
         background-image: url("stars.gif");
@@ -21,7 +21,8 @@
         color: white;
     }
     a{
-        color: magenta;
+        color: #ff69ff;
+        text-decoration: none;
     }
     a:hover{
         color: #ff9999;
@@ -61,32 +62,33 @@
     }
     @font-face{
         font-family: 'Comic Sans';
-        src: url("fonts/ComicSansBoldItalic.ttf");
+        src: url("../fonts/ComicSansBoldItalic.ttf");
         font-weight: bold;
         font-style: italic;
     }
     </style>
 </head>
 <body>
+<a href="../index.html"><img src="back.png" style="position: fixed; top: 20px; left: 20px;" /></a>
 
-<p>Images that make me go "AAAWWW!!! SO CUTE!!!"</p>
+<center>
+<h1>lightbulbMEOW's Cute Images Gallery</h1>
 
-<p>Sorted according to roughly how cute I think it is!!!</p>
+<p>Images that make me go "AWAWWAAWA!!! SO CUTE!!!"<br/>Click on the image to view its source.</p>
 
-<p>Click on the image to view its source. (Though for most of these you could use Saucenao anyways)</p>
+<div id="picture">Loading...</div>
 
-<table>
-    <tr>
-        <th>Image 1</th>
-    </tr>
-    <tr>
-        <th>Image 2</th>
-    </tr>
-</table>
+<br/>
 
-Sorry this page is still under construction...
+<button style="font-size:36px" onclick="setprev()">&lt;</button> <button style="font-size:36px" onclick="setrandom()">Random image!</button> <button style="font-size:36px" onclick="setnext()">&gt;</button>
 
-TODO: image randomizer that picks a cute image at random, and an image gallery
+<br/><br/>
 
+<a href="gallery.html">Click to go to the image gallery</a>
+
+</center>
 </body>
+
+<script src="data.js"></script>
+<script src="random.js"></script>
 </html>
