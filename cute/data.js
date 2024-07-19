@@ -51,6 +51,36 @@ data = [
         tags: "chokottodake, denpa singer, vtuber, twintails, heart, strawberry",
     },
     {
+        file: "kokona.jpg",
+        source: "https://www.pixiv.net/en/artworks/119254358",
+        artist: "円山エン", twitter: "marumaru_en",
+        tags: "kokona, shanhaijing senior secondary school, blue archive, animal ears",
+    },
+    {
+        file: "serika_swimsuit.jpg",
+        source: "https://www.pixiv.net/en/artworks/119971932",
+        artist: "円山エン", twitter: "marumaru_en",
+        tags: "serika swimsuit, abydos foreclosure task force, blue archive, halo, animal ears, catgirl",
+    },
+    {
+        file: "serika_new_year.png",
+        source: "https://www.pixiv.net/en/artworks/109339952",
+        artist: "The-Notes", twitter: "The_E_Note",
+        tags: "serika new year, abydos foreclosure task force, blue archive, spiral, miko, halo, animal ears, catgirl, blush",
+    },
+    {
+        file: "miku_chibi.jpg",
+        source: "https://www.pixiv.net/en/artworks/61826822",
+        artist: "ひより", twitter: "HoioPdiky",
+        tags: "hatsune miku, twintails, vocaloid, chibi",
+    },
+    {
+        file: "nanawo_akari.jpg",
+        source: "https://www.pixiv.net/en/artworks/110518259",
+        artist: "リチャード", twitter: "richaball",
+        tags: "nanawo akari, musician, angel wings, kyuukurarin",
+    },
+    {
         file: "prinz_eugen.png",
         source: "https://www.pixiv.net/en/artworks/97891815",
         artist: "皐月メグル", twitter: "satsuki_may93",
@@ -84,7 +114,7 @@ data = [
         file: "yoshimi_band.jpg",
         source: "https://www.pixiv.net/en/artworks/119160652",
         artist: "ぷなぷら。", twitter: "pnpr73",
-        tags: "ibaragi yoshimi, band version, blue archive, after school sweets club, trinity, sugar rush, fluffy hair, twintails"
+        tags: "ibaragi yoshimi, band version, blue archive, after school sweets club, trinity, sugar rush, fluffy hair, twintails, blush"
     },
     {
         file: "oneshot.png",
