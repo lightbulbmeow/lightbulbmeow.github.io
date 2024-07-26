@@ -120,7 +120,7 @@ data = [
         file: "oneshot.png",
         source: "https://www.pixiv.net/en/artworks/68472321",
         artist: "skm", pixiv: "4476815",
-        tags: "niko, cedric, rue, prototype, oneshot, animal, fox, hat, cat ears"
+        tags: "niko, cedric, rue, prototype, oneshot, animal, fox, hat, cat ears, mofumofu"
     },
     {
         file: "korone_cat.jpg",
