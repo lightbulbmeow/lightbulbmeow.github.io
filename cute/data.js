@@ -45,6 +45,12 @@ data = [
         tags: "nanahira, denpa singer, versus album, boxing gloves, rabbits, chibi, bow",
     },
     {
+        file: "choko.jpeg",
+        source: "https://x.com/cosmic_sasami/status/1409814610052476929",
+        artist: "木下沙沙美", twitter: "cosmic_sasami",
+        tags: "chokottodake, denpa singer, vtuber, twintails, heart",
+    },
+    {
         file: "choko_heart.jpeg",
         source: "https://x.com/cho_v_ko/status/1625333795623952391",
         artist: "三尾じゅん太", twitter: "miojun_nono",
@@ -79,6 +85,12 @@ data = [
         source: "https://www.pixiv.net/en/artworks/110518259",
         artist: "リチャード", twitter: "richaball",
         tags: "nanawo akari, musician, angel wings, kyuukurarin",
+    },
+    {
+        file: "mao_amatsuka.png",
+        source: "https://www.pixiv.net/en/artworks/33001723",
+        artist: "からあげ３", twitter: "karaage3",
+        tags: "gj-bu, mao amatsuka",
     },
     {
         file: "prinz_eugen.png",
@@ -123,6 +135,12 @@ data = [
         tags: "niko, cedric, rue, prototype, oneshot, animal, fox, hat, cat ears, mofumofu"
     },
     {
+        file: "holo.png",
+        source: "https://www.pixiv.net/en/artworks/45245565",
+        artist: "BlacKrow", twitter: "Blackrow_tw",
+        tags: "holo, spice and wolf, gyate gyate"
+    },
+    {
         file: "korone_cat.jpg",
         source: "https://www.pixiv.net/en/artworks/100022250",
         artist: "黒ノ", twitter: "kurosiro960",
@@ -147,6 +165,18 @@ data = [
         tags: "flandre scarlet, touhou project, >ω<"
     },
     {
+        file: "homu_cheer.png",
+        source: "https://www.pixiv.net/en/artworks/37955513",
+        artist: "まかろ", pixiv: "3978755",
+        tags: "akemi homura, puella magi madoka magica, cheerleader outfit, pompoms, cheer up!"
+    },
+    {
+        file: "azunyan.jpg",
+        source: "https://www.pixiv.net/en/artworks/19168491",
+        artist: "Ri-net（りね）", pixiv: "86839",
+        tags: "nakano azusa, azunyan, k-on, animal ears, catgirl, chibi, hugging"
+    },
+    {
         file: "reimu_box.png",
         source: "https://www.pixiv.net/en/artworks/17932089",
         artist: "由夜", twitter: "yuamaria",
@@ -157,6 +187,12 @@ data = [
         source: "https://x.com/usayu_u/status/1615427862944976901",
         artist: "u", twitter:"usayu_u",
         tags: "natori sana, vtuber, nurse, rabbit, bunny plushies, chibi",
+    },
+    {
+        file: "ia_pikachu.png",
+        source: "https://animesher.com/entry/ia-anime-girl-pikachu-1849063/",
+        artist: "長瀬 徹",
+        tags: "ia, vocaloid, pikachu, pokemon, hugging, animal, mouse",
     },
     {
         file: "yuzuku_yukari.jpg",
@@ -177,10 +213,28 @@ data = [
         tags: "hatsune miku, vocaloid, raining, stray cat, umbrella, outside, twintails",
     },
     {
+        file: "azunyan2.jpg",
+        source: "https://danbooru.donmai.us/posts/1728275",
+        artist: "オムライス", twitter: "0muraisu",
+        tags: "nakano azusa, azunyan, k-on, animal ears, catgirl"
+    },
+    {
+        file: "homura_cat2.jpeg",
+        source: "https://x.com/i/web/status/836768242706239488",
+        artist: "椿", twitter: "tsubakinoniwa",
+        tags: "akemi homura, puella magi madoka magica, cat hoodie, animal ears, nyan"
+    },
+    {
         file: "homura_cat.jpg",
         source: "https://x.com/tsubakinoniwa/status/1452055415798173697",
         artist: "椿", twitter: "tsubakinoniwa",
         tags: "akemi homura, puella magi madoka magica, cat hoodie, animal ears"
+    },
+    {
+        file: "hiiragi_tsukasa.png",
+        source: "https://www.deviantart.com/raeartworks/art/Hiiragi-Tsukasa-363338225",
+        artist: "RaeArtworks", deviantart: "raeartworks",
+        tags: "hiiragi tsukasa, thinking, lucky star"
     },
     {
         file: "kiritan_scarf.png",
@@ -205,6 +259,12 @@ data = [
         source: "https://www.pixiv.net/en/artworks/82412061",
         artist: "みるくぱんだ", twitter:"milkpanda0301",
         tags: "otomachi una, vocaloid, voiceroid, eyeglasses, heart",
+    },
+    {
+        file: "homumado.jpeg",
+        source: "https://x.com/1gsrgnk/status/1445259287165423618",
+        artist: "井頭眼科", twitter:"1gsrgnk",
+        tags: "akemi homura, kaname madoka, puella magi madoka magica, animal ears, rabbitgirl, catgirl, chibi",
     },
     {
         file: "arona.png",
@@ -255,5 +315,11 @@ function artistlink(img){
         return "<a href='https://x.com/" + img.twitter + "'>" + img.artist + " (@" + img.twitter + ")</a>"
     }else if(Object.hasOwn(img, 'pixiv')){
         return "<a href='https://www.pixiv.net/en/users/" + img.pixiv + "'>" + img.artist + "</a>"
+    }else if(Object.hasOwn(img, 'deviantart')){
+        return "<a href='https://www.deviantart.com/" + img.deviantart + "/gallery'>" + img.artist + "</a"
+    }else if(Object.hasOwn(img, 'artist')){
+        return img.artist
+    }else{
+        return "unknown artist"
     }
 }
