@@ -39,9 +39,21 @@ For example, "7?" will match the letters [ciotuy].</p>
 
 <p>Input text to decode:</p>
 
+<table>
+<tr>
+<td>
 <textarea id="inputcode" name="inputcode" rows="4" cols="50">78 14 17 34 22 17 34 22 34 29 16 12 48 14 47 46 29
 qwazqzacxxqzacxxzxzeacaqxxacxezdzxawzaaqadxe</textarea>
 <button onclick="decode()">Decode</button>
+</td>
+<td style="width:25px"></td>
+<td>
+<input type="checkbox" id="allowdigits"> Allow digits<br/>
+<input type="checkbox" id="allowspaces" checked> Allow spaces<br/>
+<input type="checkbox" id="nutrimatic"> Nutrimatic format<br/>
+</td>
+</tr>
+</table>
 
 <p id="malformed">Decoded text:</p>
 

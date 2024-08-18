@@ -38,10 +38,23 @@ All other characters will be ignored.</p>
 
 <p>Input text to decode:</p>
 
+<table>
+<tr>
+<td>
 <textarea id="inputcode" name="inputcode" rows="4" cols="50">.o o. .o .o .. .o .o .. o. o. o. .o o. o. o.
 oo oo o. o. .. o. o. .. o. oo .. o. o. o. .o
 o. .. .. o. .. .. o. .. .. o. .. .. o. o. ..</textarea>
 <button onclick="decode()">Decode</button>
+</td>
+<td style="width:25px"></td>
+<td>
+<input type="checkbox" id="allowdigits"> Allow digits<br/>
+<input type="checkbox" id="allowspaces" checked> Allow spaces<br/>
+<input type="checkbox" id="allowsymbols"> Allow symbols<br/>
+<input type="checkbox" id="nutrimatic"> Nutrimatic format<br/>
+</td>
+</tr>
+</table>
 
 <p id="malformed">Decoded text:</p>
 
