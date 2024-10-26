@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta name="description" content="Semaphore">
+    <title>Base64</title>
+    <style>
+        body{
+            background-color: black;
+            color: white;
+        }
+        a{
+            color: #ff99ff;
+            font-weight: bold;
+        }
+        a:hover{
+            color: #ff9999;
+            text-decoration: underline;
+        }
+        textarea, code, #output{
+            font-family: "Comic Mono";
+            white-space: pre;
+        }
+        @font-face{
+            font-family: 'Comic Mono';
+            src: url("../../fonts/ComicMono.ttf");
+        }
+    </style>
+</head>
+<body>
+<h1>Base64</h1>
+
+<p>Use "?" for unknown character.<br/>
+<p>All other characters not part of the Base64 alphabet will be ignored.</p>
+
+<p>To decode Base64 where upper-lowercase is wrong/lost, try <a href="https://www.dcode.fr/base-64-encoding">dCode</a>.
+
+<hr>
+
+<p>Input text to decode:</p>
+
+<table>
+<tr>
+<td>
+<textarea id="inputcode" name="inputcode" rows="4" cols="50">VGhpcyBpcyBCYXNlNjQgdGV4dA==</textarea>
+<button onclick="decode()">Decode</button>
+</td>
+<td style="width:25px"></td>
+<td>
+<input type="checkbox" id="allowuppercase" checked> Allow uppercase letters<br/>
+<input type="checkbox" id="allowlowercase" checked> Allow lowercase letters<br/>
+<input type="checkbox" id="allowdigits" checked> Allow digits<br/>
+<input type="checkbox" id="allowspaces" checked> Allow spaces<br/>
+<input type="checkbox" id="allowsymbols"> Allow symbols (only keyboard-typable ones)<br/>
+<input type="checkbox" id="nutrimatic"> Nutrimatic format<br/>
+</td>
+</tr>
+</table>
+
+<p id="malformed">Decoded text:</p>
+
+<div id="output"></div><br/>
+
+<hr>
+
+Base64 conversion table:<br/><br/>
+
+<img src="base64.png"><br/><br/>
+
+</body>
+</html>
+
+<script src="base64.js"></script>
