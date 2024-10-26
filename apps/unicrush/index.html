@@ -34,9 +34,9 @@
 
 <p>This is my recreation of Cary and Michael Huang's <a href="https://htwins.net/unicrush/">Unicrush</a>, just for fun. The original is missing a few transformations, such as <code>[erg → ㋍]</code>.</p>
 
-<p>In this version, I only use digraphs and character decomposition mappings explicitly defined in Unicode standard. It seems more "complete" in that it even includes Japanese and Arabic character combinations.</p>
+<p>In this version, I only use digraphs and character decomposition mappings explicitly defined in Unicode standard. Doing it this way helped me automate most of the character combinations. It also seems more "complete" in that it even includes Japanese and Arabic character combinations.</p>
 
-<p>However, even that is still incomplete. It doesn't include some transformations like <code>[Pts → ₧]</code>.</p>
+<p>However, even that is still a bit incomplete. It doesn't include some transformations like <code>[Pts → ₧]</code>. Which makes sense, because some text renderers actually display ₧ as "Pt" for some reason.</p>
 
 <p>You can see the full list of transformations used <a href="unicrushdata.js">here</a>.</p>
 
