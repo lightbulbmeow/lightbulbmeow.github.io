@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta name="description" content="Shorten your text using unicode">
+    <title>Unicrush (recreation)</title>
+    <style>
+        body{
+            background-color: black;
+            color: white;
+        }
+        a{
+            color: #ff99ff;
+            font-weight: bold;
+        }
+        a:hover{
+            color: #ff9999;
+            text-decoration: underline;
+        }
+        textarea, code, #output{
+            font-family: "Comic Mono";
+        }
+        @font-face{
+            font-family: 'Comic Mono';
+            src: url("../../fonts/ComicMono.ttf");
+        }
+        td, th{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<h1>Unicrush (recreation)</h1>
+
+<p>This is my recreation of Cary and Michael Huang's <a href="https://htwins.net/unicrush/">Unicrush</a>, just for fun. The original is missing a few transformations, such as <code>[erg → ㋍]</code>.</p>
+
+<p>In this version, I only use digraphs and character decomposition mappings explicitly defined in Unicode standard. It seems more "complete" in that it even includes Japanese and Arabic character combinations.</p>
+
+<p>However, even that is still incomplete. It doesn't include some transformations like <code>[Pts → ₧]</code>.</p>
+
+<p>You can see the full list of transformations used <a href="unicrushdata.js">here</a>.</p>
+
+<hr>
+
+<table>
+<tr>
+<th><p>Input text:</p></th>
+<th></th>
+<th><p>Unicrushed text:</p></th>
+</tr>
+<tr>
+<td><textarea id="inputcode" name="inputcode" rows="10" cols="50">Characters get merged together!</textarea></td>
+<td>
+<p><button onclick="unicrush()">→</button></p>
+<p><div id="charcount"></div></p>
+<p><button onclick="expand()">←</button></p>
+</td>
+<td><textarea id="outputcode" name="outputcode" rows="10" cols="50"></textarea></td>
+</tr>
+</table>
+
+</body>
+</html>
+
+<script src="unicrushdata.js"></script>
+<script src="unicrush.js"></script>
+
+<!--
+I did not include:
+
+<< >> L' l' t' O' o' 'P U' u' || 'A 'E 'H 'I 'O 'Y bI "A "E "H "I "O "Y 0/00 0/000 /, Pts Dp Px =/= <= >= () <<< >>> NUL SOH STX EXT EOT ENQ ACK BEL BS HT LF VT FF CR SO SI DLE DC1 DC2 DC3 DC4 NAK SYN ETB CAN EM SUB ESC FS GS RS US SP DEL NL \\
+l3 d3 WW Hb IO bi io IA X, x, du Tu th *** ** CE fff
+
+
+« » Ľ ľ ť Ơ ơ Ƥ Ư ư ǁ Ά Έ Ή Ί Ό Ύ Ы Ἃ Ἓ Ἣ Ἳ Ὃ Ὓ ‰ ‱ ⁁ ₧ ₯ ℞ ≠ ≤ ≥ ≬ ⋘ ⋙ ␀ ␁ ␂ ␃ ␄ ␅ ␆ ␇ ␈ ␉ ␊ ␋ ␌ ␍ ␎ ␏ ␐ ␑ ␒ ␓ ␔ ␕ ␖ ␗ ␘ ␙ ␚ ␛ ␜ ␝ ␞ ␟ ␠ ␡ ␤ ⑊
+ɮ ʤ ʬ Њ Ю ы ю Ѩ Ӽ ӽ ԃ Ԏ ᵺ ⁑* ⁑ ₠ ∭
+
+
+Iffy:
+Ꜷ ꜷ Ꜹ ꜹ Ꜽ ꜽ ᵺ Ꙗ ꙗ ю
+-->
