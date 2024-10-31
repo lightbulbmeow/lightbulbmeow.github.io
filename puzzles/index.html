@@ -15,19 +15,21 @@
 
 <p>Usually with these puzzles, there's some English word or phrase that you have to figure out.</p>
 
+<p>The emoji 🌶 means that puzzle is more difficult compared to the others.</p>
+
 <center>
 <table style="width: 80%;">
     <colgroup>
         <col style="width: 20%"><col style="width: 20%"><col style="width: 20%"><col style="width: 20%"><col style="width: 20%">
     </colgroup>
     <tr>
-        <td class="thumb">1</td><td class="thumb">2</td><td class="thumb">3</td><td class="thumb">4</td><td class="thumb">5</td>
+        <td class="thumb">1</td><td class="thumb">2</td><td class="thumb">3</td><td class="thumb">4</td><td class="thumb">5 🌶</td>
     </tr>
     <tr>
         <td class="thumb">6</td><td class="thumb">7</td><td class="thumb">8</td><td class="thumb">9</td><td class="thumb">10</td>
     </tr>
     <tr>
-        <td class="thumb">11</td>
+        <td class="thumb">11</td><td class="thumb" style="image-rendering: pixelated;">12 🌶🌶</td>
     </tr>
 </table>
 </center>
@@ -37,8 +39,8 @@
 <script>
     let thumbnails = document.getElementsByClassName("thumb");
     for(a of thumbnails){
-        let index = a.innerText
-        a.innerHTML = index + "<br/><a href='" + index + ".html'><img src='" + index + ".png' width=225></a>";
+        let index = a.innerText.split(" ")[0];
+        a.innerHTML = a.innerText + "<br/><a href='" + index + ".html'><img src='" + index + ".png' width=225></a>";
     }
 </script>
 <script src="../emojis/script.js"></script>
