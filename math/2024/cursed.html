@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="description" content="Hello! Welcome to my blog (*・ω・)ﾉ I will giv u free Cookies">
+    <title>Cursed Math Problems</title>
+    <link rel="stylesheet" href="../blog.css">
+    <link rel="stylesheet" href="../pygments.css">
+    <style>@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@700&display=swap');</style> <!-- Google font "Josefin Sans" -->
+
+    <style> body{ background-image: url("cursedbg.jpg"); background-size: 100% auto; }</style>
+    <style> li { margin: 20px 0; }</style>
+
+    <!-- Latex stuff -->
+    <script>
+        MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+        }
+        };
+    </script>
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+
+    <script>
+        document.cookie = "freecookie=Heres your free cookie!!! Enjoy ~ヾ(・ω・);";
+    </script>
+</head>
+<body>
+    <a href="../index.html"><img src="../back.png" style="position: fixed; top: 20px; left: 20px;" /></a>
+
+    <div class="entry">
+
+        <h1>Cursed Math Problems</h1>
+
+        <p class="date">November 24, 2024. 6:40pm</p>
+
+        Here is a list of unintuitive and (objectively?) cursed results in math. I tried to sort by least cursed to most cursed.<br/><br/>
+
+
+
+        <h2>ALGEBRA / ANALYSIS</h2>
+
+        <ol>
+        <li>Let $S$ be the set of all positive integers that do not contain the string $314159$ in its decimal representation. Does $\displaystyle\sum_{n\in S}\frac1n$ converge?
+
+        <details><summary>Answer</summary><br/>
+        Yes. This is a <a href="https://en.wikipedia.org/wiki/Kempner_series">Kempner series.</a></details>
+
+
+
+        <li>Find all functions $f:\mathbb R\to\mathbb R$ atisfying $f(x+y)=f(x)+f(y)$ for all $x,y\in\mathbb R$.
+
+        <details><summary>Answer</summary><br/>
+        $f(x)=cx$ is not the only solution to this functional equation. See <a href="https://en.wikipedia.org/wiki/Cauchy's_functional_equation">Cauchy's functional equation</a>.</details>
+
+
+
+        <li>Does there exist a function $f:\mathbb R\to\mathbb R$ such that
+        <ol type="a">
+        <li> $f$ is continuous, but differentiable nowhere?
+        <li> $f$ is differentiable, but $f'$ is not continuous?
+        <li> $f$ is continuous at a single point, but discontinuous everywhere else?
+        <li> $f$ is continuous only at irrational numbers, and discontinuous at everywhere else?
+        <li> $f$ is continuous only at rational numbers, and discontinuous at everywhere else?
+        </ol>
+
+        <details><summary>Answer</summary><br/>
+        <ol type="a">
+        <li> Yes. One example is the <a href="https://en.wikipedia.org/wiki/Weierstrass_function">Weierstrass function</a>
+        <li> Yes. For example, define $f(x)=\begin{cases}x^2\sin(1/x) & (x\ne0) \\ 0 & (x=0)\end{cases}$. It's derivative $f'$ is called a <a href="https://en.wikipedia.org/wiki/Darboux%27s_theorem_(analysis)">Darboux function</a>.
+        <li> Yes. For example, consider $x$ times the <a href="https://en.wikipedia.org/wiki/Dirichlet_function">Dirichet function</a>: $f(x)=\begin{cases}x & (x\in\mathbb Q)\\0 & (x\not\in\mathbb Q)\end{cases}$
+        <li> Yes. One example is <a href="https://en.wikipedia.org/wiki/Thomae%27s_function">Thomae's function</a>: $f(x)=\begin{cases}\frac1q & \text{if }x=\frac pq\text{ for some coprime integers }p,q\\ 0 & \text{ if }x\text{ is irrational}\end{cases}$
+        <li> No. See proof <a href="https://www.quora.com/Is-there-any-function-which-is-continuous-at-all-rational-points-and-is-discontinuous-at-all-irrational-points">here</a>.
+        </ol>
+
+        More cursed analysis stuff can be seen in this book: <i><a href="https://faculty.ksu.edu.sa/sites/default/files/_olmsted_1.pdf">Counterexamples in Analysis</a></i></details>
+
+
+
+        <li>It can be shown that
+        \begin{align*}
+        &\int^\infty_0\frac{\sin(x)}x\,dx=\frac\pi2\\
+        &\int^\infty_0\frac{\sin(x)}x\cdot\frac{\sin(x/3)}{x/3}\,dx=\frac\pi2\\
+        &\int^\infty_0\frac{\sin(x)}x\cdot\frac{\sin(x/3)}{x/3}\cdot\frac{\sin(x/5)}{x/5}\,dx=\frac\pi2\\
+        &\int^\infty_0\frac{\sin(x)}x\cdot\frac{\sin(x/3)}{x/3}\cdot\frac{\sin(x/5)}{x/5}\cdot\frac{\sin(x/7)}{x/7}\,dx=\frac\pi2\\
+        &\int^\infty_0\frac{\sin(x)}x\cdot\frac{\sin(x/3)}{x/3}\cdot\frac{\sin(x/5)}{x/5}\cdot\frac{\sin(x/7)}{x/7}\cdot\frac{\sin(x/9)}{x/9}\,dx=\frac\pi2\\
+        &\int^\infty_0\frac{\sin(x)}x\cdot\frac{\sin(x/3)}{x/3}\cdot\frac{\sin(x/5)}{x/5}\cdot\frac{\sin(x/7)}{x/7}\cdot\frac{\sin(x/9)}{x/9}\cdot\frac{\sin(x/11)}{x/11}\,dx=\frac\pi2\\
+        &\int^\infty_0\frac{\sin(x)}x\cdot\frac{\sin(x/3)}{x/3}\cdot\frac{\sin(x/5)}{x/5}\cdot\frac{\sin(x/7)}{x/7}\cdot\frac{\sin(x/9)}{x/9}\cdot\frac{\sin(x/11)}{x/11}\frac{\sin(x/13)}{x/13}\,dx=\frac\pi2\\
+        \end{align*}
+        What is the value of $\displaystyle\int^\infty_0\frac{\sin(x)}x\cdot\frac{\sin(x/3)}{x/3}\cdot\frac{\sin(x/5)}{x/5}\cdots\frac{\sin(x/15)}{x/15}\,dx$ ?
+
+        <details><summary>Answer</summary><br/>
+        The answer is $\dfrac{467807924713440738696537864469}{935615849440640907310521750000}\pi$.<br/><br/>
+
+        This is called a <a href="https://en.wikipedia.org/wiki/Borwein_integral">Borwein integral</a>.<br/> 3Blue1Brown has a <a href="https://www.youtube.com/watch?v=851U557j6HE">great video</a> explaining this weird phenomenon.</details>
+
+
+        </ol><br/>
+
+        <h2>GEOMETRY</h2>
+
+        <ol>
+        <li>What is the expected distance between two randomly chosen points inside a unit square?
+
+        <details><summary>Answer</summary><br/>
+        $\dfrac{2+\sqrt2+5\ln(1+\sqrt2)}{15}$<br/>
+
+        This problem is called <a href="https://en.wikipedia.org/wiki/Mean_line_segment_length">Mean line segment length</a>. See <a href="https://www.youtube.com/watch?v=i4VqXRRXi68">here</a> for a solution.</details>
+
+        <li>Is it possible to express $\cos(2\pi/11)$ using radicals?
+
+        <details><summary>Answer</summary><br/>
+        Despite there not being a general quintic formula, the answer is Yes.<br/>
+
+        According to <a href="https://math.stackexchange.com/questions/4468729/radical-representation-of-cos-frac-2-pi11">this StackExchange post</a>, the answer, in its full glory, is
+        \begin{align*}
+        \cos\left(\frac{2\pi}{11}\right)=&\frac14\left(\sqrt5-1-i\sqrt{10+2\sqrt5}\right)\cdot\sqrt[5]{-\frac{11}4\left(89-25\sqrt5-5i\sqrt{410+178\sqrt5}\right)}+\\
+        &\frac14\left(\sqrt5-1+i\sqrt{10+2\sqrt5}\right)\cdot\sqrt[5]{-\frac{11}4\left(89+25\sqrt5+5i\sqrt{410-178\sqrt5}\right)}+\\
+        &\frac14\left(\sqrt5-1-i\sqrt{10+2\sqrt5}\right)\cdot\sqrt[5]{-\frac{11}4\left(89+25\sqrt5-5i\sqrt{410-178\sqrt5}\right)}+\\
+        &\frac14\left(\sqrt5-1+i\sqrt{10+2\sqrt5}\right)\cdot\sqrt[5]{-\frac{11}4\left(89-25\sqrt5+5i\sqrt{410+178\sqrt5}\right)}
+        \end{align*}
+        In fact, it's always possible to write any $\cos(p\pi/q)$ using radicals, but the solution won't be very pretty. The proof involves Galois theory (I think).</details>
+
+
+
+        </ol><br/>
+
+        <h2>NUMBER THEORY</h2>
+
+        <ol>
+        <li>Find all integer solutions to $x^2=2y^4-1$
+
+        <details><summary>Answer</summary><br/>
+        For $x,y\ge0$, the only solutions are $(1,1)$ and $(239,13)$. This equation is called <a href="https://arxiv.org/pdf/1705.03011">Ljunggren's equation</a>.
+        </details>
+
+
+
+        <li>Find all integer solutions to $y^2=x^3+24$
+
+        <details><summary>Answer</summary><br/>
+        For $y\ge0$, the only solutions are $(-2,4)$, $(1,5)$, $(10,32)$, $(8158,736844)$. This equation is a <a href="https://en.wikipedia.org/wiki/Mordell_curve">Mordell curve</a>.
+        </details>
+
+
+
+        <li>Let $O(n)$ be the number of integers $\le n$ with an odd number of prime factors (with multiplicity) and $E(n)$ be the number of integers $\le n$ with an even number of prime factors.<br/>
+
+        The first few $n$ such that $O(n)=E(n)$ are $n=0,2,4,6,10,16,26,40,96,586$. Are there any others?
+
+        <details><summary>Answer</summary><br/>
+        Yes. The next smallest is $n=906150256$. This is also known as <a href="https://mathworld.wolfram.com/PolyaConjecture.html">Pólya Conjecture</a>.<br/>
+
+        A list of all such $n$ found so far can be found on <a href="https://oeis.org/A028488">OEIS</a>.
+        </details>
+
+
+
+        <li>Can you find positive integer solutions to
+        $$\frac a{b+c}+\frac b{c+a}+\frac c{a+b}=4\,?$$
+        <center><img src="fruits.jpg"></center>
+
+        <details><summary>Answer</summary><br/>
+        The smallest solution for $(a,b,c)$ is 80 digits long:
+        \begin{align*}
+        a &= 154476802108746166441951315019919837485664325669565431700026634898253202035277999\\
+        b &= 36875131794129999827197811565225474825492979968971970996283137471637224634055579\\
+        c &= 4373612677928697257861252602371390152816537558161613618621437993378423467772036
+        \end{align*}
+        See <a href="https://www.quora.com/Is-there-a-positive-integer-solution-for-a-b-and-c-if-c-a-+-b-+-b-a-+-c-+-a-b+c-4">this Quora post</a> or <a href="https://artofproblemsolving.com/community/c2532359h2760821">this AoPS blog post</a> to see how these could be computed.
+        </details>
+
+
+
+        <li>Let $\sigma(n)$ be the sum of divisors function, and $H_n$ be the $n^{th}$ harmonic number. Is it true that
+        $$\sigma(n)\le H_n+e^{H_n}\log(H_n)$$
+        for all integers $n\ge1$?
+
+        <details><summary>Answer</summary><br/>
+        It is equivalent to the Riemann Hypothesis. See <a href="https://mathoverflow.net/questions/39944/collection-of-equivalent-forms-of-riemann-hypothesis">here</a> for other equivalent forms.
+        </details>
+
+
+
+        <li>Is the following inequality true for all integers $n\ge3$?
+        $$|\log\mathrm{lcm}(1,2,\ldots,n)-n|<\sqrt n\log^2(n)$$
+
+        <details><summary>Answer</summary><br/>
+        It is also equivalent to the Riemann Hypothesis. See <a href="https://mathoverflow.net/questions/39944/collection-of-equivalent-forms-of-riemann-hypothesis">here</a> for other equivalent forms.
+        </details>
+
+
+
+        </ol><br/>
+
+        <h2>COMBINATORICS</h2>
+
+        <ol>
+        <li>Denote the "hereditary base-$n$ notation" of an integer $m$ as writing it in base-$n$, then its exponents in base-$n$, and its exponents' exponents in base-$n$, etc. For example, the hereditary base-3 notation of 100 is
+        $$100=3^{3^1+1}+2\cdot3^2+1$$
+        Let $m$ be a positive integer. Perform the following step repeatedly until the result is 0 starting with Step 1:<br/><br/>
+
+        "In the $n^{th}$ step, express the current value using base-$(n+1)$ notation. Then replace each occurrence of $(n+1)$ with $(n+2)$, and finally subtract 1 from the resulting new number."<br/><br/>
+
+        Does this algorithm eventually halt for every positive integer $m$?
+
+        <details><summary>Answer</summary><br/>
+        Yes. Even though it seems to grow without bound, it will eventually halt after finitely many steps. This is <a href="https://en.wikipedia.org/wiki/Goodstein's_theorem">Goodstein's theorem</a>, and is an example of a sequence that grows absurdly fast.
+        </details>
+
+
+
+        <li>In this problem, we'll refer to "trees" as any rooted tree where each node has a color.<br/><br/>
+
+        We say that a tree T is "contained" in tree T' if T can be formed from T' by deleting edges, vertices, and by contracting edges.<br/><br/>
+
+        We say that a (finite) sequence of trees is "good" if each node of every tree in the sequence is colored in one of $c$ colors, the $i^{th}$ tree in the sequence contains at most $i$ nodes, and a tree cannot contain a tree that appears earlier in the sequence.<br/><br/>
+
+        If only one color can be used for the nodes, the max length of a good sequence is 1.<br/>
+        If only two colors can be used for the nodes, the max length of a good sequence is 3.<br/><br/>
+
+        What is the max length of a good sequence, if three colors can be used for the nodes?<br/><br/>
+
+        <center><img src="tree3.webp" height=250></center>
+
+        <details><summary>Answer</summary><br/>
+        The answer is TREE(3), which is absurdly huge! It's <i>extremely</i> bigger than Graham's number, which itself is already unfathomably large.<br/><br/>
+
+        See <a href="https://www.youtube.com/watch?v=3P6DWAwwViU">Numberphile's video</a> on TREE(3), or read more about it on the <a href="https://googology.fandom.com/wiki/TREE_sequence">Googology wiki</a>.
+        </details>
+
+
+
+        </ol><br/>
+
+        <h2>PROBABILITY</h2>
+
+        <ol>
+        <li>
+        <ol type="a">
+        <li>You are playing a game: You flip a coin repeatedly until it turns up tails for the first time. At that point, you win $2^n$ dollars, where $n$ is the number of times you flipped the coin. What is your expected winnings?
+        <li>The same game, but if $n$ is odd, you win $2^n$ dollars. Otherwise if $n$ is even, you lose $2^n$ dollars. What is your expected winnings?
+        <li>The same game, but if $n$ is odd, you win $3^n$ dollars. Otherwise if $n$ is even, you lose $3^n$ dollars. What is your expected winnings?
+        <li>The same game, but if $n$ is odd, you win $2^n/n$ dollars. Otherwise if $n$ is even, you lose $2^n/n$ dollars. What is your expected winnings?
+        </ol>
+
+        <details><summary>Answer</summary><br/>
+        Not entirely sure, but here are my answers:<br/><br/>
+
+        a. $+\infty$<br/>
+        b. Does not converge. The expected sum seems to oscillate between 1, 0, 1, 0, 1, 0, ...<br/>
+        c. Does not converge. The expected sum oscillates wildly.<br/>
+        d. $\ln2$. This is a bit suspicious since the expected sum is conditionally convergent.<br/><br/>
+
+        This is also known as the <a href="https://en.wikipedia.org/wiki/St._Petersburg_paradox">St. Petersburg paradox</a>. It shows how absurd expected values can be.
+        </details>
+
+
+
+        <li>
+        <ol type="a">
+        <li>Mr. Jones has two children; at least one is a boy. What is the probability he has two boys?
+        <li>Mr. Jones has two children; at least one is a boy who was born on Tuesday. What is the probability he has two boys?
+        <li>Mr. Jones has two children. When you walk to his house and knock on the door, one of these two children (with equal probability) will open the door. You knock on the door and a boy opens the door. What is the probability he has two boys?
+        </ol>
+
+        <details><summary>Answer</summary><br/>
+        a. 1/3<br/>
+        b. 13/27<br/>
+        c. 1/2<br/><br/>
+
+        This is also known as the <a href="https://en.wikipedia.org/wiki/Boy_or_girl_paradox">Boy or girl paradox</a>, which shows how counterintuitive conditional probabilities can be.
+        </details>
+
+
+
+        </ol><br/>
+
+        <h2>GAME THEORY</h2>
+
+        <ol>
+        <li>Consider infinitely many people each wearing a hat, which is either red, green, or blue. Each person can see the hat color of everyone except themselves. Simultaneously each person guesses the color of their hat. Show that they can form a strategy such that at most finitely many people guess their color incorrectly.
+
+        <details><summary>Answer</summary><br/>
+        From Problem 82E in Evan Chen's Napkin.
+        </details>
+
+
+
+        <li> There is a house with 100 rooms, and each room contains countably many boxes indexed with the natural numbers. Each box contains a random real number, which is the same over all the rooms (that is, box n contains the same real number in every room).<br/><br/>
+
+        100 set theorists play a game. Each person will go into a unique room and open as many boxes as they like (perhaps countably many) as long as they leave at least one box in their room unopened. Then, each of them need to pick an unopened box in their room, and guess what real number is inside of it.<br/><br/>
+
+        In order to win, 99 of them need to guess correctly.<br/><br/>
+
+        The mathematicians can discuss a strategy beforehand, but after they go into their respective rooms, no more communication is allowed. What is a 100% winning strategy for this seemingly impossible task?
+
+        <details><summary>Answer</summary><br/>
+        The solution requires Axiom of Choice. Source: <a href="https://old.reddit.com/r/math/comments/rpbhos/predicting_random_real_numbers_with_the_axiom_of/">Reddit</a>
+        </details>
+
+
+
+        </ol><br/>
+
+        <h2>SET THEORY</h2>
+
+        <ol>
+        <li>Let $X$ and $Y$ be sets. If $X$ has smaller cardinality than $Y$, does it imply $X$ has fewer subsets than $Y$?
+
+        <details><summary>Answer</summary><br/>
+        The answer is independent of ZFC. See <a href="https://mathoverflow.net/questions/1924/what-are-some-reasonable-sounding-statements-that-are-independent-of-zfc">here</a> for some other reasonable-sounding statements that are actually independent of ZFC.</a>
+        </details>
+
+
+
+        <li>Define a subset $A$ of $\mathbb R^2$ to be a "cloud around $p$" if every line through $p$ has a finite intersection with $A$. Can three clouds cover the entire plane?
+
+        <details><summary>Answer</summary><br/>
+        It is equivalent to the Continuum Hypothesis, which is undecidable in ZFC. See <a href="https://mathoverflow.net/questions/1924/what-are-some-reasonable-sounding-statements-that-are-independent-of-zfc">here</a> for some other reasonable-sounding statements that are actually independent of ZFC.</a>
+        </details>
+
+
+
+        </ol>
+    </div>
+</body>
+
+<script src="../../emojis/script.js"></script>
