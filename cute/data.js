@@ -9,6 +9,12 @@ data = [
         tags: "nanahira, chokottodake, denpa singers, utaites, vtubers, twintails, girls kissing, hugging, yuri, bow",
     },
     {
+        file: "nekoha_shizuku.png",
+        source: "https://gelbooru.com/index.php?page=post&s=view&id=7196918",
+        artist: "甘城なつき/Nachoneko", twitter: "amsrntk3",
+        tags: "catgirl, animal ears, plush, hugging, sleep, bed, blanket, pawprints",
+    },
+    {
         file: "yuru_yuri_hug.jpg",
         source: "https://www.pixiv.net/en/artworks/53550685",
         artist: "ばふぁこ", twitter: "_yurubafa_",
@@ -69,6 +75,12 @@ data = [
         tags: "serika swimsuit, abydos foreclosure task force, blue archive, halo, animal ears, catgirl",
     },
     {
+        file: "mcdonalds.jpg",
+        source: "https://www.pixiv.net/en/artworks/123661570",
+        artist: "桃彗 くみの", pixiv: "50810160",
+        tags: "imadakedabuchitabemi, mcdonalds employee, only now try eating a double cheeseburger, pinch, puni",
+    },
+    {
         file: "serika_new_year.png",
         source: "https://www.pixiv.net/en/artworks/109339952",
         artist: "The-Notes", twitter: "The_E_Note",
@@ -79,6 +91,12 @@ data = [
         source: "https://www.pixiv.net/en/artworks/61826822",
         artist: "ひより", twitter: "HoioPdiky",
         tags: "hatsune miku, twintails, vocaloid, chibi",
+    },
+    {
+        file: "mahiro_hoshino_tsumiki_konata.jpg",
+        source: "https://www.pixiv.net/en/artworks/105365533",
+        artist: "マスター村上", pixiv: "74260288",
+        tags: "mahiro oyama, onii-chan was oshimai, oniimai, takanashi hoshino, blue archive, ahoge, halo, tsumiki miniwa, acchi kocchi, catgirl, konata izumi, lucky star",
     },
     {
         file: "nanawo_akari.jpg",
@@ -235,6 +253,12 @@ data = [
         source: "https://www.deviantart.com/raeartworks/art/Hiiragi-Tsukasa-363338225",
         artist: "RaeArtworks", deviantart: "raeartworks",
         tags: "hiiragi tsukasa, thinking, lucky star"
+    },
+    {
+        file: "sushi_cat.jpeg",
+        source: "https://x.com/hotatetatetate/status/1497466462797135875",
+        artist: "hotate", twitter: "hotatetatetate",
+        tags: "catgirl, sushi, animal ears, tail, food, maid"
     },
     {
         file: "kiritan_scarf.png",
