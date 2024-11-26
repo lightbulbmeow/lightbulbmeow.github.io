@@ -28,12 +28,11 @@ h1, h2, h3 {
     color: white;
     font-family: 'Comic Sans';
 }
-.theorem, details {
+.theorem {
     border-radius: 5px;
     border: 2px solid rgba(0,100,200);
     background-color: rgba(0,10,20,0.69);
     padding: 10px 10px 10px 10px;
-    margin: 10px;
 }
 .proof {
     border-radius: 5px;
@@ -46,6 +45,13 @@ h1, h2, h3 {
     border: 2px solid rgba(200,100,0);
     background-color: rgba(20,10,0,0.69);
     padding: 10px 10px 10px 10px;
+}
+details {
+    border-radius: 5px;
+    border: 2px solid rgba(0,100,200);
+    background-color: rgba(0,10,20,0.69);
+    padding: 10px 10px 10px 10px;
+    margin: 10px;
 }
 @font-face{
     font-family: 'Comic Mono';

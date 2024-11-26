@@ -13,7 +13,10 @@ function clean(s){
 submit.onclick = function(){
     let useranswer = answer.value;
     let correctanswer = atob(answer.dataset.base64Answer);
-    let partialanswer = atob(answer.dataset.base64PartialAnswer).split("|");
+    let partialanswer = [];
+    if(answer.dataset.base64PartialAnswer != undefined){
+        partialanswer = atob(answer.dataset.base64PartialAnswer).split("|");
+    }
     if(clean(useranswer) == clean(correctanswer)){
         answer.value = correctanswer
         verdict.innerHTML = "<b><span style='color:lime'>CORRECT!!!</span> <img src='" + akariyep + "' height=24></b>"
