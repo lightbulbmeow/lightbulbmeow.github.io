@@ -7,8 +7,24 @@
     <link rel="stylesheet" href="../pygments.css">
     <style>@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@700&display=swap');</style> <!-- Google font "Josefin Sans" -->
 
-    <style> body{ background-image: url("cursedbg.jpg"); background-size: 100% auto; }</style>
-    <style> li { margin: 20px 0; }</style>
+    <style>
+        body {
+            background-image: url("cursedbg.jpg");
+            background-size: 100% auto;
+        }
+        li {
+            margin: 20px 0;
+        }
+        table {
+            border-collapse: collapse;
+        }
+        td {
+            border: 1px solid white;
+            color: white;
+            padding: 5px;
+            text-align: center;
+        }
+    </style>
 
     <!-- Latex stuff -->
     <script>
@@ -33,19 +49,20 @@
 
         <h1>Cursed Math Problems</h1>
 
-        <p class="date">November 24, 2024. 6:40pm</p>
+        <p class="date">Created: November 24, 2024. 6:40pm<br/>Updated: November 25, 2024. 11:00am</p>
 
         Here is a list of unintuitive and (objectively?) cursed results in math. I tried to sort by least cursed to most cursed.<br/><br/>
-
 
 
         <h2>ALGEBRA / ANALYSIS</h2>
 
         <ol>
-        <li>Let $S$ be the set of all positive integers that do not contain the string $314159$ in its decimal representation. Does $\displaystyle\sum_{n\in S}\frac1n$ converge?
+        <li>Let $S$ be the set of all positive integers that do not contain the string 314159 in its decimal representation. Does $\displaystyle\sum_{n\in S}\frac1n$ converge?
 
         <details><summary>Answer</summary><br/>
-        Yes. This is a <a href="https://en.wikipedia.org/wiki/Kempner_series">Kempner series.</a></details>
+        Yes. It converges to 2302582.33386...<br/><br/>
+
+        This is a <a href="https://en.wikipedia.org/wiki/Kempner_series">Kempner series.</a></details>
 
 
 
@@ -173,7 +190,7 @@
 
 
 
-        <li>Let $\sigma(n)$ be the sum of divisors function, and $H_n$ be the $n^{th}$ harmonic number. Is it true that
+        <li>Let $\sigma(n)=\sum_{d\mid n}d$ be the sum of divisors function, and $H_n=1+\frac12+\frac13+\cdots+\frac1n$ be the $n^{th}$ harmonic number. Is it true that
         $$\sigma(n)\le H_n+e^{H_n}\log(H_n)$$
         for all integers $n\ge1$?
 
@@ -190,6 +207,24 @@
         It is also equivalent to the Riemann Hypothesis. See <a href="https://mathoverflow.net/questions/39944/collection-of-equivalent-forms-of-riemann-hypothesis">here</a> for other equivalent forms.
         </details>
 
+
+
+        <li>Does there exist a multivariate polynomial $P(x,y_1,y_2,\ldots,y_n)$ with integer coefficients with the following property:<br/>
+
+        For every nonnegative integer $x$, $x$ is a prime number if and only if there exist nonnegative integers $y_1,\ldots,y_n$ such that $P(x,y_1,\ldots,y_n)=0$.
+
+        <details><summary>Answer</summary><br/>
+        Yes. According to <a href="https://www.logicmatters.net/resources/pdfs/MRDP.pdf">this source</a>, one such polynomial is
+        \begin{align*}
+        &(wz+h+j-q)^2+((gk+2g+k+1)(h+j)+h-z)^2+(16(k+1)^3(k+2)(n+1)^2+1-f^2)^2+(2n+p+q+z-e)^2\\
+        &+(e^3(e+2)(a+1)^2+1-o^2)^2+((a^2-1)y^2+1-x^2)^2+(16r^2y^4(a^2-1)+1-u^2)^2+(n+l+v-y)^2+((a^2-1)l^2+1-m^2)^2\\
+        &+(ai+k+1-l-i)^2+(((a+u^2(u^2-a))^2-1)(n+4dy)^2+1-(x+cu)^2)^2+(p+l(a-n-1)+b(2an+2a-n^2-2n-2)-m)^2\\
+        &+(q+y(a-p-1)+s(2ap+2a-p^2-2p-2)-x)^2+(z+pl(a-p)+t(2ap-p^2-1)-m)^2
+        \end{align*}
+        Then $k+2$ is prime so long as there are values of the other variables for which the polynomial equal zero.<br/><br/>
+
+        More generally, the <a href="https://en.wikipedia.org/wiki/Diophantine_set">MRDP theorem</a> states that if $S$ is any <a href="https://en.wikipedia.org/wiki/Computably_enumerable_set">recursively enumerable set</a> of natural numbers (any set which you can compute with some algorithm), then there exists a polynomial $P(x,y_1,\ldots,y_n)$ such that $x\in S$ if and only if there exist nonnegative integer values for the other variables $y_1,\ldots,y_n$ which make the polynomial 0.
+        </details>
 
 
         </ol><br/>
@@ -277,13 +312,46 @@
 
         </ol><br/>
 
-        <h2>GAME THEORY</h2>
+        <h2>SET THEORY</h2>
 
         <ol>
-        <li>Consider infinitely many people each wearing a hat, which is either red, green, or blue. Each person can see the hat color of everyone except themselves. Simultaneously each person guesses the color of their hat. Show that they can form a strategy such that at most finitely many people guess their color incorrectly.
+        <li>Let $X$ and $Y$ be sets. If $X$ has smaller cardinality than $Y$, does it imply $X$ has fewer subsets than $Y$?
 
         <details><summary>Answer</summary><br/>
-        From Problem 82E in Evan Chen's Napkin.
+        The answer is independent of ZFC. See <a href="https://mathoverflow.net/questions/1924/what-are-some-reasonable-sounding-statements-that-are-independent-of-zfc">here</a> for some other reasonable-sounding statements that are actually independent of ZFC.</a>
+        </details>
+
+
+
+        <li>Define a subset $A$ of $\mathbb R^2$ to be a "cloud around $p$" if every line through $p$ has a finite intersection with $A$. Can three clouds cover the entire plane?
+
+        <details><summary>Answer</summary><br/>
+        It is equivalent to the Continuum Hypothesis, which is undecidable in ZFC. See <a href="https://mathoverflow.net/questions/1924/what-are-some-reasonable-sounding-statements-that-are-independent-of-zfc">here</a> for some other reasonable-sounding statements that are actually independent of ZFC.</a>
+        </details>
+
+
+
+                </ol><br/>
+
+        <h2>LOGIC / GAME THEORY</h2>
+
+
+
+        <ol>
+        <li>On an island, there are 100 people who are imprisoned by a mad dictator. All 100 of them have green eyes, and they are also perfect logicians. There is no escape from the island, except for one rule: Every night, any prisoner can approach the guards at night and ask to leave. If they have green eyes, they'll be released. If not, they get executed. No one on the island ever knows their own eye color. Each person knows every other person's eye color, there are no reflective surfaces, and they cannot communicate with each other.<br/>
+        At some point, an outsider comes to the island, calls together all the people on the island, and makes the following public announcement: "At least one of you has green eyes". What happens next?
+
+        <details><summary>Answer</summary><br/>
+        On the 100th night after the announcement, all the people will leave the island.<br/><br/>
+
+        This is known as the <a href="https://www.youtube.com/watch?v=98TQv5IAtY8">green-eyed logic puzzle</a>. To this day I still haven't found a satisfactory explanation to the solution of this riddle. It has to do with <a href="https://en.wikipedia.org/wiki/Common_knowledge_(logic)">common knowledge</a> somehow.
+        </details>
+
+
+        <li>Consider infinitely many people each wearing a hat, which is either red or blue. Each person can see the hat color of everyone except themselves. Simultaneously each person guesses the color of their hat. Show that they can form a strategy such that at most finitely many people guess their color incorrectly.
+
+        <details><summary>Answer</summary><br/>
+        Mathologer has <a href="https://youtu.be/aDOP0XynAzA?t=150">a video</a> about this riddle. The solution involves the Axiom of Choice.
         </details>
 
 
@@ -304,21 +372,28 @@
 
         </ol><br/>
 
-        <h2>SET THEORY</h2>
+        <h2>COMPUTER SCIENCE</h2>
 
         <ol>
-        <li>Let $X$ and $Y$ be sets. If $X$ has smaller cardinality than $Y$, does it imply $X$ has fewer subsets than $Y$?
+        <li>Does the following six-state Turing machine halt?<br/><br/>
+
+        <center><table style="font-family: Comic Mono">
+        <tr><td rowspan=2><b>State</b></td><td colspan=2><b>Symbol</b></td></tr>
+        <tr><td>0</td><td>1</td></tr>
+        <tr><td>A</td><td>1 R B</td><td>0 L D</td></tr>
+        <tr><td>B</td><td>1 R C</td><td>0 R F</td></tr>
+        <tr><td>C</td><td>1 L C</td><td>1 L A</td></tr>
+        <tr><td>D</td><td>0 L E</td><td>1 R HALT</td></tr>
+        <tr><td>E</td><td>1 L F</td><td>0 R B</td></tr>
+        <tr><td>F</td><td>0 R C</td><td>0 R E</td></tr>
+        </table></center>
 
         <details><summary>Answer</summary><br/>
-        The answer is independent of ZFC. See <a href="https://mathoverflow.net/questions/1924/what-are-some-reasonable-sounding-statements-that-are-independent-of-zfc">here</a> for some other reasonable-sounding statements that are actually independent of ZFC.</a>
-        </details>
+        Yes. It halts after this many steps:
+        $$\frac{-11+3^{\frac{13+3^{\frac{23+3^{\frac{7+3^{\frac{21+3^{\frac{7+3^{\frac{23+3^{\frac{7+3^{\frac{23+3^{\frac{7+3^{\frac{21+3^{\frac{7+3^{\frac{23+3^{\frac{7+3^{\frac{21+3^{\frac{7+3^{4}}8}}8}}8}}8}}8}}8}}8}}8}}8}}8}}8}}8}}8}}8}}8}}2>10\uparrow\uparrow15$$
+        This number can't even be stored on a comupter!<br/><br/>
 
-
-
-        <li>Define a subset $A$ of $\mathbb R^2$ to be a "cloud around $p$" if every line through $p$ has a finite intersection with $A$. Can three clouds cover the entire plane?
-
-        <details><summary>Answer</summary><br/>
-        It is equivalent to the Continuum Hypothesis, which is undecidable in ZFC. See <a href="https://mathoverflow.net/questions/1924/what-are-some-reasonable-sounding-statements-that-are-independent-of-zfc">here</a> for some other reasonable-sounding statements that are actually independent of ZFC.</a>
+        This six-state Turing machine was found by Pavel Kropitz, and it is also the <a href="https://www.sligocki.com/2022/06/21/bb-6-2-t15.html">current world record</a> for $BB(6)$, where $BB$ is the <a href="https://googology.fandom.com/wiki/Busy_beaver_function">Busy beaver function</a>.
         </details>
 
 
