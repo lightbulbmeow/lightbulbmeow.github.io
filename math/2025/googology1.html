@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="description" content="Hello! Welcome to my blog (*・ω・)ﾉ I will giv u free Cookies">
+    <title>Googology - Part 1</title>
+    <link rel="stylesheet" href="googology.css">
+    <link rel="stylesheet" href="../pygments.css">
+    <style>@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@700&display=swap');</style> <!-- Google font "Josefin Sans" -->
+
+    <style> body{ background-image: url("googology1.png"); } </style>
+
+    <!-- Latex stuff -->
+    <script>
+        MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+        }
+        };
+    </script>
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+
+    <script>
+        document.cookie = "freecookie=Heres your free cookie!!! Enjoy ~ヾ(・ω・);";
+    </script>
+</head>
+<body>
+    <a href="../index.html"><img src="../black.png" style="position: fixed; top: 20px; left: 20px;" /></a>
+
+    <div class="entry">
+
+        <h1>Googology: What is the BIGGEST NUMBER we can reach? - Part 1</h1>
+
+        <p class="date">December 2, 2024. 1:20pm</p>
+
+        What's the largest number you can imagine?<br/><br/>
+
+        Is it one million? One billion? One trillion?
+
+        \begin{align*}
+        \text{one million }&=1\,000\,000\\
+        \text{one billion }&=1\,000\,000\,000\\
+        \text{one trillion }&=1\,000\,000\,000\,000\\
+        \text{one quadrillion }&=1\,000\,000\,000\,000\,000\\
+        \text{one quintillion }&=1\,000\,000\,000\,000\,000\,000\\
+        &\vdots
+        \end{align*}
+
+        As you write more and more zeroes, the number becomes 10 times bigger each time.<br/><br/>
+
+        Maybe you've also heard of a "googol" before, which is one followed by a hundred zeroes.
+
+        \begin{align*}
+        \text{one googol }&=10\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\\
+        &\phantom{=10\,}\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\\
+        &\phantom{=10\,}\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\\
+        \end{align*}
+
+        But have you heard about a "googolplex", which is one followed by a <i>googol</i> zeroes?
+
+        \begin{align*}
+        \text{one googolplex }&=1\,\underbrace{000\cdots000}_{\text{1 googol zeroes}}
+        \end{align*}
+
+        If you're a math nerd, you've probably also heard of <i>even bigger numbers</i>. Do you know Graham's number, TREE(3), Busy beaver, or Rayo's Number?<br/><br/>
+
+        It's okay if you haven't heard of any of these! In this article, I'll explain most of the common notations that googologists talk about. I want to try and make this as accessible to anyone as possible, so no prior math knowledge is required.<br/><br/>
+
+        The goal of this series of this article is to guide you through the world of <b><i>googology</i></b>, the art of (insanely) fast-growing functions. By the end of this article, I hope you'll learn how to write your own fast growing function, gain some intuition on how fast they grow, and maybe discover new branches of math out of it!<br/><br/>
+
+        <h2>Small brain</h2>
+
+        Let's revisit the googol, a large number you've probably heard of before.<br/><br/>
+
+        This number is already unbelievably huge. Let's imagine you put the entire universe inside a small little box.<br/><br/>
+
+        <center><img src="universebox.png" style="width: 60vh"></center><br/>
+
+        Every single atom in the <i>entire universe</i>, inside that little box. There's around $10^{80}$ atoms in there, one followed by 80 zeroes.<br/><br/>
+
+        In order to even come close to a googol, you'd need a hundred quintillion copies of the entire universe!<br/><br/>
+
+        <center><img src="googolbox.png" style="width: 75vh"></center><br/>
+
+        If you were to compare one googol to all the other bigger numbers we'll encounter in this article, a googol is just... <i>so stupidly small!</i> I can't even describe in words how small it is.<br/><br/>
+
+        Trying to imagine what any of these big numbers look like in real life is a lost cause. Anyways, let's begin the <i>real</i> article.<br/><br/>
+
+        <h2>Baby steps</h2>
+
+        Let's start with operations we're familiar with. Something simple and small: <b><u>addition</u></b>.
+        $$a+b$$
+        We'll call this the "<b>level 1 operation</b>", the beginning of it all.<br/><br/>
+
+        The second operation is <b><u>multiplication</u></b>. This can be thought of as <b><i>repeated addition</i></b>.
+        $$a\times b=\underbrace{a+a+\cdots+a+a}_{b\text{ times}}$$
+        $$2\times5=2+2+2+2+2=10$$
+        This will be the "<b>level 2 operation</b>". So far, the numbers we can get with just addition and multiplication aren't that huge.<br/><br/>
+
+        Next up is <b><u>exponentiation</u></b>, which is just <b><i>repeated multiplication</i></b>. This is where things start getting kind of big.
+        $$a^b=\underbrace{a\times a\times \cdots\times a\times a}_{b\text{ times}}$$
+        $$2^5=2\times2\times2\times2\times2=32$$
+        This is the "<b>level 3 operation</b>".<br/><br/>
+
+        You might have heard about this story on exponential growth:<br/><br/>
+
+        <div style="margin-left: 24px">Long back in ancient times, a farmer saved the life of a king’s daughter. The king decided to reward the farmer with whatever he wished. The farmer, who was a chess champion, made an unusual request:<br/><br/>
+
+"I would like you to place a single grain of rice on the first square of my chessboard, two grains on the second, four on the third, eight on the fourth, and so on, until you have covered all 64 squares. Each square should have twice as many grains as the previous square."<br/><br/>
+
+The king thought this request was foolish because it would produce just a small amount of rice, but he ordered it be done anyway. Little did he know what's about to happen...</div><br/>
+
+<center><img src="ricechess.jpg" style="width: 60vh"></center><br/>
+
+        The sequence starts out small, 1, 2, 4, 8, 16, 32, ... but the feeling of exponential growth really kicks in when you see the tenth square getting filled with <i>a thousand</i> grains of rice, the twentieth square filled with <i>a million</i> grains, and the thirtieth with <i>a billion</i> grains.<br/><br/>
+
+        Once this is all done, we end up having $2^{63}=9\,223\,372\,036\,854\,775\,808$ grains of rice on the final square! There isn't even enough rice in the world to finish that request. This just goes to show how fast exponentiation truly is.<br/><br/>
+
+        In the next section, we'll see operations that go even faster than this.<br/><br/>
+
+        <h2>Power tower</h2>
+
+        The level 2 operation is <b>multiplication</b>, which is <b><i>repeated addition</i></b>.<br/><br/>
+
+        The level 3 operation is <b>exponentiation</b>, which is <b><i>repeated multiplication</i></b>.<br/><br/>
+
+        Can you guess what the level 4 operation is? Yep, it's <b><i>repeated exponentiation</i></b>.<br/><br/>
+
+        Repeated exponentiation is most commonly called the <u><b>tetration</b></u>. This is the "<b>level 4 operation</b>", and it's notated like this:
+
+        $$^ba=\underbrace{a^{a^{a^{\cdot^{\cdot^{\cdot^a}}}}}}_{b\text{ copies of }a}$$
+
+        It's a power tower of $a$'s, where $a$ repeated $b$ times. To evaluate this, you must simplify the exponents from top to bottom.<br/><br/>
+
+        To see how absurdly fast this grow, let's evaluate something as small as $^52$.
+
+        $$^52=2^{2^{2^{2^2}}}=2^{2^{2^4}}=2^{2^{16}}=2^{65536}$$
+
+        It turns out, $^52$ is equal to $2^{65536}$, which I'm not going to write here since that number has 19729 digits! This number alone is already much much bigger than a googol.<br/><br/>
+
+        If we increase the height by even just one,
+        $$^62=2^{2^{2^{2^{2^2}}}}=2^{2^{65536}}$$
+        You end up with a number with an absurd amount of digits, it can't physically be written down anymore! This number is already much bigger than a googolplex (which is one followed by a googol zeroes).
+        $$^62>10^{10^{100}}$$
+        Every time we increase the height of this power tower, it just adds another layer of incomprehensibility to the number!<br/><br/><br/>
+
+        Power towers like this can still come up naturally in math. As a little trivia, here's a well-known number called <a href="https://en.wikipedia.org/wiki/Skewes%27s_number""><b>Skewes's number</b></a>, and it's absolutely massive:
+        $$\text{Skewes's number }\approx10^{10^{10^{34}}}$$
+        It comes up in some problem about prime numbers. It involves a function $\pi(x)$ that counts prime numbers, and the logarithmic integral function $\operatorname{li}(x)$.<br/><br/>
+
+        Somewhere around the year 1900, mathematicians asked whether there exists any integer $x$ such that
+
+        $$\pi(x)>\operatorname{li}(x)$$
+
+        At the time, computers didn't exist yet, so it was difficult to obtain values of $\pi(x)$ for really high $x$. All numerical evidence seemed to suggest that $\pi(x)$ is always less than $\operatorname{li}(x)$. <br/><br/>
+
+        However, in 1914, J.E. Littlewood showed that the sign of the difference $\pi(x)-\operatorname{li}(x)$ changes infinitely many times. His proof, however, did not give an explicit value for $x$.<br/><br/>
+
+        In 1933, Stanley Skewes proved that (assuming the Riemann hypothesis), the first time a sign change happens is below
+        $$e^{e^{e^{79}}}\lt10^{10^{10^{34}}}$$
+        This is a really unfeasible bound to check, even for computers of today!<br/><br/>
+
+        If you want to learn more about Skewes's number, <a href="https://www.youtube.com/watch?v=Lihh_lMmcDw">Numberphile</a> made a fantastic video about it.<br/><br/>
+
+        <h2>Going $\uparrow$ even further</h2>
+
+        We don't stop there yet. We can go <i>even further</i>!<br/><br/>
+
+        The next operation is <b><i>pentation</i></b>, which is just <b><i>repeated tetration</i></b>. This is the "<b>level 5 operation</b>".
+
+        $$\underbrace{^{^{^{^{^{^a\cdot}\cdot}\cdot}a}a}a}_{b\text{ copies of }a}$$
+
+        It's a <i>tetration</i> tower of $a$'s, where $a$ is repeated $b$ times. To evaluate this, you must simplify the tetrations from top to bottom.<br/><br/>
+
+        This notation is getting really messy, so let's change up our notation to make things neater.<br/><br/>
+
+        Exponentiation will be written as $a\uparrow b$, with an up arrow.
+        $$a\uparrow b=a^b$$
+        Tetration will be written as $a\uparrow\uparrow b$. It has two arrows, since it's repeated exponentiation.
+        $$a\uparrow\uparrow b={^b}a=\underbrace{a^{a^{a^{\cdot^{\cdot^{\cdot^a}}}}}}_{b\text{ copies of }a}$$
+        Pentation will be written as $a\uparrow\uparrow\uparrow b$. It has three arrows, since it's repeated tetration.
+        $$a\uparrow\uparrow\uparrow b=\underbrace{^{^{^{^{^{^a\cdot}\cdot}\cdot}a}a}a}_{b\text{ copies of }a}$$
+        To evaluate expressions with tetrations or pentations, we evaluate from right to left.<br/><br/>
+
+        For example, to evaluate $2\uparrow\uparrow 5$, which is tetration, we do it like this:
+
+        \begin{align*}
+        2\uparrow\uparrow5 &= 2\uparrow(2\uparrow(2\uparrow(2\uparrow2)))\\
+        &= 2\uparrow(2\uparrow(2\uparrow4))\\
+        &= 2\uparrow(2\uparrow16)\\
+        &= 2\uparrow65536\\
+        &= 2^{65536}
+        \end{align*}
+        Just remember that $\uparrow$ still means exponentiation.<br/><br/>
+
+        Now, here's an example of pentation. Let's evaluate $2\uparrow\uparrow\uparrow5$.
+
+        \begin{align*}
+        2\uparrow\uparrow\uparrow5 &= 2\uparrow\uparrow(2\uparrow\uparrow(2\uparrow\uparrow(2\uparrow\uparrow2)))\\
+        &= 2\uparrow\uparrow(2\uparrow\uparrow(2\uparrow\uparrow(2\uparrow2)))\\
+        &= 2\uparrow\uparrow(2\uparrow\uparrow(2\uparrow\uparrow4))\\
+        &= 2\uparrow\uparrow(2\uparrow\uparrow(2\uparrow(2\uparrow(2\uparrow2))))\\
+        &= 2\uparrow\uparrow(2\uparrow\uparrow(2\uparrow(2\uparrow4)))\\
+        &= 2\uparrow\uparrow(2\uparrow\uparrow(2\uparrow16))\\
+        &= 2\uparrow\uparrow(2\uparrow\uparrow65536)\\
+        &= 2\uparrow\uparrow(\underbrace{2\uparrow(2\uparrow(\cdots\uparrow2))}_{65536})\\
+        &= 2\uparrow\uparrow\underbrace{2^{2^{2^{\cdot^{\cdot^{\cdot^2}}}}}}_{65536}\\
+        &= \underbrace{2\uparrow(2\uparrow(\cdots\uparrow2))}_{\underbrace{2^{2^{2^{\cdot^{\cdot^{\cdot^2}}}}}}_{65536}}\\
+        &= \underbrace{2^{2^{2^{\cdot^{\cdot^{\cdot^2}}}}}}_{\underbrace{2^{2^{2^{\cdot^{\cdot^{\cdot^2}}}}}}_{65536}}\\
+        \end{align*}
+
+        Pentation expands into tetration, which in turn expands into exponentiation, so try not to get confused.<br/><br/>
+
+        The final value of $2\uparrow\uparrow\uparrow5$ is a power tower of 2's, whose <i>height</i> is also a <i>power tower of 2's</i>. Just... unfathomably huge! Even writing the entire power tower itself is impossible now.<br/><br/><br/>
+
+        The next operation, you guessed it, is <b><u>hexation</u></b>, which is just <b><i>repeated pentation</i></b>, and is the "<b>level 6 operation</b>".
+        $$a\uparrow\uparrow\uparrow\uparrow b = \underbrace{a\uparrow\uparrow\uparrow(a\uparrow\uparrow\uparrow(\cdots\uparrow\uparrow\uparrow a))}_{b\text{ copies of }a}$$
+        We already saw how absurd pentation can get, so we won't even bother with hexation anymore. :menherateehee:<br/><br/>
+
+        Of course, we can just keep continuing this chain forever, getting heptation, octation, nonation, etc. Each new operation just repeating the previous operation and adding one more arrow, you know the drill.
+        \begin{align*}
+        a\uparrow\uparrow\uparrow\uparrow\uparrow b &= \underbrace{a\uparrow\uparrow\uparrow\uparrow(a\uparrow\uparrow\uparrow\uparrow(\cdots\uparrow\uparrow\uparrow\uparrow a))}_{b\text{ copies of }a}\\
+        a\uparrow\uparrow\uparrow\uparrow\uparrow\uparrow b &= \underbrace{a\uparrow\uparrow\uparrow\uparrow\uparrow(a\uparrow\uparrow\uparrow\uparrow\uparrow(\cdots\uparrow\uparrow\uparrow\uparrow\uparrow a))}_{b\text{ copies of }a}\\
+        a\uparrow\uparrow\uparrow\uparrow\uparrow\uparrow\uparrow b &= \underbrace{a\uparrow\uparrow\uparrow\uparrow\uparrow\uparrow(a\uparrow\uparrow\uparrow\uparrow\uparrow\uparrow(\cdots\uparrow\uparrow\uparrow\uparrow\uparrow\uparrow\uparrow a))}_{b\text{ copies of }a}\\
+        &\vdots
+        \end{align*}
+        For brevity, we can use an exponent to denote how many arrows there should be.
+        $$a\uparrow^5b=a\uparrow\uparrow\uparrow\uparrow\uparrow b$$
+        With this, we have all the levels of operation! For any positive integer $n$, the "<b>level $n$ operation</b>" is just repeated "<b>level $(n-1)$ operation</b>".<br/><br/>
+
+        It's called $n$-ation, written with $(n-2)$ arrows.
+        $$a\uparrow^nb=\underbrace{a\uparrow^{n-1}(a\uparrow^{n-1}(\cdots\uparrow^{n-1}a))}_{b\text{ copies of }a}$$
+        You might also prefer writing it as a recurrence relation, to keep things rigorous.
+        $$a\uparrow^n b=\begin{cases}
+        a^b & (\text{if }n=1)\\
+        1 & (\text{if }n>1\text{ and }b=0)\\
+        a\uparrow^{n-1}(a\uparrow^n (b-1)) & (\text{otherwise})
+        \end{cases}$$
+        This up arrow notation actually has a name. They're called <a href="https://en.wikipedia.org/wiki/Knuth%27s_up-arrow_notation">Knuth's up-arrow notation</a>, invented by Donald Knuth in 1976, for the purpose of writing very big numbers like these.<br/><br/>
+
+        If you'd like, here is Python code implementing Knuth's up-arrow notation. (I will not be responsible if your computer crashes while running this code.)<br/><br/>
+
+        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">knuth</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">):</span> <span class="c1"># returns a ↑ⁿ b</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">a</span> <span class="o">**</span> <span class="n">b</span>
+    <span class="k">elif</span> <span class="n">b</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">knuth</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">knuth</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">knuth</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span> <span class="c1"># should print 2 ↑↑ 5</span>
+</pre></div><br/>
+
+        <h2>Beyond the finite levels</h2>
+
+        It almost seems like we reached a dead end. For any function we try to construct, we can construct an even faster function by just iteratively repeating the previous one.<br/><br/>
+
+        Everytime we think that $a\uparrow^n b$ is as large as we can define, we can still repeat that operation to obtain $a\uparrow^{n+1}b$.<br/><br/>
+
+        What if I told you, there's a function that grows even faster than any amount of arrows you throw at it? A function that grows so fast, you can't even assign it any "level"?<br/><br/>
+
+        Let's introduce a technique called <b><i>diagonalization</i></b>.<br/><br/>
+
+        Suppose we listed down all the functions we created so far. The $m$th row represents a sequence using the "level $m$ operation".<br/><br/>
+
+        <center><table>
+        <tr><td><b>level 1</b></td><td>$2+1$</td><td>$2+2$</td><td>$2+3$</td><td>$2+4$</td><td>$2+5$</td><td>$\cdots$</td><td>$2+n$</td></tr>
+        <tr><td><b>level 2</b></td><td>$2\times1$</td><td>$2\times2$</td><td>$2\times3$</td><td>$2\times4$</td><td>$2\times5$</td><td>$\cdots$</td><td>$2\times n$</td></tr>
+        <tr><td><b>level 3</b></td><td>$2\uparrow1$</td><td>$2\uparrow2$</td><td>$2\uparrow3$</td><td>$2\uparrow4$</td><td>$2\uparrow5$</td><td>$\cdots$</td><td>$2\uparrow n$</td></tr>
+        <tr><td><b>level 4</b></td><td>$2\uparrow\uparrow1$</td><td>$2\uparrow\uparrow2$</td><td>$2\uparrow\uparrow3$</td><td>$2\uparrow\uparrow4$</td><td>$2\uparrow\uparrow5$</td><td>$\cdots$</td><td>$2\uparrow\uparrow n$</td></tr>
+        <tr><td><b>level 5</b></td><td>$2\uparrow\uparrow\uparrow1$</td><td>$2\uparrow\uparrow\uparrow2$</td><td>$2\uparrow\uparrow\uparrow3$</td><td>$2\uparrow\uparrow\uparrow4$</td><td>$2\uparrow\uparrow\uparrow5$</td><td>$\cdots$</td><td>$2\uparrow\uparrow\uparrow n$</td></tr>
+        <tr><td>$\vdots$</td><td>$\vdots$</td><td>$\vdots$</td><td>$\vdots$</td><td>$\vdots$</td><td>$\vdots$</td><td>$\ddots$</td></tr>
+        </table></center><br/>
+
+        Each row represents a sequence that grows much much faster than the previous, and this list goes on to infinity.<br/><br/>
+
+        Now let's construct a new sequence $A$ by taking the <i>diagonal</i> of this table.<br/><br/>
+
+        <center><table>
+        <tr><td><b>level 1</b></td><td bgcolor="#ffff99">$2+1$</td><td>$2+2$</td><td>$2+3$</td><td>$2+4$</td><td>$2+5$</td><td>$\cdots$</td><td>$2+n$</td></tr>
+        <tr><td><b>level 2</b></td><td>$2\times1$</td><td bgcolor="#ffff99">$2\times2$</td><td>$2\times3$</td><td>$2\times4$</td><td>$2\times5$</td><td>$\cdots$</td><td>$2\times n$</td></tr>
+        <tr><td><b>level 3</b></td><td>$2\uparrow1$</td><td>$2\uparrow2$</td><td bgcolor="#ffff99">$2\uparrow3$</td><td>$2\uparrow4$</td><td>$2\uparrow5$</td><td>$\cdots$</td><td>$2\uparrow n$</td></tr>
+        <tr><td><b>level 4</b></td><td>$2\uparrow\uparrow1$</td><td>$2\uparrow\uparrow2$</td><td>$2\uparrow\uparrow3$</td><td bgcolor="#ffff99">$2\uparrow\uparrow4$</td><td>$2\uparrow\uparrow5$</td><td>$\cdots$</td><td>$2\uparrow\uparrow n$</td></tr>
+        <tr><td><b>level 5</b></td><td>$2\uparrow\uparrow\uparrow1$</td><td>$2\uparrow\uparrow\uparrow2$</td><td>$2\uparrow\uparrow\uparrow3$</td><td>$2\uparrow\uparrow\uparrow4$</td><td bgcolor="#ffff99">$2\uparrow\uparrow\uparrow5$</td><td>$\cdots$</td><td>$2\uparrow\uparrow\uparrow n$</td></tr>
+        <tr><td>$\vdots$</td><td>$\vdots$</td><td>$\vdots$</td><td>$\vdots$</td><td>$\vdots$</td><td>$\vdots$</td><td bgcolor="#ffff99">$\ddots$</td></tr>
+        </table></center><br/>
+
+        Our new sequence $A$ is as follows:
+        $$2+1,\,2\times2,\,2\uparrow 3,\,2\uparrow\uparrow4,\,2\uparrow\uparrow\uparrow5,\,\ldots$$
+        The $n$th term of this sequence is
+        $$A(n)=2\uparrow^{n-2}n$$
+        It's the "level $n$ operation" applied to 2 and $n$. It grows absurdly fast, with each term adding a new arrow to the previous term.<br/><br/><br/>
+
+        <u>Question</u>: Which level does this operation belong?<br/><br/>
+
+        If we say that $A$ is a "level $n$ operation" then no matter what $n$ we choose, it would be false since $A$ absolutely outgrows the level $n$ operation $\uparrow^{n-2}$ at some point with more and more arrows.<br/><br/>
+
+        Since $A$ grows faster than any finite level operation, it would be appropriate to call $A$ the "level infinity operation", right?<br/><br/>
+
+        <h2>Faster than level infinity</h2>
+
+        Despite $A$ being the "level infinity operation", we can still go even higher.<br/><br/>
+
+        We can just define a new function $B$, that's just <b><i>repeated $A$</i></b>.
+        $$B(n)=\underbrace{A(A(A(\cdots(1))))}_{n\text{ copies of }A}$$
+        Just to comprehend how fast this grows, let's take a look at $B(4)$. It's the same as applying $A$ four times.
+        \begin{align*}
+        B(4) &= A(A(A(A(1))))\\
+        &= A(A(A(2+1)))\\
+        &= A(A(A(3)))\\
+        &= A(A(2\uparrow3))\\
+        &= A(A(8))\\
+        &= A(2\uparrow\uparrow\uparrow\uparrow\uparrow\uparrow8)\\
+        &= 2\underbrace{\uparrow\uparrow\uparrow\cdots\uparrow\uparrow\uparrow}_{2\uparrow\uparrow\uparrow\uparrow\uparrow\uparrow8\text{ arrows}}(2\uparrow\uparrow\uparrow\uparrow\uparrow\uparrow8)\\
+        \end{align*}
+        The <i>amount of arrows</i> is itself written with a bunch of arrows! Everytime you increase the input to $B$ by one, it will nest that <i>amount of arrows</i> to produce a new absurdly large number!<br/><br/>
+
+        $B(n)$ roughly looks something like this:
+
+        $$\left.\begin{matrix}B(n)\approx 2\underbrace{\uparrow\uparrow\uparrow\cdots\uparrow\uparrow\uparrow}_{2\underbrace{\uparrow\uparrow\uparrow\cdots\uparrow\uparrow\uparrow}_{2\underbrace{\uparrow\uparrow\uparrow\cdots\uparrow\uparrow\uparrow}_{\stackrel\vdots n}n}n}n\end{matrix}\right\}n\text{ layers}$$
+
+        To expression you see here is $n$ <i>layers deep</i>. That is, you're nesting <i>amounts of arrows</i> into <i>amounts of arrows</i> again and again, $n$ times!<br/><br/>
+
+        Note that the $\approx$ symbol means it's just an approximation, not an exact formula. But still, function $B$ more or less has a growth rate somewhere around there.<br/><br/><br/>
+
+        Let's call $A$ the "<b><u>arrow duplicating</u></b>" operation since it just duplicates arrows, and call $B$ the "<b><u>arrow nesting</u></b>" operation since it nests arrow amounts onto arrows amounts.<br/>
+        (These names are not official and I just made them up.)<br/><br/>
+
+        We know that $A$ is a "level infinity operation". But since $B$ is repeated $A$, wouldn't that mean $B$ is a "level infinity + 1 operation"?<br/><br/>
+
+        <h2>Conclusion</h2>
+
+        So far, we've seen how we can just keep repeating the previous operation over and over to obtain a new operation that grows much much faster than the previous.<br/><br/>
+
+        We started with <b>addition</b>. Repeating that operation gave us <b>multiplication</b>. Repeating that gave us <b>exponentiation</b>. Then <b>tetration</b>, then <b>pentation</b>, and so on.
+        $$a+b,\,a\times b,\,a\uparrow b,\,a\uparrow\uparrow b,\,a\uparrow\uparrow\uparrow b,\,\ldots$$
+        Every new arrow adds a new layer of uncomprehensibility, but despite that we can still keep climbing higher and higher. This gave us <b>Knuth's up-arrow notation</b>.<br/><br/>
+
+        Eventually, we went past beyond all the "finite level operations" by diagonalizing our way to "level infinity". As a result, we obtained the <b>arrow duplicator operation</b>.
+
+        $$A(n)=2\uparrow^{n-2}n$$
+
+        Yet, we can still go one step further into "level infinity + 1", with the <b>arrow nester operation</b>.
+
+        $$B(n)=\underbrace{A(A(A(\cdots(1))))}_{n\text{ copies of }A}$$
+
+        How much higher can we get? This is just the very beginning of our journey.<br/><br/>
+
+        In <a href="googology2.html"><b>Part 2</b></a>, we'll discuss how to precisely measure the growth of every function. We'll also look at some famous fast-growing functions that might be familiar to you.<br/><br/>
+
+    </div>
+</body>
+
+<script src="../../emojis/script.js"></script>

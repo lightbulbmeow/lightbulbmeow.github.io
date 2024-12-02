@@ -1,0 +1,100 @@
+body {
+    background-repeat: repeat;
+    background-attachment: fixed;
+}
+a{
+    color: #dd00dd;
+    text-decoration: none;
+}
+a:hover{
+    color: #dd0033;
+    text-decoration: underline;
+}
+s {
+    opacity: 0.4;
+}
+h1, h2, h3 {
+    font-family: 'Josefin Sans';
+}
+.entry {
+    margin: 50px 40vh 50px 40vh;
+    padding: 20px 20px 20px 20px;
+    background-color: white;
+    border-radius: 10px;
+    font-family: 'Computer Modern';
+    font-size: 22px;
+}
+.theorem {
+    border-radius: 5px;
+    border: 2px solid rgba(0,100,200);
+    background-color: rgba(0,10,20,0.69);
+    padding: 10px 10px 10px 10px;
+}
+.proof {
+    border-radius: 5px;
+    border: 2px solid rgba(0,200,100);
+    background-color: rgba(0,20,10,0.69);
+    padding: 10px 10px 10px 10px;
+}
+.problem {
+    border-radius: 5px;
+    border: 2px solid rgba(200,100,0);
+    background-color: rgba(20,10,0,0.69);
+    padding: 10px 10px 10px 10px;
+}
+details {
+    border-radius: 5px;
+    border: 2px solid rgba(0,100,200);
+    background-color: rgba(0,10,20,0.69);
+    padding: 10px 10px 10px 10px;
+    margin: 10px;
+}
+.highlight {
+    padding: 5px;
+    margin: 5px;
+    font-size: 16px;
+}
+@font-face {
+  font-family: "Computer Modern";
+  src: url('../../fonts/cmunss.ttf');
+}
+
+@font-face {
+  font-family: "Computer Modern";
+  src: url('../../fonts/cmunsx.ttf');
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: "Computer Modern";
+  src: url('../../fonts/cmunsi.ttf');
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Computer Modern";
+  src: url('../../fonts/cmunso.ttf');
+  font-weight: bold;
+  font-style: italic;
+}
+.code {
+    background-color: rgb(10,5,10,0.95);
+    white-space: pre;
+}
+.date {
+    font-size: 18px;
+}
+.image {
+    padding: 5px;
+}
+.image:hover {
+    background-color: rgb(255,255,255,0.3);
+    border-radius: 5px;
+}
+table {
+    border-collapse: collapse;
+}
+td {
+    border: 1px solid black;
+    padding: 5px;
+}

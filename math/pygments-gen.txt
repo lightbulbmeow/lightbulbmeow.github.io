@@ -1,56 +1,15 @@
-def precompute(p): # precompute all factorials, inverses, and harmonic numbers mod p
-    global fact,invfact,inv,harmonic
-
-    # factorial mod p^2
-    fact = [1]*p
-    for i in range(1,p): fact[i] = fact[i-1]*i % p**2
-    invfact = [1]*p
-    invfact[-1] = pow(fact[-1],-1,p**2)
-    for i in range(p-1,0,-1): invfact[i-1] = invfact[i]*i % p**2
-
-    # inverses mod p
-    inv = [1]*p
-    for i in range(2,p): inv[i] = (p-p//i)*inv[p%i] % p
-
-    # harmonic numbers mod p
-    harmonic = [0]*p
-    for i in range(1,p): harmonic[i] = (harmonic[i-1] + inv[i]) % p
-
-
-def lucas(m,n,p): # compute comb(m,n) mod p^2
-    if m < n: return 0
-
-    # get base-p digits of m and n
-    M,N = [],[]
-    pcount = 0
-    while m:
-        if m % p < n % p:
-            pcount += 1
-            if pcount > 1: return 0  # comb(m,n) is divisible by p^2
-        M.append(m % p)
-        N.append(n % p)
-        m //= p
-        n //= p
-
-    # main loop
-    if pcount == 0:
-        product = 1
-        psum = 0
-        for i in range(len(M)):
-            product *= fact[M[i]]*invfact[N[i]]*invfact[M[i]-N[i]]
-        for i in range(len(M)-1):
-            psum += M[i+1]*harmonic[M[i]] - N[i+1]*harmonic[N[i]] - (M[i+1]-N[i+1])*harmonic[M[i]-N[i]]
-        return product*(1 + p*psum) % p**2
+def knuth(n,a,b): # returns a ↑ⁿ b
+    if n == 1:
+        return a ** b
+    elif b == 0:
+        return 1
     else:
-        product = 1
-        for i in range(len(M)):
-            if M[i] >= N[i]:
-                product *= fact[M[i]]*invfact[N[i]]*invfact[M[i]-N[i]]
-            else:
-                product *= (M[i+1]-N[i+1])*fact[M[i]]*fact[N[i]-M[i]-1]*invfact[N[i]] * (-1)**(N[i]-M[i]-1)
-        return p*product % p**2
+        return knuth(n-1,a,knuth(n,a,b-1))
 
+def g(n):
+    if n == 1:
+        return knuth(4,3,3) # returns 3 ↑↑↑↑ 3
+    else:
+        return knuth(g(n-1),3,3)
 
-precompute(17)
-print(lucas(46654,5546,17))  # comb(46654,5546) mod 17^2 = 176
-print(lucas(46654,5648,17))  # comb(46654,5648) mod 17^2 = 136
+print(g(64)) # should print Graham's number, if your PC can handle it

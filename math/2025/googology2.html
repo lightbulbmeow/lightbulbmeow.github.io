@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="description" content="Hello! Welcome to my blog (*・ω・)ﾉ I will giv u free Cookies">
+    <title>Googology - Part 2</title>
+    <link rel="stylesheet" href="googology.css">
+    <link rel="stylesheet" href="../pygments.css">
+    <style>@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@700&display=swap');</style> <!-- Google font "Josefin Sans" -->
+
+    <style> body{ background-image: url("googology2.png"); } </style>
+
+    <!-- Latex stuff -->
+    <script>
+        MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+        }
+        };
+    </script>
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+
+    <script>
+        document.cookie = "freecookie=Heres your free cookie!!! Enjoy ~ヾ(・ω・);";
+    </script>
+</head>
+<body>
+    <a href="../index.html"><img src="../black.png" style="position: fixed; top: 20px; left: 20px;" /></a>
+
+    <div class="entry">
+
+        <h1>Googology - Part 2</h1>
+
+        <p class="date">December 2, 2024. 8:30pm</p>
+
+        In <b><a href="googology1.html">Part 1</a></b>, we've seen how we can just keep repeating the previous operation over and over to obtain a new operation that grows much much faster than the previous.<br/><br/>
+
+        We started with <b>addition</b>. Repeating that operation gave us <b>multiplication</b>. Repeating that gave us <b>exponentiation</b>. Then <b>tetration</b>, then <b>pentation</b>, and so on.
+        $$a+b,\,a\times b,\,a\uparrow b,\,a\uparrow\uparrow b,\,a\uparrow\uparrow\uparrow b,\,\ldots$$
+        Every new arrow adds a new layer of uncomprehensibility, but despite that we can still keep climbing higher and higher. This gave us <b>Knuth's up-arrow notation</b>.<br/><br/>
+
+        Eventually, we went past beyond all the "finite level operations" by diagonalizing our way to "level infinity". As a result, we obtained the <b>arrow duplicator operation</b>.
+
+        $$A(n)=2\uparrow^{n-2}n$$
+
+        Yet, we can still go one step further into "level infinity + 1", with the <b>arrow nester operation</b>.
+
+        $$B(n)=\underbrace{A(A(A(\cdots(1))))}_{n\text{ copies of }A}$$
+
+        In this part, we'll discuss how to precisely measure the growth of every function. This will rigorize our notion of "levels".<br/><br/>
+
+        <h2>Measuring stick</h2>
+
+        In order to measure how fast certain functions grow, we need some kind of "measuring stick". It needs to be rigorous, well-defined, and enough to capture every function, no matter how fast it grows.<br/><br/>
+
+        Our "levels" system is nice and all, but it's not well-defined. What does it mean for an operation to belong in "level infinity" or "level infinity + 1"?<br/><br/>
+
+        We know infinity behaves very weirdly. How can we say that "infinity" and "infinity + 1" are different numbers? Shouldn't adding 1 to infinity still give infinity?<br/><br/>
+
+        Introducing: <b>ordinals</b>.<br/><br/>
+
+        Ordinal numbers are an extension of ordinal numerals (first, second, third, etc.). Despite their "infinite" nature, they are still well-behaved and follow simple rules.<br/><br/>
+
+        This section will just be an oversimplification of how ordinals work, and is by no means comprehensive. <br/><br/>
+
+        Let's define an ordinal number $\omega$ (called <b><u>omega</u></b>) to be the <b><i>smallest element that's greater than every natural number</i></b>.<br/><br/><br/>
+
+        <center><img src="omega.png" style="width: 75vh"></center><br/>
+
+        In the diagram above, $\omega$ is the smallest ordinal number that's greater than 0, 1, 2, 3, ... You can also think of it as the <i>limit</i> of the sequence 0, 1, 2, 3, ...<br/><br/>
+
+        The next smallest ordinal is called $\omega+1$. After that is $\omega+2$, then $\omega+3$, then $\omega+4$, and so on.<br/><br/>
+
+        The limit of that sequence is $\omega+\omega$. It's the smallest ordinal that's greater than $\omega$, $\omega+1$, $\omega+2$, $\omega+3$, ...
+
+        <center><img src="omega2.png" style="width: 75vh"></center><br/>
+
+        People would usually write $\omega+\omega$ as $\omega\cdot2$ instead.<br/><br/>
+
+        We could continue on with $\omega\cdot2+1$, $\omega\cdot2+2$, $\omega\cdot2+3$, ... Taking its limit gives us $\omega\cdot3$.<br/><br/>
+
+        Then we go on with $\omega\cdot3+1$, $\omega\cdot3+2$, $\omega\cdot3+3$, ... Its limit is $\omega\cdot4$.<br/><br/>
+
+        We can keep repeating that process to get $\omega\cdot5$, $\omega\cdot6$, $\omega\cdot7$, ... all the way until we arrive at a new limit, $\omega^2$.<br/><br/>
+
+        <center><img src="omegasquared.png" style="width: 75vh"></center><br/>
+
+        Once again we can repeat all of that to get $\omega^2\cdot2$, then $\omega^2\cdot3$, then $\omega^2\cdot4$, ... to get $\omega^3$.<br/><br/>
+
+        Doing that again gives $\omega^3\cdot2$, then $\omega^3\cdot3$, then $\omega^3\cdot4$, ... to get $\omega^4$.<br/><br/>
+
+        We can repeat <i>that</i> many more times to get $\omega^5$, $\omega^6$, $\omega^7$, ... all the way until we finally arrive at $\omega^\omega$.<br/><br/>
+
+        <center><img src="omegaomega.png" style="width: 75vh"></center><br/>
+
+        And this could go on and on... continuing with $\omega^\omega$, $\omega^{\omega^\omega}$, $\omega^{\omega^{\omega^\omega}}$... But this is our stopping point for now.<br/><br/>
+
+        <b><u>IMPORTANT:</u></b> It's important to keep in mind that <b>ordinal addition</b> is <i><b>not commutative</b></i>.<br/><br/>
+
+        That is, $1+\omega$ is <i>not the same as</i> $\omega+1$.<br/><br/>
+
+        In fact, $1+\omega=\omega$. The reason is that the sequences $1,2,3,\ldots$ and $0,1,2,\ldots$ both tend to the same ordinal, $\omega$.<br/><br/>
+
+        <center><img src="1omega.png" style="width: 75vh"></center><br/>
+
+        For the same reason, <b>ordinal multiplication</b> is also <i><b>not commutative</b></i>.<br/><br/>
+
+        The ordinal $2\cdot\omega$ is not the same as $\omega\cdot2$.<br/><br/>
+
+        In fact, $2\cdot\omega=\omega$, because the sequences $2,4,6,\ldots$ and $1,2,3,\ldots$ both tend to the same ordinal, $\omega$.<br/><br/>
+
+        <center><img src="2omega.png" style="width: 75vh"></center><br/>
+
+        The order in which we write $\omega+1$ or $\omega\cdot2$ matters a lot. Keep this in mind!<br/><br/><br/>
+
+        All that is just an oversimplification of how ordinals work, but I hope it gives you an intuition for it. :menherateehee:<br/><br/>
+
+        There's rigorous definition for ordinals, but its a bit technical and beyond the scope of this article. If you want to properly learn more about ordinals, you might want to look up any book about Set Theory. :mikuexcited:<br/><br/><br/>
+
+        Anyways, the reason why I brought up ordinals in the first place is because this is what we'll use to measure how fast functions grow.<br/><br/>
+
+        Earlier, we diagonalized all the finite level operations, giving us a new operation $A$. This is the "<b>level $\omega$ operation</b>", because it's arguably the smallest function that grows faster than any level $n$ operation.<br/><br/>
+
+        Then, we iteratively repeated the $A$ operation to get a new operation $B$. This is the "<b>level $\omega+1$ operation</b>".<br/><br/>
+
+        <h2>The family tree of fast-growing functions</h2>
+
+        In a way, we saw that if $\alpha$ is any ordinal, then repeating the "level $\alpha$ operation" gives us the "level $\alpha+1$ operation". Trying to diagonalize some sequence of operations will bring us to "an even higher level operation".<br/><br/>
+
+        Now we'll rigorously define what these "levels" means.<br/><br/>
+
+        Define a series of functions as follows:
+
+        \begin{align*}
+        f_0(n)&=n+1\\
+        f_{\alpha+1}(n)&=f_{\alpha}^n(n)\\
+        f_{\alpha}(n)&=f_{\alpha[n]}(n),\text{ if }\alpha\text{ is a limit ordinal}
+        \end{align*}
+
+        In the second rule, $f_\alpha^n$ denotes function iteration, so you apply the function $f_{\alpha}$ to $n$, $n$ times.
+
+        $$f_{\alpha}^n(n)=\underbrace{f_\alpha(f_\alpha(f_\alpha(\cdots(n))))}_{n\text{ copies of }f_\alpha}$$
+
+        In the third rule, $\alpha[n]$ denotes the $n$th of a <i>fundamental sequence</i> to ordinal $\alpha$. (I'll explain this later.)<br/><br/>
+
+        For example, the first one in this hierarchy of functions is
+        \begin{align*}
+        f_1(n) &= f_0^n(n)\\
+        &= \underbrace{f_0(f_0(f_0(\cdots(n))))}_{n\text{ copies of }f_0}\\
+        &= n+\underbrace{1+1+\cdots+1+1}_n\\
+        &= 2n
+        \end{align*}
+        giving us $f_1(n)=2n$. The next one is
+        \begin{align*}
+        f_2(n) &= f_1^n(n)\\
+        &= \underbrace{f_1(f_1(f_1(\cdots(n))))}_{n\text{ copies of }f_1}\\
+        &= \underbrace{2(2(2(\cdots(2}_nn))))\\
+        &= 2^nn
+        \end{align*}
+        giving us $f_2(n)=2^nn$. The next one is a bit messy,
+        \begin{align*}
+        f_3(n) &= f_2^n(n)\\
+        &= \underbrace{f_2(f_2(f_2(\cdots(n))))}_{n\text{ copies of }f_2}\\
+        &= \underbrace{f_2(f_2(f_2(\cdots(2^nn))))}_{(n-1)\text{ copies of }f_2}\\
+        &= \underbrace{f_2(f_2(f_2(\cdots(2^{2^nn}2^nn))))}_{(n-2)\text{ copies of }f_2}\\
+        &= \underbrace{f_2(f_2(f_2(\cdots(2^{2^{2^nn}2^nn}2^{2^nn}2^nn))))}_{(n-3)\text{ copies of }f_2}\\
+        &\vdots
+        \end{align*}
+        Writing it out in full won't be elegant, but with some effort, we can bound the function $f_3(n)$ in terms of tetrations.
+        $$2\uparrow\uparrow n\lt f_3(n)\lt 2\uparrow\uparrow(2n)$$
+        So in some sense, the function $f_3$ grows "just as fast as" tetration. We can write it like this:
+        $$f_3(n)\approx2\uparrow\uparrow n$$
+        Similarly, $f_4(n)$ is just $f_3$ applied to $n$, $n$ times, so it's kind of like "repeated tetration". In fact, it can be shown that
+        $$2\uparrow\uparrow\uparrow n\lt f_4(n)\lt 2\uparrow\uparrow\uparrow(2n)$$
+        So in the same sense, $f_4$ grows "just as fast as" pentation.
+        $$f_4(n)\approx2\uparrow\uparrow\uparrow n$$
+        We can also do this for all the finite level functions in the hierarchy, giving us a general formula for finite indices:
+        $$f_m(n)\approx 2\uparrow^{m-1}n$$
+        In other words, the function $f_m$ grows as fast as $(m+1)$-ation.<br/><br/>
+
+        <h2>Grasping the fundamentals(equence)</h2>
+
+        So far we've only talked about finite ordinals. For ordinals such as $\omega$, this is where the third rule comes in:
+        $$f_\alpha(n)=f_{\alpha[n]}(n)$$
+        Here, $\alpha[n]$ is the $n$th term of the <i><b>fundamental sequence</b></i> of $\alpha$. The fundamental sequence is simply the sequence whose limit is the ordinal we want.<br/><br/>
+
+        For $\omega$, the fundamental sequence is $1,2,3,\ldots$, since its limit is what we used to define $\omega$.<br/><br/>
+
+        For $\omega\cdot2$, the fundamental sequence is $\omega,\omega+1,\omega+2,\ldots$ since it approaches $\omega\cdot2$.<br/><br/>
+
+        For $\omega^2$, the fundamental sequence is $\omega,\omega\cdot2,\omega\cdot3,\ldots$ since it approaches $\omega^2$, and so on.
+
+        From now on, we'll always be using the fast-growing hierarchy to "estimate" how fast our functions grow.<br/><br/>
+
+        Let's consider evaluating $f_\omega(3)$. Since the fundamental sequence of $\omega$ is $1,2,3,\ldots$, the $n$th term of that sequence is just $n$, so we have $\omega[n]=n$.
+        \begin{align*}
+        f_\omega(3) &= f_{\omega[3]}(3)\\
+        &= f_3(3)\\
+        &= f_2(f_2(f_2(3)))\\
+        &= f_2(f_2(2^3\cdot3)) \qquad (\text{recall that }f_2(n)=2^nn)\\
+        &= f_2(f_2(24))\\
+        &= f_2(2^{24}\,24)\\
+        &= f_2(402653184)\\
+        &= 2^{402653184}\,402653184
+        \end{align*}
+        Another way you could think about the third rule is it <i>diagonalizes</i> over the functions $f_1,f_2,f_3,\ldots$.<br/><br/>
+
+        <center><table>
+        <tr><td>$f_1(n)=$</td><td bgcolor="#ffff99">$f_1(1)$</td><td>$f_1(2)$</td><td>$f_1(3)$</td><td>$f_1(4)$</td><td>$f_1(5)$</td><td>$\cdots$</td></tr>
+        <tr><td>$f_2(n)=$</td><td>$f_2(1)$</td><td bgcolor="#ffff99">$f_2(2)$</td><td>$f_2(3)$</td><td>$f_2(4)$</td><td>$f_2(5)$</td><td>$\cdots$</td></tr>
+        <tr><td>$f_3(n)=$</td><td>$f_3(1)$</td><td>$f_3(2)$</td><td bgcolor="#ffff99">$f_3(3)$</td><td>$f_3(4)$</td><td>$f_3(5)$</td><td>$\cdots$</td></tr>
+        <tr><td>$f_4(n)=$</td><td>$f_4(1)$</td><td>$f_4(2)$</td><td>$f_4(3)$</td><td bgcolor="#ffff99">$f_4(4)$</td><td>$f_4(5)$</td><td>$\cdots$</td></tr>
+        <tr><td>$f_5(n)=$</td><td>$f_5(1)$</td><td>$f_5(2)$</td><td>$f_5(3)$</td><td>$f_5(4)$</td><td bgcolor="#ffff99">$f_5(5)$</td><td>$\cdots$</td></tr>
+        <tr><td>$\vdots$</td><td>$\vdots$</td><td>$\vdots$</td><td>$\vdots$</td><td>$\vdots$</td><td>$\vdots$</td><td>$\ddots$</td></tr>
+        <tr><td>$f_\omega(n)=$</td><td bgcolor="#ffff99">$f_1(1)$</td><td bgcolor="#ffff99">$f_2(2)$</td><td bgcolor="#ffff99">$f_3(3)$</td><td bgcolor="#ffff99">$f_4(4)$</td><td bgcolor="#ffff99">$f_5(5)$</td><td>$\cdots$</td></tr>
+        </table></center><br/>
+        This gives us the formula
+        $$f_\omega(n)=f_n(n)\approx 2\uparrow^{n-1}n$$
+        Now here is the cool thing: Recall the function $A$ we defined earlier using <i>diagonalization</i>. It also had the exact same formula!
+        $$A(n)=2\uparrow^{n-1}n$$
+        So we can place our "arrow duplicating operation" $A$ in the fast-growing hierarchy:
+        $$A(n)\approx f_\omega(n)$$
+
+        The next ordinal is $f_{\omega+1}(n)$. Since it's the successor ordinal to $\omega$, we use the second rule and just repeatedly apply $f_\omega$ to $n$, $n$ times.
+
+        $$f_{\omega+1}(n)=f_\omega^n(n)$$
+
+        Let's evaluate $f_{\omega+1}(3)$. For brevity, let $X=f_3(3)=2^{402653184}\,402653184$, a value we computed earlier.
+
+        \begin{align*}
+        f_{\omega+1}(3) &= f_\omega^3(3)\\
+        &= f_\omega(f_\omega(f_\omega(3)))\\
+        &= f_\omega(f_\omega(f_{\omega[3]}(3)))\\
+        &= f_\omega(f_\omega(f_3(3)))\\
+        &= f_\omega(f_\omega(X))\\
+        &= f_\omega(f_{\omega[X]}(X))\\
+        &= f_\omega(f_X(X))\\
+        &\approx f_\omega(2\uparrow^{X-1}X)\\
+        &\approx f_{\omega[2\uparrow^{X-1}X]}(2\uparrow^{X-1}X)\\
+        &\approx f_{2\uparrow^{X-1}X}(2\uparrow^{X-1}X)\\
+        &\approx 2\uparrow^{2\uparrow^{X-1}X-1}(2\uparrow^{X-1}X)
+        \end{align*}
+
+        Since $f_{\omega+1}(n)$ is just repeatedly applying $f_\omega$ to $n$, and that $f_\omega$ grows "just as fast as" $A$, we can say that
+        $$f_{\omega+1}(n)=f_\omega^n(n)\approx\underbrace{A(A(A(\cdots(n))))}_n$$
+        This is exactly what our "arrow nesting operation" $B$ does!<br/><br/>
+        $$B(n)=\underbrace{A(A(A(\cdots(n))))}_n$$
+        So we can also place $B$ in the fast-growing hierarchy:
+        $$B(n)\approx f_{\omega+1}(n)$$
+        The fast-growing hierarchy is a pretty good way of measuring how fast a certain function grows, and it lets us easily compare the relative rates between functions.<br/><br/>
+
+        From now on, we'll be using the fast-growing hierarchy to measure every function's growth rate.<br/><br/>
+
+        <center><img src="fgh1.png" style="width: 75vh"></center><br/>
+
+        <h2>It's Ackermann time</h2>
+
+        It's time to meet one of the famous fast growing functions. You might have heard about this before, the <b><u>Ackermann function</u></b>. This function was originally invented by Wilhelm Ackermann in the late 1920s.<br/><br/>
+
+        <center><img src="ackerman.jpg" style="width: 50vh"></center><br/>
+
+        It has multiple variations, but the most common one is by Péter and Robinson. The Ackermann function is defined as follows: It is a two-variable function with just three rules,
+        \begin{align*}
+        \text A(0,n)&=n+1\\
+        \text A(m+1,0)&=\text A(m,1)\\
+        \text A(m+1,n+1)&=\text A(m,\text A(m+1,n))
+        \end{align*}
+        It also has a one-variable version, which just "diagonalizes" the two-variable one.
+        $$\text{Ack}(n)=\text A(n,n)$$<br/>
+        <u>Question:</u> How fast does the Ackermann function grow?<br/><br/>
+
+        The Ackermann function starts off relatively slow,
+        \begin{align*}
+        \text{Ack}(0) &= \text A(0,0)\\
+        &= 1
+        \end{align*}
+        \begin{align*}
+        \text{Ack}(1) &= \text A(1,1)\\
+        &= \text A(0,\text A(1,0))\\
+        &= \text A(0,\text A(0,1))\\
+        &= \text A(0,2)\\
+        &= \text 3\\
+        \end{align*}
+        $\text{Ack}(2)$ is a bit annoying to compute, but still doable.
+        \begin{align*}
+        \text{Ack}(2) &= \text A(2,2)\\
+        &= \text A(1,\text A(2,1))\\
+        &= \text A(1,\text A(1,\text A(2,0)))\\
+        &= \text A(1,\text A(1,\text A(1,1)))\\
+        &= \text A(1,\text A(1,3))\\
+        &= \text A(1,5)\\
+        &= 7\\
+        \end{align*}
+        With some effort, you might be able to compute that $\text{Ack}(3)=61$ (perhaps through Python or using other shortcuts).
+
+        By the time you get to $\text{Ack}(4)$, it starts exploding:
+        $$\text{Ack}(4)=2^{2^{2^{65536}}}-3$$
+        Let's investigate why this happens.<br/><br/>
+
+        We can start by figuring out the "formulas" for $\text A(0,n)$, $\text A(1,n)$, $\text A(2,n)$, and so on.<br/><br/>
+
+        $\text A(0,n)$ is already given to us.
+        $$\text A(0,n)=n+1$$
+        To figure out $\text A(1,n)$, let's try evaluating $\text A(1,5)$ is.
+        \begin{align*}
+        \text A(1,5) &= \text A(0,\text A(1,4))\\
+        &= \text A(0,\text A(0,\text A(1,3)))\\
+        &= \text A(0,\text A(0,\text A(0,\text A(1,2))))\\
+        &= \text A(0,\text A(0,\text A(0,\text A(0,\text A(1,1)))))\\
+        &= \text A(0,\text A(0,\text A(0,\text A(0,\text A(0,\text A(1,0))))))\\
+        &= \text A(0,\text A(0,\text A(0,\text A(0,\text A(0,\text A(0,1))))))
+        \end{align*}
+        As you can see, the $n$ part just tells how many times we're supposed to repeat the $\text A(0,\bullet)$ operation.<br/><br/>
+
+        Here, it's being repeated 6 times. Since every $\text A(0,\bullet)$ just adds 1 to the number, we have
+        \begin{align*}
+        \text A(1,5) &= (((((1+1)+1)+1)+1)+1)+1\\
+        &= 7
+        \end{align*}
+        More generally, $\text A(1,n)$ just repeats the $\text A(0,\bullet)$ operation $n+1$ times, so this gives us a formula
+        $$\text A(1,n)=n+2$$
+        Next, let's figure out $\text A(2,n)$. Let's try evaluating $\text A(2,5)$. We see the same pattern emerge,
+        \begin{align*}
+        \text A(2,5) &= \text A(1,\text A(2,4))\\
+        &= \text A(1,\text A(1,\text A(2,3)))\\
+        &= \text A(1,\text A(1,\text A(1,\text A(2,2))))\\
+        &= \text A(1,\text A(1,\text A(1,\text A(1,\text A(2,1)))))\\
+        &= \text A(1,\text A(1,\text A(1,\text A(1,\text A(1,\text A(2,0))))))\\
+        &= \text A(1,\text A(1,\text A(1,\text A(1,\text A(1,\text A(1,1))))))
+        \end{align*}
+        This time, the $n$ part tells how many times we're supposed to repeat the $\text A(1,\bullet)$ operation.<br/><br/>
+
+        Since it's being repeated 6 times, and every $\text A(1,\bullet)$ adds 2 to the number, we have
+        \begin{align*}
+        \text A(2,5) &= (((((1+2)+2)+2)+2)+2)+2\\
+        &= 15
+        \end{align*}
+        Or more generally, $\text A(2,n)$ is just applying the $\text A(1,\bullet)$ operation $n+1$ times, so
+        $$\text A(2,n)=2n+3$$
+        We expect the same thing to happen with $\text A(3,n)$ too, applying the $\text A(2,\bullet)$ operation $n+1$ times. In fact,
+        \begin{align*}
+        \text A(m,n) &= \text A(m-1,\text A(m,n-1))\\
+        &= \text A(m-1,\text A(m-1,\text A(m,n-2)))\\
+        &= \text A(m-1,\text A(m-1,\text A(m-1,\text A(m,n-3))))\\
+        &= \vdots\\
+        &= \underbrace{\text A(m-1,\text A(m-1,\text A(m-1,\cdots A(m-1,1))))}_{n+1}
+        \end{align*}
+        Now it becomes pretty clear: The $A(m,\bullet)$ operation is just a "repeated $A(m-1,\bullet)$ operation".<br/><br/>
+
+        What kind of operation do we know that's just "repeating the previous operation" over and over? That's right, Knuth's up-arrow notation.<br/><br/>
+
+        In fact, it can be shown that the Ackermann function is <i>exactly</i> the same as up-arrow notation, just offset by a bit.
+        $$\text A(m,n)=(2\uparrow^{m-2}(n+3))-3$$
+        As an exercise, you could try proving this formula by induction. :nanayay:<br/><br/>
+
+        The one-variable function $\text{Ack}(n)$ just <i>diagonalizes</i> over the $\text A(m,n)$ function. Hence,
+        $$\text{Ack}(n)=\text A(n,n)=(2\uparrow^{n-2}(n+3))-3$$
+        From here, we see the Ackermann function grows as fast as $f_\omega$, the same growth rate as the arrow duplicating function $A(n)$. After all, Ackermann is also just doing arrow duplication.
+        $$\text{Ack}(n)\approx A(n)\approx f_\omega(n)$$
+        We'll be seeing this kind of thing a lot: functions that look completely different from each other on the surface, yet they essentially do "the same thing", in terms of growth rate.<br/><br/>
+
+
+        If you'd like, here is Python code implementing Ackermann's function. Notice how it's very similar to Knuth's up arrow notation. (Again I will not be responsible if your computer crashes while running this code.)<br/><br/>
+
+        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">A</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">n</span><span class="p">):</span> <span class="c1"># Ackermann function</span>
+    <span class="k">if</span> <span class="n">m</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">n</span><span class="o">+</span><span class="mi">1</span>
+    <span class="k">elif</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">A</span><span class="p">(</span><span class="n">m</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">A</span><span class="p">(</span><span class="n">m</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">A</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">Ack</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">A</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">n</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">Ack</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span> <span class="c1"># should print Ack(3) = 61</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span> <span class="c1"># should print A(4,1) = 2 ↑↑ 4 - 3</span>
+</pre></div><br/><br/>
+
+        The Ackermann function is important in the field of computer science, since it's an example of function that's "not primitive recursive". In other words, there's no way to convert the recursion into 'for' loops, where the number of iterations is known before entering the loop.<br/><br/>
+
+        If you want to learn more about this topic, <a href="https://www.youtube.com/watch?v=i7sm9dzFtEI">Computerphile</a> has a nice video on this.<br/><br/>
+
+        <h2>Delicious Grahams</h2>
+
+        Want some grahams?<br/><br/>
+
+        <center><img src="graham.jpg" style="width: 50vh"></center><br/>
+
+        This next function comes from a problem in combinatorics. The problem is as follows:<br/><br/>
+
+        <div style="margin-left: 24px">Connect each pair of vertices of an $n$-dimensional hypercube to obtain a complete graph on $2^n$ vertices. Color each edges of this graph either red or blue. What is the smallest $n$ for which <i>every</i> such coloring contains at least one single-colored complete subgraph on four coplanar vertices?</div><br/>
+
+        For example, here one possible way to color every edge of a 3-dimensional cube either red or blue. It contains four coplanar vertices whose edges are all of the same color.<br/><br/>
+
+        <center><img src="ramsey.png" style="width: 60vh"></center><br/>
+
+        If however, the bottom red edge is changed to blue, then such a subgraph would no longer exist. This shows $n=3$ is not enough.<br/><br/>
+
+        <center><img src="ramsey2.png" style="width: 30vh"></center><br/>
+
+        In 1971, Graham and Rothschild found an upper bound for $n$ that works, but that bound is so incredibly large. This bound is known as Graham's number.<br/><br/>
+
+        Graham's number is equal to $g_{64}$, where $g_n$ is defined as the sequence
+        $$\begin{cases}g_1 = 3\uparrow\uparrow\uparrow\uparrow3 \\ g_n = 3\uparrow^{g_{n-1}}3 & (n\ge2)\end{cases}$$
+        Let me explain this step by step. First, let's begin with $g_1$, the first term of the sequence.
+        $$g_1=3\uparrow\uparrow\uparrow\uparrow3$$
+        You can already imagine how big this number is, just from the amount of arrows there are.<br/><br/>
+
+        The next term in the sequence, $g_2$, is defined by taking the previous term $g_1=3\uparrow\uparrow\uparrow\uparrow3$, and using that as the <i>amount of arrows</i>.
+        $$g_2=3\underbrace{\uparrow\uparrow\uparrow\cdots\uparrow\uparrow\uparrow}_{3\uparrow\uparrow\uparrow\uparrow3}3$$
+        Then the next term, $g_3$, takes the previous term $g_2$, and uses <i>that</i> as the new amount of arrows.
+        $$g_3=3\underbrace{\uparrow\uparrow\uparrow\cdots\uparrow\uparrow\uparrow}_{\underbrace{3\uparrow\uparrow\uparrow\cdots\uparrow\uparrow\uparrow3}_{3\uparrow\uparrow\uparrow\uparrow3}}3$$
+        This goes on and on, until we stop at $g_{64}$.
+        $$G=g_{64}$$
+        Graham's number is the 64th term of this sequence! Remember, this is just an <i>upper bound</i> for $n$ in the problem I mentioned above.<br/><br/>
+
+        What's really funny about this number is that it just appears naturally in some math proof. This number is ridiculously much bigger than Skewes's number, which was also an upper bound for some other problem.<br/><br/>
+
+        If you want to see Graham's number in its full glory, here it is:
+        $$\left.\begin{matrix}G=\underbrace{3\uparrow\uparrow\uparrow\cdots\uparrow\uparrow\uparrow3}_{\underbrace{3\uparrow\uparrow\uparrow\cdots\uparrow\uparrow\uparrow3}_{\underbrace{3\uparrow\uparrow\uparrow\cdots\uparrow\uparrow\uparrow3}_{\underbrace{\vdots}_{3\uparrow\uparrow\uparrow\uparrow3}}}}\end{matrix}\right\}\text{64 layers}$$
+
+        Unfortunately Graham's number is no longer the best upper bound for this problem. The current best known upper bound for $n$ in the problem above was found by Eryk Lipka in 2019, and that upper bound is
+        $$(2\uparrow\uparrow5138)\cdot((2\uparrow\uparrow5140)\uparrow\uparrow(2\cdot2\uparrow\uparrow 5137))\ll2\uparrow\uparrow(2\uparrow\uparrow5138)$$
+        It's much much much smaller than Graham's number, but still ridiculously huge.<br/><br/><br/>
+
+        <u>Question:</u> How fast does Graham's sequence grow?<br/><br/>
+
+        Since what we're essentially doing is just nesting arrow amounts in each other repeatedly, what we're doing is pretty much the same thing as in our "arrow nesting operation" $B(n)$.<br/><br/>
+
+        This means Graham's sequence grows as fast as $f_{\omega+1}(n)$ in the fast-growing hierarchy.
+        $$g_n\approx B(n)\approx f_{\omega+1}(n)$$
+        For completeness sake, here's Python code implementing Graham's function.<br/><br/>
+        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">knuth</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">):</span> <span class="c1"># returns a ↑ⁿ b</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">a</span> <span class="o">**</span> <span class="n">b</span>
+    <span class="k">elif</span> <span class="n">b</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">knuth</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">knuth</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">g</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">knuth</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span> <span class="c1"># returns 3 ↑↑↑↑ 3</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">knuth</span><span class="p">(</span><span class="n">g</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">g</span><span class="p">(</span><span class="mi">64</span><span class="p">))</span> <span class="c1"># should print Graham&#39;s number, if your PC can handle it</span>
+</pre></div><br/>
+
+        <h2>Ackermann vs Graham</h2>
+
+        <u>Question:</u> Which function grows faster, Ackermann's function or Graham's function?<br/><br/>
+
+        The answer should be pretty clear.<br/><br/>
+
+        We know that $\text{Ack}(n)$ grows as fast as $f_{\omega}(n)$, while $g_n$ grows as fast as $f_{\omega+1}(n)$.<br/><br/>
+
+        Since $\omega+1$ is a higher ordinal than $\omega$, the clear winner here is Graham's function.<br/><br/>
+
+        In fact, Graham's function is just as powerful as a repeated Ackermann function:
+        $$g_n\approx\underbrace{\text{Ack}(\text{Ack}(\text{Ack}(\cdots(n))))}_n$$<br/>
+        Just for fun, here's an excerpt from an <a href="https://xkcd.com/207/">xkcd comic</a> featuring both the Ackermann function and Graham's number.
+
+        <center><img src="xkcd.png" style="width: 50vh"></center><br/>
+
+        As we know, the Ackermann function is an order of magnitude slower than Graham's function, so trying to wrap the Ackermann function around Graham's number is like trying to equip a giant iron golem with thin paper armor.<br/><br/>
+
+        In fact, the number in question is less than $g_{65}$, which can be easily shown using the fast-growing hierarchy:
+        $$\text A(g_{64},g_{64})\approx f_{\omega}(f_{\omega+1}(64))=f_{\omega}(f_{\omega}^{64}(64))=f_{\omega}^{65}(64)\lt f_{\omega}^{65}(65)=f_{\omega+1}(65)\approx g_{65}$$
+        Since $\text A(g_{64},g_{64})\lt g_{65}$, it turns out this number isn't that much of an improvement over Graham's number.<br/><br/>
+
+        At least this number no longer horrifies us. :nanasmirk:<br/><br/>
+
+        <h2>Conclusion</h2>
+
+        In this part, we've rigorously defined a system that would let us measure how fast certain functions grow. We even used it to compare how fast functions grow relative to each other!<br/><br/>
+
+        In the next parts, we'll explore functions that grow <i>even faster</i> than Ackermann and Graham.<br/><br/>
+
+        <center><img src="fgh2.png" style="width: 75vh"></center><br/>
+
+        Remember when we defined ordinals like $\omega^2$ and $\omega^{\omega^\omega}$? We can use those in the fast-growing hierarchy too.<br/><br/>
+
+        In <a href="googology3.html"><b>Part 3</b></a>, we'll take a look at functions that grow at a rate of $f_{\omega^2}$, and another that grows at a rate of $f_{\omega^{\omega^\omega}}$!
+
+    </div>
+</body>
+
+<script src="../../emojis/script.js"></script>
