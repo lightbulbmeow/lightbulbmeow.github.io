@@ -66,7 +66,7 @@
 
         Let's define an ordinal number $\omega$ (called <b><u>omega</u></b>) to be the <b><i>smallest element that's greater than every natural number</i></b>.<br/><br/><br/>
 
-        <center><img src="omega.png" style="width: 75vh"></center><br/>
+        <center><img src="omega.png" style="width: 40vw"></center><br/>
 
         In the diagram above, $\omega$ is the smallest ordinal number that's greater than 0, 1, 2, 3, ... You can also think of it as the <i>limit</i> of the sequence 0, 1, 2, 3, ...<br/><br/>
 
@@ -74,7 +74,7 @@
 
         The limit of that sequence is $\omega+\omega$. It's the smallest ordinal that's greater than $\omega$, $\omega+1$, $\omega+2$, $\omega+3$, ...
 
-        <center><img src="omega2.png" style="width: 75vh"></center><br/>
+        <center><img src="omega2.png" style="width: 40vw"></center><br/>
 
         People would usually write $\omega+\omega$ as $\omega\cdot2$ instead.<br/><br/>
 
@@ -84,7 +84,7 @@
 
         We can keep repeating that process to get $\omega\cdot5$, $\omega\cdot6$, $\omega\cdot7$, ... all the way until we arrive at a new limit, $\omega^2$.<br/><br/>
 
-        <center><img src="omegasquared.png" style="width: 75vh"></center><br/>
+        <center><img src="omegasquared.png" style="width: 40vw"></center><br/>
 
         Once again we can repeat all of that to get $\omega^2\cdot2$, then $\omega^2\cdot3$, then $\omega^2\cdot4$, ... to get $\omega^3$.<br/><br/>
 
@@ -92,7 +92,7 @@
 
         We can repeat <i>that</i> many more times to get $\omega^5$, $\omega^6$, $\omega^7$, ... all the way until we finally arrive at $\omega^\omega$.<br/><br/>
 
-        <center><img src="omegaomega.png" style="width: 75vh"></center><br/>
+        <center><img src="omegaomega.png" style="width: 40vw"></center><br/>
 
         And this could go on and on... continuing with $\omega^\omega$, $\omega^{\omega^\omega}$, $\omega^{\omega^{\omega^\omega}}$... But this is our stopping point for now.<br/><br/>
 
@@ -102,7 +102,7 @@
 
         In fact, $1+\omega=\omega$. The reason is that the sequences $1,2,3,\ldots$ and $0,1,2,\ldots$ both tend to the same ordinal, $\omega$.<br/><br/>
 
-        <center><img src="1omega.png" style="width: 75vh"></center><br/>
+        <center><img src="1omega.png" style="width: 40vw"></center><br/>
 
         For the same reason, <b>ordinal multiplication</b> is also <i><b>not commutative</b></i>.<br/><br/>
 
@@ -110,7 +110,7 @@
 
         In fact, $2\cdot\omega=\omega$, because the sequences $2,4,6,\ldots$ and $1,2,3,\ldots$ both tend to the same ordinal, $\omega$.<br/><br/>
 
-        <center><img src="2omega.png" style="width: 75vh"></center><br/>
+        <center><img src="2omega.png" style="width: 40vw"></center><br/>
 
         The order in which we write $\omega+1$ or $\omega\cdot2$ matters a lot. Keep this in mind!<br/><br/><br/>
 
@@ -252,13 +252,13 @@
 
         From now on, we'll be using the fast-growing hierarchy to measure every function's growth rate.<br/><br/>
 
-        <center><img src="fgh1.png" style="width: 75vh"></center><br/>
+        <center><img src="fgh1.png" style="width: 40vw"></center><br/>
 
         <h2>It's Ackermann time</h2>
 
         It's time to meet one of the famous fast growing functions. You might have heard about this before, the <b><u>Ackermann function</u></b>. This function was originally invented by Wilhelm Ackermann in the late 1920s.<br/><br/>
 
-        <center><img src="ackerman.jpg" style="width: 50vh"></center><br/>
+        <center><img src="ackerman.jpg" style="width: 30vw"></center><br/>
 
         It has multiple variations, but the most common one is by Péter and Robinson. The Ackermann function is defined as follows: It is a two-variable function with just three rules,
         \begin{align*}
@@ -386,7 +386,7 @@
 
         Want some grahams?<br/><br/>
 
-        <center><img src="graham.jpg" style="width: 50vh"></center><br/>
+        <center><img src="graham.jpg" style="width: 30vw"></center><br/>
 
         This next function comes from a problem in combinatorics. The problem is as follows:<br/><br/>
 
@@ -394,11 +394,11 @@
 
         For example, here one possible way to color every edge of a 3-dimensional cube either red or blue. It contains four coplanar vertices whose edges are all of the same color.<br/><br/>
 
-        <center><img src="ramsey.png" style="width: 60vh"></center><br/>
+        <center><img src="ramsey.png" style="width: 35vw"></center><br/>
 
         If however, the bottom red edge is changed to blue, then such a subgraph would no longer exist. This shows $n=3$ is not enough.<br/><br/>
 
-        <center><img src="ramsey2.png" style="width: 30vh"></center><br/>
+        <center><img src="ramsey2.png" style="width: 18vw"></center><br/>
 
         In 1971, Graham and Rothschild found an upper bound for $n$ that works, but that bound is so incredibly large. This bound is known as Graham's number.<br/><br/>
 
@@ -463,7 +463,7 @@
         $$g_n\approx\underbrace{\text{Ack}(\text{Ack}(\text{Ack}(\cdots(n))))}_n$$<br/>
         Just for fun, here's an excerpt from an <a href="https://xkcd.com/207/">xkcd comic</a> featuring both the Ackermann function and Graham's number.
 
-        <center><img src="xkcd.png" style="width: 50vh"></center><br/>
+        <center><img src="xkcd.png" style="width: 25vw"></center><br/>
 
         As we know, the Ackermann function is an order of magnitude slower than Graham's function, so trying to wrap the Ackermann function around Graham's number is like trying to equip a giant iron golem with thin paper armor.<br/><br/>
 
@@ -479,7 +479,7 @@
 
         In the next parts, we'll explore functions that grow <i>even faster</i> than Ackermann and Graham.<br/><br/>
 
-        <center><img src="fgh2.png" style="width: 75vh"></center><br/>
+        <center><img src="fgh2.png" style="width: 40vw"></center><br/>
 
         Remember when we defined ordinals like $\omega^2$ and $\omega^{\omega^\omega}$? We can use those in the fast-growing hierarchy too.<br/><br/>
 
