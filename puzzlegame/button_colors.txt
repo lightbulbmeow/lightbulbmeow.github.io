@@ -1,0 +1,10 @@
+1 - cerulean
+2 - red
+3 - green
+4 - yellow
+5 - invisible
+6 - 1pixel
+7 - pink
+8 - turquoise
+9 - orange
+10 - purple

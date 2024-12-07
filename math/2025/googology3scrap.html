@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="description" content="Hello! Welcome to my blog (*・ω・)ﾉ I will giv u free Cookies">
+    <title>Googology - Part 3</title>
+    <link rel="stylesheet" href="googology.css">
+    <link rel="stylesheet" href="../pygments.css">
+    <style>@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@700&display=swap');</style> <!-- Google font "Josefin Sans" -->
+
+    <style> body{ background-image: url("googology3.png"); } </style>
+
+    <!-- Latex stuff -->
+    <script>
+        MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+        }
+        };
+    </script>
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+
+    <script>
+        document.cookie = "freecookie=Heres your free cookie!!! Enjoy ~ヾ(・ω・);";
+    </script>
+</head>
+<body>
+    <a href="../index.html"><img src="../black.png" style="position: fixed; top: 20px; left: 20px;" /></a>
+
+    <div class="entry">
+
+        <h1>Googology - Part 3</h1>
+
+        <p class="date">???. ??:??am</p>
+
+        In <a href="googology2.html"><b>Part 2</b></a>, we've rigorously defined a system that would let us measure how fast certain functions grow. We also used it to compare how fast functions grow relative to each other.<br/><br/>
+
+        <center><img src="fgh2.png" style="width: 40vw"></center><br/>
+
+        In this part, we'll explore functions that grow <i>much much faster</i> than Ackermann and Graham!<br/><br/>
+
+        <h2>Breaking the $f_{\omega\cdot2}$ barrier</h2>
+
+        Before we jump right into the massive ordinals, let's first try constructing a function that grows as fast as $f_{\omega\cdot2}$.<br/><br/>
+
+        For this part, we'll be nested up arrows <i>a lot</i>, which becomes messy very very quickly. Let's rewrite up-arrow notation using right arrows like this:
+        $$a\to b\to c=a\uparrow^c b$$
+        The rightmost number tells us how many arrows there should be. Our "arrow duplicating" operation $A(n)$ can be written using this notation.
+        $$A(n)=2\to n\to(n-1)$$
+        which means the same thing as $2\uparrow^{n-1}n$.<br/><br/>
+
+        Next, let's attempt to express arrow nesting using this notation. For example, let's try writing Graham's function $g_n$ using right arrow notation.
+        $$\left.\begin{matrix}g_n=\underbrace{3\uparrow\uparrow\uparrow\cdots\uparrow\uparrow\uparrow3}_{\underbrace{3\uparrow\uparrow\uparrow\cdots\uparrow\uparrow\uparrow3}_{\underbrace{3\uparrow\uparrow\uparrow\cdots\uparrow\uparrow\uparrow3}_{\underbrace{\vdots}_{3\uparrow\uparrow\uparrow\uparrow3}}}}\end{matrix}\right\}n\text{ layers}$$
+        The first layer is just $g_1=3\uparrow\uparrow\uparrow\uparrow3$,
+        $$g_1=3\to3\to4$$
+        For the next layer, we want $g_2$ to have $g_1$ amounts of arrows. This can be written as
+        \begin{align*}
+        g_2 &= 3\to3\to g_1\\
+        &= 3\to3\to(3\to3\to4)
+        \end{align*}
+        Next, $g_3$ should have $g_2$ amounts of arrows, which can be written as
+        \begin{align*}
+        g_3 &= 3\to3\to g_2\\
+        &= 3\to3\to(3\to3\to(3\to3\to4))
+        \end{align*}
+        At this point you might be seeing the pattern. To write $g_n$, we just need to repeatedly apply the $(3\to3\to\bullet)$ operation to 4, $n$ times.
+        $$g_n=\underbrace{3\to3\to(3\to3\to(3\to3\to\cdots(3\to3\to4)))}_n$$
+        That long chain of nested right arrows is a bit cumbersome to write, so what if we extend our arrow notation that makes our life easier?
+        Let's extend the right arrow notation like this,
+        $$a\to b\to n\times$$
+        This would mean "repeatedly apply the $(a\to b\to\bullet)$ operation $n$ times". The initial value doesn't really matter, so let's just say it's 1.
+        $$a\to b\to n\times=\underbrace{a\to b\to(a\to b\to(a\to b\to\cdots(a\to b\to1)))}_n$$
+        You could also easily see where this places in the fast-growing hierarchy. If we assume that $a$ and $b$ are <b>fixed</b> constants, then
+        \begin{align*}
+        a\to b\to n&\approx A(n)\approx f_{\omega}(n)\\
+        a\to b\to n\times&\approx B(n)\approx f_{\omega+1}(n)
+        \end{align*}
+        By simply repeating the $(a\to b\to\bullet)$ operation, we ascend one level in the hirerarchy.<br/><br/>
+
+        Now what if we want to repeat <i>that</i> operation? What if we want to nest the $(a\to b\to \bullet\times)$ operation inside itself? Something like
+        $$\underbrace{a\to b\to(a\to b\to(a\to b\to\cdots(a\to b\to1\times)\times)\times)\times}_n$$
+        Then this would place us another level above in the hierarchy. Let's notate this using two $\times$'s, since it's like you're nesting the "number of times" with "number of times" itself.
+        $$a\to b\to n{\times}{\times}=\underbrace{a\to b\to(a\to b\to(a\to b\to\cdots(a\to b\to1\times)\times)\times)\times}_n$$
+        This puts us in $f_{\omega+2}(n)$ in the hierarchy, since we're iteratively repeating $f_{\omega+1}(n)$.
+        $$a\to b\to n{\times}{\times}\approx f_{\omega+2}(n)$$
+        Okay, but we can repeat <i>that</i> operation too! If you nest the $(a\to b\to\bullet{\times}{\times})$ operation inside itself, we'll go another level in the hierarchy.
+        $$
+        a\to b\to n{\times}{\times}{\times}=\underbrace{a\to b\to(a\to b\to(a\to b\to\cdots(a\to b\to1{\times}{\times}){\times}{\times}){\times}{\times}){\times}{\times}}_n$$
+        This places us in $f_{\omega+3}(n)$.
+        $$a\to b\to n{\times}{\times}{\times}\approx f_{\omega+3}(n)$$
+        At this point you see the pattern. By just nesting that operation with itself, adding a new $\times$ symbol, we keep ascending the hierarchy by one level each time. Doing this over and over gives us
+        $$a\to b\to n\underbrace{{\times}{\times}\cdots{\times}{\times}}_m\approx f_{\omega+m}(n)$$<br/>
+        How do we break the $f_{\omega\cdot2}$ barrier? We just <i>diagonalize!</i> We already have the construction for $f_{\omega+1}$, $f_{\omega+2}$, $f_{\omega+3}$, ..., so we've got the fundamental sequence of $\omega\cdot2$ covered.<br/><br/>
+
+        To diagonalize what we just did, notice how we're just adding a single $\times$ symbols each time. To construct $f_{\omega\cdot2}(n)$, we just allow the amount of $\times$'s itself to become an argument of the function.
+        \begin{align*}
+        f_\omega(n)&\approx a\to b\to n\\
+        f_{\omega+1}(n)&\approx a\to b\to n{\times}\\
+        f_{\omega+2}(n)&\approx a\to b\to n{\times}{\times}\\
+        f_{\omega+3}(n)&\approx a\to b\to n{\times}{\times}{\times}\\
+        &\vdots\\
+        f_{\omega\cdot2}(n)&\approx a\to b\to n\underbrace{{\times}{\times}\cdots{\times}{\times}}_n\\
+        \end{align*}
+
+        <h2>Conway's Chain Arrow Notation</h2>
+
+        grows as fast as $f_{\omega^2}$
+
+        <h2>Bowser's Extended Array Function</h2>
+
+        as fast as $f_{\omega^{\omega^\omega}}$ i think, kinda sus
+
+    </div>
+</body>
+
+<script src="../../emojis/script.js"></script>

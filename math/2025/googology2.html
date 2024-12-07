@@ -294,7 +294,7 @@
         \end{align*}
         With some effort, you might be able to compute that $\text{Ack}(3)=61$ (perhaps through Python or using other shortcuts).
 
-        By the time you get to $\text{Ack}(4)$, it starts exploding:
+        By the time you get to $\text{Ack}(4)$, it starts exploding. :chokodestroy:
         $$\text{Ack}(4)=2^{2^{2^{65536}}}-3$$
         Let's investigate why this happens.<br/><br/>
 
@@ -376,9 +376,15 @@
 
 <span class="nb">print</span><span class="p">(</span><span class="n">Ack</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span> <span class="c1"># should print Ack(3) = 61</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span> <span class="c1"># should print A(4,1) = 2 ↑↑ 4 - 3</span>
-</pre></div><br/><br/>
+</pre></div><br/>
 
-        The Ackermann function is important in the field of computer science, since it's an example of function that's "not primitive recursive". In other words, there's no way to convert the recursion into 'for' loops, where the number of iterations is known before entering the loop.<br/><br/>
+        There are some places where the Ackermann function appears naturally. The <b>inverse Ackermann function</b> is commonly seen in computer science, and is denoted by $\alpha$. It grows <i>extremely slowly</i>.
+        $$\alpha(n)=[\text{smallest integer }m\text{ such that Ack}(m)\ge n]$$
+        The inverse appears in the time complexity of some computer algorithms, most notably the <a href="https://en.wikipedia.org/wiki/Disjoint-set_data_structure">disjoint-set data structure</a>. Just to comprehend how <i>slow</i> it grows, we know that
+        $$\alpha(3)=1,\quad\alpha(7)=2,\quad\alpha(61)=3,\quad\alpha(2^{2^{2^{65536}}})=4,\,\quad\ldots$$
+        The smallest $n$ for which $\alpha(n)=5$ is no longer feasible to write. Since $\alpha(n)$ grows <i>so slowly</i>, we just assume that $\alpha(n)\lt5$ for all practical purposes.<br/><br/>
+
+        The Ackermann function itself is also pretty important in theoretical computer science, since it's an example of function that's "not primitive recursive". In other words, there's no way to convert the recursion into 'for' loops, where the number of iterations is known before entering the loop.<br/><br/>
 
         If you want to learn more about this topic, <a href="https://www.youtube.com/watch?v=i7sm9dzFtEI">Computerphile</a> has a nice video on this.<br/><br/>
 
@@ -412,23 +418,23 @@
         $$g_2=3\underbrace{\uparrow\uparrow\uparrow\cdots\uparrow\uparrow\uparrow}_{3\uparrow\uparrow\uparrow\uparrow3}3$$
         Then the next term, $g_3$, takes the previous term $g_2$, and uses <i>that</i> as the new amount of arrows.
         $$g_3=3\underbrace{\uparrow\uparrow\uparrow\cdots\uparrow\uparrow\uparrow}_{\underbrace{3\uparrow\uparrow\uparrow\cdots\uparrow\uparrow\uparrow3}_{3\uparrow\uparrow\uparrow\uparrow3}}3$$
-        This goes on and on, until we stop at $g_{64}$.
-        $$G=g_{64}$$
-        Graham's number is the 64th term of this sequence! Remember, this is just an <i>upper bound</i> for $n$ in the problem I mentioned above.<br/><br/>
-
-        What's really funny about this number is that it just appears naturally in some math proof. This number is ridiculously much bigger than Skewes's number, which was also an upper bound for some other problem.<br/><br/>
+        This goes on and on, until we stop at $g_{64}$. Finally, this is Graham's number!
+        $$\text{Graham's number }=g_{64}$$
+        Remember, this is just an <i>upper bound</i> for $n$ in the problem I mentioned above. Just imagine... trying to color the edges of a hypercube in $g_{64}$-dimensional space!<br/><br/>
 
         If you want to see Graham's number in its full glory, here it is:
-        $$\left.\begin{matrix}G=\underbrace{3\uparrow\uparrow\uparrow\cdots\uparrow\uparrow\uparrow3}_{\underbrace{3\uparrow\uparrow\uparrow\cdots\uparrow\uparrow\uparrow3}_{\underbrace{3\uparrow\uparrow\uparrow\cdots\uparrow\uparrow\uparrow3}_{\underbrace{\vdots}_{3\uparrow\uparrow\uparrow\uparrow3}}}}\end{matrix}\right\}\text{64 layers}$$
+        $$\left.\begin{matrix}\text{Graham's number }=\underbrace{3\uparrow\uparrow\uparrow\cdots\uparrow\uparrow\uparrow3}_{\underbrace{3\uparrow\uparrow\uparrow\cdots\uparrow\uparrow\uparrow3}_{\underbrace{3\uparrow\uparrow\uparrow\cdots\uparrow\uparrow\uparrow3}_{\underbrace{\vdots}_{3\uparrow\uparrow\uparrow\uparrow3}}}}\end{matrix}\right\}\text{64 layers}$$
 
-        Unfortunately Graham's number is no longer the best upper bound for this problem. The current best known upper bound for $n$ in the problem above was found by Eryk Lipka in 2019, and that upper bound is
+        What's really funny about this number is that it just appears naturally in some math proof. This number is ridiculously much bigger than Skewes's number, which was also an upper bound for some other unrelated problem.<br/><br/>
+
+        Unfortunately Graham's number is no longer the best upper bound for the hypercube coloring problem. The current best known upper bound for $n$ in the problem was found in 2019 by Eryk Lipka, and that upper bound is
         $$(2\uparrow\uparrow5138)\cdot((2\uparrow\uparrow5140)\uparrow\uparrow(2\cdot2\uparrow\uparrow 5137))\ll2\uparrow\uparrow(2\uparrow\uparrow5138)$$
         It's much much much smaller than Graham's number, but still ridiculously huge.<br/><br/><br/>
 
         <u>Question:</u> How fast does Graham's sequence grow?<br/><br/>
 
-        Since what we're essentially doing is just nesting arrow amounts in each other repeatedly, what we're doing is pretty much the same thing as in our "arrow nesting operation" $B(n)$.<br/><br/>
-
+        Since what we're essentially doing is just nesting arrow amounts in each other repeatedly, what we're doing is pretty much the same thing as in our "arrow nesting operation" $B(n)$.
+        $$\left.\begin{matrix}g_n=\underbrace{3\uparrow\uparrow\uparrow\cdots\uparrow\uparrow\uparrow3}_{\underbrace{3\uparrow\uparrow\uparrow\cdots\uparrow\uparrow\uparrow3}_{\underbrace{3\uparrow\uparrow\uparrow\cdots\uparrow\uparrow\uparrow3}_{\underbrace{\vdots}_{3\uparrow\uparrow\uparrow\uparrow3}}}}\end{matrix}\right\}n\text{ layers}\quad\left.\begin{matrix}B(n)\approx \underbrace{2\uparrow\uparrow\uparrow\cdots\uparrow\uparrow\uparrow n}_{\underbrace{2\uparrow\uparrow\uparrow\cdots\uparrow\uparrow\uparrow n}_{\underbrace{2\uparrow\uparrow\uparrow\cdots\uparrow\uparrow\uparrow n}_{\underbrace\vdots_n}}}\end{matrix}\right\}n\text{ layers}$$
         This means Graham's sequence grows as fast as $f_{\omega+1}(n)$ in the fast-growing hierarchy.
         $$g_n\approx B(n)\approx f_{\omega+1}(n)$$
         For completeness sake, here's Python code implementing Graham's function.<br/><br/>
@@ -457,7 +463,7 @@
 
         We know that $\text{Ack}(n)$ grows as fast as $f_{\omega}(n)$, while $g_n$ grows as fast as $f_{\omega+1}(n)$.<br/><br/>
 
-        Since $\omega+1$ is a higher ordinal than $\omega$, the clear winner here is Graham's function.<br/><br/>
+        Since $\omega+1$ is a higher ordinal than $\omega$, the clear winner here is <b>Graham's function</b>!<br/><br/>
 
         In fact, Graham's function is just as powerful as a repeated Ackermann function:
         $$g_n\approx\underbrace{\text{Ack}(\text{Ack}(\text{Ack}(\cdots(n))))}_n$$<br/>
@@ -477,7 +483,7 @@
 
         In this part, we've rigorously defined a system that would let us measure how fast certain functions grow. We even used it to compare how fast functions grow relative to each other!<br/><br/>
 
-        In the next parts, we'll explore functions that grow <i>even faster</i> than Ackermann and Graham.<br/><br/>
+        In the next parts, we'll explore functions that grow <i>much much faster</i> than Ackermann and Graham.<br/><br/>
 
         <center><img src="fgh2.png" style="width: 40vw"></center><br/>
 

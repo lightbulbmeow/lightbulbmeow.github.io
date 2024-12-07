@@ -34,9 +34,181 @@
 
         <p class="date">???. ??:??am</p>
 
-        :introduction:
+        In <a href="googology2.html"><b>Part 2</b></a>, we've rigorously defined a system that would let us measure how fast certain functions grow. We also used it to compare how fast functions grow relative to each other.<br/><br/>
 
-        nooo illegalllll :mikuangery:
+        <center><img src="fgh2.png" style="width: 40vw"></center><br/>
+
+        In this part, we'll explore functions that grow <i>much much faster</i> than Ackermann and Graham!<br/><br/>
+
+        <h2>Climbing up again...</h2>
+
+        Before we jump right into the massive ordinals, let's first try constructing a function that grows as fast as $f_{\omega\cdot2}$.<br/><br/>
+
+        For this part, we'll be nesting up arrows <i>a lot</i>, which becomes messy very very quickly. To make things neater, let's rewrite the up-arrow notation using brackets:
+
+        $$a\{n\}b=a\uparrow^nb$$
+
+        We'll define a new operation called <b><u>expansion</u></b>. It will just be "<i><b>repeated bracket nesting</b></i>", which works very similarly to our arrow nesting operation.<br/><br/>
+
+        This operation is denoted as $\{\{1\}\}$.
+
+        $$a\,\{\{1\}\}\,n=\underbrace{a\{a\{a\{\cdots\{a\}\cdots\}a\}a\}a}_n$$
+
+        Here, $n$ is the number of $a$'s from inside out. Note that $a\,\{\{1\}\}\,1$ is just equal $a$.<br/><br/>
+
+        Let's try evaluating $3\,\{\{1\}\}\,4$.
+        \begin{align*}
+        3\,\{\{1\}\}\,4 &= 3\{3\{3\{3\}3\}3\}3\\
+        &= 3\{3\{3\uparrow\uparrow\uparrow3\}3\}3\\
+        &= 3\{\underbrace{3\uparrow\uparrow\uparrow\cdots\uparrow\uparrow\uparrow3}_{3\uparrow\uparrow\uparrow3}\}3\\
+        &= \underbrace{3\uparrow\uparrow\uparrow\cdots\uparrow\uparrow\uparrow3}_{\underbrace{3\uparrow\uparrow\uparrow\cdots\uparrow\uparrow\uparrow3}_{3\uparrow\uparrow\uparrow3}}
+        \end{align*}
+
+        As you can see, it really is just a more compact way to write nested arrow notation. The $n$ part of $a\,\{\{1\}\}\,n$ tells how many layers of nesting to do.<br/><br/>
+
+        The <b>expansion</b> operator grows at pretty much the same rate as our arrow nesting operation $B(n)$.
+
+        $$a\,\{\{1\}\}\,n\approx B(n)\approx f_{\omega+1}(n)$$
+
+        where $a\ge3$ is any fixed integer. It doesn't matter which integer $a$ we choose, since they all grow at roughly the same rate regardless.<br/><br/>
+
+        Note that the same can't be said about $a=2$, because $2\,\{\{1\}\}\,n$ is always equal to $4$. (Can you see why?)<br/><br/><br/>
+
+        Repeating the expansion operator gives us <b>multiexpansion</b>, denoted as $\{\{2\}\}$. Note that these operations must be evaluated from right to left.
+
+        $$a\,\{\{2\}\}\,n=\underbrace{a\,\{\{1\}\}\,a\,\{\{1\}\}\,\cdots\,\{\{1\}\}\,a\,\{\{1\}\}\,a}_n$$
+
+        We place this a $f_{\omega+2}$ in the hierarchy, since we're just iteratively repeating expansion.
+        $$a\,\{\{2\}\}\,n\approx f_{\omega+2}(n)$$
+        Repeating this operation gives <b><u>powerexpansion</u></b>, denoted as $\{\{3\}\}$.
+
+        $$a\,\{\{3\}\}\,n=\underbrace{a\,\{\{2\}\}\,a\,\{\{2\}\}\,\cdots\,\{\{2\}\}\,a\,\{\{2\}\}\,a}_n$$
+
+        Repeating this operation gives <b><u>expandotetration</u></b>, denoted as $\{\{4\}\}$.
+
+        $$a\,\{\{4\}\}\,n=\underbrace{a\,\{\{3\}\}\,a\,\{\{3\}\}\,\cdots\,\{\{3\}\}\,a\,\{\{3\}\}\,a}_n$$
+
+        I'm sure you get the pattern at this point. We can generalize this to $\{\{m\}\}$, just repeating the previous operation every time.
+
+        $$a\,\{\{m\}\}\,n=\underbrace{a\,\{\{m-1\}\}\,a\,\{\{m-1\}\}\,\cdots\,\{\{m-1\}\}\,a\,\{\{m-1\}\}\,a}_n$$<br/>
+
+        <u>Question:</u> How fast does the $\{\{m\}\}$ operation grow?<br/>
+
+        We've seen that $\{\{1\}\}$ grows as fast as $f_{\omega+1}$, and $\{\{2\}\}$ grows as fast as $f_{\omega+2}$.<br/><br/>
+
+        Each time we repeat the previous operation, we ascend one level in the hierarchy. Therefore, $\{\{m\}\}$ grows as fast as $f_{\omega+m}$.
+        $$a\,\{\{m\}\}\,n\approx f_{\omega+m}(n)$$<br/>
+
+
+        At this point it might seem as if we reached another dead end. How do we get higher than $f_{\omega+m}(n)$?<br/><br/>
+
+        Repeating the previous operation just ascends us one layer, $f_{\omega+m+1}(n)$, which isn't much of an improvement.<br/><br/>
+
+        <h2>Breaking the $f_{\omega\cdot2}$ barrier</h2>
+
+        The trick is to use <i>diagonalization</i> again. Remember that $\omega+1$, $\omega+2$, $\omega+3$, ... is the fundamental sequence for $\omega\cdot2$?<br/><br/>
+
+        We already know how to define $f_{\omega+1}$, $f_{\omega+2}$, $f_{\omega+3}$, ... In order to reach $f_{\omega\cdot2}$, all we have to do is diagonalize over these functions.
+
+        \begin{align*}
+        f_{\omega+1}(n)&\approx a\,\{\{1\}\}\,n\\
+        f_{\omega+2}(n)&\approx a\,\{\{2\}\}\,n\\
+        f_{\omega+3}(n)&\approx a\,\{\{3\}\}\,n\\
+        f_{\omega+4}(n)&\approx a\,\{\{4\}\}\,n\\
+        &\vdots\\
+        f_{\omega\cdot2}(n)&\approx a\,\{\{n\}\}\,n\\
+        \end{align*}
+
+        Thus, the function $f_{\omega\cdot2}(n)$ is like just getting to choose what $n$ to put inside the double brackets, $\{\{n\}\}$.<br/><br/><br/>
+
+        Now, to break the $f_{\omega\cdot2}$ barrier, all we have to do is repeat this operation once more. That operation is called...<br/><br/>
+
+        <center><img src="explosion.gif" style="width: 40vw"><br/><span style="font-size:72px"><b><i><u>EXPLOSION!!!</u></i></b></span><br/><span style="font-size:14px">(Yes, that's exactly what they call it.)</span></center><br/>
+
+        The <b><u>explosion</u></b> operation is "<i><b>repeated double bracket nesting</b></i>", and is denoted by $\{\{\{1\}\}\}$.
+
+        $$a\,\{\{\{1\}\}\}\,n=\underbrace{a\,\{\{a\,\{\{\cdots\,\{\{a\}\}\,\cdots\}\}\,a\}\}\,a}_n$$
+
+        This grows as fast as $f_{\omega\cdot2+1}(n)$ in the fast-growing hierarchy.<br/><br/>
+
+        Taking it a step further gives <b><u>multiexplosion</u></b>, which is "<i><b>repeated explosion</b></i>", denoted by $\{\{\{2\}\}\}$.
+
+        $$a\,\{\{\{2\}\}\}\,n=\underbrace{a\,\{\{\{1\}\}\}\,a\,\{\{\{1\}\}\}\,\cdots\,\{\{\{1\}\}\}\,a\,\{\{\{1\}\}\}\,a}_n$$
+
+        This grows as fast as $f_{\omega\cdot2+2}(n)$.<br/><br/>
+
+        After that, <i><b>repeated multiexplosion</b></i> gives "<b><u>powerexplosion</u></b>" denoted as $\{\{\{3\}\}\}$.<br/><br/>
+
+        Then, <i><b>repeated powerexplosion</b></i> gives "<b><u>explodotetration</u></b>" denoted as $\{\{\{4\}\}\}$.<br/><br/>
+
+        I think the pattern is pretty obvious by now.<br/><br/><br/>
+
+        We can keep repeating this until we get the $\{\{\{m\}\}\}$ operation, which grows as fast as $f_{\omega\cdot2+m}(n)$ in the hierarchy.<br/><br/>
+        $$a\,\{\{\{m\}\}\}\,n\approx f_{\omega\cdot2+m}(n)$$
+        Then we can diagonalize this again to get a function that grows as fast as $f_{\omega\cdot3}(n)$.
+        $$a\,\{\{\{n\}\}\}\,n\approx f_{\omega\cdot3+m}(n)$$
+        We do that all again with another pair of brackets, repeating it all again, to get a function that grows as fast as $f_{\omega\cdot4}(n)$.
+        \begin{align*}
+        a\,\{\{\{\{1\}\}\}\}\,n&=\underbrace{a\,\{\{\{a\,\{\{\{\cdots\,\{\{\{a\}\}\}\,\cdots\}\}\}\,a\}\}\}\,a}_n\\
+        a\,\{\{\{\{2\}\}\}\}\,n&=\underbrace{a\,\{\{\{\{1\}\}\}\}\,a\,\{\{\{\{1\}\}\}\}\,\cdots\,\{\{\{\{1\}\}\}\}\,a\,\{\{\{\{1\}\}\}\}\,a}_n\\
+        a\,\{\{\{\{3\}\}\}\}\,n&=\underbrace{a\,\{\{\{\{2\}\}\}\}\,a\,\{\{\{\{2\}\}\}\}\,\cdots\,\{\{\{\{2\}\}\}\}\,a\,\{\{\{\{2\}\}\}\}\,a}_n\\
+        &\vdots\\
+        a\,\{\{\{\{n\}\}\}\}\,n&\approx f_{\omega\cdot4}(n)
+        \end{align*}
+        Then we just add more brackets, again and again...
+        \begin{align*}
+        a\,\{\{\{\{\{n\}\}\}\}\}\,n&\approx f_{\omega\cdot5}(n)\\
+        a\,\{\{\{\{\{\{n\}\}\}\}\}\}\,n&\approx f_{\omega\cdot6}(n)\\
+        a\,\{\{\{\{\{\{\{n\}\}\}\}\}\}\}\,n&\approx f_{\omega\cdot7}(n)\\
+        &\vdots
+        \end{align*}
+        By diagonalizing this again, we at last reach
+        $$a\,\underbrace{\{\{\cdots\{\{n\}\}\cdots\}\}}_n\,n\approx f_{\omega^2}(n)$$
+        That expression on the left has $n$ pairs of brackets.<br/><br/>
+
+        And just when you think it's over, we can still keep going...
+        $$a\,\underbrace{\{\{\cdots\{\{n\}\}\cdots\}\}}_{a\,\underbrace{\{\{\cdots\{\{n\}\}\cdots\}\}}_{\underbrace{\vdots}_n}\,n}\,n\approx f_{\omega^2+1}(n)$$
+        Some people would call this "<b>megotion</b>" or something, but I think this is where we'll have to stop for now.<br/><br/>
+
+        If you'd like, you could still keep going with this notation, reaching higher and higher ordinals. Nothing's stopping you. :hacker:<br/><br/>
+
+        Anyways, we still have to "rigorize" all these bracket operations.<br/><br/>
+
+        First, let's shorten the notation by writing the amount of brackets as an exponent.
+        $$a\,\{c\}^d\,b=a\,\underbrace{\{\{\cdots\{\{c\}\}\cdots\}\}}_d\,b$$
+        Our bracket notation can then be defined using four rules:
+
+        \begin{align*}
+        a\,\{c\}\,b &= a\uparrow^cb\\
+        a\,\{c\}^d\,1 &= a\\
+        a\,\{1\}^d\,b &= a\,\{a\,\{1\}^d\,(b-1)\}^{d-1}\,a\quad\text{ if }b,d>1\\
+        a\,\{c\}^d\,b &= a\,\{c-1\}^d\,(a\,\{c\}^d\,(b-1))\quad\text{ if }b,c>1
+        \end{align*}
+
+        For completeness, here's Python code that implements the bracket operations.<br/><br/>
+
+        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">knuth</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">):</span> <span class="c1"># returns a ↑ⁿ b</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">a</span> <span class="o">**</span> <span class="n">b</span>
+    <span class="k">elif</span> <span class="n">b</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">knuth</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">knuth</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">bracket</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="n">d</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">d</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">knuth</span><span class="p">(</span><span class="n">c</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">b</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">a</span>
+    <span class="k">elif</span> <span class="n">c</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">bracket</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">bracket</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">d</span><span class="p">),</span><span class="n">d</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">bracket</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">bracket</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="n">d</span><span class="p">),</span><span class="n">c</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">d</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">bracket</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span> <span class="c1"># should print 2 {{{{{4}}}}} 3, which is just 4</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">bracket</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span> <span class="c1"># should print 3 {{2}} 3, which is a lost cause</span>
+</pre></div><br/>
+
 
         <h2>Conway's Chain Arrow Notation</h2>
 
