@@ -6,15 +6,26 @@ def knuth(n,a,b): # returns a ↑ⁿ b
     else:
         return knuth(n-1,a,knuth(n,a,b-1))
 
-def bracket(a,b,c,d):
-    if d == 1:
+def conway(S):
+    if len(S) == 2:      # S is of the form a → b
+        a,b = S
+        return a**b
+    elif len(S) == 3:    # S is of the form a → b → c
+        a,b,c = S
         return knuth(c,a,b)
-    elif b == 1:
-        return a
-    elif c == 1:
-        return bracket(a,a,bracket(a,b-1,1,d),d-1)
-    else:
-        return bracket(a,bracket(a,b-1,c,d),c-1,d)
+    elif len(S) >= 4:
+        if S[-1] == 1:    # S is of the form # → 1
+            *T,_ = S
+            return conway(T)
+        elif S[-2] == 1:  # S is of the form # → 1 → a
+            *T,_,a = S
+            return conway(T)
+        else:             # S is of the form # → a → b
+            *T,a,b = S
+            return conway(T+[conway(T+[a-1,b]),b-1])
 
-print(bracket(2,3,4,5)) # should print 2 {{{{{4}}}}} 3, which is just 4
-print(bracket(3,3,2,2)) # should print 3 {{2}} 3, which is a lost cause
+def cg(n):
+    return conway(n*[n])
+
+print(conway([3,3,2,1]))  # should print 3 → 3 → 2 → 1 = 3 ↑↑ 3
+print(cg(5))              # should print cg(5) = 5 → 5 → 5 → 5 → 5

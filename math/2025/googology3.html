@@ -32,7 +32,7 @@
 
         <h1>Googology - Part 3</h1>
 
-        <p class="date">???. ??:??am</p>
+        <p class="date">December 8, 2024. 6:00pm</p>
 
         In <a href="googology2.html"><b>Part 2</b></a>, we've rigorously defined a system that would let us measure how fast certain functions grow. We also used it to compare how fast functions grow relative to each other.<br/><br/>
 
@@ -176,10 +176,10 @@
 
         First, let's shorten the notation by writing the amount of brackets as an exponent.
         $$a\,\{c\}^d\,b=a\,\underbrace{\{\{\cdots\{\{c\}\}\cdots\}\}}_d\,b$$
-        Our bracket notation can then be defined using four rules:
+        Our bracket notation can then be defined using just four rules:
 
         \begin{align*}
-        a\,\{c\}\,b &= a\uparrow^cb\\
+        a\,\{1\}\,b &= a^b\\
         a\,\{c\}^d\,1 &= a\\
         a\,\{1\}^d\,b &= a\,\{a\,\{1\}^d\,(b-1)\}^{d-1}\,a\quad\text{ if }b,d>1\\
         a\,\{c\}^d\,b &= a\,\{c-1\}^d\,(a\,\{c\}^d\,(b-1))\quad\text{ if }b,c>1
@@ -187,17 +187,9 @@
 
         For completeness, here's Python code that implements the bracket operations.<br/><br/>
 
-        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">knuth</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">):</span> <span class="c1"># returns a ↑ⁿ b</span>
-    <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">a</span> <span class="o">**</span> <span class="n">b</span>
-    <span class="k">elif</span> <span class="n">b</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">return</span> <span class="mi">1</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">knuth</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">knuth</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
-
-<span class="k">def</span> <span class="nf">bracket</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="n">d</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">d</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">knuth</span><span class="p">(</span><span class="n">c</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
+        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">bracket</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="n">d</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">d</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">a</span><span class="o">**</span><span class="n">b</span>
     <span class="k">elif</span> <span class="n">b</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">a</span>
     <span class="k">elif</span> <span class="n">c</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
@@ -209,15 +201,368 @@
 <span class="nb">print</span><span class="p">(</span><span class="n">bracket</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span> <span class="c1"># should print 3 {{2}} 3, which is a lost cause</span>
 </pre></div><br/>
 
-
         <h2>Conway's Chain Arrow Notation</h2>
 
-        grows as fast as $f_{\omega^2}$
+        <center><img src="chainarrow.jpg" style="width: 30vw"></center><br/>
+
+        In 1995, John Conway and Richard Guy developed a notation called <b><u>Conway's chained arrow notation</u></b>. It works as follows:<br/><br/>
+
+        Numbers using this notation as a chain of right arrows, e.g.
+        $$2\to3\to4\to5\to6$$
+        The $\rightarrow$ arrow is not an operator in the conventional sense; $a\to b\to c$ is neither equal to $a\to(b\to c)$ nor $(a\to b)\to c$. The entire chain represents just a single operation! (You could think of it as applying an operation over an array.)<br/><br/>
+
+        Let $\#$ denote some chain. There are four simplification rules.
+
+        <ol>
+        <li>The chain $a\to b$ represents the number $a^b$.
+        <li>The chain $a\to b\to c$ represents the number $a\uparrow^cb$.
+        <li>The chains $\#\to1$ and $\#\to1\to a$ represent the same number as the chain $\#$.
+        <li>Else, the chain $\#\to(a+1)\to(b+1)$ represents the same number as the chain $\#\to(\#\to a\to(b+1))\to b$.
+        </ol>
+
+        Alternatively, we can write $a\to b\to c=a\{c\}b$ using bracket notation.<br/><br/>
+
+        For example, let's say we wanted to simplify $3\to3\to3\to2$.
+
+        \begin{align*}
+        3\to3\to3\to2 &= 3\to3\to(3\to3\to2\to2)\to1\\
+        &= 3\to3\to(3\to3\to(3\to3\to1\to2)\to1)\to1\\
+        &= 3\to3\to(3\to3\to(3\to3)\to1)\to1\\
+        &= 3\to3\to(3\to3\to3^3\to1)\to1\\
+        &= 3\to3\to(3\to3\to27)\to1\\
+        &= 3\to3\to3\{27\}3\to1\\
+        &= 3\to3\to3\{27\}3\\
+        &= 3\{3\{27\}3\}3\\
+        &= \underbrace{3\uparrow\uparrow\cdots\uparrow\uparrow3}_{\underbrace{3\uparrow\uparrow\cdots\uparrow\uparrow3}_{27}}
+        \end{align*}
+
+        Conway and Guy also defined a one-variable version of this notation, called the CG function which diagonalizes over the entire notation.
+        $$cg(n)=\underbrace{n\to n\to\cdots\to n\to n}_n$$
+
+        <u>Question:</u> How fast does this function grow?<br/><br/>
+
+        To gain a sense of how fast this grows, let's first try adding arrows one by one.<br/><br/>
+
+        With a single arrow, we know it's just exponentiation. With two arrows, it's Knuth's up arrow notation.
+        \begin{align*}
+        a \to n &= a^n & \approx f_2(n)\\
+        a \to b \to n &= a\uparrow^n b & \approx f_\omega(n)
+        \end{align*}
+        What happens with three arrows? Let's take a look at what $a\to b\to c\to n$ simplifies to.
+        \begin{align*}
+        &a\to b\to c\to n\\
+        &= a\to b\to (a\to b\to (c-1)\to n)\to(n-1)\\
+        &= a\to b\to (a\to b\to (a\to b\to (c-2)\to n)\to (n-1))\to(n-1)\\
+        &= \underbrace{(a\to b\to (a\to b\to (\cdots(a\to b\to 1\to n)\cdots)\to (n-1))\to (n-1))\to(n-1)}_{n}\\
+        &= \underbrace{(a\to b\to (a\to b\to (\cdots(a\to b)\cdots)\to (n-1))\to (n-1))\to(n-1)}_{n}\\
+        \end{align*}
+        So it seems that this operation just repeatedly nests $a\to b\to\bullet\to(n-1)$ with itself $c$ times.<br/><br/>
+
+        In other words, the operation $a\to b\to\bullet\to n$ is just the repeated $a\to b\to\bullet\to(n-1)$ operation. This gives us a slight hint.<br/><br/>
+
+        Let's try small values of $n$, starting with $n=1,2,3,\ldots$.<br/><br/>
+
+        If $n=1$, then $a\to b\to c\to1$ is just $a\to b\to c=a\uparrow^c b$.<br/><br/>
+
+        If $n=2$, then $a\to b\to c\to2$ nests the $a\to b\to\bullet\to1$ operation $c$ times. In other words,
+        $$\left.\begin{matrix}a\to b\to c\to2=\underbrace{a\uparrow\uparrow\cdots\uparrow\uparrow b}_{\underbrace{a\uparrow\uparrow\cdots\uparrow\uparrow b}_{\underbrace{\vdots}_{a^b}}}\end{matrix}\right\}c\text{ layers}$$
+        It's like an arrow nesting operation, which is convenient since we have notation for functions that grow like this!<br/><br/>
+        $$a\to b\to c\to 2=\underbrace{a\{a\{\cdots a\{a^b\}b\cdots\}b\}b}_c\approx a\,\{\{1\}\}\,c$$
+        Note that the $b$ variable disappears, since it's pretty "insignificant" compared to how the function grows when $c$ is varied. In fact, it can be shown that for all $b>a$,
+        $$a\,\{\{1\}\}\,c\lt a\to b\to c\to 2\lt a\,\{\{1\}\}\,(c+1)$$
+        If $n=3$, then $a\to b\to c\to 3$ nests the $a\to b\to\bullet\to2$ operation $c$ times.
+        \begin{align*}
+        a\to b\to c\to 3&\approx \underbrace{a\,\{\{1\}\}\,a\,\{\{1\}\}\,\cdots\,\{\{1\}\}\,a\,\{\{1\}\}\,a^b}_c\\
+        &\approx a\,\{\{2\}\}\,c
+        \end{align*}
+        If $n=4$, then $a\to b\to c\to4$ nests the $a\to b\to\bullet\to3$ operation $c$ times. At this point, you can see what the pattern is.
+        \begin{align*}
+        a\to b\to c\to 4&\approx \underbrace{a\,\{\{2\}\}\,a\,\{\{2\}\}\,\cdots\,\{\{2\}\}\,a\,\{\{2\}\}\,a^b}_c\\
+        &\approx a\,\{\{3\}\}\,c
+        \end{align*}
+        More generally, we can see that for all $n$, we have
+        $$a\to b\to c\to n\approx a\,\{\{n-1\}\}\,c$$
+        The $n$ at the end tells us what number to put inside the double brackets.<br/><br/>
+
+        As shown previously, we know that $a\,\{\{m\}\}\,n$ grows as fast as $f_{\omega+m}(n)$ in the hierarchy. This operation diagonalizes over that.<br/><br/>
+
+        Hence, we now know where this roughly places in the fast-growing hierarchy.
+        $$a\to b\to c\to n\approx f_{\omega\cdot2}(n)$$<br/>
+        What about four arrows?<br/><br/>
+
+        Well, it's actually pretty similar.
+        $$a\to b\to c\to d\to n=a\to b\to c\to(a\to b\to c\to(d-1)\to n)\to(n-1)$$
+        Just based on this, you can figure out that $a\to b\to c\to d\to n$ is essentially just the $a\to b\to c\to\bullet\to(n-1)$ operation repeated $d$ times.<br/><br/>
+
+        You can easily show that
+        $$a\to b\to c\to d\to n\approx a\,\{\{\{n-1\}\}\}\,d\approx f_{\omega\cdot3}(n)$$
+        and more generally, if you have $m$ arrows, then
+        $$\underbrace{a\to b\to c\to\cdots\to k\to n}_{m\text{ arrows}}\approx a\,\{n-1\}^m\,k\approx f_{\omega\cdot(m-1)}(n)$$
+        This is left as an exercise to the reader. :nanasmirk:<br/><br/>
+
+        Finally, this lets us figure out the growth rate of the CG function.
+        $$cg(n)=\underbrace{n\to n\to\cdots\to n\to n}_n$$
+        This diagonalizes over the arrow notation. Since two arrows is $f_\omega$, three arrows is $f_{\omega\cdot2}$, four arrows is $f_{\omega\cdot3}$, diagonalizing that means getting the limit of $\omega$, $\omega\cdot2$, $\omega\cdot3$, ..., which is $\omega^2$.
+        $$cg(n)\approx f_{\omega^2}(n)$$
+        In other words, Conway's chained arrow notation grows just as fast as our bracket notation!<br/><br/>
+
+        The difference between the two is that bracket notation is more "compact", while Conway's chained arrow notation allows more "precision" for the number by specifying an array.<br/><br/>
+
+        Graham's number can be approximated to be between
+        $$3\to3\to64\to2\lt g_{64}\lt 3\to3\to65\to2$$
+        Though, when trying to 'rank' Conway's chained arrow notation on the hierarchy, only the final number and the amount of arrows matter. For example, the two functions
+        \begin{align*}
+        & 3\to3\to3\to3\to n &\approx f_{\omega\cdot3}(n)\\
+        & 999\to 99999\to 999^{999}\to \text{Ack}(999)\to n &\approx f_{\omega\cdot3}(n)
+        \end{align*}
+        have the same growth rate in the hierarchy, even though the numbers in one chain seem much bigger than the other.<br/><br/>
+
+        For completeness, here's a Python code that implements Conway's chained arrow notation.<br/><br/>
+
+        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">knuth</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">):</span> <span class="c1"># returns a ↑ⁿ b</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">a</span> <span class="o">**</span> <span class="n">b</span>
+    <span class="k">elif</span> <span class="n">b</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">knuth</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">knuth</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">conway</span><span class="p">(</span><span class="n">S</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">S</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>      <span class="c1"># S is of the form a → b</span>
+        <span class="n">a</span><span class="p">,</span><span class="n">b</span> <span class="o">=</span> <span class="n">S</span>
+        <span class="k">return</span> <span class="n">a</span><span class="o">**</span><span class="n">b</span>
+    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">S</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>    <span class="c1"># S is of the form a → b → c</span>
+        <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span> <span class="o">=</span> <span class="n">S</span>
+        <span class="k">return</span> <span class="n">knuth</span><span class="p">(</span><span class="n">c</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">S</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">S</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>    <span class="c1"># S is of the form # → 1</span>
+            <span class="o">*</span><span class="n">T</span><span class="p">,</span><span class="n">_</span> <span class="o">=</span> <span class="n">S</span>
+            <span class="k">return</span> <span class="n">conway</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">S</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># S is of the form # → 1 → a</span>
+            <span class="o">*</span><span class="n">T</span><span class="p">,</span><span class="n">_</span><span class="p">,</span><span class="n">a</span> <span class="o">=</span> <span class="n">S</span>
+            <span class="k">return</span> <span class="n">conway</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>             <span class="c1"># S is of the form # → a → b</span>
+            <span class="o">*</span><span class="n">T</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span> <span class="o">=</span> <span class="n">S</span>
+            <span class="k">return</span> <span class="n">conway</span><span class="p">(</span><span class="n">T</span><span class="o">+</span><span class="p">[</span><span class="n">conway</span><span class="p">(</span><span class="n">T</span><span class="o">+</span><span class="p">[</span><span class="n">a</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">b</span><span class="p">]),</span><span class="n">b</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="k">def</span> <span class="nf">cg</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">conway</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="p">[</span><span class="n">n</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">conway</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">]))</span>  <span class="c1"># should print 3 → 3 → 2 → 1 = 3 ↑↑ 3</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cg</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>              <span class="c1"># should print cg(5) = 5 → 5 → 5 → 5 → 5</span>
+</pre></div><br/>
+
+        Notice the use of arrays this time, which is required to construct the arrow chains. (Also, apologies for the messy code.)<br/><br/>
+
 
         <h2>Bowser's Extended Array Function</h2>
 
-        as fast as $f_{\omega^{\omega^\omega}}$ i think, kinda sus
+        This is a whole new can of worms, so buckle up. There's this notation called <b><u>Bowser's Extended Array Function</u></b> which is a favorite among googologists.<br/><br/>
 
+        BEAF notation can reach levels as high as $f_{\omega^{\omega^\omega}}(n)$. It can apparently reach even higher than that, but it's unfortunately ill-defined so this will do for now.<br/><br/>
+
+        The first main idea is to use arrays to construct the notation. As you've seen, Conway's chained arrow notation uses a single array (essentially) and is able to reach $f_{\omega^2}(n)$.<br/><br/>
+
+        However we can do even better. Our bracket notation $a\,\{c\}^d\,b$ is able to reach the same growth rate, despite only having four variables. What would it become if it had five variables or more?<br/><br/>
+
+        Let's first write out our bracket notation as an array, in preparation for BEAF.
+        $$\{a,b,c,d\}=a\,\{c\}^d\,b$$
+        If we rewritten the rules for bracket notation in this new format, we get
+        \begin{align*}
+        \{a,b,1,1\} &= a^b\\
+        \{a,1,c,d\} &= a\\
+        \{a,b,1,d\} &= \{a,a,\{a,b-1,1,d\},d-1\}\\
+        \{a,b,c,d\} &= \{a,\{a,b-1,c,d\},c-1,d\}
+        \end{align*}
+        What would adding a fifth term to this array look like?
+        $$\{a,b,c,d,e\}=\,???$$
+        For now, our goal is to make it reach a growth rate of $f_{\omega^3}(n)$.<br/><br/>
+
+        Earlier, we defined a function with growth rate $f_{\omega^2}(n)$ by "diagonalizing" over the bracket notation. It looked somewhat like this,
+        $$a\{n\}^nn=a\,\underbrace{\{\{\cdots\{\{n\}\}\cdots\}\}}_n\,n\approx f_{\omega^2}(n)$$
+        Let's make this simpler by setting all the other $n$'s to $a$'s. The growth rate should still be the same, as long as $n$, the number of brackets, stays variable.
+        $$a\{a\}^na=a\,\underbrace{\{\{\cdots\{\{a\}\}\cdots\}\}}_n\,a\approx f_{\omega^2}(n)$$
+        This is our "<b>bracket duplicating</b>" operation, since it duplicates brackets however many times we want.<br/><br/>
+
+        By iteratively repeating this operation, we obtain a new operation which nests bracket amounts to itself. I would call this the "<b>bracket nesting</b>" operation, but it's already more well-known as "<b><u>megotion</u></b>".<br/><br/>
+
+        The megotion operation is denoted using two <i>vertically stacked</i> brackets, which looks silly...
+        $$\left.\begin{matrix}a\,\substack{\{\\\{}1\substack{\}\\\}}\,n=a\,\underbrace{\{\{\cdots\{\{a\}\}\cdots\}\}}_{a\,\underbrace{\{\{\cdots\{\{a\}\}\cdots\}\}}_{\underbrace{\vdots}_a}\,a}\,a\end{matrix}\right\}n\text{ layers}$$
+        This has a growth rate of $f_{\omega^2+1}(n)$.<br/><br/>
+
+        Taking it a step further gives <b><u>multimegotion</u></b>, which is "<b><i>repeated megotion</i></b>".
+        $$a\,\substack{\{\\\{}2\substack{\}\\\}}\,n=\underbrace{a\,\substack{\{\\\{}1\substack{\}\\\}}\,a\,\substack{\{\\\{}1\substack{\}\\\}}\,\cdots\,\substack{\{\\\{}1\substack{\}\\\}}\,a\,\substack{\{\\\{}1\substack{\}\\\}}\,a}_n$$
+        As you'd expect, it grows as fast as $f_{\omega^2+2}(n)$ in the hierarchy.<br/><br/>
+
+        Repeating this operation gives <b><u>powermegotion</u></b>, then <b><u>tetramegotion</u></b>, and so on.
+        \begin{align*}
+        a\,\substack{\{\\\{}3\substack{\}\\\}}\,n&=\underbrace{a\,\substack{\{\\\{}2\substack{\}\\\}}\,a\,\substack{\{\\\{}2\substack{\}\\\}}\,\cdots\,\substack{\{\\\{}2\substack{\}\\\}}\,a\,\substack{\{\\\{}2\substack{\}\\\}}\,a}_n\\
+        a\,\substack{\{\\\{}4\substack{\}\\\}}\,n&=\underbrace{a\,\substack{\{\\\{}3\substack{\}\\\}}\,a\,\substack{\{\\\{}3\substack{\}\\\}}\,\cdots\,\substack{\{\\\{}3\substack{\}\\\}}\,a\,\substack{\{\\\{}3\substack{\}\\\}}\,a}_n\\
+        &\vdots\\
+        a\,\substack{\{\\\{}m\substack{\}\\\}}\,n&\approx f_{\omega^2+m}(n)\\
+        \end{align*}
+        and then... we can define <b><u>megoexpansion</u></b>, which is denoted by two pairs of <i>vertically stacked double brackets</i>.
+        $$a\,\substack{\{\{\\\{\{}1\substack{\}\}\\\}\}}\,n=\underbrace{a\,\substack{\{\\\{}a\,\substack{\{\\\{}\cdots\,\substack{\{\\\{}a\substack{\}\\\}}\,\cdots\substack{\}\\\}}\,a\substack{\}\\\}}\,a}_n$$
+        It has a growth rate of $f_{\omega^2+\omega+1}(n)$. This is analogous to our <b>expansion</b> operation $\{\{1\}\}$, that grows as fast as $f_{\omega+1}(n)$.<br/><br/>
+        \begin{align*}
+        a\,\substack{\{\{\\\{\{}2\substack{\}\}\\\}\}}\,n&=\underbrace{a\,\substack{\{\{\\\{\{}1\substack{\}\}\\\}\}}\,a\substack{\{\{\\\{\{}1\substack{\}\}\\\}\}}\,\cdots\,\substack{\{\{\\\{\{}1\substack{\}\}\\\}\}}\,a\substack{\{\{\\\{\{}1\substack{\}\}\\\}\}}\,a}_n\\
+        a\,\substack{\{\{\\\{\{}3\substack{\}\}\\\}\}}\,n&=\underbrace{a\,\substack{\{\{\\\{\{}2\substack{\}\}\\\}\}}\,a\substack{\{\{\\\{\{}1\substack{\}\}\\\}\}}\,\cdots\,\substack{\{\{\\\{\{}2\substack{\}\}\\\}\}}\,a\substack{\{\{\\\{\{}2\substack{\}\}\\\}\}}\,a}_n\\
+        &\vdots\\
+        a\,\substack{\{\{\\\{\{}m\substack{\}\}\\\}\}}\,n &\approx f_{\omega^2+\omega+m}(n)\\
+        a\,\substack{\{\{\{\\\{\{\{}1\substack{\}\}\}\\\}\}\}}\,n&=\underbrace{a\,\substack{\{\{\\\{\{}a\,\substack{\{\{\\\{\{}\cdots\,\substack{\{\{\\\{\{}a\substack{\}\}\\\}\}}\,\cdots\substack{\}\}\\\}\}}\,a\substack{\}\}\\\}\}}\,a}_n\\
+        &\vdots\\
+        a\,\substack{\{\{\{\\\{\{\{}m\substack{\}\}\}\\\}\}\}}\,n &\approx f_{\omega^2+\omega\cdot2+m}(n)\\
+        a\,\substack{\{\{\{\{\\\{\{\{\{}m\substack{\}\}\}\}\\\}\}\}\}}\,n &\approx f_{\omega^2+\omega\cdot3+m}(n)\\
+        a\,\substack{\{\{\{\{\{\\\{\{\{\{\{}m\substack{\}\}\}\}\}\\\}\}\}\}\}}\,n &\approx f_{\omega^2+\omega\cdot4+m}(n)\\
+        &\vdots\\
+        a\,\substack{\{\\\{}m\substack{\}\\\}}^k\,n &\approx f_{\omega^2+\omega\cdot(k-1)+m}(n)\\
+        \end{align*}
+        You get the point right? It's the exact same way we defined bracket notation, except there's just a new vertical layer. It also has almost the exact same growth rate as $\{m\}^k$, with the only difference being that additional $\omega^2$.<br/><br/>
+
+        Now, let's add <i>another layer</i>, which just <i>nests the double stacked brackets</i>. This here is called <b><u>gigotion</u></b>, and is denoted by <i>triple stacked brackets</i>.
+        $$\left.\begin{matrix}a\,{\small\substack{\{\\\{\\\{}}1{\small\substack{\}\\\}\\\}}}\,n=a\,\underbrace{\substack{\{\{\\\{\{}\cdots\substack{\{\{\\\{\{}a\substack{\}\}\\\}\}}\cdots\substack{\}\}\\\}\}}}_{a\,\underbrace{\substack{\{\{\\\{\{}\cdots\substack{\{\{\\\{\{}a\substack{\}\}\\\}\}}\cdots\substack{\}\}\\\}\}}}_{\underbrace{\vdots}_a}\,a}\,a\end{matrix}\right\}n\text{ layers}$$
+        Then uh... yeah, you can do all the bracket stuff again. (Left as an exercise :menherateehee:)
+        $$a\,{\small\substack{\{\\\{\\\{}}m{\small\substack{\}\\\}\\\}}}^k\,n \approx f_{\omega^2\cdot2+\omega\cdot(k-1)+m}(n)$$
+        Every time we add a new layer to the vertical stack, we're adding $\omega^2$ to the ordinal of the function's growth rate.<br/><br/>
+
+        You can even continue this further, making the stack of brackets taller and taller. It quickly becomes a nightmare to typeset.
+        \begin{align*}
+        a\,{\small\substack{\{\\\{\\\{\\\{}}\,1\,{\small\substack{\}\\\}\\\}\\\}}}\,n &\approx f_{\omega^2\cdot3+1}(n)\\
+        a\,{\tiny\substack{\{\\\{\\\{\\\{\\\{}}\,1\,{\tiny\substack{\}\\\}\\\}\\\}\\\}}}\,n &\approx f_{\omega^2\cdot4+1}(n)\\
+        &\vdots
+        \end{align*}
+        To make things easier to write down, let's rewrite our bracket notation to include both the "width" and "height".
+        $$a\,\{c\}^{d,e}\,b=a~{\small\substack{\{\{\cdots\{\{\\\{\{\cdots\{\{\\\vdots\ddots\vdots\\\{\{\cdots\{\{\\\{\{\cdots\{\{}}~c~{\small\substack{\}\}\cdots\}\}\\\}\}\cdots\}\}\\\vdots\ddots\vdots\\\}\}\cdots\}\}\\\}\}\cdots\}\}}}~b$$
+        The first component $d$ denotes the "width", how many layers it has horizontally, and the second component $e$ denotes "height", how many layers vertically.<br/><br/>
+
+        If $e=1$, then it's just the same as our old bracket notation, without the "2D-ness".
+        $$a\,\{c\}^{d,1}\,b=a\,\{c\}^d\,b=a\,\underbrace{\{\{\cdots\{\{c\}\}\cdots\}\}}_d\,b$$
+        Since each layer of horizontal stack adds $\omega$ to the rank, and each layer of vertical stack adds $\omega^2$, we can figure out where in the hierarchy it places.
+        $$a\,\{m\}^{k,\ell}\,n\approx f_{\omega^2\cdot(\ell-1)+\omega\cdot(k-1)+m}(n)$$<br/>
+
+        Finally, let's go back to the array notation we had. We defined
+        $$\{a,b,c,d\}=a\,\{c\}^d\,b$$
+        $c$ indicates the number inside the brackets, and $d$ indicates the "width" of the brackets.<br/><br/>
+
+        Just now, we defined a new parameter for bracket notation, the <i>vertical height</i>. This will be the fifth entry of the array.
+        $$\{a,b,c,d,e\}=a\,\{c\}^{d,e}\,b$$
+        We can rigorize the fifth entry, "vertical height", by adding a new rule like this,
+        \begin{align*}
+        \{a,b,1,1,1\} &= a^b\\
+        \{a,1,c,d,e\} &= a\\
+        \{a,b,1,1,e\} &= \{a,a,a,\{a,b-1,1,1,e\},e-1\}\\
+        \{a,b,1,d,e\} &= \{a,a,\{a,b-1,1,d,e\},d-1,e\}\\
+        \{a,b,c,d,e\} &= \{a,\{a,b-1,c,d,e\},c-1,d,e\}
+        \end{align*}
+        which gives us
+        $$\{a,n,m,k,\ell\}\approx f_{\omega^2\cdot(\ell-1)+\omega\cdot(k-1)+m}(n)$$<br/>
+        What about a sixth entry?<br/><br/>
+
+        Adding a sixth entry to this array would be like adding a "third dimension" to our bracket notation.<br/><br/>
+
+        Just know this: If "<b>vertically stacked brackets</b>" comes from "<i>nesting bracket amounts</i>", then "<b>3D stacked brackets</b>" comes from "<i>nesting vertical-stack amounts</i>".<br/><br/>
+
+        <center><img src="powiaination.png" style="width: 40vw"></center><br/>
+
+        <center><img src="3d.png" style="width: 40vw"></center><br/>
+
+        Don't even imagine it. :nanastare:<br/><br/>
+
+        The sixth entry can be added by carefully rewriting the formulas like this,
+        \begin{align*}
+        \{a,b,1,1,1,1\} &= a^b\\
+        \{a,1,c,d,e,f\} &= a\\
+        \{a,b,1,1,1,f\} &= \{a,a,a,a,\{a,b-1,1,1,1\},f-1\}\\
+        \{a,b,1,1,e,f\} &= \{a,a,a,\{a,b-1,1,1,e\},e-1,f\}\\
+        \{a,b,1,d,e,f\} &= \{a,a,\{a,b-1,1,d,e\},d-1,e,f\}\\
+        \{a,b,c,d,e,f\} &= \{a,\{a,b-1,c,d,e\},c-1,d,e,f\}
+        \end{align*}
+        Can you spot the pattern here? You may see how this generalizes to arbitrary number of entries. It's like for each new entry, we're adding a new "dimension" to our bracket notation.<br/><br/>
+
+        <center><img src="dimensions.png" style="width: 35vw"></center><br/>
+
+        Alright, it's time to write down exactly what our array does. To define BEAF notation, they introduced some notation to keep things concise.<br/><br/>
+
+        The first entry $a$ is called the <b>base</b>, and the second entry $b$ is called the <b>prime</b>. The first non-1 entry after the prime is the <b>pilot</b>. The entry immediately before it is the <b>copilot</b>, and all entries before that are <b>passengers</b>.<br/><br/>
+
+        <center><img src="beaf.png" style="width: 35vw"></center><br/>
+
+        The three rules of BEAF are as follows:
+
+        <ol>
+        <li><b>Prime rule:</b> If the prime $b$ is 1, the entire array evaluates to $a$.</li>
+        <li><b>Initial rule:</b> If there is no pilot, the entire array evaluates to $a^b$.</li>
+        <li><b>Catastrophic rule:</b> If neither 1 nor 2 apply, then:
+        <ol>
+        <li>the pilot decreases by 1,</li>
+        <li>the copilot becomes the original array with the prime $b$ decreased by 1, and</li>
+        <li>each passenger becomes $a$.</li>
+        </ol>
+        </ol>
+        For example, the catastrophic rule means that
+        $$\{a,b,1,1,1,1,c,d\}=\{a,a,a,a,a,\{a,b-1,1,1,1,1,c,d\},c-1,d\}$$
+        As an exercise for the reader :akarismug: it can also be shown that
+
+        \begin{align*}
+        \{a,a,n\} &\approx f_\omega(n)\\
+        \{a,a,a,n\} &\approx f_{\omega^2}(n)\\
+        \{a,a,a,a,n\} &\approx f_{\omega^3}(n)\\
+        \{a,a,a,a,a,n\} &\approx f_{\omega^4}(n)\\
+        &\vdots\\
+        \{\underbrace{a,a,\ldots,a,a}_{m+1},n\} &\approx f_{\omega^{m}}(n)
+        \end{align*}
+        We can also define a new operator that specifies the <i>length</i> of the array.
+        $$n\,\&\,a=\underbrace{\{a,a,\ldots,a,a\}}_n$$
+        This operation diagonalizes over the linear arrays. The limit of the sequence $\omega,\omega^2,\omega^3,\ldots$ is $\omega^\omega$, so with this we achieve a function that grows as fast as $f_{\omega^\omega}(n)$!
+
+        $$n\,\&\,n=\underbrace{\{n,n,\ldots,n,n\}}_n\approx f_{\omega^\omega}(n)$$
+
+        This notation can easily be written in Python.<br/><br/>
+
+        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">beaf</span><span class="p">(</span><span class="n">S</span><span class="p">):</span>
+    <span class="n">a</span><span class="p">,</span><span class="n">b</span> <span class="o">=</span> <span class="n">S</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">S</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="c1"># Prime rule</span>
+    <span class="k">if</span> <span class="n">b</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">a</span>
+
+    <span class="c1"># Initial rule</span>
+    <span class="n">pilot</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="k">while</span> <span class="n">pilot</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">S</span><span class="p">)</span> <span class="ow">and</span> <span class="n">S</span><span class="p">[</span><span class="n">pilot</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">pilot</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="n">pilot</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">S</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">a</span><span class="o">**</span><span class="n">b</span>
+
+    <span class="c1"># Catastrophic rule</span>
+    <span class="n">T</span> <span class="o">=</span> <span class="n">S</span><span class="p">[:]</span>
+    <span class="n">T</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="n">S</span><span class="p">[</span><span class="n">pilot</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="n">S</span><span class="p">[</span><span class="n">pilot</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">beaf</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
+    <span class="n">S</span><span class="p">[:</span><span class="n">pilot</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">pilot</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">beaf</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">beaf</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">]))</span>    <span class="c1"># should return {3,3,2} = 3 ↑↑ 3</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">beaf</span><span class="p">(</span><span class="mi">5</span><span class="o">*</span><span class="p">[</span><span class="mi">10</span><span class="p">]))</span>     <span class="c1"># should return 5 &amp; 10 = {10,10,10,10,10}</span>
+</pre></div><br/>
+
+        <h2>Conclusion</h2>
+
+        In this part, we took a look at one of the most famous fast-growing functions, Conway's chain arrow notation, and see how it compared to the other fast-growing functions.
+        $$a\to b\to c\to \cdots\to n$$
+        We also defined the bracket notation,
+        $$a\,\{c\}^d\,b=a\,\underbrace{\{\{\cdots\{\{c\}\}\cdots\}\}}_d\,b$$
+        which was important in letting us reach functions that grow as fast as $f_{\omega\cdot2}$, $f_{\omega\cdot3}$, $f_{\omega\cdot4}$, ... all the way up to $f_{\omega^2}(n)$!<br/><br/>
+        And finally, we see how generalizing this even further led to Bowser's Extended Array Function.
+        $$\{a,b,c,d\}=a\,\{c\}^d\,b$$
+        with each entry of the array adding a new "layer of dimension" to our bracket notation. This was the operation that let us reach $f_{\omega^\omega}(n)$.<br/><br/>
+
+        <center><img src="fgh3.png" style="width: 50vw"></center><br/>
+
+        Although it's incredible, it's not quite what I promised at the beginning of this chapter, which is $f_{\omega^{\omega^\omega}}(n)$.<br/><br/>
+
+        What you've seen about BEAF so far is just very barely scratching the surface. So far, we've only considered <i>linear arrays</i>. Those arrays can only go in one dimension.<br/><br/>
+
+        In <a href="googology4.html"><b>Part 4</b></a>, we'll explore <b><i>multidimensional arrays</i></b>, a <i>much much</i> more powerful extension to linear arrays, which would be the key to reaching $f_{\omega^{\omega^\omega}}(n)$.
     </div>
 </body>
 
