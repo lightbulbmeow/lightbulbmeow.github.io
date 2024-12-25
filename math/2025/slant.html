@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="description" content="Hello! Welcome to my blog (*・ω・)ﾉ I will giv u free Cookies">
+    <title>Slant is NP-Complete</title>
+    <link rel="stylesheet" href="googology.css">
+    <link rel="stylesheet" href="../pygments.css">
+    <style>@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@700&display=swap');</style> <!-- Google font "Josefin Sans" -->
+
+    <style> body{ background-image: url("gokigen-bg.png"); }
+            a.image:hover{ text-decoration: none; }</style>
+
+    <!-- Latex stuff -->
+    <script>
+        MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+        }
+        };
+    </script>
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+
+    <script>
+        document.cookie = "freecookie=Heres your free cookie!!! Enjoy ~ヾ(・ω・);";
+    </script>
+</head>
+<body>
+    <a href="../index.html"><img src="../black.png" style="position: fixed; top: 20px; left: 20px;" /></a>
+
+    <div class="entry">
+
+        <h1>Slant is NP-Complete</h1>
+
+        <p class="date">December 25, 2024. 6:30pm</p>
+
+        <b><a href="https://en.wikipedia.org/wiki/Gokigen_Naname">Slant</a></b> (also known as <b>Gokigen Naname</b>) is a genre of pen-and-paper logic puzzles which originated in Japan, much like Sudoku and Nonogram.<br/><br/>
+
+        Each puzzle is played on a grid of squares, in which numbers appear at some intersections of the grid. The goal of the puzzle is to draw lines in each cell of the grid satisfying three rules:<br/>
+
+        <ol>
+        <li>Each cell has exactly one line traversing one of its diagonals.</li>
+        <li>Each number determines the number of lines connected to that node.</li>
+        <li>There must not be any loops formed by the lines in the resulting grid.</li>
+        </ol>
+
+        Below is an example of a Slant puzzle and its solution. Click on the image for an interactable version of this puzzle!<br/><br/>
+
+        <center><a class="image" href="https://puzz.link/p?gokigen/10/10/gag0cj2683615142b2dgc227cid3226di786c2dcg916616dej022d2232ahbbg"><img src="gokigen-unsolved.png" style="width:22vw"> &nbsp; &nbsp; <img src="gokigen-solved.png" style="width:22vw"></a></center><br/>
+
+        Slant is a fairly popular logic puzzle genre. There is a <a href="https://puzz.link/db/?type=gokigen">database</a> for this specific genre, if you want to check out more of this puzzle type.<br/><br/>
+
+        The question we'll be answering today is: How <i>diffcult</i> is it to solve such a puzzle?<br/><br/>
+
+        It turns out, it's just as hard as solving a Sudoku or a Nonogram. In fact, it's as hard as every other <b>NP-complete</b> problem! This fact is what we'll be proving today.<br/><br/>
+
+        <h2>Definitions and Notation</h2>
+
+        If you're already familiar with computation and complexity theory, you can skip this part.<br/><br/>
+
+        A <b><a href="https://en.wikipedia.org/wiki/Decision_problem">decision problem</a></b> is any problem that can be posed as a yes-no question based on the given input. Examples of decision problems are "Is this integer a prime number?" or "Does this Sudoku puzzle have a solution?"<br/><br/>
+
+        For this blog post, the decision problem for Slant is the following:<br/>
+        <b>Input:</b> An $n\times n$ square grid, with numbers at some intersections of the grid.<br/>
+        <b>Question:</b> Does this Slant puzzle have a solution?<br/><br/>
+
+        A decision problem is in <b><a href="https://en.wikipedia.org/wiki/NP_(complexity)">NP</a></b> if, given any input and solution to a problem, you can quickly verify (in polynomial time) whether that is a valid solution for that input.<br/><br/>
+
+        For example, the Sudoku problem is in NP, because if someone gives you a solution to the puzzle, you can quickly verify its correctness by checking whether every row, column, and $3\times3$ box contain no repeated digits.<br/><br/>
+
+        A decision problem $H$ is <b><a href="https://en.wikipedia.org/wiki/NP-hardness">NP-hard</a></b> if, for any problem $L$ in NP, you can reduce (in polynomial time) an instance of $L$ into an instance of $H$. In other words, knowing the solution to $H$ automatically solves every problem in NP.<br/><br/>
+
+        Finally, a decision problem is <b><a href="https://en.wikipedia.org/wiki/NP-complete">NP-complete</a></b> if it's both in NP and NP-hard.<br/><br/>
+
+        The most famous NP-complete problem is <b><a href="https://en.wikipedia.org/wiki/Boolean_satisfiability_problem">SAT</a></b>. In this problem, inputs look like this:
+        $$(x_1\lor x_2)\land(\lnot x_1\lor x_2\lor\lnot x_3)\land(x_1\lor x_3)$$
+        and the question is "Can this formula be satisfied by setting each variable to either TRUE or FALSE?". This is in NP, because you can quickly verify whether a given assignment of TRUE/FALSE values satisfy the formula. Proving NP-hardness is a lot more difficult, also known as the <b><a href="https://en.wikipedia.org/wiki/Cook–Levin_theorem">Cook-Levin theorem</a></b>.<br/><br/>
+
+        <h2>Planar 1-in-3SAT problem</h2>
+
+        To show that Slant is NP-complete, we'll be reducing the Planar 1-in-3SAT problem to Slant in the proof.<br/><br/>
+
+        Let's introduce what <B><a href="https://en.wikipedia.org/wiki/Planar_SAT">Planar SAT</a></b> is. Every SAT problem in <a href="https://en.wikipedia.org/wiki/Conjunctive_normal_form">CNF</a> can be converted to an incidence graph in the following manner:<br/>
+
+        <ul>
+        <li>For every variable $x_i$, the graph has a corresponding node $x_i$.</li>
+        <li>For every clause $c_j$, the graph has a corresponding node $c_j$.</li>
+        <li>An edge $(x_i,c_j)$ is created between variable $x_i$ and clause $c_j$ whenever $x_i$ or $\lnot x_i$ is in $c_j$. Positive and negative literals are distinguished using edge colorings.</li>
+        </ul>
+
+        For example, here is how one would convert the formula $(x_1\lor\lnot x_2)\land(\lnot x_1\lor x_2\lor\lnot x_3)$ into an incidence graph:<br/><br/>
+
+        <center><img src="planar-sat.png" style="width:20vw"></center>
+
+        Black edges represent positive literals, while red edges represent negative literals.<br/><br/>
+
+        <b>Planar SAT</b> consists of all the formulas in SAT in which the incidence graph of the formula is <a href="https://en.wikipedia.org/wiki/Planar_graph">planar</a>, i.e. it can be drawn without any edges crossing each other.<br/><br/>
+
+        It turns out, Planar SAT is NP-complete. This was proven by D. Lichtenstein in 1982. See this proof on <a href="https://en.wikipedia.org/wiki/Planar_SAT#Proof_of_NP-completeness">Wikipedia</a> for how it works.<br/><br/>
+
+        A variant of this problem is the <b>Planar 1-in-3 SAT</b>. It's the planar equivalent of <b><a href="https://en.wikipedia.org/wiki/Boolean_satisfiability_problem#Exactly-1_3-satisfiability">1-in-3 SAT</a></b>, a variation of SAT where given a formula in 3-CNF-form, the problem is to determine whether there exists a satisfing assignment of variables such that <i>each clause has <b>exactly one</b> TRUE literal</i>. In other words, each clause $(y_1\lor y_2\lor y_3)$ can only be satisfied if $(y_1,y_2,y_3)$ is either $(\text T,\text F,\text F)$, $(\text F,\text T,\text F)$, or $(\text F,\text F,\text T)$.<br/><br/>
+
+        In 1986, <a href="https://www.math.cmu.edu/~af1p/Texfiles/3DM.pdf">Dyer and Frieze</a> showed that Planar 1-in-3 SAT is also NP-complete.<br/><br/>
+
+        To make things simpler, we'll assume the planar graph is rectilinear, i.e. the graph can be drawn with just horizontal or vertical lines.<br/><br/>
+
+        <center><img src="planar-sat-rect.png" style="width:20vw"></center><br/>
+
+        Under this restriction, Planar 1-in-3 SAT is still NP-complete. Its decision problem is:<br/><br/>
+        <b>Input:</b> A 3-CNF formula $\phi$, and a planar embedding of its graph on a rectangular grid.<br/>
+        <b>Question:</b> Is there a 1-in-3 satisfying assignment for $\phi$?<br/><br/>
+
+        To prove that Slant is NP-complete, it's enough to show a reduction from Planar 1-in-3 SAT to Slant.<br/><br/>
+
+        <h2>Gadgets</h2>
+
+        For the NP-completeness proof, we'll construct some gadgets. The complete construction should have:
+        <ul>
+        <li>wires that carry signals of TRUE or FALSE, representing the truth value of a variable.</li>
+        <li>a gadget that can duplicate a signal.</li>
+        <li>a gadget that simulates a NOT gate.</li>
+        <li>a gadget that checks whether each clause satisfies 1-in-3 SAT.</li>
+        </ul>
+        If all this is done, then we can reduce Planar 1-in-3 SAT to Slant.<br/><br/>
+
+        You can click on any image below for an interactable version.<br/>
+
+        <h3>Wires and Variables</h3>
+
+        The wire gadget is shown below.<br/><br/>
+
+        The ④ clues are used to initialize a wire signal by forcing the direction of lines that connect to it. The signal is maintained by two rows of ② clues. This forces all line directions across the row to be the same, and allows two possible directions for the third row.<br/><br/>
+
+        Each wire signal may be treated as a single variable. To initiate a TRUE signal, two ② clues are used. To initiate a FALSE signal, a single ① is used.<br/><br/>
+
+        <center><a class="image" href="https://puzz.link/p?gokigen/28/5/zzz422222c422222c422222cj2222c222222cg12222czzx"><img src="wire-any.png" style="width:15vw"> &nbsp; <img src="wire-true.png" style="width:15vw"> &nbsp; <img src="wire-false.png" style="width:15vw"></a></center><br/>
+
+        <center><a class="image" href="https://puzz.link/p?gokigen/28/5/zzz422222c422222c422222cj2222c222222cg12222czzx"><img src="start-any.png" style="width:15vw"> &nbsp; <img src="start-true.png" style="width:15vw"> &nbsp; <img src="start-false.png" style="width:15vw"></a></center>
+
+        <h3>NOT Gate</h3>
+
+        The gadget for the NOT gate is shown blow. It's able to convert a TRUE signal to FALSE and vice versa, which is needed to construct positive and negative literals.<br/><br/>
+
+        The figure below shows that this can be achieved by placing a ③ clue such that exactly one of the upper-left or lower-right lines must connect with it. The ④ clues forces two of the ③ clue's lines in place.<br/><br/>
+
+        <center><a class="image" href="https://puzz.link/p?gokigen/15/7/zt422222co22227422co3122cnezw"><img src="not-any.png" style="width:15vw"> &nbsp; <img src="not-true.png" style="width:15vw"> &nbsp; <img src="not-false.png" style="width:15vw"></a></center>
+
+        <h3>Transporting Signals</h3>
+
+        For wires to move freely, we need a gadget that can rotate and translate signals. Only a gadget that rotates a signal suffices, since it can be used to offset the signal's position by placing two such gadgets next to each other.<br/><br/>
+
+        Separate gadgets are needed for 90° clockwise and 90° counterclockwise rotations. In the figures below, the signal comes from the left.<br/><br/>
+
+        For 90° clockwise rotation, it's similar to the NOT gate but it extends downwards.<br/><br/>
+
+        <center><a class="image" href="https://puzz.link/p?gokigen/12/11/zn42222cm22272en8cm92co2co2co2co2czl"><img src="cw-any.png" style="width:15vw"> &nbsp; <img src="cw-true.png" style="width:15vw"> &nbsp; <img src="cw-false.png" style="width:15vw"></a></center><br/>
+
+        For 90° counterclockwise rotation, it's similar to the NOT gate but it extends upwards.<br/><br/>
+
+        <center><a class="image" href="https://puzz.link/p?gokigen/12/11/zt2co2co2co4bpdi4222222bk22222dqezl"><img src="ccw-any.png" style="width:15vw"> &nbsp; <img src="ccw-true.png" style="width:15vw"> &nbsp; <img src="ccw-false.png" style="width:15vw"></a></center><br/>
+
+        <h3>Duplicating Signals</h3>
+
+        The signal duplication gadget is constructed by combining two rotation gadgets together, as shown below. The signal comes from the left, then split into an upwards and downwards signal.<br/><br/>
+
+        <center><a class="image" href="https://puzz.link/p?gokigen/12/17/zs2co2co2co4bpdj422222bk22222dp2do12en8cm92co2co2co2czl"><img src="dupe-any.png" style="width:15vw"> &nbsp; <img src="dupe-true.png" style="width:15vw"> &nbsp; <img src="dupe-false.png" style="width:15vw"></a></center>
+
+        <h3>3-Variable Clause</h3>
+
+        This gadget simulates the clause $(y_1\lor y_2\lor y_3)$ for 1-in-3 SAT, where $y_1$, $y_2$, $y_3$ are the literals for signals coming from three directions.<br/><br/>
+
+        The gadget simply connects the three signals together with a single ② clue. The ② in the middle is satisfied iff exactly one of $y_1$, $y_2$, $y_3$ is TRUE.<br/><br/>
+
+        <center><a class="image" href="https://puzz.link/p?gokigen/18/13/zzoevcu2cu2cu2cm42222272co222272ctcu92222cr222222ezx"><img src="clause-any.png" style="width:20vw"></a></center><br/>
+
+        <h2>Filling in the Blanks</h2>
+
+        Consider the following "easy" variation of Slant, where we do not have to fill every cell of the grid, just the cells around every numbered node.<br/>
+
+        <ol>
+        <li>Each cell <b>can be blank</b> or have a line traversing one of its diagonals.</li>
+        <li>The cells surrounding each number must <b>not be blank</b>.</li>
+        <li>Each number determines the number of lines connected to that node.</li>
+        <li>There must not be any loops formed by the lines in the resulting grid.</li>
+        </ol>
+
+        I'll call this version <b>Partial Slant</b>.<br/><br/>
+
+        Below is an example of a Partial Slant puzzle and one possible solution. Note that it's not unique, since filling the blank cells also gives a valid Partial Slant solution. Filling <i>all</i> the cells gives a valid Slant solution.<br/><br/>
+
+        <center><a class="image" href="https://puzz.link/p?gokigen/10/10/gag0ck6dh1a42b2dj2clddbmdgc2dcg91bjdej022dh32akbg"><img src="partial-slant-unsolved.png" style="width:22vw"> &nbsp; &nbsp; <img src="partial-slant-solved.png" style="width:22vw"></a></center><br/>
+
+        It seems like it's always possible to fill all the blank cells to give a valid Slant solution. Turns out, it <i>is</i> always possible!<br/><br/>
+
+        <div class="theorem"><b>Lemma.</b> Every Partial Slant solution can always be completed into a full Slant solution.</div><br/>
+
+        <b>Proof.</b> In a Partial Slant solution, every number clue is already satisfied. The only thing left we need to worry about is forming loops.<br/><br/>
+
+        To complete a Partial Slant solution into a Slant solution, we can simply fill each blank cell one by one with either ╱ or ╲, choosing the one that avoids a loop.<br/><br/>
+
+        Suppose, for the sake of contradiction, that there's no way to fill the blank cells of a Partial Slant solution to a valid Slant solution. That means there's a blank cell where filling it with either ╱ or ╲ will both form a loop.<br/><br/>
+
+        The diagram below shows this happening. No matter what we place in the blank cell, it will always form a loop with either the purple curve or the red curve.<br/><br/>
+
+        <center><img src="loop-intersect.png" style="width:15vw"></center><br/>
+
+        Observe that these two curves <i>must</i> intersect at a second point. The only way we can have curves intersect with each other in Slant is by forming a two-by-two X, like this:<br/><br/>
+
+        <center><img src="slant-x.png" style="width:5vw"></center><br/>
+
+        But this is actually not possible. To see why, let's color the grid like a checkboard. The purple curve can only consist of <img src="white-back.png" width=24> and <img src="black-front.png" width=24> cells, while the red curve can only consist of <img src="white-front.png" width=24> and <img src="black-back.png" width=24> cells.<br/><br/>
+
+        <center><img src="loop-checker.png" style="width:25vw"></center><br/>
+
+        If they ever intersect and form an X, then depending on the checkerboard coloring, only the purple curve can have X's cells, or only the red curve can have X's cells. This shows that it's actually impossible for the two curves to intersect at an X.<br/><br/>
+
+        <center><img src="slant-checker-x.png" style="width:20vw"></center><br/>
+
+        We've reached a contradiction. Therefore, it can't happen that for some blank cell, filling it with either ╱ or ╲ will both form a loop. Forming a loop is always avoidable.<br/><br/>
+
+        This proves that it's always possible to fill every blank cell without forming any loops, completing a Partial Solution into a valid Slant solution.$_\square$<br/><br/>
+
+        As a corollary,<br/><br/>
+
+        <div class="theorem"><b>Corollary.</b> A Slant puzzle is solvable if and only if it is solvable as a Partial Slant puzzle.</div><br/>
+
+        <b>Proof.</b> Every Slant solution is also a Partial Slant solution, and every Partial Slant solution can always be completed into a Slant solution.$_\square$<br/><br/>
+
+        <h2>NP-Completeness Proof</h2>
+
+        Finally, we're ready to show that Slant is NP-complete. To prove this, we will show that Slant is in NP, then show that it's NP-complete.<br/>
+
+        <h3>NP</h3>
+
+        <div class="theorem">Slant is in NP.</div><br/>
+
+        <b>Proof.</b> To show that Slant is in NP, the puzzle solution will be the certificate. Verifying a solution to an $n\times n$ Slant puzzle involves checking two rules:
+
+        <ol>
+        <li>Each number determines the number of lines connected to that node.</li>
+        <li>There must not be any loops formed by the lines in the resulting grid.</li>
+        </ol>
+
+        The former can be easily checked by counting the number of lines connected to each node, which takes $O(n^2)$ time in total.<br/><br/>
+
+        The latter involves checking if the resulting grid has no loops. This can be done by transforming the grid into a graph of $(n+1)^2$ nodes consisting of the grid intersections. Two nodes are connected by an edge iff there's a line connecting them. A <a href="https://en.wikipedia.org/wiki/Depth-first_search">DFS</a> algorithm can be used to check for cycles in the graph. This only takes $O(n^2)$ time to check.<br/><br/>
+
+        Therefore, a solution to an $n\times n$ Slant puzzle can be checked in $O(n^2)$ time, which is polynomial.<br/>
+
+        <h3>NP-Complete</h3>
+
+        <div class="theorem"><b>Theorem.</b> Slant is NP-complete.</div><br/>
+
+        <b>Proof.</b> We'll show a reduction from Planar 1-in-3 SAT to Slant. Let $\phi$ be an instance of Planar 1-in-3 SAT. Its planar embedding consists of variable nodes, clause nodes, and edges such that:<br/>
+
+        <ol>
+        <li>Each variable node can have multiple edges.</li>
+        <li>Each edge is either positive or negative.</li>
+        <li>Each clause node has exactly 3 edges.</li>
+        <li>All nodes and edges are on a grid, and no two edges cross each other.</li>
+        </ol>
+
+        For the first condition, we must allow a variable node to handle multiple edges. This can be done by initializing a signal then using multiple signal duplication gadgets, along with rotation gadgets to fix directions.<br/><br/>
+
+        <center><img src="planar-slant-init.png" style="width:25vw"></center><br/>
+
+        For the second condition, negative edges can be handled by our NOT gate gadget.<br/><br/>
+
+        <center><img src="planar-slant-not.png" style="width:25vw"></center><br/>
+
+        For the third condition, each clause node will be replaced with our 1-in-3 clause gadget.<br/><br/>
+
+        <center><img src="planar-slant-clause.png" style="width:25vw"></center><br/>
+
+        Finally, the last condition ensures that each replacement can be done in constant time, and that we don't need to worry about crossing. We succesfully transformed the planar embedding of $\phi$ into a Slant puzzle in polynomial time.<br/><br/>
+
+        <div class="theorem"><b>Proposition.</b> $\phi$ is 1-in-3 satisfiable if and only if the Slant puzzle is solvable.</div><br/>
+
+        <b>Proof.</b> If the Slant puzzle has a solution, we can look at the corresponding signals of each variable and use that as an assignment for $\phi$. Our gadgets ensure this is a valid 1-in-3 satisfying assignment for $\phi$. Therefore, $\phi$ is 1-in-3 satisfiable.<br/><br/>
+
+        For the other direction, suppose there is a 1-in-3 satisfying assignment for $\phi$. We can use that assignment to initialize the signals for each variable and fill in all the wires. It satisfies all our gadgets, but this will only give us a Partial Slant solution. From our lemma, we know that every Partial Slant solution can be completed into a Slant solution. Therefore, the Slant puzzle is solvable.$_\square$<br/><br/>
+
+        Thus, we have a polynomial time reduction from Planar 1-in-3 SAT to Slant. Since Planar 1-in-3 SAT is NP-complete, it follows that Slant is NP-complete.$_\blacksquare$<br/>
+
+        <h2>Conclusion</h2>
+
+        NP-completeness proofs are pretty fun! Seeing the NP-completeness proofs of some logic puzzles inspired me to make my own too. I haven't seen anyone prove that Slant is NP-complete, so I might have been the first one to do it.<br/><br/>
+
+        I've actually proven this result three years ago with a friend, but never got around to finish writing the proof. Today, a <a href="https://www.youtube.com/watch?v=5dd8_N_nKRI">certain video from CodeParade</a> finally gave me the push to finish writing this down.<br/><br/>
+
+        We showed that Slant is NP-complete via a reduction from Planar 1-in-3 SAT. It was necessary to show that every Partial Slant solution can be completed into a Slant solution, otherwise we couldn't guarantee the Slant puzzle has a solution at all.<br/><br/>
+
+        In my construction, I didn't use the "no loops" rule at all. That means Slant is still NP-complete even without the "no loops" rule!<br/><br/>
+
+        Here are some other questions for further exploration:<br/>
+
+        <ol>
+        <li>If the decision question was instead "Does this Slant puzzle have <b><i>exactly one</i></b> solution?", would Slant still be NP-complete?</li>
+        <li>If we restrict the clues we can use, say we're only allowed to use ① and ② clues and nothing else, would Slant still be NP-complete?</li>
+        <li><b><a href="https://puzz.link/rules.html?wagiri">Wagiri</a></b> is a logic puzzle like Slant but with two new symbols: Cells with '切' must not be part of a loop, while cells with '輪' must be part of a loop. If we restrict the clues to just these two symbols and nothing else, is Wagiri NP-complete?
+        <li>Is there a fast algorithm for counting the number of ways to complete a Partial Slant solution into a full Slant solution?</li>
+        </ol>
+
+        That is all. Thank you for reading, and Merry Christmas! :nanaadmiresanta:
+    </div>
+</body>
+
+<script src="../../emojis/script.js"></script>

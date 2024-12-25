@@ -26,8 +26,8 @@ h1, h2, h3 {
 }
 .theorem {
     border-radius: 5px;
-    border: 2px solid rgba(0,100,200);
-    background-color: rgba(0,10,20,0.69);
+    border: 2px solid #0033dd;
+    background-color: #ddeeff;
     padding: 10px 10px 10px 10px;
 }
 .proof {
