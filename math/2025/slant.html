@@ -77,9 +77,9 @@
         $$(x_1\lor x_2)\land(\lnot x_1\lor x_2\lor\lnot x_3)\land(x_1\lor x_3)$$
         and the question is "Can this formula be satisfied by setting each variable to either TRUE or FALSE?". This is in NP, because you can quickly verify whether a given assignment of TRUE/FALSE values satisfy the formula. Proving NP-hardness is a lot more difficult, also known as the <b><a href="https://en.wikipedia.org/wiki/Cook–Levin_theorem">Cook-Levin theorem</a></b>.<br/><br/>
 
-        <h2>Planar 1-in-3SAT problem</h2>
+        <h2>Planar 1-in-3 SAT problem</h2>
 
-        To show that Slant is NP-complete, we'll be reducing the Planar 1-in-3SAT problem to Slant in the proof.<br/><br/>
+        To show that Slant is NP-complete, we'll be reducing the Planar 1-in-3 SAT problem to Slant in the proof.<br/><br/>
 
         Let's introduce what <B><a href="https://en.wikipedia.org/wiki/Planar_SAT">Planar SAT</a></b> is. Every SAT problem in <a href="https://en.wikipedia.org/wiki/Conjunctive_normal_form">CNF</a> can be converted to an incidence graph in the following manner:<br/>
 
@@ -99,7 +99,7 @@
 
         It turns out, Planar SAT is NP-complete. This was proven by D. Lichtenstein in 1982. See this proof on <a href="https://en.wikipedia.org/wiki/Planar_SAT#Proof_of_NP-completeness">Wikipedia</a> for how it works.<br/><br/>
 
-        A variant of this problem is the <b>Planar 1-in-3 SAT</b>. It's the planar equivalent of <b><a href="https://en.wikipedia.org/wiki/Boolean_satisfiability_problem#Exactly-1_3-satisfiability">1-in-3 SAT</a></b>, a variation of SAT where given a formula in 3-CNF-form, the problem is to determine whether there exists a satisfing assignment of variables such that <i>each clause has <b>exactly one</b> TRUE literal</i>. In other words, each clause $(y_1\lor y_2\lor y_3)$ can only be satisfied if $(y_1,y_2,y_3)$ is either $(\text T,\text F,\text F)$, $(\text F,\text T,\text F)$, or $(\text F,\text F,\text T)$.<br/><br/>
+        A variant of this problem is the <b>Planar 1-in-3 SAT</b>. It's the planar equivalent of <b><a href="https://en.wikipedia.org/wiki/Boolean_satisfiability_problem#Exactly-1_3-satisfiability">1-in-3 SAT</a></b>, a variation of SAT where given a formula in 3-CNF-form, the problem is to determine whether there exists a satisfing assignment of variables such that <i>each clause has <b>exactly one</b> TRUE literal</i>. In other words, each clause $(y_1\lor y_2\lor y_3)$ can only be satisfied iff $(y_1,y_2,y_3)$ is either $(\text T,\text F,\text F)$, $(\text F,\text T,\text F)$, or $(\text F,\text F,\text T)$.<br/><br/>
 
         In 1986, <a href="https://www.math.cmu.edu/~af1p/Texfiles/3DM.pdf">Dyer and Frieze</a> showed that Planar 1-in-3 SAT is also NP-complete.<br/><br/>
 
@@ -158,7 +158,7 @@
 
         For 90° counterclockwise rotation, it's similar to the NOT gate but it extends upwards.<br/><br/>
 
-        <center><a class="image" href="https://puzz.link/p?gokigen/12/11/zt2co2co2co4bpdi4222222bk22222dqezl"><img src="ccw-any.png" style="width:15vw"> &nbsp; <img src="ccw-true.png" style="width:15vw"> &nbsp; <img src="ccw-false.png" style="width:15vw"></a></center><br/>
+        <center><a class="image" href="https://puzz.link/p?gokigen/12/11/zt2co2co2co4bpdi4222222bk22222dqezl"><img src="ccw-any.png" style="width:15vw"> &nbsp; <img src="ccw-true.png" style="width:15vw"> &nbsp; <img src="ccw-false.png" style="width:15vw"></a></center>
 
         <h3>Duplicating Signals</h3>
 
@@ -273,7 +273,7 @@
 
         <center><img src="planar-slant-clause.png" style="width:25vw"></center><br/>
 
-        Finally, the last condition ensures that each replacement can be done in constant time, and that we don't need to worry about crossing. We succesfully transformed the planar embedding of $\phi$ into a Slant puzzle in polynomial time.<br/><br/>
+        Finally, the last condition ensures that each replacement can be done in constant time, and that we don't need to worry about crossings. We succesfully transformed the planar embedding of $\phi$ into a Slant puzzle in polynomial time.<br/><br/>
 
         <div class="theorem"><b>Proposition.</b> $\phi$ is 1-in-3 satisfiable if and only if the Slant puzzle is solvable.</div><br/>
 
@@ -281,15 +281,15 @@
 
         For the other direction, suppose there is a 1-in-3 satisfying assignment for $\phi$. We can use that assignment to initialize the signals for each variable and fill in all the wires. It satisfies all our gadgets, but this will only give us a Partial Slant solution. From our lemma, we know that every Partial Slant solution can be completed into a Slant solution. Therefore, the Slant puzzle is solvable.$_\square$<br/><br/>
 
-        Thus, we have a polynomial time reduction from Planar 1-in-3 SAT to Slant. Since Planar 1-in-3 SAT is NP-complete, it follows that Slant is NP-complete.$_\blacksquare$<br/>
+        Thus, we have a polynomial time reduction from Planar 1-in-3 SAT to Slant. Since Planar 1-in-3 SAT is NP-complete, it follows that Slant is NP-complete.$_\blacksquare$<br/><br/>
 
         <h2>Conclusion</h2>
 
         NP-completeness proofs are pretty fun! Seeing the NP-completeness proofs of some logic puzzles inspired me to make my own too. I haven't seen anyone prove that Slant is NP-complete, so I might have been the first one to do it.<br/><br/>
 
-        I've actually proven this result three years ago with a friend, but never got around to finish writing the proof. Today, a <a href="https://www.youtube.com/watch?v=5dd8_N_nKRI">certain video from CodeParade</a> finally gave me the push to finish writing this down.<br/><br/>
+        I've actually proven this result three years ago with a friend, but never got around to finish writing the proof. Today, a certain <a href="https://www.youtube.com/watch?v=5dd8_N_nKRI">YouTube video from CodeParade</a> finally gave me the push to finish writing this down.<br/><br/>
 
-        We showed that Slant is NP-complete via a reduction from Planar 1-in-3 SAT. It was necessary to show that every Partial Slant solution can be completed into a Slant solution, otherwise we couldn't guarantee the Slant puzzle has a solution at all.<br/><br/>
+        We showed that Slant is NP-complete via a reduction from Planar 1-in-3 SAT. It was necessary to show that every Partial Slant solution can be completed into a Slant solution, otherwise we couldn't guarantee the Slant puzzle has a solution.<br/><br/>
 
         In my construction, I didn't use the "no loops" rule at all. That means Slant is still NP-complete even without the "no loops" rule!<br/><br/>
 
@@ -297,8 +297,8 @@
 
         <ol>
         <li>If the decision question was instead "Does this Slant puzzle have <b><i>exactly one</i></b> solution?", would Slant still be NP-complete?</li>
-        <li>If we restrict the clues we can use, say we're only allowed to use ① and ② clues and nothing else, would Slant still be NP-complete?</li>
-        <li><b><a href="https://puzz.link/rules.html?wagiri">Wagiri</a></b> is a logic puzzle like Slant but with two new symbols: Cells with '切' must not be part of a loop, while cells with '輪' must be part of a loop. If we restrict the clues to just these two symbols and nothing else, is Wagiri NP-complete?
+        <li>If we restrict the clues, say we're only allowed to use ① and ② clues and nothing else, would Slant still be NP-complete?</li>
+        <li><b><a href="https://puzz.link/rules.html?wagiri">Wagiri</a></b> is a logic puzzle like Slant but with two new symbols: Cells with 切 must not be part of a loop, while cells with 輪 must be part of a loop. If we restrict the clues to just these two symbols and nothing else, is Wagiri NP-complete?
         <li>Is there a fast algorithm for counting the number of ways to complete a Partial Slant solution into a full Slant solution?</li>
         </ol>
 
