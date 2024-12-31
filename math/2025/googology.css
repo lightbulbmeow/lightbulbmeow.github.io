@@ -30,24 +30,17 @@ h1, h2, h3 {
     background-color: #ddeeff;
     padding: 10px 10px 10px 10px;
 }
-.proof {
+.proof, details {
     border-radius: 5px;
-    border: 2px solid rgba(0,200,100);
-    background-color: rgba(0,20,10,0.69);
+    border: 2px solid #00dd33;
+    background-color: #ddffee;
     padding: 10px 10px 10px 10px;
 }
 .problem {
     border-radius: 5px;
-    border: 2px solid rgba(200,100,0);
-    background-color: rgba(20,10,0,0.69);
+    border: 2px solid #dd3300;
+    background-color: #ffeedd;
     padding: 10px 10px 10px 10px;
-}
-details {
-    border-radius: 5px;
-    border: 2px solid rgba(0,100,200);
-    background-color: rgba(0,10,20,0.69);
-    padding: 10px 10px 10px 10px;
-    margin: 10px;
 }
 .highlight {
     padding: 5px;

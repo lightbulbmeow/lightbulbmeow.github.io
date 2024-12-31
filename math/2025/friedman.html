@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="description" content="Hello! Welcome to my blog (*・ω・)ﾉ I will giv u free Cookies">
+    <title>Powers of 5 are Friedman numbers</title>
+    <link rel="stylesheet" href="googology.css">
+    <link rel="stylesheet" href="../pygments.css">
+    <style>@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@700&display=swap');</style> <!-- Google font "Josefin Sans" -->
+
+    <style> body{ background-image: url("friedman-bg.png"); }
+            a.image:hover{ text-decoration: none; }</style>
+
+    <!-- Latex stuff -->
+    <script>
+        MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+        }
+        };
+    </script>
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+
+    <script>
+        document.cookie = "freecookie=Heres your free cookie!!! Enjoy ~ヾ(・ω・);";
+    </script>
+</head>
+<body>
+    <a href="../index.html"><img src="../black.png" style="position: fixed; top: 20px; left: 20px;" /></a>
+
+    <div class="entry">
+
+        <h1>Powers of 5 are Friedman numbers</h1>
+
+        <p class="date">December 31, 2024. 9:50pm</p>
+
+        <center><img src="friedman.png" style="width:25vw"></center><br/>
+
+        25 is a really nice number, since by rearranging its digits, we can obtain a new expression, 5<sup>2</sup>, that's still equal to 25.<br/><br/>
+
+        Another such number is 126, since we can write 6 × 21, only using the digits from itself. 127 is also another such number, by writing it as 2<sup>7</sup> − 1.<br/><br/>
+
+        The first few numbers with this amazing property are 25, 121, 125, 126, 127, 128, 153, 216, 289, 343... It's a fun puzzle to figure out how each one works!<br/><br/>
+
+        These numbers are called <b><a href="https://en.wikipedia.org/wiki/Friedman_number">Friedman numbers</a></b>, named after Erich Friedman. He popularized these numbers on his website back in <a href="https://erich-friedman.github.io/mathmagic/0800.html">2000</a>.<br/><br/>
+
+        A <b>Friedman number</b> is a positive integer that can be written in some non-trivial way using its own digits, together with the symbols + − × / ^ ( ) and concatenation. (Square roots and factorials are not allowed.)<br/><br/>
+
+        Ulrich Schimke conjectures that for every integer $a$ which is not a power of 10, $a^n$ is a Friedman number for arbitrarily large $n$.<br/><br/>
+
+        Furthermore, Trevor Green pointed out that all powers of 5 seem to be Friedman numbers. This seems true if we list out the first few powers of 5.
+        $$\begin{array}{lll}
+5^2&=25&=5^2\\
+5^3&=125&=5^{1+2}\\
+5^4&=625&=5^{6-2}\\
+5^5&=3125&=5^{3+1\cdot2}\\
+5^6&=15625&=5^6\cdot1^{52}\\
+5^7&=78125&=5^7\cdot1^{82}\\
+5^8&=390625&=5^{6+2}+0\cdot39\\
+5^9&=1953125&=5^9+(1-1)\cdot532\\
+5^{10}&=9765625&=5^{7+5-2}+(6-6)\cdot9
+\end{array}$$
+        Today, we'll proving that... <i>Yes!</i> All powers of 5 are Friedman numbers.<br/><br/>
+
+        Though as simple as it seems, proving this is actually a bit tricky.<br/><br/>
+
+        <h2>Definitions and Clarifications</h2>
+
+        Concatenation will only be allowed if we combine digits with digits, and not expressions with expressions.<br/>
+
+        For example, we are allowed to concatenate 6 and 9 to produce 69, but we are <b>not</b> allowed to concatenate the expression $(1+5)$ with $3^2$ to produce $(1+5)||3^2=69$.<br/><br/>
+
+        We'll avoid using $0^0=1$ because it's generally undefined.<br/><br/>
+
+        <div class="problem"><b>Definition.</b> For a positive integer $N$ and a collection $\mathfrak S$ of digits, we'll say that $N$ is <i>expressible by $\mathfrak S$ with some set of operations $\mathfrak O$</i> if it's possible to write $N$ as an expression using some digits from $\mathfrak S$ (not necessarily all) with the use of operations in $\mathfrak O$ and parentheses.<br/><br/>
+
+        A blue colored number $\color{blue}N$ means it should be treated as a <i>string</i> of its expression using digits in $\mathfrak S$, instead of the value of $N$ itself.</div><br/>
+
+        By definition, an integer $N$ is a Friedman number if and only if it is nontrivially expressible using its own digits with the operations {+, −, ×, /, ^, ||}.<br/><br/>
+
+        The symbol ^ represents exponentiation, and || represents concatenation of digits.<br/><br/>
+
+        <h2>Initial approach</h2>
+
+        At first glance it seems pretty simple. To express $5^n$ using its own digits, we just have to find the digit 0, digit 5, and all digits of $n$ somewhere in the decimal representation of $5^n$, then we can write
+        $$5^n+0\times(\texttt{remaining digits})$$
+        For example, $5^{21}$ is a Friedman number because digits 0, 5, 2, 1 are present.
+        \begin{align*}
+        5^{21}&=476837\underline158\underline2\underline0312\underline5\\
+        &=5^{21}+0\times47683758312
+        \end{align*}
+        This works for most powers of 5, but not all of them. For example, $5^{14}=6103515625$ doesn't even have a digit 4!<br/><br/>
+
+        There are 21 integers $n\le2000$ where this exact method doesn't quite work: 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 14, 17, 18, 20, 23, 30, 33, 43, 45, 48, 58.<br/><br/>
+
+        We can't just hope that certain digits appear in $5^n$. We need something <i>deterministic</i>, something that works regardless of whatever digits $5^n$ has.<br/><br/>
+
+        <h2>A surplus of digits</h2>
+
+        $5^n$ already ends with a 5, so all we really have to do is express $n$ using the rest of the digits, since we can just shove the expression $\color{blue}n$ into the exponent, $5^{\color{blue}n}$.<br/><br/>
+
+        How many digits are we working with?<br/><br/>
+
+        Observe that $5^n$ has around $\lfloor\log_{10}(5^n)\rfloor\approx 0.69897n$ decimal digits. This is linear in $n$, which is <i>a lot</i> to work with!<br/><br/>
+
+        By Pigeonhole principle, there will be some digit $\mathbf d$ that appears in $5^n$ at least $\lceil\frac{0.69897n}{10}\rceil\approx 0.069897n$ times, which is still linear in $n$.<br/><br/>
+
+        This turns out to be more than enough, since we can express $n$ using only $O((\log n)^2)$ copies of the same digit, as we'll show below. The trick is to represent $n$ in binary using only digit $\mathbf d$.<br/><br/>
+
+        <div class="theorem" id="lemma-1"><b>Lemma 1.</b> Let $\mathbf d$ be any nonzero digit. For all integers $N\ge2000$, $N$ is expressible by $\lfloor\log_2N\rfloor^2$ copies of digit $\mathbf d$ with the operations {+, /, ^}.</div><br/>
+
+        <b>Proof.</b> Let $k$ be the number of digits of $N$ in its binary representation. Since $N\ge2000$, we have $k=\lfloor\log_2N\rfloor+1\ge11$.<br/><br/>
+
+        Let $e_1,e_2,\ldots,e_l$ be the nonnegative integers corresponding to the indices of digit 1's in the binary representation of $N$. i.e.,
+        $$N=2^{e_1}+2^{e_2}+\cdots+2^{e_l}$$
+        where $0\le e_1\lt e_2\lt\cdots\lt e_l$. Note that $e_l\lt k$, since the largest index must be less than $k$.<br/><br/>
+
+        To express $N$ using $\lfloor\log_2N\rfloor^2$ copies of digit $\mathbf d$, we do this by expressing each of $2^{e_1},2^{e_2},\ldots,2^{e_l}$ using only a total of at most $\lfloor\log_2N\rfloor^2$ digit $\mathbf d$'s.<br/><br/>
+
+        For each integer $e_i$, if $e_i>0$, it can be expressed as ${\color{blue}2^{e_i}}=\left(\tfrac{\mathbf d+\mathbf d}{\mathbf d}\right)^{\frac{\mathbf d+\mathbf d+\cdots+\mathbf d+\mathbf d}{\mathbf d}}$ where the number of $\mathbf d$'s in the exponent's numerator is $e_i$. This uses up $(e_i+4)$ copies of digit $\mathbf d$.<br/><br/>
+
+        If $e_i=0$, it can be expressed by ${\color{blue}1}=\frac{\mathbf d}{\mathbf d}$, which takes two $\mathbf d$'s.<br/><br/>
+
+        This shows that each $2^{e_i}$ can be expressed using at most $(e_i+4)$ copies of digit $\mathbf d$.<br/><br/>
+
+        The total amount of $\mathbf d$'s used to express ${\color{blue}N}={\color{blue}2^{e_1}}+{\color{blue}2^{e_2}}+\cdots+{\color{blue}2^{e_l}}$ is
+        \begin{align*}
+        &(e_1+4)+(e_2+4)+\cdots+(e_l+4)\\
+        &=(e_1+e_2+\cdots+e_l)+4l\\
+        &\le(0+1+\cdots+(k-1))+4k\\
+        &=\frac{k(k-1)}2+4k\\
+        &=\frac{k^2+7k}2\\
+        &=(k-1)^2-\frac{k^2-11k+2}2\\
+        &\lt(k-1)^2\qquad\text{(because $k\ge11$)}\\
+        &=\lfloor\log_2N\rfloor^2.
+        \end{align*}
+        Thus, $N$ is expressible using at most $\lfloor\log_2N\rfloor^2$ copies of digit $\mathbf d._\square$<br/><br/>
+
+        <details><summary>Example of Lemma 1's construction</summary><br/>
+
+        This example will use $N=2025$ and $\mathbf d=6$.<br/><br/>
+
+        $N$ expressed in binary is 11111101001, or $N=2^0+2^3+2^5+2^6+2^7+2^8+2^9+2^{10}$, which gives $(e_1,e_2,e_3,e_4,e_5,e_6,e_7,e_8)=(0,3,5,6,7,8,9,10)$.
+
+        <ul>
+        <li>$2^{e_1}$ can be expressed as ${\color{blue}1}=\frac66$.</li>
+        <li>$2^{e_2}$ can be expressed as ${\color{blue}2^3}=(\frac{6+6}6)^{\frac{6+6+6}6}$.</li>
+        <li>$2^{e_3}$ can be expressed as ${\color{blue}2^5}=(\frac{6+6}6)^{\frac{6+6+6+6+6}6}$.</li>
+        <li>$2^{e_4}$ can be expressed as ${\color{blue}2^6}=(\frac{6+6}6)^{\frac{6+6+6+6+6+6}6}$.</li>
+        <li>... and so on.</li>
+        </ul>
+
+        Putting this together,
+        $${\color{blue}2025}=\frac66+\left(\frac{6+6}6\right)^{\frac{6+6+6}6}+\left(\frac{6+6}6\right)^{\frac{6+6+6+6+6}6}+\left(\frac{6+6}6\right)^{\frac{6+6+6+6+6+6}6}+\cdots$$
+        The total number of digit 6s used to express 2025 is
+        $$2 + 7 + 9 + 10 + 11 + 12 + 13 + 14 = 78$$
+        which is at most $\lfloor\log_22025\rfloor^2=100$.</details><br/>
+
+        As we observed earlier, $5^n$ will always contain some digit $\mathbf d$ that appears at least $O(n)$ times. Lemma 1 implies that we only need $O((\log n)^2)$ copies of $\mathbf d$ to express $N$, so it seems we're done, right?<br/><br/>
+
+        Well, not quite. Lemma 1 only works when $\mathbf d$ is a <i>nonzero</i> digit.<br/><br/>
+
+        What if $\mathbf d=0$ is the most common digit? We can't use that to write $2=\frac{0+0}0$, that doesn't make any sense.<br/><br/>
+
+        Actually, what <i>can</i> we even do about digit 0? It's useless to add, subtract, multiply, or divide anything by 0.<br/><br/>
+
+        <h2>A surplus of 0's</h2>
+
+        Although it's highly unlikely, what if $5^n$ turns out to have a <i>vast</i> sea of 0's?
+        $$5^n=69420000000000\cdots000000000025\quad\text{(just as an example)}$$
+        Since 0's are effectively useless, we only have extremely tiny amount of digits to work with. In fact, it might not be enough digits to express $n$ at all!<br/><br/>
+
+        We want to make sure that $5^n$ doesn't have <i>too many</i> 0's. Otherwise, there'll just be too few digits to work with.<br/><br/>
+
+        Unfortunately, proving anything about the behavior of digits of $a^n$ in general turns out to be extremely hard.<br/><br/>
+
+        As an example, let $s(n)$ denote the sum of decimal digits of $n$. We expect $s(2^n)$ to be about $O(n)$ as $n$ tends to infinity, but the best bound we have so far is just $s(2^n)>\log_4(n)$, as shown by <a href="https://oeis.org/A001370/a001370_1.pdf">David Radcliffe</a> in 2015.<br/><br/>
+
+        In order to proceed, we still need to lower bound the amount of nonzero digits of $5^n$ in some way.<br/><br/>
+
+        Let $d(N)$ be the number of nonzero digits in the decimal representation of $N$. The best bound I could come up with is as follows:<br/><br/>
+
+        <div class="theorem" id="lemma-2"><b>Lemma 2.</b> $d(5^n)>6.2491\log_{10}(n)-4$ for all $n\ge1$.</div><br/>
+
+        <b>Proof.</b> The following proof will use a similar method as what <a href="https://oeis.org/A001370/a001370_1.pdf">David Radcliffe</a> used in his paper. This proof heavily relies on the fact that 5 divides 10.<br/><br/>
+
+        Let $\mathbf d_1,\mathbf d_2,\ldots,\mathbf d_l$ be the nonzero digits of $5^n$ and $e_1,e_2,\ldots,e_l$ be their indices. i.e.,
+        $$5^n=\mathbf d_1\cdot 10^{e_1}+\mathbf d_2\cdot 10^{e_2}+\cdots+\mathbf d_l\cdot10^{e_l}$$
+        where $0\le e_1\lt e_2\lt\cdots\lt e_l$. Note that $l=d(5^n)$ is the number of nonzero digits.<br/><br/>
+
+        We shall prove that $e_{i-1}\lt\log_{10}5\cdot e_i$ for all $i=2,3,\ldots,l$.<br/><br/>
+
+        Let $5^n=A\cdot10^{e_i}+B$ for some nonnegative integers $A$ and $B$ where $0\le B\lt10^{e_i}$. Notice that $B=5^n-A\cdot10^{e_i}$ is odd and also a multiple of $5^{e_i}$. Therefore, $B\ge5^{e_i}$.<br/><br/>
+
+        Since $e_{i-1}$ is the largest index of a nonzero digit in $B$, that means $10^{e_{i-1}}\le B\lt10^{e_{i-1}+1}$. We must have
+        $$5^{e_i}\le10^{e_{i-1}+1}~~\implies~~e_i\le\log_5(10^{e_{i-1}+1})~~\implies~~e_i\le(e_{i-1}+1)\log_510$$
+        Note that we have $e_1=0$ since the ones digit of $5^n$ is nonzero.<br/><br/>
+
+        Now we solve for $e_l$ in terms of $e_1$ using induction. This part should be straightforward, just a bunch of messy calculations.<br/><br/>
+
+        We add $\log_210$ to both sides to simplify the induction step.
+        \begin{align*}
+        e_i&\le(e_{i-1}+1)\log_510\\
+        e_i+\log_210&\le(e_{i-1}+1)\log_510+\log_210\\
+        e_i+\log_210&\le\left(e_{i-1}+1+\frac{\log_210}{\log_510}\right)\log_510\\
+        e_i+\log_210&\le(e_{i-1}+\log_210)\log_510\\
+        \end{align*}
+        From here, it can be seen by induction that
+        \begin{align*}
+        e_i+\log_210&\le(e_1+\log_210)(\log_510)^{i-1}\\
+        e_i&\le(e_1+\log_210)(\log_510)^{i-1}-\log_210\\
+        e_l&\le(\log_210)(\log_510)^{l-1}-\log_210\\
+        \end{align*}
+        Thus,
+        \begin{align*}
+        10^{e_l+1}&\gt5^n\\
+        e_l+1&\gt n\log_{10}5\\
+        (\log_210)(\log_510)^{l-1}-\log_210+1&\gt n\log_{10}5\\
+        (\log_510)^{l-1}&\gt\frac{n\log_{10}5+\log_210-1}{\log_210}\\
+        l&\gt1+\log_{\log_510}\left(\frac{n\log_{10}5+\log_210-1}{\log_210}\right)\\
+        l&\gt1+\log_{\log_510}\left(n+\frac{\log_210-1}{\log_{10}5}\right)+\log_{\log_510}\left(\frac{\log_{10}5}{\log_2{10}}\right)\\
+        l&\gt1+\frac1{\log_{10}\log_510}\log_{10}\left(n+\frac{\log_210-1}{\log_{10}5}\right)+\log_{\log_510}\left(\frac{\log_{10}5}{\log_2{10}}\right)\\
+        l&\gt6.4291\log_{10}n-4
+        \end{align*}
+        Therefore, $5^n$ has $d(5^n)>6.4291\log_{10}n-4$ nonzero digits in its decimal representation.$_\square$<br/><br/>
+
+        $O(\log n)$ nonzero digits might not seem like a lot to work with, but combined with the fact that we have an abundance of 0's, it turns out to be <i>just barely enough</i> to express $n$.<br/><br/>
+
+        The idea is to express each decimal digit of $n$ using $O(1)$ symbols each, then pad each of them up with a bunch of 0's at the end.<br/><br/>
+
+        For example, if we wanted to express $n=1357$ with just $O(\log n)$ nonzero digits, we express each of 1, 3, 5, 7 using constant amount of symbols for each, then pad them with 0's to make them 1000, 300, 50, 7, letting us write
+        $${\color{blue}1357}={\color{blue}1000}+{\color{blue}300}+{\color{blue}50}+{\color{blue}7}$$
+        Since we only have $\approx6\log n$ nonzero digits to work with for $n$, this would require knowing how to write each of 1, 2, 3, ..., 9 using <i>any</i> six given combination of nonzero digits.<br/><br/>
+
+        We have to come up with 9<sup>6</sup> = 531441 different expressions for each possible combination! Luckily, Python can quickly handle all those cases for us. Turns out, it's possible to express every integer $1\le\mathbf d\le9$ by just using any five nonzero digits and a few 0's.<br/><br/>
+
+        <div class="theorem" id="claim-3-1"><b>Claim 3.1.</b> Let $\mathfrak S$ be any collection of five nonzero digits. Then any nonzero digit $\mathbf d$ is expressible by $\mathfrak S$ and five 0's with the operations {+, −, ×, /, ||}. (exponentiation is excluded)</div><br/>
+
+        <b>Proof.</b> This is proven via computer. See <a href="Friedman-Claim3.1.py" style="font-family: Comic Mono; font-size: 20px">Friedman-Claim3.1.py</a> for the Python code, or see <a href="Friedman-Claim3.1.txt" style="font-family: Comic Mono; font-size: 20px">Friedman-Claim3.1.txt</a> for the list of all 1287 possible combinations for each digit. (less than 9<sup>5</sup> = 531441 since order of digits don't matter)<br/><br/>
+
+        The Python code works as follows:<br/><br/>
+
+        It first checks if $\mathbf d$ appears as one of the digits in $\mathfrak S$, which means it's trivially expressible.<br/><br/>
+
+        Next, it tries to find two digits $\mathbf a$ and $\mathbf b$ in $\mathfrak S$ such that $\mathbf d\in\{\mathbf a+\mathbf b,\mathbf a-\mathbf b,\mathbf a\times\mathbf b,\mathbf a/\mathbf b\}$.<br/><br/>
+
+        If those also do not exist, it checks if there is a digit $\mathbf a$ in $\mathfrak S$ that appears at least $\mathbf d+1$ times. In that case, $\mathbf d$ can be expressed as $\frac{\mathbf a+\cdots+\mathbf a}{\mathbf a}$ (with $\mathbf a$ appearing $\mathbf d$ times in the numerator).<br/><br/>
+
+        Then it tries to determine whether $\mathbf d$ can be expressed using digits in $\mathfrak S$ and digit 0's with only + and − operations. Every digit is expressed as either $\pm\mathbf d$ or $\pm\mathbf d0$, so each digit is only appended to at most one digit 0. This ensures that only at most five 0's are used.<br/><br/>
+
+        Then it tries to find a digit $\mathbf a$ in $\mathfrak S$ which appears at least twice, and express $\mathbf d\pm1$ using the other digits with only + and − operations, to write $({\color{blue}\mathbf d\pm1})\mp\frac{\mathbf a}{\mathbf a}$.<br/><br/>
+
+        It does similarly for a digit $\mathbf a$ which appears at least thrice, expressing $\mathbf d\pm2$ using the other digits and writing $({\color{blue}\mathbf d\pm2})\mp\frac{\mathbf a+\mathbf a}{\mathbf a}$.<br/><br/>
+
+        If it fails all the above checks, the expression needs to be hardcoded. There are only 20 such special cases needed to be considered.$_\square$<br/><br/>
+
+        <div class="theorem"><b>Claim 3.2.</b> Let $\mathfrak S$ be any collection of five nonzero digits. For any nonzero digit $\mathbf d$ and nonnegative integer $k$, $\mathbf d\cdot10^k$ is expressible by $\mathfrak S$ and $(5k+5)$ digit 0's with the operations {+, −, ×, /, ||}.</div><br/>
+
+        <b>Proof.</b> From Claim 3.1, we know that $\mathbf d$ is expressible by $\mathfrak S$ and five digit 0's, and it suffcies to turn this into an expression for $\mathbf d\cdot10^k$ by adding at most $5k$ digit 0's.<br/><br/>
+
+        Since $\mathbf d$ was expressed using just the operations {+, −, ×, /, ||}, the expression just looks like a sum or difference of fractions, without any exponentiation involved.<br/><br/>
+
+        To turn this into an expression for $\mathbf d\cdot10^k$, we append $k$ 0's to each term on the numerator. If it's part of a product, only one of the factors gets appended by 0's.
+        $${\color{blue}3}=1+\frac{2\times3+4}5\quad\implies\quad{\color{blue}3\cdot10^k}=1\overbrace{00\cdots00}^k+\frac{2\overbrace{00\cdots00}^k\times3+4\overbrace{00\cdots00}^k}5$$
+        We're effectively multiplying each term in $\color{blue}\mathbf d$ by $10^k$, so the number becomes $\mathbf d\cdot10^k$.<br/><br/>
+
+        There are only five nonzero digits, so we're only adding at most $5k$ new 0's to the expression. In total, $\color{blue}\mathbf d\cdot10^k$ only uses the digits from $\mathfrak S$ and at most $(5k+5)$ digit 0's.$_\square$<br/><br/>
+
+        <div class="theorem" id="lemma-3"><b>Lemma 3.</b> Any integer $N$ is expressible by any $5(\lfloor\log_{10}N\rfloor+1)$ nonzero digits and $3(\lfloor\log_{10}N\rfloor+2)^2$ digit 0's with {+, −, ×, /, ||}.</div><br/>
+
+        <b>Proof.</b> Let $k$ be the number of digits of $N$ in its decimal representation. We have $k=\lfloor\log_{10}N\rfloor+1$.<br/><br/>
+
+        Let $\mathbf d_0,\mathbf d_1,\mathbf d_2,\ldots,\mathbf d_{k-1}$ be the decimal digits of $N$, i.e.
+        $$N=\mathbf d_0+\mathbf d_1\cdot10+\mathbf d_2\cdot10^2+\cdots+\mathbf d_{k-1}\cdot10^{k-1}$$
+        where $0\le\mathbf d_i\le9$ for all $i$.<br/><br/>
+
+        In order to express $N$, we can express each of $\mathbf d_0,\mathbf d_1\cdot10,\mathbf d_2\cdot10^2,\ldots,\mathbf d_{k-1}\cdot10^{k-1}$.<br/><br/>
+
+        For each $\mathbf d_i\cdot10^i$, if $\mathbf d_i$ is nonzero, then by Claim 3.2, it can be expressed using any 5 nonzero digits and $(5i+5)$ digit 0's.<br/><br/>
+
+        Otherwise if $\mathbf d_i$ is zero, we can ignore it.<br/><br/>
+
+        Each digit $\mathbf d_i$ takes 5 nonzero digits, so the total amount of nonzero digits used to express ${\color{blue}N}={\color{blue}\mathbf d_0}+{\color{blue}\mathbf d_1\cdot10}+{\color{blue}\mathbf d_2\cdot10^2}+\cdots+{\color{blue}\mathbf d_{k-1}\cdot10^{k-1}}$ is at most $5k=5(\lfloor\log_{10}N\rfloor+1)$, while the total amount of digit 0's used is
+        \begin{align*}
+        & 5\cdot1+5\cdot2+5\cdot3+\cdots+5k\\
+        &=\frac{5k(k+1)}2\\
+        &\lt3(k+1)^2\\
+        &=3(\lfloor\log_{10}N\rfloor+2)^2
+        \end{align*}
+        Thus, $N$ is expressible using any $5(\lfloor\log_{10}N\rfloor+1)$ nonzero digits and $3(\lfloor\log_{10}N\rfloor+2)^2$ digit 0's.$_\square$<br/><br/>
+
+        <details><summary>Example of Lemma 3's construction</summary><br/>
+
+        This example will use $N$ = 2025 and $\mathfrak S$ = {3,1,4,1,5,9,2,6,5,3,5,8,9,7,9,3,2,3,8,4}.<br><br/>
+
+        Decomposing 2025's decimal representation gives $2025=2\cdot10^3+0+2\cdot10+5$.<br/><br/>
+
+        By looking through the list in <a href="Friedman-Claim3.1.txt" style="font-family: Comic Mono; font-size: 20px">Friedman-Claim3.1.txt</a>, we express each digit:
+        <ul>
+        <li>2 can be expressed using digits from {3,1,4,1,5} as $1+1$.</li>
+        <li>0 will be ignored</li>
+        <li>2 can be expressed using digits from {5,8,9,7,9} as $7-5$.</li>
+        <li>5 can be expressed using digits from {3,2,3,8,4} as $2+3$</li>
+        </ul>
+
+        Appending 0s and combining these together give an expression for 2025 using $\mathfrak S$:
+        $${\color{blue}2025}=(1000+1000)+(70-50)+(2+3)$$
+        In total, this uses eight digit 0s, which is at most $3(\lfloor\log_{10}N\rfloor+2)^2=75$.
+        </details><br/>
+
+        Since $5^n$ always has at least $5(\lfloor\log_{10}N\rfloor+1)$ nonzero digits, this lemma shows that $5^n$ is a Friedman number, as long as it has lots of 0's!<br/><br/>
+
+        <h2>Putting it all together</h2>
+
+        We have all the puzzle pieces now!<br/><br/>
+
+        The number of digits of $5^n$ is $\lfloor\log_{10}(5^n)\rfloor+1=O(n)$, which is linear in $n$.<br/><br/>
+
+        If the most common digit of $5^n$ is a nonzero digit $\mathbf d$, then <a href="#lemma-1">Lemma 1</a> lets us construct an expression for $n$ using only $O((\log n)^2)$ copies of digit $\mathbf d$.<br/><br/>
+
+        If the most common digit of $5^n$ is the digit 0, then <a href="#lemma-2">Lemma 2</a> tells us that $5^n$ still has at least $O(\log n)$ nonzero digits. <a href="#lemma-3">Lemma 3</a> lets us construct an expression for $n$ using only $O(\log n)$ nonzero digits and $O((\log n)^2)$ copies of digit 0.<br/><br/>
+
+        We can finally attempt the proof.<br/><br/>
+
+        <div class="theorem"><b>Theorem.</b> $5^n$ is a Friedman number for all $n\ge2$.</div><br/>
+
+        <b>Proof.</b> We divide this proof into two cases.<br/><br/>
+
+        <b>Case I.</b> $n\lt2000$.<br/><br/>
+
+        Most of the values for $n\lt2000$ can be expressed using the form:
+        $$5^n+0\times(\texttt{remaining digits})$$
+        Not all integers can be expressed in this way however. There are 21 such integers $n\lt2000$: 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 14, 17, 18, 20, 23, 30, 33, 43, 45, 48, 58. These special cases must be handled separately.<br/><br/>
+
+        The Python code for this can be found in <a href="Friedman-Case1.py" style="font-family: Comic Mono; font-size: 20px">Friedman-Case1.py</a>. The list for all $n\lt2000$ expressions can also be found in <a href="Friedman-Case1.txt" style="font-family: Comic Mono; font-size: 20px">Friedman-Case1.txt</a>.<br/><br/>
+
+        The program works by finding the digits of $n$, 0, and 5 in the decimal representation of $5^n$ and expressing $5^n$ using the form above. The special cases which can't be expressed in that form are hardcoded.<br/><br/>
+
+        <b>Case II.</b> $n\ge2000$.<br/><br/>
+
+        The number of decimal digits of $5^n$ is $\lfloor\log_{10}(5^n)\rfloor+1=\lfloor n\log_{10}5\rfloor+1$. Since the units digit 5 will be used for the base of $5^n$, the rest of the $\lfloor n\log_{10}5\rfloor$ digits will be used to express $n$.<br/><br/>
+
+        Let $\mathbf d$ be the most common digit of $5^n$. By Pigeonhole Principle, $\mathbf d$ appears at least $\frac{\lfloor n\log_{10}5\rfloor}{10}$ times in $5^n$.<br/><br/>
+
+        It can easily be verified (by WolframAlpha or Desmos) that for all $n\ge2000$,
+        $$\frac{\lfloor n\log_{10}5\rfloor}{10}\gt3(\lfloor\log_{10}n\rfloor+2)^2$$
+
+        <center><img src="friedman-graph.png" style="width:25vw"><br/>(red line = $\frac{\lfloor n\log_{10}5\rfloor}{10}$, blue line = $3(\lfloor\log_{10}n\rfloor+2)^2$)</center><br/>
+
+        This means digit $\mathbf d$ appears more than $3(\lfloor\log_{10}n\rfloor+2)^2$ times in $5^n$.<br/><br/>
+
+        Case II is divided further depending on whether $\mathbf d$ is nonzero.<br/><br/>
+
+        <b>Case II.I.</b> $\mathbf d$ is nonzero.<br/><br/>
+
+        We have more than $(\lfloor\log_{10}n\rfloor^2+2)$ copies of digit $\mathbf d$.<br/><br/>
+
+        Lemma 1 lets us construct an expression for $n$ using only $\lfloor\log_{10}n\rfloor^2$ copies of $\mathbf d$, so we still have two digit $\mathbf d$'s for another purpose. Two $\mathbf d$'s can be used to form $\mathbf d-\mathbf d=0$ to be multiplied with all the remaining digits not used in the expression of $\color{blue}n$.<br/><br/>
+
+        Combined together, we have an expression for $5^n$ which uses 5, and $(\lfloor\log_{10}n\rfloor^2+2)$ copies of digit $\mathbf d$.
+        $$5^{\color{blue}n}+(\mathbf d-\mathbf d)\times(\texttt{remaining digits})$$
+        where $\color{blue}n$ is the expression of $n$ using digit $\mathbf d$'s.<br/><br/>
+
+        <b>Case II.II.</b> $\mathbf d=0$.<br/><br/>
+
+        Lemma 2 tells us that $5^n$ has at least $d(5^n)>6.2491\log_{10}n-4$ nonzero digits. We also showed that digit $\mathbf d=0$ appears more than $3(\lfloor\log_{10}n\rfloor+2)^2$ times.<br/><br/>
+
+        In order to use Lemma 3, we still have to show that $d(5^n)>5(\lfloor\log_{10}n\rfloor+1)$.<br/><br/>
+
+        <details><summary><b>Proof that $d(5^n)>5(\lfloor\log_{10}n\rfloor+1)$ for all $n\ge2000$</b></summary><br/>
+
+        This can be divided into two cases.<br/><br/>
+
+        <b>Case I.</b> $2000\le n\lt2\cdot10^6$<br/><br/>
+
+        This can be done via computer. Since $5(\lfloor\log_{10}n\rfloor+1)\le5(\lfloor\log_{10}(2\cdot10^6)\rfloor+1)\le35$, it suffices to check for each $2000\le n\lt2\cdot10^6$ that $d(5^n)\gt35$.<br/><br/>
+
+        In order to make the exhaustive search more efficient, it suffices to check only the last few digits of $5^n$ and verify that it contains more than 35 nonzero digits.<br/><br/>
+
+        The Python program in <a href="Friedman-Dbound.py" style="font-family: Comic Mono; font-size: 20px">Friedman-Dbound.py</a> runs a loop over integers $2000\le n\lt2\cdot10^6$, keeping track of only the last 60 digits of $5^n$ and counting the number of nonzero digits.<br/><br/>
+
+        Out of all the cases it needed to check, the lowest recorded nonzero digit count was at $n=1282797$, having only 41 nonzero digits out of the last 60 digits of $5^{1282797}$.<br/><br/>
+
+        <b>Case II.</b> $n\ge2\cdot10^6$<br/><br/>
+
+        From Lemma 2, $d(5^n)>6.2491\log_{10}n-4$, which means it suffices to show that $6.4291\log_{10}n-4>5(\lfloor\log_{10}n\rfloor+1)$.<br/><br/>
+
+        Since $n\ge2\cdot10^6$, then the inequality holds true because
+        \begin{align*}
+        \log_{10}n&\lt6.3010\\
+        1.4291\log_{10}n&\lt9.005\\
+        6.4291\log_{10}n&\lt5\log_{10}n+9.005\\
+        6.4291\log_{10}n-4&\lt5\log_{10}n+5.005\\
+        6.4291\log_{10}n-4&\lt5\lfloor\log_{10}n\rfloor+5._\square\\
+        \end{align*}</details><br/>
+
+        From this, we know that $5^n$ has more than $3(\lfloor\log_{10}n\rfloor+2)^2$ copies of digit 0 and more than $5(\lfloor\log_{10}n\rfloor+1)$ nonzero digits.<br/><br/>
+
+        Lemma 3 lets us construct an expression for $n$ using any $5(\lfloor\log_{10}n\rfloor+1)$ nonzero digits and $3(\lfloor\log_{10}n\rfloor+2)^2$ copies of digit 0, and we have at least one digit 0 and 5 left over. Therefore, we can express $5^n$ as
+        $$5^{\color{blue}n}+0\times(\texttt{remaining digits})$$
+        where $\color{blue}n$ is the expression of $n$ using nonzero digits.<br/><br/>
+
+        Thus, this finishes the proof that $5^n$ is always a Friedman number for all $n\ge2._\square$<br/><br/>
+
+        <h2>Conclusion</h2>
+
+        In conclusion, we have proven that all powers of 5 are Friedman numbers! :nanayay:<br/><br/>
+
+        Furthermore, tweaking the proof a bit can prove the following slightly stronger statement:<br/><br/>
+
+        <div class="theorem"><b>Theorem 2.</b> For every constant $a$, $5^n+a$ is a Friedman number for all sufficiently large $n$.</div><br/>
+
+        This can be proven using the same construction for $5^n$ in the original theorem, but using a few extra digits to express $a$.<br/><br/>
+
+        A corollary of Theorem 2 is:<br/><br/>
+
+        <div class="theorem"><b>Corollary.</b> For any positive integer $a$, there are infinitely many integers $N$ such that $N$, $N+1$, $N+2$, ..., $N+a$ are all Friedman numbers.</div><br/>
+
+        This can be proven by choosing $N=5^n$. Though, this corollary can already be proven from the fact that <a href="https://erich-friedman.github.io/mathmagic/0800/proof.pdf">Friedman numbers have density 1</a>.<br/><br/>
+
+        <h2>The $a^n$ conjecture</h2>
+
+        Its natural to ask whether any $a^n$ is also a Friedman number. Ulrich Schimke conjectured the following.<br/><br/>
+
+        <div class="problem"><b>Conjecture.</b> For every $a$ which is not a power of 10, $a^n$ is a Friedman number for arbitrarily large $n$.</div><br/>
+
+        Unfortunately, generalizing the proof of $5^n$ to any $a^n$ is not as simple.<br/><br/>
+
+        The entire second half of the theorem's proof is merely a way to work around the fact that no strong bound exists for $d(5^n)$, so I had to work with the fact that $d(5^n)$ is at least $6.2491\log n-4$.<br/><br/>
+
+        The proof of the logarithmic bound for $d(5^n)$ only works because 5 is a divisor of 10, which means the same proof cannot be used for other values of $a$ when proving $a^n$ is a Friedman number for any $n$.<br/><br/>
+
+        However, we <i>do</i> have some bound for the number of nonzero digits in $a^n$. A result from <a href="https://uwaterloo.ca/pure-mathematics/sites/default/files/uploads/documents/j-reine-ange-math-1980.pdf">C. L. Stewart</a> shows that:<br/><br/>
+
+        <div class="theorem"><b>Result.</b> For every constant $a$, there exists a constant $C$, such that for all $n$,
+        $$d(a^n)>\frac{\log n}{\log\log n+C}-1$$</div><br/>
+
+        Their proof of this seems to rely on transcendental number theory, which is a bit out of reach for me. But using this lemma, we can resolve Ulrich Schimke's conjecture.<br/><br/>
+
+        <div class="theorem"><b>Theorem.</b> For every $a$ which is not a power of 10, $a^{2^n}$ is a Friedman number for all sufficiently large $n$.</div><br/>
+
+        <b>Proof.</b> It suffices to construct $a$, $2$, and $n$ from the digits of $a^{2^n}$. The result of <a href="https://uwaterloo.ca/pure-mathematics/sites/default/files/uploads/documents/j-reine-ange-math-1980.pdf">C. L. Stewart</a> shows that there exists a constant $C$ such that for all $n$,
+        $$d(a^{2^n})>\frac{n\cdot\log 2}{\log n+\log\log2+C}-1$$
+        This means $a^{2^n}$ contains at least $O(\frac{n}{\log n})$ nonzero digits.<br/><br/>
+
+        From <a href="#lemma-1">Lemma 1</a>, we know that it's possible to construct $a$, $2$, and $n$ as long as we have at least $O((\log n)^2)$ nonzero digits.<br/><br/>
+
+        Since $O(\frac{n}{\log n})$ grows faster than $O((\log n)^2)$, that means as $n$ goes to infinity, we'll eventually have enough symbols to express $a$, $2$, and $n$. Therefore, $a^{2^n}$ is a Friedman number for all large $n._\square$<br/><br/>
+
+        Now, if we change "arbitrarily large" to "sufficiently large" in the conjecture, it becomes much more difficult, and still open:<br/><br/>
+
+        <div class="problem"><b>Conjecture.</b> For every $a$ which is not a power of 10, $a^n$ is a Friedman number for all sufficiently large $n$.</div><br/>
+
+        This time we don't have the freedom of handpicking $n$, since we need to prove that it works for <i>all</i> large $n$.<br/><br/>
+
+        The $O(\frac{\log n}{\log\log n})$ bound from C. L. Stewart isn't enough to express $n$. Lemma 3 requires us to have at least $\approx5\log_{10}(n)$ nonzero digits.<br/><br/>
+
+        Not even $a=2$ is resolved, since <a href="https://oeis.org/A001370/a001370_1.pdf">David Radcliffe</a>'s method is only enough to show that $2^n$ has at least $1.9179\log_{10}(n)$ nonzero digits.<br/><br/>
+
+        There are two possible ways we can resolve this conjecture, I believe. One is to get a better bound for the number of nonzero digits. This would allow us to use the same construction from Lemma 3.<br/><br/>
+
+        <div class="theorem"><b>Possible approach 1.</b> If it can be proven that the number of nonzero digits of $a^n$ is greater than $5\log_{10}(n)+O(1)$, then Conjecture is true.</div><br/>
+
+        Another possible method is to somehow improve the construction from Lemma 3 to a sublogarithmic bound, which would let us use the result from C. L. Stewart.<br/><br/>
+
+        <div class="theorem"><b>Possible approach 2.</b> If it can be shown that $n$ is expressible by any $\frac{\log n}{\log\log n+O(1)}$ nonzero digits and any amount of 0's, then Conjecture is true.</div><br/>
+
+
+        <h2>Remarks</h2>
+
+        I really love Friedman numbers! Stuff like <a href="https://en.wikipedia.org/wiki/Four_fours">Four fours</a> and <a href="https://en.wikipedia.org/wiki/24_(puzzle)">24</a> have always interested me ever since elementary. If you like these types of puzzles, you might like this one <a href="https://www.youtube.com/watch?v=-ruC5A9EzzE">Numberphile</a> video.<br/><br/>
+
+        I've actually proven this result 6 years ago with a friend, who has unfortunately passed away. :zonesad: He was a really great friend, and he helped me a lot in proving this theorem.<br/><br/>
+
+        I've rewritten this proof multiple times. First time was in 2018, I was still new to proof writing back then. Second time was in 2021, when I was practicing LaTeX. Third time is this blog post, what you're currently reading right now.<br/><br/>
+
+        Here are a couple other questions for further exploration:
+        <ol>
+        <li>Using <a href="#claim-3-1">Claim 3.1</a>, it can be shown that any <b>two-digit</b> number $1\le\mathbf n\le99$ is expressible by any collection of <b>ten</b> nonzero digits and a few 0's.<br/>Can we show the same thing but for any collection of <b>nine</b> nonzero digits or fewer?</li>
+        <li><a href="#lemma-2">Lemma 2</a> shows that $5^n$ has at least $6.2491\log n-4$ nonzero digits.<br/>Is it possible to get a logarithmic lower bound for the number of nonzero digits for:
+        <ul>
+        <li>$5^n+p(n)$, where $p$ is any polynomial</li>
+        <li>$5^n\cdot p(n)$, where $p$ is any polynomial</li>
+        <li>$5^n+3^n$</li>
+        <li>$15^n$</li>
+        </ul>
+        <li>Let $f(n)$ be the minimum number of digit 1's needed to express $n$. <a href="#lemma-1">Lemma 1</a> shows that $f(n)$ is upper bounded by $O((\log n)^2)$, while $f(n)$ is lower bounded by the iterated logarithm $O(\log^*n)$, since the maximum number expressible with $k$ 1's is $11^{11^{11^{\cdots}}}$.<br/>
+        Can we find a better lower bound and upper bound for $f(n)$?</li>
+        </ol>
+
+        That's all. Feels nice to end off the year with a math problem I've used to obssess years ago. :nanaxd:<br/><br/>
+
+        Thank you for reading, and I wish you a happy (20 + 25)<sup>2!</sup> :bebelove:
+
+    </div>
+</body>
+
+<script src="../../emojis/script.js"></script>
