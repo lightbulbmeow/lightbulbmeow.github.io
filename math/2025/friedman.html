@@ -433,7 +433,7 @@
 
         However, we <i>do</i> have some bound for the number of nonzero digits in $a^n$. A result from <a href="https://uwaterloo.ca/pure-mathematics/sites/default/files/uploads/documents/j-reine-ange-math-1980.pdf">C. L. Stewart</a> shows that:<br/><br/>
 
-        <div class="theorem"><b>Result.</b> For every constant $a$, there exists a constant $C$, such that for all $n$,
+        <div class="theorem"><b>Lemma.</b> For every constant $a$, there exists a constant $C$, such that for all $n$,
         $$d(a^n)>\frac{\log n}{\log\log n+C}-1$$</div><br/>
 
         Their proof of this seems to rely on transcendental number theory, which is a bit out of reach for me. But using this lemma, we can resolve Ulrich Schimke's conjecture.<br/><br/>
@@ -460,11 +460,11 @@
 
         There are two possible ways we can resolve this conjecture, I believe. One is to get a better bound for the number of nonzero digits. This would allow us to use the same construction from Lemma 3.<br/><br/>
 
-        <div class="theorem"><b>Possible approach 1.</b> If it can be proven that the number of nonzero digits of $a^n$ is greater than $5\log_{10}(n)+O(1)$, then Conjecture is true.</div><br/>
+        <div class="proof"><b>Possible approach 1.</b> If it can be proven that the number of nonzero digits of $a^n$ is greater than $5\log_{10}(n)+O(1)$, then Conjecture is true.</div><br/>
 
         Another possible method is to somehow improve the construction from Lemma 3 to a sublogarithmic bound, which would let us use the result from C. L. Stewart.<br/><br/>
 
-        <div class="theorem"><b>Possible approach 2.</b> If it can be shown that $n$ is expressible by any $\frac{\log n}{\log\log n+O(1)}$ nonzero digits and any amount of 0's, then Conjecture is true.</div><br/>
+        <div class="proof"><b>Possible approach 2.</b> If it can be shown that $n$ is expressible by any $\frac{\log n}{\log\log n+O(1)}$ nonzero digits and any amount of 0's, then Conjecture is true.</div><br/>
 
 
         <h2>Remarks</h2>
