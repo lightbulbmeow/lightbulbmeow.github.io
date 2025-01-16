@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta name="description" content="Binary">
+    <title>Binary</title>
+    <style>
+        body{
+            background-color: black;
+            color: white;
+        }
+        textarea, code, #output{
+            font-family: "Comic Mono";
+            white-space: pre;
+        }
+        @font-face{
+            font-family: 'Comic Mono';
+            src: url("../../fonts/ComicMono.ttf");
+        }
+    </style>
+</head>
+<body>
+<h1>Binary</h1>
+
+<p>Possible formats:</p>
+
+<b>5-bit binary:</b> Letter M corresponds to 01101<br/><br/>
+<b>8-bit binary:</b> Capital letter M corresponds to 01001101<br/>
+
+<p>Use "?" for unknown dot.<br/>
+For example, "01?1?" will match the letters [jkno].</p>
+
+<p>All other characters will be ignored.</p>
+
+<hr>
+
+<p>Input text to decode:</p>
+
+<table>
+<tr>
+<td>
+<textarea id="inputcode" name="inputcode" rows="4" cols="50">10100 01000 01001 10011 00000 01001 10011
+00000 00010 01001 01110 00001 10010 11001</textarea>
+<button onclick="decode()">Decode</button>
+</td>
+<td style="width:25px"></td>
+<td>
+<input type="radio" id="fivebit" name="bitmode" checked> 5-bit binary<br/>
+<input type="radio" id="eightbit" name="bitmode"> 8-bit binary<br/>
+<br/>
+<div style="display: none" id="fivebitoptions">
+<input type="checkbox" id="allowspaces2" checked> Allow spaces<br/>
+<input type="checkbox" id="nutrimatic2"> Nutrimatic format<br/>
+</div>
+<div id="eightbitoptions">
+<input type="checkbox" id="allowuppercase" checked> Allow uppercase letters<br/>
+<input type="checkbox" id="allowlowercase" checked> Allow lowercase letters<br/>
+<input type="checkbox" id="allowdigits" checked> Allow digits<br/>
+<input type="checkbox" id="allowspaces" checked> Allow spaces<br/>
+<input type="checkbox" id="allowsymbols"> Allow symbols (only keyboard-typable ones)<br/>
+<input type="checkbox" id="nutrimatic"> Nutrimatic format<br/>
+</div>
+</td>
+</tr>
+</table>
+
+<p id="malformed">Decoded text:</p>
+
+<div id="output"></div><br/>
+
+<hr>
+
+Binary alphabet:<br/><br/>
+
+<img src="binary.jpg" height=600><br/><br/>
+
+</body>
+</html>
+
+<script src="binary.js"></script>
