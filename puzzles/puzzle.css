@@ -42,6 +42,10 @@ a:hover{
     border-color: #bb00ff;
 }
 @font-face{
+    font-family: 'Comic Mono';
+    src: url("../fonts/ComicMono.ttf");
+}
+@font-face{
     font-family: 'Comic Sans';
     src: url("../fonts/ComicSans.ttf");
 }
@@ -57,7 +61,7 @@ a:hover{
 }
 @font-face{
     font-family: 'Comic Sans';
-    src: url("fonts/ComicSansBoldItalic.ttf");
+    src: url("../fonts/ComicSansBoldItalic.ttf");
     font-weight: bold;
     font-style: italic;
 }
