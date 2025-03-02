@@ -79,7 +79,7 @@
         <div class="theorem" id="lemma-1-1"><b>Lemma 1.1. (Unrestricted Perpendicular Line tool)</b><br/>
         Given any three points $A$, $B$, $C$  (collinear or noncollinear), we can mark the line perpendicular to $A$ passing through line $BC$.</div><br/>
 
-        <b>Proof.</b>
+        <details><summary><b>Proof of Lemma 1.1.</b></summary>
 
         <center><img src="perpendicular/lemma-1-1.png" style="width:20vw"></a></center>
 
@@ -90,14 +90,14 @@
         <li>Draw the line passing through $R$ and perpendicular to $PQ$. Mark any point $S$ on that line.</li>
         <li>Draw the line passing through $A$ and perpendicular to $RS$.</li>
         </ol>
-        Since $BC\perp PQ\perp RS$, we know $BC$ is parallel to $RS$, so that last step gives the line we wanted to draw.$_\square$<br/><br/>
+        Since $BC\perp PQ\perp RS$, we know $BC$ is parallel to $RS$, so that last step gives the line we wanted to draw.$_\square$</details><br/>
 
         The next result gives us the ability to simulate a <b>straightedge</b>. This is very nice, since a straightedge combined with parallel lines is incredibly powerful.<br/><br/>
 
         <div class="theorem" id="lemma-1-2"><b>Lemma 1.2. (Straightedge)</b><br/>
         Given any two points $A$ and $B$, we can mark line $AB$.</div><br/>
 
-        <b>Proof.</b>
+        <details><summary><b>Proof of Lemma 1.2.</b></summary>
 
         <center><img src="perpendicular/lemma-1-2.png" style="width:20vw"></a></center>
 
@@ -106,14 +106,14 @@
         <li>Draw the line passing through $P$ and perpendicular to $AB$. Mark any point $Q$ on that line.</li>
         <li>Draw the line passing through $A$ and perpendicular to $PQ$.</li>
         </ol>
-        Since $AB\perp PQ$, drawing that line through $A$ gives us line $AB$ itself.$_\square$<br/><br/>
+        Since $AB\perp PQ$, drawing that line through $A$ gives us line $AB$ itself.$_\square$</details><br/>
 
         The following result gives us access to the <b>Parallel Line tool</b>, which lets us use the straightedge to its full potential.<br/><br/>
 
         <div class="theorem" id="lemma-1-3"><b>Lemma 1.3. (Parallel Line tool)</b><br/>
         Given any point $A$ and line $BC$, we can mark the line parallel to $BC$ passing through $A$.</div><br/>
 
-        <b>Proof.</b><br/>
+        <details><summary><b>Proof of Lemma 1.3.</b></summary>
 
         <center><img src="perpendicular/lemma-1-3.png" style="width:20vw"></a></center>
 
@@ -122,7 +122,7 @@
         <li>Draw the line passing through $P$ and perpendicular to $BC$. Mark any point $Q$ on that line.</li>
         <li>Draw the line passing through $A$ and perpendicular to $PQ$.</li>
         </ol>
-        Since $BC\perp PQ$, the line we just drew is parallel to $BC._\square$<br/><br/>
+        Since $BC\perp PQ$, the line we just drew is parallel to $BC._\square$</details><br/>
 
         Now that we have a straightedge and the Parallel Line tool, we have the following classical result which lets us scale any segment by any rational factor. I unfortunately don't remember where I read it from.<br/><br/>
 
@@ -131,7 +131,7 @@
         <div class="theorem" id="lemma-1-4"><b>Lemma 1.4. (Midpoint tool)</b><br/>
         Given any two points $A$ and $B$, we can construct the midpoint $M$ of segment $AB$.</div><br/>
 
-        <b>Proof.</b>
+        <details><summary><b>Proof of Lemma 1.4.</b></summary>
 
         <center><img src="perpendicular/lemma-1-4.png" style="width:20vw"></a></center>
 
@@ -141,12 +141,14 @@
         <li>Draw lines $AQ$ and $BP$, and mark their intersection $Y$.</li>
         <li>Draw lines $AB$ and $XY$, and mark their intersection $M$.</li>
         </ol>
-        In this construction, $M$ is the midpoint of $AB$. The proof is this is very classical and is left as an exercise to the reader. :menherateehee: $_\square$<br/><br/>
+        In this construction, $M$ is the midpoint of $AB$. The proof is this is very classical and is left as an exercise to the reader. :menherateehee: $_\square$</details><br/>
 
         <div class="theorem" id="lemma-1-5"><b>Lemma 1.5. (Ratio tool)</b><br/>
         Let $r>0$ be any rational number. Given any two points $A$ and $B$, we can construct point $P$ on line $AB$ such that $AP:AB=r$.</div><br/>
 
-        <b>Proof.</b> Let $r=\frac mn$ for integers $m$ and $n$. Let $2^k$ be any power of 2 greater than $m$ and $n$.<br/><br/>
+        <details><summary><b>Proof of Lemma 1.5.</b></summary>
+
+        Let $r=\frac mn$ for integers $m$ and $n$. Let $2^k$ be any power of 2 greater than $m$ and $n$.<br/><br/>
 
         <center><img src="perpendicular/lemma-1-5.png" style="width:24vw"></a></center>
 
@@ -156,21 +158,22 @@
         <li>Draw lines $AX$ and $BT_n$, and mark their intersection $Z$.</li>
         <li>Draw lines $AB$ and $ZT_m$, and mark their intersection $P$.</li>
         </ol>
-        The constructed point $P$ is what we wanted. This works because $\frac{AP}{AB}=\frac{XT_m}{XT_n}=\frac mn._\square$<br/><br/>
+        The constructed point $P$ is what we wanted. This works because $\frac{AP}{AB}=\frac{XT_m}{XT_n}=\frac mn._\square$</details><br/>
 
         Setting $r=\frac12$ gives us the midpoint of segment $AB$, while setting $r=2$ gives us the reflection of point $A$ over point $B$.<br/><br/>
 
         <div class="theorem" id="lemma-1-6"><b>Lemma 1.6. (Reflection over a line)</b><br/>
         Given a point $A$ and line $BC$, we can mark the reflection $A'$ of point $A$ over line $BC$.</div><br/>
 
-        <b>Proof.</b>
+        <details><summary><b>Proof of Lemma 1.6.</b></summary>
 
         <center><img src="perpendicular/lemma-1-6.png" style="width:20vw"></a></center>
 
         <ol>
         <li>Draw the line passing through $A$ and perpendicular to $BC$. Let this line intersect $BC$ at $P$.</li>
         <li>Using the <a href="#lemma-1-5">Ratio tool</a>, construct the reflection $A'$ of point $A$ over point $P._\square$</li>
-        </ol>
+        </ol></details><br/>
+
         This tool also allows us to reflect lines over other lines, essentially allowing us to double any given angle.<br/><br/>
 
         <h2>Advanced constructions</h2>
@@ -186,34 +189,36 @@
         <li>nine-point center $N$</li>
         </ol></div><br/>
 
-        <b>Proof.</b> The orthocenter $H$ is constructed by simply intersecting its altitudes.<br/><br/>
+        <details><summary><b>Proof of Lemma 2.1.</b></summary>
+
+        The orthocenter $H$ is constructed by simply intersecting its altitudes.<br/><br/>
 
         The centroid $G$ is constructed by intersecting the medians. The medians are drawn by connecting each vertex to the <a href="#lemma-1-4">midpoint</a> of the opposite side.<br/><br/>
 
         The circumcenter $O$ is constructed by intersecting the perpendicular bisectors. The perpendicular bisectors are drawn by marking the midpoints of each side, then erecting perpendicular lines from them.<br/><br/>
 
-        The nine-point center $N$ is just the midpoint of $OH._\square$<br/><br/>
+        The nine-point center $N$ is just the midpoint of $OH._\square$</details><br/>
 
         You may have noticed I left out the incenter. There's a reason for this, as I'll show later. This next one has to do with circles, despite not being able to draw the circles themselves.<br/><br/>
 
         <div class="theorem" id="lemma-2-2"><b>Lemma 2.2. (Tangent line to a circle)</b><br/>
         Given triangle $ABC$, we can construct the line passing through $A$ and tangent to circumcircle $(ABC)$.</div><br/>
 
-        <b>Proof.</b>
+        <details><summary><b>Proof of Lemma 2.2.</b></summary>
 
         <center><img src="perpendicular/lemma-2-2.png" style="width:20vw"></a></center>
 
         <ol>
         <li>Mark the <a href="#lemma-2-1">circumcenter</a> $O$ of triangle $ABC$.</li>
         <li>Draw the line passing through $A$ and perpendicular to $AO._\square$</li>
-        </ol>
+        </ol></details><br/>
 
         Although we can't draw the circle itself, we can still draw tangent lines to it, pretending that it exists. As a corollary, we can draw the symmedians of the triangle.<br/><br/>
 
         <div class="theorem" id="lemma-2-3"><b>Lemma 2.3. (Symmedian point)</b><br/>
         Given triangle $ABC$, we can construct the symmedian point $K$.</div><br/>
 
-        <b>Proof.</b>
+        <details><summary><b>Proof of Lemma 2.3.</b></summary>
 
         <center><img src="perpendicular/lemma-2-3.png" style="width:25vw"></a></center>
 
@@ -223,18 +228,21 @@
         <li>Let lines $\ell_B$ and $\ell_C$ intersect at point $K_A$.</li>
         <li>Draw line $AK_A$. This is the $A$-symmedian of triangle $ABC$.</li>
         <li>Similarly, draw the other symmedians $BK_B$ and $CK_C$.</li>
-        <li>Lines $AK_A$, $BK_B$, $CK_C$ intersect at the symmedian point $K._\square$</li></ol>
+        <li>Lines $AK_A$, $BK_B$, $CK_C$ intersect at the symmedian point $K._\square$</li>
+        </ol></details><br/>
 
         These next ones give useful constructions involving angles. Please note that all angles specified are oriented, which means the result below also works if we want to subtract angles from one another.<br/><br/>
 
         <div class="theorem" id="lemma-2-4"><b>Lemma 2.4. (Angle addition)</b><br/>
         Given points $A,B,X,Y$ such that $\angle ABX=\alpha$ and $\angle ABY=\beta$, we can construct a point $Z$ such that $\angle ABZ=\alpha+\beta$.</div><br/>
 
+        <details><summary><b>Proof of Lemma 2.4.</b></summary>
+
         <b>Proof Sketch.</b> I don't know of a simpler proof, so please feel free to tell me if you find one.<br/><br/>
 
         The idea of this proof is to view angles as <i>slopes</i>. Suppose we let $A=(1,0)$ and $B=(0,0)$, and we let lines $AX$ and $AY$ have slopes $x$ and $y$ respectively. Then, it suffices to construct a line with slope $\frac{x+y}{1-xy}$, which can be done by constructing the point $Z=(1-xy,x+y)$.<br/><br/>
 
-        <b>Proof.</b>
+        <b>Proof.</b><br/>
 
         <center><img src="perpendicular/lemma-2-4.png" style="width:25vw"></a></center>
 
@@ -258,15 +266,16 @@
 
         Next, $M$ is the mipoint of $X'Y'$, so $AM=\frac{x+y}2$. $A'$ is the reflection of $A$ over $M$, giving us $AA'=x+y$.<br/><br/>
 
-        Finally, we see that $AA'ZC'$ is a rectangle, so therefore $\triangle BC'Z$ is a right triangle where $BC'=1-xy$ and $C'Z=x+y$. This proves $\tan\angle ABZ=\tan\angle C'BZ=\frac{x+y}{1-xy}._\square$.
-        <br/><br/>
+        Finally, we see that $AA'ZC'$ is a rectangle, so therefore $\triangle BC'Z$ is a right triangle where $BC'=1-xy$ and $C'Z=x+y$. This proves $\tan\angle ABZ=\tan\angle C'BZ=\frac{x+y}{1-xy}._\square$</details><br/>
 
         The ability to add or subtract angles lends us a way to construct isogonal conjugates.<br/><br/>
 
         <div class="theorem" id="lemma-2-5"><b>Lemma 2.5. (Isogonal conjugate)</b><br/>
         Given triangle $ABC$ and point $P$, we can construct the isogonal conjugate $P^*$ of point $P$.</div><br/>
 
-        <b>Proof.</b> Let $AP=\ell$, $BP=m$, $CP=n$. It suffices to show that we can construct the isogonal of $\ell$.<br/><br/>
+        <details><summary><b>Proof of Lemma 2.5.</b></summary>
+
+        Let $AP=\ell$, $BP=m$, $CP=n$. It suffices to show that we can construct the isogonal of these lines.<br/><br/>
 
         <center><img src="perpendicular/lemma-2-5.png" style="width:22vw"></a></center>
 
@@ -276,7 +285,7 @@
         <li>Similarly, draw the other isogonal lines $m'$ and $n'$.</li>
         <li>Lines $\ell'$, $m'$, $n'$ intersect at the isogonal conjugate $P^*$ of point $P._\square$</li>
         </li>
-        </ol>
+        </ol></details><br/>
 
         This gives us an alternative construction for the <a href="#lemma-2-3">symmedian point</a>: It suffices to construct the <a href="#lemma-2-1">centroid</a> of triangle $ABC$, then construct its isogonal conjugate.<br/><br/>
 
@@ -287,7 +296,9 @@
         <div class="theorem" id="lemma-2-6"><b>Lemma 2.6. (Spiral similarity)</b><br/>
         Given triangle $ABC$ and segment $XY$, we can construct point $Z$ such that $\triangle ABC\sim\triangle XYZ$.</div><br/>
 
-        <b>Proof.</b> The main idea is to simply rotate $XY$ by $\angle BAC$ to get line $XZ$, and rotate $XY$ by $\angle ABC$ to get line $YZ$.<br/><br/>
+        <details><summary><b>Proof of Lemma 2.6.</b></summary>
+
+        The main idea is to simply rotate $XY$ by $\angle BAC$ to get line $XZ$, and rotate $XY$ by $\angle ABC$ to get line $YZ$.<br/><br/>
 
         <center><img src="perpendicular/lemma-2-6.png" style="width:28vw"></a></center>
 
@@ -302,12 +313,14 @@
         </ol>
         To see why this works, it might be better to imagine the angles between lines instead of points.<br/><br/>
 
-        We wanted to construct point $Z$ such that $\triangle XYZ$ is essentially a scaled version of $\triangle ABC$ rotated by an angle amount $\angle(AB,XY)$. This is done by constructing lines $XZ$ and $YZ$, which are just lines $AC$ and $BC$ rotated by the same angle amount $\angle(AB,XY)._\square$<br/><br/>
+        We wanted to construct point $Z$ such that $\triangle XYZ$ is essentially a scaled version of $\triangle ABC$ rotated by an angle amount $\angle(AB,XY)$. This is done by constructing lines $XZ$ and $YZ$, which are just lines $AC$ and $BC$ rotated by the same angle amount $\angle(AB,XY)._\square$</details><br/>
 
         Spiral similarity is pretty powerful too, since it allows us to perform complex number multiplication and division. In the following construction, we find that it's also possible to locate the center of any spiral similarity.<br/><br/>
 
         <div class="theorem" id="lemma-2-7"><b>Lemma 2.7. (Spiral similarity center)</b><br/>
         Given two segments $AB$ and $CD$, we can construct point $Z$ such that $\triangle ABZ\sim\triangle CDZ$.</div><br/>
+
+        <details><summary><b>Proof of Lemma 2.7.</b></summary>
 
         <b>Proof Sketch.</b> My proof of this is pretty contrived, so feel free to tell me if you can find a shorter one.<br/><br/>
 
@@ -334,7 +347,9 @@
 
         Finally, we constructed $Z$ in such a way that $A$ is the center of a spiral similarity sending $D'B$ to $CZ$, giving us an equation
         $$\frac{b-a}{d'-a}=\frac{z-a}{c-a}\quad\implies\quad z=\frac{ad-bc}{a+d-b-c}$$
-        This proves $Z$ is the center of the spiral similarity sending $AB$ to $CD._\square$<br/><br/>
+        This proves $Z$ is the center of the spiral similarity sending $AB$ to $CD._\square$</details><br/>
+
+        The spiral similarity center $Z$ is also known as the Miquel point of complete quadrilateral $ABCD$.<br/><br/>
 
         <h2>Impossible constructions</h2>
 
@@ -393,7 +408,9 @@
         <li>the only constructible lines are of the form $ax+by=c$ where $a,b,c$ are rational numbers.</li>
         </ul></div><br/>
 
-        <b>Proof.</b> This can be proven by induction. Suppose we have a list of instructions that tell us how to construct $(x,y)$. Then we just have to show that after each step, the marked points and lines are always rational too, as stated in the theorem.<br/><br/>
+        <details><summary><b>Proof of Theorem 3.1.</b></summary>
+
+        This can be proven by induction. Suppose we have a list of instructions that tell us how to construct $(x,y)$. Then we just have to show that after each step, the marked points and lines are always rational too, as stated in the theorem.<br/><br/>
 
         If at any point during the construction, we have to introduce some new arbitrary point $(x',y')$, the construction needs to work for <i>any</i> values $x,y$ we throw at it. We can assume the worst case scenario: that $x',y'$ are also rational numbers. This way we don't "gain anything new".<br/><br/>
 
@@ -404,7 +421,7 @@
 
         The only way to mark new points is by intersecting two lines. Suppose we have two lines $a_1x+b_1y=c_1$ and $a_2x+b_2y=c_2$. Then their intersection point is
         $$\left(\frac{b_2c_1-b_1c_2}{a_1b_2-a_2b_1},\frac{a_2c_1-a_1c_2}{a_1b_2-a_2b_1}\right)$$
-        but we know that $a_1,b_1,c_1,a_2,b_2,c_2$ are rational, so it follows this point has rational coordinates too. This completes the theorem's proof.$_\square$<br/><br/>
+        but we know that $a_1,b_1,c_1,a_2,b_2,c_2$ are rational, so it follows this point has rational coordinates too. This completes the theorem's proof.$_\square$</details><br/>
 
         The following theorem is similar, but it will be useful for proving some of the trickier stuff. It states that "$\sqrt d$-rational points" is preserved.<br/><br/>
 
@@ -415,7 +432,9 @@
         <li>the only constructible lines are of the form $ax+b\sqrt d\,y=c$ where $a,b,c$ are rational numbers.</li>
         </ul></div><br/>
 
-        <b>Proof.</b> Like previously, we just have to show that after each step, marked points are always of the form $(x,y\sqrt d)$ for rationals $x,y$, and marked lines are of the form $ax+b\sqrt d\,y=c$ for rationals $a,b,c$, as stated in the theorem.<br/><br/>
+        <details><summary><b>Proof of Theorem 3.2.</b></summary>
+
+        Like previously, we just have to show that after each step, marked points are always of the form $(x,y\sqrt d)$ for rationals $x,y$, and marked lines are of the form $ax+b\sqrt d\,y=c$ for rationals $a,b,c$, as stated in the theorem.<br/><br/>
 
         If at any point during the construction, we have to introduce some new arbitrary point, we can assume the worst case scenario: that it's always of the form $(x',y'\sqrt d)$ where $x',y'$ are rational numbers.<br/><br/>
 
@@ -428,18 +447,20 @@
         $$\left(\frac{(b_2\sqrt d)c_1-(b_1\sqrt d)c_2}{a_1(b_2\sqrt d)-a_2(b_2\sqrt d)},\frac{a_2c_1-a_1c_2}{a_1(b_2\sqrt d)-a_2(b_1\sqrt d)}\right)$$
         which simplifies to
         $$\left(\frac{b_2c_1-b_1c_2}{a_1b_2-a_2b_2},\frac{a_2c_1-a_1c_2}{(a_1b_2-a_2b_1)d}\sqrt d\right)$$
-        Because $a_1,b_1,c_1,a_2,b_2,c_2,d$ are rational, we know that $\frac{b_2c_1-b_1c_2}{a_1b_2-a_2b_2}$ and $\frac{a_2c_1-a_1c_2}{(a_1b_2-a_2b_1)d}$ are rational too. This proves that the marked point is of the form $(x,y\sqrt d)$, completing the theorem's proof.$_\square$<br/><br/>
+        Because $a_1,b_1,c_1,a_2,b_2,c_2,d$ are rational, we know that $\frac{b_2c_1-b_1c_2}{a_1b_2-a_2b_2}$ and $\frac{a_2c_1-a_1c_2}{(a_1b_2-a_2b_1)d}$ are rational too. This proves that the marked point is of the form $(x,y\sqrt d)$, completing the theorem's proof.$_\square$</details><br/>
 
         Using these theorems, we can show why some geometric constructions are impossible using just the Perpendicular Line tool. The first one shows that an angle bisector is impossible to construct since it involves "square roots".<br/><br/>
 
         <div class="theorem" id="theorem-3-3"><b>Theorem 3.3. (Angle bisection is impossible)</b><br/>
         It is not possible to construct the angle bisector of any arbitrary angle $\angle ABC$.</div><br/>
 
-        <b>Proof.</b> Suppose the given points are $A=(1,0)$, $B=(0,0)$, and $C=(1,1)$. Since these points are rational, <a href="#theorem-3-1">the only points and lines we can construct must also be rational</a>.<br/><br/>
+        <details><summary><b>Proof of Theorem 3.3.</b></summary>
+
+        Suppose the given points are $A=(1,0)$, $B=(0,0)$, and $C=(1,1)$. Since these points are rational, <a href="#theorem-3-1">the only points and lines we can construct must also be rational</a>.<br/><br/>
 
         <center><img src="perpendicular/theorem-3-3.png" style="width:22vw"></a></center><br/>
 
-        However, the angle bisector of $\angle ABC$ is the line $y=(\sqrt2-1)x$. Since $\sqrt2-1$ is not rational, constructing this line is impossible.$_\square$<br/><br/>
+        However, the angle bisector of $\angle ABC$ is the line $y=(\sqrt2-1)x$. Since $\sqrt2-1$ is not rational, constructing this line is impossible.$_\square$</details><br/>
 
         As a corollary of this, constructing the incenter $I$ of an arbitrary triangle $ABC$ is impossible.<br/><br/>
 
@@ -448,7 +469,9 @@
         <div class="theorem" id="theorem-3-4"><b>Theorem 3.4. (Constructing an equilateral triangle is impossible)</b><br/>
         It is not possible to construct an equilateral triangle.</div><br/>
 
-        <b>Proof.</b> Suppose for the sake of contradiction that it's possible to construct an equilateral triangle $ABC$.<br/><br/>
+        <details><summary><b>Proof of Theorem 3.4.</b></summary>
+
+        Suppose for the sake of contradiction that it's possible to construct an equilateral triangle $ABC$.<br/><br/>
 
         <center><img src="perpendicular/theorem-3-4.png" style="width:20vw"></a></center><br/>
 
@@ -456,7 +479,7 @@
 
         Let the slope of line $AB$ be $x$, and the slope of line $AC$ be $y$. Notice that
         $$\tan\angle A=\frac{y-x}{1+xy}$$
-        Since $x$ and $y$ are both rational, this shows that $\tan\angle A$ is also rational. But then $\angle A=60^\circ$, so $\tan\angle A=\sqrt3$ must be irrational, contradiction.$_\square$<br/><br/>
+        Since $x$ and $y$ are both rational, this shows that $\tan\angle A$ is also rational. But then $\angle A=60^\circ$, so $\tan\angle A=\sqrt3$ must be irrational, contradiction.$_\square$</details><br/>
 
         The next one is pretty surprising, since you'd think that a square is possible to construct because of how "perpendicular" it looks. However, we'll soon find out that there's actually no way to construct a square out of just arbitrary points.<br/><br/>
 
@@ -465,7 +488,9 @@
         <div class="theorem" id="theorem-3-5"><b>Theorem 3.5. (Constructing a square is impossible)</b><br/>
         It is not possible to construct a square.</div><br/>
 
-        <b>Proof.</b> Suppose for the sake of contradiction that it's possible to construct a square $ABCD$.<br/><br/>
+        <details><summary><b>Proof of Theorem 3.5.</b></summary>
+
+        Suppose for the sake of contradiction that it's possible to construct a square $ABCD$.<br/><br/>
 
         <center><img src="perpendicular/theorem-3-5.png" style="width:20vw"></a></center><br/>
 
@@ -475,14 +500,16 @@
 
         But $D$ needs to also be of the form $(x',y'\sqrt2)$ for some rationals $x',y'$. The only way this can happen is when
         $$\begin{cases}y_2\sqrt2-y_1\sqrt2=0\\x_2-x_1=0\end{cases}\implies x_1=x_2~\text{ and }~y_1=y_2$$
-        This implies $A$ and $B$ are the exact same point, which is absurd. Therefore, constructing a square has to be impossible.$_\square$<br/><br/>
+        This implies $A$ and $B$ are the exact same point, which is absurd. Therefore, constructing a square has to be impossible.$_\square$</details><br/>
 
         Finally, this last one shows that constructing any given fixed angle $\theta$ is impossible. This proof is very similar to a previous proof showing that <a href="#theorem-3-4">constructing an equilateral triangle</a> is impossible.<br/><br/>
 
         <div class="theorem" id="theorem-3-6"><b>Theorem 3.6. (Measuring a fixed angle is impossible)</b><br/>
         There does not exist any angle $0^\circ\lt\theta\lt90^\circ$ for which it is possible to construct an angle measuring exactly $\theta$.</div><br/>
 
-        <b>Proof.</b> Suppose for the sake of contradiction that there exists some $\theta$ for which it is possible to construct an angle $\angle ABC$ measuring exactly $\theta$. Let's consider two different potential worst case scenarios.<br/><br/>
+        <details><summary><b>Proof of Theorem 3.6.</b></summary>
+
+        Suppose for the sake of contradiction that there exists some $\theta$ for which it is possible to construct an angle $\angle ABC$ measuring exactly $\theta$. Let's consider two different potential worst case scenarios.<br/><br/>
 
         <center><img src="perpendicular/theorem-3-6.png" style="width:20vw"></a></center><br/>
 
@@ -500,7 +527,7 @@
 
         From the two cases, we find that $\tan\theta$ is simultaneously a rational number and also of the form $k\sqrt2$ for some rational $k$. The only way this could happen is when $k=0$, which is a contradiction since $0^\circ\lt\theta\lt90^\circ$.<br/><br/>
 
-        Therefore, it's impossible to construct any angle measuring exactly $\theta._\square$<br/><br/>
+        Therefore, it's impossible to construct any angle measuring exactly $\theta._\square$</details><br/>
 
 
         <h2>Characterizing all possible constructions</h2>
@@ -513,7 +540,7 @@
 
         As you saw in the previous section, this tool can only handle geometric constructions whose algebraic expressions "only involves rational numbers". But we also saw that drawing a <i>square</i> is impossible, so that must mean a more restricted condition is at play.<br/><br/>
 
-        <div class="proof"><b>Definition 1. (Field)</b><br/>
+        <div class="problem"><b>Definition 1. (Field)</b><br/>
         For a real number $r$, let $\mathbb Q(r)$ denote the <b>field</b> obtained by adjoining $r$ to the rational numbers. In other words, $\mathbb Q(r)$ is the set of all numbers of the form $\frac{P(r)}{Q(r)}$ for some polynomials $P,Q$ with rational coefficients.</div><br/>
 
         Fields are always closed under addition, subtraction, multiplication, and division.<br/><br/>
@@ -522,10 +549,10 @@
 
         I might also adjoin multiple elements to the field: $\mathbb Q(a,b)$ denotes the set of all numbers of the form $\frac{P(a,b)}{Q(a,b)}$ for some (multivariate) polynomials $P,Q$ with rational coefficients..<br/><br/>
 
-        <div class="proof"><b>Definition 2. (Set of points)</b><br/>
+        <div class="problem"><b>Definition 2. (Set of points)</b><br/>
         For any sets $\mathbb A$ and $\mathbb B$, let $(\mathbb A,\mathbb B)$ denote the set of all points of the form $(a,b)$ for some $a\in\mathbb A$, $b\in\mathbb B$.<br/></div><br/>
 
-        <div class="proof"><b>Definition 3. (Set of lines)</b><br/>
+        <div class="problem"><b>Definition 3. (Set of lines)</b><br/>
         For any sets $\mathbb A,\mathbb B,\mathbb C$, let $\mathbb Ax+\mathbb By=\mathbb C$ denote the set of all points of the form $ax+by=c$ for some $a\in\mathbb A$, $b\in\mathbb B$, $c\in\mathbb C$.<br/></div><br/>
 
         Another way to state <a href="#theorem-3-1">Theorem 3.1</a> is,<br/><br/>
@@ -565,7 +592,9 @@
         But the following points are not constructible:
         $$(b,a),(a+b^2,b+a^2),\left(\frac{a^2b^2}{a^3+b^3},\frac{ab}{a+b}\right)$$
 
-        <b>Proof.</b> For the $\impliedby$ direction, we wish to show that if we're given point $(a,b)$ and the coordinate axes, then every point of the form $(a\mathbb K,b\mathbb K)$ is constructible, and every line of the form $(b\mathbb K)x+(a\mathbb K)y=ab\mathbb K$ is constructible.<br/><br/>
+        <details><summary><b>Proof of Theorem 4.1.</b></summary>
+
+        For the $\impliedby$ direction, we wish to show that if we're given point $(a,b)$ and the coordinate axes, then every point of the form $(a\mathbb K,b\mathbb K)$ is constructible, and every line of the form $(b\mathbb K)x+(a\mathbb K)y=ab\mathbb K$ is constructible.<br/><br/>
 
         Notice that the field $\mathbb K=\mathbb Q(\frac{a^2}{b^2})$ can be obtained simply having a set with a single element $\frac{a^2}{b^2}$ initially, then inserting all elements that are sums, products, or multiplicative inverses of elements in that set.<br/><br/>
 
@@ -638,7 +667,9 @@
 
         The $\implies$ part of the theorem is pretty straightfoward. Just like what we did in Theorems <a href="#theorem-3-1">3.1</a> and <a href="#theorem-3-2">3.2</a>, we just have to show that after each step, marked points are always of the form $(a\mathbb K,b\mathbb K)$ and marked lines are of the form $(b\mathbb K)x+(a\mathbb K)y=ab\mathbb K$.<br/><br/>
 
-        Doing this is pretty straightforward and uninteresting, so I'm omitting this part of the proof. Left as an exercise to the reader. :menherateehee: $_\square$<br/><br/>
+        Doing this is pretty straightforward and uninteresting, so I'm omitting this part of the proof. Left as an exercise to the reader. :menherateehee: $_\square$</details><br/>
+
+        This result is generalizable to multiple given points. In the following statement, the field $\mathbb K$ might look a bit conmplicated, but it's actually just the exact same field as $\mathbb Q(\frac{b^2}{a^2})$ if you treat all the $a_1,\ldots,a_k$'s as identically $a$ and all the $b_1,\ldots,b_k$'s as identically $b$.<br/><br/>
 
         <div class="theorem" id="lemma-4-2"><b>Theorem 4.2. (Characterization from multiple given points)</b><br/>
         Let $\mathbb K$ be the field $\mathbb Q(\frac{b_1^2}{a_1^2},\frac{a_2}{a_1},\frac{a_3}{a_1},\ldots,\frac{a_k}{a_1},\frac{b_2}{b_1},\frac{b_3}{b_1},\ldots,\frac{b_k}{b_1})$. Given a marked points $(a_1,b_1),\ldots,(a_k,b_k)$ and the coordinate axes,
@@ -656,7 +687,9 @@
         <li>for every term in $y$, the sum of the "degrees" of $b_1,\ldots,b_k$ is odd."</li>
         </ul>
 
-        <b>Proof.</b> This proof is pretty much almost identical as in <a href="#theorem-4-1">Theorem 4.1</a>. This time, the field is $\mathbb K=\mathbb Q(\frac{b_1^2}{a_1^2},\frac{a_2}{a_1},\ldots,\frac{a_k}{a_1},\frac{b_2}{b_1},\ldots,\frac{b_k}{b_1})$.
+        <details><summary><b>Proof of Theorem 4.2.</b></summary>
+
+        This proof is pretty much almost identical as in <a href="#theorem-4-1">Theorem 4.1</a>. This time, the field is $\mathbb K=\mathbb Q(\frac{b_1^2}{a_1^2},\frac{a_2}{a_1},\ldots,\frac{a_k}{a_1},\frac{b_2}{b_1},\ldots,\frac{b_k}{b_1})$.
 
         For the $\impliedby$ direction, it suffices to show:
         <ol type="a">
@@ -668,7 +701,7 @@
         </ol>
         All of which are already done in the proof of the previous theorem.<br/><br/>
 
-        The $\implies$ direction is also pretty much the exact same as in Theorems <a href="#theorem-3-1">3.1</a> and <a href="#theorem-3-2">3.2</a>, so they are also left as an exercise.$_\square$<br/><br/>
+        The $\implies$ direction is also pretty much the exact same as in Theorems <a href="#theorem-3-1">3.1</a> and <a href="#theorem-3-2">3.2</a>, so they are also left as an exercise.$_\square$</details><br/>
 
         Using this, verifying whether a geometric construction is possible is a matter of just expressing it in terms of coordinates.<br/><br/>
 
