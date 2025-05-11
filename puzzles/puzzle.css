@@ -11,6 +11,10 @@ table, th, td {
     border-radius: 3px;
     color: white;
 }
+code {
+    font-family: "Comic Mono";
+    white-space: pre;
+}
 td {
     padding: 10px;
     vertical-align: top;
