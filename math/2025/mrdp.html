@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="description" content="Hello! Welcome to my blog (*・ω・)ﾉ I will giv u free Cookies">
+    <title>MRDP Theorem: Polynomial equations are "Turing-complete"</title>
+    <link rel="stylesheet" href="googology.css">
+    <link rel="stylesheet" href="../pygments.css">
+    <style>@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@700&display=swap');</style> <!-- Google font "Josefin Sans" -->
+
+    <style> body{ background-image: url("mrdp-bg.png"); }
+            a.image:hover{ text-decoration: none; }</style>
+
+    <!-- Latex stuff -->
+    <script>
+        MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+        }
+        };
+    </script>
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+
+    <script>
+        document.cookie = "freecookie=Heres your free cookie!!! Enjoy ~ヾ(・ω・);";
+    </script>
+</head>
+<body>
+    <a href="../index.html"><img src="../black.png" style="position: fixed; top: 20px; left: 20px;" /></a>
+
+    <div class="entry">
+
+        <h1>MRDP Theorem: Polynomial equations are "Turing-complete"</h1>
+
+        <p class="date">June ??, 2024. ??:??pm</p>
+
+        Let's talk about polynomials. As a warmup, try solving the following question:<br/><br/>
+
+        <div class="problem">For which values of $k$ does the quadratic equation $x^2-6x+25-k^2=0$ have at least one real root?</div><br/>
+
+        <details><summary><b>Solution.</b></summary>
+
+        For the quadratic equation to have at least one real root, its <b>discriminant</b> has to be nonnegative.
+        $$D=(-6)^2-4(25-k^2)=4k^2-64$$
+        Solving the inequality $4k^2-64\ge0$ gives us $\boxed{k\le-4\text{ or }k\ge4}$, which is the answer.</details><br/>
+
+        Those of you who've been in a lot of math contests might already know how to solve these kinds of problems.<br/><br/>
+
+        Problems like these are a bit boring, since there's really only one "routine" way to solve it. Even if we change the numbers in the problem, the solution stays more or less the same.<br/><br/>
+
+        Now, let's try concerning ourselves with only <b>integers</b>.<br/><br/>
+
+        <div class="problem">For which <b>integer</b> values of $k$ does the quadratic equation $x^2-6x+25-k^2=0$ have at least one <b>integer</b> root?</div><br/>
+
+        <details><summary><b>Solution.</b></summary>
+
+        Completing the square on the left hand side gives
+        $$(x-3)^2+16-k^20=$$
+        After factoring out difference of two squares, we get
+        $$(x-3-k)(x-3+k)=-16$$
+        This means $(x-3-k)$ and $(x-3+k)$ must both be integer factors that multiply to $-16$. Furthermore, since $(x-3-k)$ and $(x-3+k)$ share the same parity, they must both be even numbers.<br/><br/>
+
+        There are only a few ways this could happen:
+        $$\begin{cases}x-3-k=-8\\x-3+k=2\end{cases}\implies(x,k)=(0,5)$$
+        $$\begin{cases}x-3-k=-4\\x-3+k=4\end{cases}\implies(x,k)=(3,4)$$
+        $$\begin{cases}x-3-k=-2\\x-3+k=8\end{cases}\implies(x,k)=(6,5)$$
+        $$\begin{cases}x-3-k=2\\x-3+k=-8\end{cases}\implies(x,k)=(6,-5)$$
+        $$\begin{cases}x-3-k=4\\x-3+k=-4\end{cases}\implies(x,k)=(3,-4)$$
+        $$\begin{cases}x-3-k=8\\x-3+k=-2\end{cases}\implies(x,k)=(0,-5)$$
+        From above, we find that only the values $\boxed{k=-5,-4,4,5}$ yield integer solutions for $x$.</details><br/>
+
+        This time, the solution becomes a bit more complicated. In the real case, we had infinitely many values for $k$. But in the integer case, suddenly there are only finitely many of them.<br/><br/>
+
+        The solution also heavily depends on the numbers we choose for the problem. For example, if we just changed $25$ to something else, the possible values for $k$ wildly changes!<br/><br/>
+
+        Even worse, look what happens if we change only the coefficient of $x^2$.<br/><br/>
+
+        <div class="problem">For which integer values of $k$ does the quadratic equation $2x^2-6x+25-k^2=0$ have at least one integer root?</div><br/>
+
+        Suddenly, the list of possible values for $k$ becomes infinite again, and follow a strange pattern!
+        $$k=9,21,49,121,285,705,1661,4109,9681,\ldots$$
+        Equations that look like this are called <a href="https://en.wikipedia.org/wiki/Pell%27s_equation">Pell's equation</a>, a class of equations that's been heavily studied in the field of number theory.<br/><br/>
+
+        There are also other ways to modify this equation to give interesting results. We could experiment with any polynomial equation, other than just quadratic. We can also increase the number of variables for more degrees of freedom.<br/><br/>
+
+        The question we'll be answering today is: What possible solution sets could we get from any math problem of this form?<br/><br/>
+
+        <div class="problem">For which integer values of $k$ does the polynomial equation ＿＿＿ have at least one integer root?</div><br/>
+
+        The answer is, well, very surprising. It is <i>almost anything</i> you could possibly think of. As the title says, they are "Turing-complete", in some sense.<br/><br/>
+
+        <h2>Definitions</h2>
+
+        Before we proceed, let us first lay down some definitions.<br/><br/>
+
+        A <a href="https://en.wikipedia.org/wiki/Diophantine_set"><b>Diophantine equation</b></a> is a polynomial equation of the form
+        $$P(x_1,\ldots,x_k,y_1,\ldots,y_n)=0$$
+        where $P$ is any multivariable polynomial with integer coefficients. $x_1,\ldots,x_k$ indicate parameters and $y_1,\ldots,y_n$ indicate unknowns.<br/><br/>
+
+        The name comes from <a href="https://en.wikipedia.org/wiki/Diophantus">Diophantus</a>, who is among the first people to study such equations.<br/><br/>
+
+        A <a href="https://en.wikipedia.org/wiki/Diophantine_set"><b>Diophantine set</b></a> is a subset $S$ of $\mathbb N^k$ for which there exist a multivariable polynomial $P$ with integer coefficients such that,
+        $$(x_1,\ldots,x_k)\in S\iff(\exists y_1,\ldots,y_n\in\mathbb N)(P(x_1,\ldots,x_k,y_1,\ldots,y_n)=0)$$
+        In other words, we say that a <b>Diophantine set</b> is any set of integers (or integer tuples) that could possibly be the answer to the question "For which values of $x_1,\ldots,x_k$ does the  polynomial equation ＿＿＿ have an integer solution in $y_1,\ldots,y_n$?"<br/><br/>
+
+        By the way, <span style="color:red"><b>0 is considered a natural number.</b></span><br/><br/>
+
+        In the introduction, we looked at the Diophantine equation $2x^2-6x+25-k^2=0$. Here, $k$ is the parameter and $x$ is the unknown. The Diophantine set is the set of integer values for $k$ which permits an integer solution for $x$.<br/><br/>
+
+        Here are a few simple examples of Diophantine sets, to get a feel for them. These ones only involve one parameter:<br/><br/>
+
+        <div class="theorem"><b>EVEN is Diophantine.</b><br/>
+        The set of even integers $\{0,2,4,6,8,10,\ldots\}$ is a Diophantine set.</div><br/>
+
+        <details><summary><b>Proof.</b></summary>
+        Consider the Diophantine equation
+        $$x-2y=0$$
+        where $x$ is the parameter and $y$ is the unknown.<br/><br/>
+
+        The equation has an integer solution in $y$ if and only if $x$ is an even integer.</details><br/>
+
+        <div class="theorem"><b>PERFECTSQUARE is Diophantine.</b><br/>
+        The set of perfect squares $\{0,1,4,9,16,25,\ldots\}$ is a Diophantine set.</div><br/>
+
+        <details><summary><b>Proof.</b></summary>
+        Consider the Diophantine equation
+        $$x-y^2=0$$
+        where $x$ is the parameter and $y$ is the unknown.<br/><br/>
+
+        The equation has an integer solution in $y$ if and only if $x$ is a perfect square.</details><br/>
+
+        Here are some Diophantine sets that involve multiple parameters:<br/><br/>
+
+        <div class="theorem"><b>$\lt$ is Diophantine.</b><br/>
+        The set $\{(x_1,x_2)\in\mathbb N^2\mid x_1\lt x_2\}$ is a Diophantine set.</div><br/>
+
+        <details><summary><b>Proof.</b></summary>
+        Consider the Diophantine equation
+        $$x_1+y+1-x_2=0$$
+        where $x_1,x_2$ are the parameters and $y$ is the unknown.<br/><br/>
+
+        The equation has a nonnegative integer solution in $y$ if and only if $x_1+1\le x_2$.</details><br/>
+
+        <div class="theorem"><b>$\ne$ is Diophantine.</b><br/>
+        The set $\{(x_1,x_2)\in\mathbb N^2\mid x_1\ne x_2\}$ is a Diophantine set.</div><br/>
+
+        <details><summary><b>Proof.</b></summary>
+        Consider the Diophantine equation
+        $$(x_1+y+1-x_2)(x_2+y+1-x_1)=0$$
+        where $x_1,x_2$ are the parameters and $y$ is the unknown.<br/><br/>
+
+        The equation has a nonnegative integer solution in $x$ if and only if either $x_1\lt x_2$ or $x_2\lt x_1$.</details><br/>
+
+        <h3>The difference between $\mathbb N$ or $\mathbb Z$</h3>
+
+        Notice that our definition for Diophantine set uses $\mathbb N$ instead of $\mathbb Z$. This is because it's easier to avoid thinking about negative integers when dealing with Diophantine sets.<br/><br/>
+
+        It turns out, it doesn't matter whether we use $\mathbb N$ or $\mathbb Z$, as shown below:<br/><br/>
+
+        <div class="theorem"><b>$\mathbb N$ is Diophantine.</b><br/>
+
+        There exist a Diophantine equation $P(x,y_1,y_2,\ldots)=0$ such that $x$ is a positive integer if and only if the equation has an integer solution in $y_1,y_2,\ldots$ (possibly negative).</div><br/>
+
+        <details><summary><b>Proof.</b></summary>
+
+        Consider the Diophantine equation
+        $$x-y_1^2-y_2^2-y_3^2-y_4^2=0$$
+        where $x$ is the parameter and $y_1,y_2,y_3,y_4$ are the unknowns.<br/><br/>
+
+        Clearly, $x=y_1^2+y_2^2+y_3^2+y_4^2\ge1$, so $x$ is a nonnegative integer.<br/><br/>
+
+        Conversely, if $x$ is a nonnegative integer, then according to <a href="https://en.wikipedia.org/wiki/Lagrange%27s_four-square_theorem">Lagrange's four-square theorem</a>, $x$ can be represented as a sum of four perfect squares, so $x=y_1^2+y_2^2+y_3^2+y_4^2$.</details><br/>
+
+        This means we don't have to worry about negative integers at all.<br/><br/>
+
+        <h2>More examples of Diophantine sets</h2>
+
+        The following are a bit trickier to show, but they are all Diophantine sets. Feel free to try proving them yourself first before looking at the proofs.<br/><br/>
+
+        <div class="theorem"><b>COMPOSITE is Diophantine.</b><br/>
+        The set of composite numbers, $\{4,6,8,9,10,12,\ldots\}$ is Diophantine.</div><br/>
+
+        <details><summary><b>Proof.</b></summary>
+
+        Consider the Diophantine equation
+        $$x-(a+2)(b+2)=0$$
+        where $x$ is the parameter and $a,b$ are the unknowns.<br/><br/>
+
+        The equation has a positive integer solution in $a$ and $b$ if and only if $x$ can be expressed as a product of two integers $\ge2$, i.e. $x$ is a composite number.</details><br/>
+
+        <div class="theorem"><b>$\lnot$POWEROFTWO is Diophantine.</b><br/>
+        The set of integers that are not powers of two, $\{0,3,5,6,7,9,10,\ldots\}$ is Diophantine.</div><br/>
+
+        <details><summary><b>Proof.</b></summary>
+
+        Consider the Diophantine equation
+        $$x-a(2b+3)=0$$
+        where $x$ is the parameter and $a,b$ are the unknowns.<br/><br/>
+
+        The equation has a nonnegative integer solution in $a$ and $b$ if and only if $x$ has an odd divisor $\ge3$, which is precisely when $x$ is not a power of two.</details><br/>
+
+        <div class="theorem"><b>$\lnot$PERFECTSQUARE is Diophantine.</b><br/>
+        The set of integers that are not perfect squares, $\{2,3,5,6,7,8,\ldots\}$ is Diophantine.</div><br/>
+
+        <details><summary><b>Proof.</b></summary>
+
+        The main idea is to look at equations of the form
+        $$x^2-ny^2=1$$
+        where $n$ is a positive integer. This is called a <a href="https://en.wikipedia.org/wiki/Pell_equation">Pell equation</a>, and it only has positive integer solutions in $x,y$ if and only if $n$ is not a perfect square.<br/><br/>
+
+        This fact is a bit complicated to prove, so interested readers may read up about its proof somewhere else online.<br/><br/>
+
+        With this in mind, consider the Diophantine equation
+        $$((x+1)^2-n(y+1)^2-1)^2+(n-z-1)^2=0$$
+        where $n$ is the parameter, and $x,y,z$ are the unknowns.<br/><br/>
+
+        For the equation to be satisfied, we need both of these to be true for some $x,y,z$:
+        $$\begin{cases}(x+1)^2-n(y+1)^2=1\\n=z+1\end{cases}$$
+        The first equation is our Pell equation. Since $x$ and $y$ are nonnegative, this forces $x+1$ and $y+1$ to be positive integers. The second equation forces $n\ge1$.<br/><br/>
+
+        The Diophantine equation has a nonnegative integer solution in $x,y,z$ if and only if $n\ne0$ and not a perfect square.</details><br/>
+
+        These ones involve multiple parameters:<br/><br/>
+
+        <div class="theorem"><b>$\lnot$COPRIME is Diophantine.</b><br/>
+        The set $\{(a,b)\in\mathbb N^2\mid \gcd(a,b)\ne1\}$ is Diophantine.</div><br/>
+
+        <details><summary><b>Proof.</b></summary>
+
+        Consider the Diophantine equation
+        $$(a-xy)^2+(b-xz)^2+(x-w-2)^2=0$$
+        where $a,b$ are parameters and $x,y,z,w$ are unknowns.<br/><br/>
+
+        For the equation to be satisfied, we need all three of these to be true for some $x,y,z,w$:
+        $$\begin{cases}a-xy=0\\b-xz=0\\x-w-2=0\end{cases}$$
+        The first two ensures that $a,b$ have a common factor $x$, and the third one ensures that $x\ge2$.<br/><br/>
+
+        The Diophantine equation has a nonnegative integer solution in $x,y,z,w$ if and only if $a,b$ share a common factor $\ge2$.</details><br/>
+
+        <div class="theorem"><b>COPRIME is Diophantine.</b><br/>
+        The set $\{(a,b)\in\mathbb N^2\mid \gcd(a,b)=1\}$ is Diophantine.</div><br/>
+
+        <details><summary><b>Proof.</b></summary>
+
+        Consider the Diophantine equation
+        $$ax-by=1$$
+        where $a,b$ are parameters and $x,y$ are unknowns.<br/><br/>
+
+        <a href="https://en.wikipedia.org/wiki/Bézout%27s_identity">Bézout's lemma</a> says this equation has an integer solution in $x$ and $y$ if and only if $a,b$ are coprime.</details><br/>
+
+        <div class="theorem"><b>floorsqrt is Diophantine.</b><br/>
+        The set $\{(a,b)\in\mathbb N^2\mid a=\lfloor\sqrt b\rfloor\}$ is Diophantine.</div><br/>
+
+        <details><summary><b>Proof.</b></summary>
+
+        The equation $a=\lfloor\sqrt b\rfloor$ is equivalent to saying $a\le\sqrt b\lt a+1$, which is then equivalent to saying $a^2\le b\lt(a+1)^2$.<br/><br/>
+
+        Consider the Diophantine equation
+        $$(a^2+x-b)^2+(b+y+1-(a+1)^2)^2=0$$
+        where $a,b,c$ are parameters and $x,y$ are unknowns.<br/><br/>
+
+        For the equation to be satisfied, we need both of these to be true for some $x,y$:
+        $$\begin{cases}b=a^2-x\\(a+1)^2=b-y-1\end{cases}$$
+        The first one ensures $a^2\le b$, while the second one ensures $b\lt(a+1)^2$.<br/><br/>
+
+        The Diophantine equation has a nonnegative integer solution in $x,y$ if and only if $a^2\le b\lt(a+1)^2$, or equivalently, $a=\lfloor\sqrt b\rfloor$.</details><br/>
+
+        <h3>Operations on Diophantine sets</h3>
+
+        If you've looked at any of the last examples, you probably already know that we can combine Diophantine sets together with union or intersection, as if they were AND, OR logical operators.<br/><br/>
+
+        <div class="theorem"><b>Diophantine sets are closed under AND.</b><br/>
+        The intersection of two Diophantine sets is also Diophantine.</div><br/>
+
+        <details><summary><b>Proof.</b></summary>
+
+        Let $A$ and $B$ be Diophantine sets, and let $P(x_1,\ldots,x_n)=0$ and $Q(x_1,\ldots,x_n)=0$ be their corresponding Diophantine equations. Then a Diophantine equation for $A\cap B$ is
+        $$P(x_1,\ldots,x_n)^2+Q(x_1,\ldots,x_n)^2=0$$
+        which works because $p^2+q^2=0$ iff $p=0$ and $q=0$.</details><br/>
+
+        <div class="theorem"><b>Diophantine sets are closed under OR.</b><br/>
+        The union of two Diophantine sets is also Diophantine.</div><br/>
+
+        <details><summary><b>Proof.</b></summary>
+
+        Let $A$ and $B$ be Diophantine sets, and let $P(x_1,\ldots,x_n)=0$ and $Q(x_1,\ldots,x_n)=0$ be their corresponding Diophantine equations. Then a Diophantine equation for $A\cup B$ is
+        $$P(x_1,\ldots,x_n)Q(x_1,\ldots,x_n)=0$$
+        which works because $pq=0$ iff $p=0$ or $q=0$.</details><br/>
+
+        Using this, we can start treating logical statements as if they were subsets of $\mathbb N$, and we can also classify whether they are Diophantine or not. We can start constructing statements like
+        $$(x\text{ is composite})\land[(y\text{ is not a power of two})\lor(\gcd(x,y)=1)]$$
+        and say they are Diophantine. This lets us "abstractify" most of the things we do with polynomial equations.<br/><br/>
+
+        The earlier examples with PERFECTSQUARE and $\lnot$PERFECTSQUARE might lead us to believe that Diophantine sets are also closed under complement. Unfortunately, this is not possible, as we'll see much later.<br/><br/>
+
+        The following two examples are particularly important since they allow us to perform operations beyond simple addition and multiplication.<br/><br/>
+
+        <div class="theorem" id="mod"><b>mod is Diophantine.</b><br/>
+        The set $\{(a,b,c)\in\mathbb N^3\mid a\bmod b=c\}$ is Diophantine.</div><br/>
+
+        <details><summary><b>Proof.</b></summary>
+
+        Consider the Diophantine equation
+        $$(a-c-bx)^2+(c+y+1-b)^2=0$$
+        where $a,b,c$ are parameters and $x,y$ are unknowns.<br/><br/>
+
+        For the equation to be satisfied, we need both of these to be true for some $x,y$:
+        $$\begin{cases}a=c+bx\\c=b-y-1\end{cases}$$
+        The first one ensures that $a\equiv c\pmod b$, while the second ensures that $c\lt b$.<br/><br/>
+
+        The Diophantine equation has a nonnegative integer solution in $x,y$ if and only if $a\bmod b=c$.</details><br/>
+
+        <div class="theorem" id="floordiv"><b>floordiv is Diophantine.</b><br/>
+        The set $\{(a,b,c)\in\mathbb N^3\mid\lfloor a/b\rfloor=c\}$ is Diophantine.</div><br/>
+
+        <details><summary><b>Proof.</b></summary>
+
+        The statement $\lfloor a/b\rfloor=c$ is equivalent to saying $c\le a/b\lt c+1$, which is then equivalent to saying $bc\le a$ and $a\lt b(c+1)$.<br/><br/>
+
+        Consider the Diophantine equation
+        $$(bc+x-a)^2+(a+y+1-b(c+1))^2=0$$
+        where $a,b,c$ are parameters and $x,y$ are unknowns.<br/><br/>
+
+        For the equation to be satisfied, we need both of these to be true for some $x,y$:
+        $$\begin{cases}bc=a-x\\a=b(c+1)-y-1\end{cases}$$
+        The first one ensures $bc\le a$, while the second one ensures $a\lt b(c+1)$.<br/><br/>
+
+        The Diophantine equation has a nonnegative integer solution in $x,y$ if and only if $bc\le a\lt b(c+1)$, or equivalently, $\lfloor a/b\rfloor=c$.</details><br/>
+
+        For example, suppose we wanted to show the set $\{(a,b)\in\mathbb N^2\mid\lfloor a/b\rfloor\equiv4\pmod 5\}$ is Diophantine.<br/><br/>
+
+        To do this, all we have to do is "store" the value of $\lfloor a/b\rfloor$ as a new variable $c$, then check whether $c\bmod 5$ equals 4. Since we already showed that mod and floordiv are Diophantine, we can rewrite them as polynomial equations.
+        \begin{align*}
+        \lfloor a/b\rfloor\equiv4\pmod5\quad&\iff\quad\exists c\,[(c=\lfloor a/b\rfloor)\land(c\bmod 5=4)]\\
+        &\iff\quad\exists c,x,y,z\,[(a-c-bx)^2+(c+y+1-b)^2+(c-4-5z)^2=0]
+        \end{align*}
+
+        <h2>Exponential Diophantine</h2>
+
+        Even though Diophantine sets seem like it could express lots of things, some sets still seem very hard to figure out.<br/><br/>
+
+        Consider the set of powers of two, $\{1,2,4,8,16,32,\ldots\}$. Is this a Diophantine set? If you could show that it is, then congratulations! You are super smart! :nanaclap: Otherwise, it seems very out of reach for now.<br/><br/>
+
+        How can we even express anything <i>exponential</i> with just polynomial equations? Let's introduce a new class of equations which allows more power.<br/><br/>
+
+        <h3>Definition</h3>
+
+        An <b>exponential Diophantine equation</b> is just like a Diophantine equation, but exponentiation is also allowed. Expressions like $x^y$ (where $x,y$ are variables) can now be used in the equation.<br/><br/>
+
+        Formally, an exponential Diophantine equation is anything of the form
+        $$P(x_1,\ldots,x_n)=0$$
+        where $P$ is a sum of terms $y_1^{z_1}\cdots y_k^{z_k}$, where each $y_i$ and $z_i$ can be any polynomial expression.<br/><br/>
+
+        An <b>exponential Diophantine set</b> is a subset $S$ of $\mathbb N^k$ for which there exist an exponential Diophantine equation with integer coefficients such that,
+        $$(x_1,\ldots,x_k)\in S\iff(\exists y_1,\ldots,y_n)P(x_1,\ldots,x_k,y_1,\ldots,y_n)=0$$
+        In other words, an exponential Diophantine set is any set of integers (or integer tuples) that could possibly be the answer to the question "For which values of $x_1,\ldots,x_k$ does the exponential Diophantine equation have an integer solution in $y_1,\ldots,y_n$?"<br/><br/>
+
+        For example, here are some exponential Diophantine sets:<br/><br/>
+
+        <div class="theorem"><b>POWEROFTWO is exponential Diophantine.</b><br/>
+        The set of powers of two, $\{1,2,4,8,16,32,\ldots\}$ is an exponential Diophantine set.</div><br/>
+
+        <details><summary><b>Proof.</b></summary>
+        Consider the exponential Diophantine equation
+        $$x-2^y=0$$
+        where $x$ is the parameter and $y$ is the unknown.<br/><br/>
+
+        This equation has an integer solution in $y$ if and only if $x$ is a power of two.</details><br/>
+
+        <div class="theorem"><b>REPUNIT is exponential Diophantine.</b><br/>
+        The set of integers that only contain the digit 1, $\{1,11,111,1111,11111,111111,\ldots\}$ is an exponential Diophantine set.</div><br/>
+
+        <details><summary><b>Proof.</b></summary>
+        Every repunit $\underbrace{11\cdots11}_n$ is expressible in the form $(10^n-1)/9$.<br/><br/>
+
+        Consider the exponential Diophantine equation
+        $$9x-10^{n+1}+1=0$$
+        where $x$ is the parameter and $n$ is the unknown.<br/><br/>
+
+        The equation has an integer solution in $n$ if and only if $x$ is of the form $(10^{n+1}-1)/9=\underbrace{11\cdots11}_{n+1}$.</details><br/>
+
+        <div class="theorem"><b>Concatenation is exponential Diophantine.</b><br/>
+        Let $S=\{(a,b,c)\in\mathbb N^3\mid\text{$c$ is the concatenation of $a$ and $b$}\}$. For example, $(123,45,12345)\in S$.<br/>
+        Then $S$ is an exponential Diophantine set.</div><br/>
+
+        <details><summary><b>Proof.</b></summary>
+        The concatenation of $a$ and $b$ can also be written as $a\cdot 10^n+b$, where $n$ is the number of digits of $b$, or equivalently, $10^{n-1}\le b\lt10^n$.<br/><br/>
+
+        Consider the exponential Diophantine equation
+        $$(c-a\cdot10^n-b)^2+(10^{n-1}+x-b)^2+(b+y+1-10^n)^2=0$$
+        where $a,b,c$ are the parameters and $n,x,y$ are the unknowns.<br/><br/>
+
+        For the equation to be satisfied, we need all three of these to be true for some $n,x,y$:
+        $$\begin{cases}c=a\cdot10^n+b\\10^{n-1}=b-x\\b=10^n-y-1\end{cases}$$
+        The last two equations ensure that $10^{n-1}\le b\lt10^n$, so that $n$ is exactly the number of digits of $b$.<br/></details><br/>
+
+        Adding exponentiation into the mix might feel like cheating, since after all it's not quite what I promised in the title: we were only talking about <i>polynomial</i> equations, not exponential ones! For now, let's just see how far exponential Diophantine equations can take us.<br/><br/>
+
+        <h3>More examples of exponential Diophantine sets</h3>
+
+        It turns out, exponential Diophantine equations are extremely powerful and can do what ordinary Diophantine equations can't do easily. These next examples are quite surprising, see if you could figure out how to show that these are exponential Diophantine:<br/><br/>
+
+        <div class="theorem"><b>$e$ is exponential Diophantine.</b><br/>
+        Consider the digits of Euler's number $e=2.7182818\ldots$.<br/>
+        The set $\{2,27,271,2718,27182,271828,\ldots\}$ is exponential Diophantine.</div><br/>
+
+        <details><summary><b>Proof.</b></summary>
+
+        Essentially, for every $n$ we want to approximate $e$ to $n$ decimal places then multiply it by $10^n$. The easiest way to do this would be to use the fact that
+        $$\left(1+\frac 1x\right)^x\lt e\lt\left(1+\frac1x\right)^{x+1}$$
+        for all $x$. Multiplying both sides by $10^n$, we have
+        $$10^n\left(1+\frac 1x\right)^x\lt 10^n\cdot e\lt10^n\left(1+\frac1x\right)^{x+1}$$
+        The gap between the left and right sides tend to 0 as $x\to\infty$, so there exists $x$ large enough such that $\lfloor 10^n(1+\frac 1x)^x\rfloor=\lfloor 10^n(1+\frac1x)\rfloor=\lfloor 10^n\cdot e\rfloor$.<br/><br/>
+
+        If we let $m=\lfloor 10^n\cdot e\rfloor$, then we have $m=\lfloor 10^n(1+\frac 1x)^x\rfloor$, which is equivalent to $10^n(1+\frac 1x)^x\le m\lt10^n(1+\frac 1x)^x+1$.<br/><br/>
+
+        Consider the following statement
+        $$[10^n(x+1)^x\le x^x m\lt 10^n(x+1)^x + x^x]\land[10^n(x+1)^{x+1}\le x^x m\lt 10^n(x+1)^{x+1} + x^{x+1}]$$
+        This statement can be satisfied for $m$ if and only if $m$ represents the first $n$ digits of $e$, with a large enough $x$ for the approximation.<br/><br/>
+
+        It's easy to rewrite the inequalities into an exponential Diophantine equation with $m$ as parameter and $n,x$ as unknowns.</details><br/>
+
+        <div class="theorem" id="binom"><b>Binomial coefficient is exponential Diophantine.</b><br/>
+        The set $\{(x,n,r)\mid x=\binom nr\}$ is exponential Diophantine.</div><br/>
+
+        <details><summary><b>Proof.</b></summary>
+
+        Recall the <a href="https://en.wikipedia.org/wiki/Binomial_theorem">binomial theorem</a>. If we look at the base-$b$ representation of $(b+1)^n$ for large enough $b$, then we'll see that the $r$th digit is $\binom nr$.<br/><br/>
+
+        We can retrieve the $r$th digit of the base-$b$ representation of any number by dividing it by $b^r$ and only take the units digit. We also need to ensure that $b$ is larger than $\binom nr$ itself, so taking $b>2^n$ is enough.<br/><br/>
+
+        Consider the following statement
+        $$(b>2^n)\land\left(x=\left\lfloor\frac{(b+1)^n}{b^r}\right\rfloor\bmod b\right)$$
+        The first clause ensures that $b$ is big enough, and the second clause is what gives $x=\binom nr$.<br/><br/>
+
+        We showed that it's possible to take the <a href="#mod">mod</a> and <a href="#floordiv">floordiv</a> of any number, so it's easy to convert this into an exponential Diophatine equation with $x,n,r$ as parameters and $b$ as an unknown.</details><br/>
+
+        <div class="theorem"><b>Factorial is exponential Diophantine.</b><br/>
+        The set $\{(x,n)\mid x=n!\}$ is exponential Diophantine.</div><br/>
+
+        <details><summary><b>Proof.</b></summary>
+
+        The main idea comes from the fact that
+        $$\binom bn=\frac{b(b-1)\cdots(b-n+1)}{n!}\approx\frac{b^n}{n!}$$
+        for all large enough $b$. Using this, it's enough to compute $\lfloor b^n/\binom bn\rfloor$ to obtain $n!$.<br/><br/>
+
+        To ensure that such $b$ works, we want to make sure $n!\le b^n/\binom bn\lt n!+1$.<br/><br/>
+
+        It's easy to show that $b^n/\binom bn\ge n!$ for all $b$, and it also turns out that choosing $b\gt(2n)^{n+1}$ already guarantees that $b^n/\binom bn\lt n!+1$. (Left as an exercise to the reader :menherateehee:)<br/><br/>
+
+        Consider the following statement
+        $$(b>(2n)^{n+1})\land\left(x=\left\lfloor\frac{b^n}{\binom bn}\right\rfloor\right)$$
+        The first clause ensures that $b$ is big enough, and the second clause is what gives $x=n!$.<br/><br/>
+
+        We previously showed that it's possible to take the <a href="#floordiv">floordiv</a> of any number as well as <a href="#binom">binomial coefficients</a>, so it's easy to convert this into an exponential Diophantine equation with $x,n$ as parameters and $b$ as an unknown.</details><br/>
+
+        <div class="theorem"><b>PRIME is exponential Diophantine.</b><br/>
+        The set of prime numbers, $\{2,3,5,7,11,13,\ldots\}$ is exponential Diophantine.</div><br/>
+
+        <details><summary><b>Proof.</b></summary>
+
+        <a href="https://en.wikipedia.org/wiki/Wilson%27s_theorem">Wilson's theorem</a> states that an integer $n>1$ is prime if and only if $(n-1)!+1$ is a multiple of $n$. This can be written as
+        $$(n>1)\land((n-1)!+1\equiv0\pmod n)$$
+        We previously showed that it's possible to take the <a href="#factorial">factorial</a> of any number, so it's easy to convert this into an exponential Diophantine equation.</details><br/>
+
+        <h2>Recursively enumerable</h2>
+
+        introduce turing machines and define recursively enumerable<br/><br/>
+
+        <h2>Exponential Diophantine $\iff$ Recursively enumerable</h2>
+
+        proof<br/><br/>
+
+        <h2>Diophantine $\iff$ Exponential Diophantine</h2>
+
+        introduce pell equations, proof<br/><br/>
+    </div>
+</body>
+
+<script src="../../emojis/script.js"></script>
+
+
+
+
+<!--
+https://math.uchicago.edu/~shmuel/lg-readings/martin%20davis,%20hilbert%2010.pdf
+https://www.logicmatters.net/resources/pdfs/MRDP.pdf
+https://www.ps.uni-saarland.de/Publications/documents/Larchey-WendlingForster_2019_H10_in_Coq.pdf
+-->
