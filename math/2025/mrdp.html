@@ -56,7 +56,7 @@
         <details><summary><b>Solution.</b></summary>
 
         Completing the square on the left hand side gives
-        $$(x-3)^2+16-k^20=$$
+        $$(x-3)^2+16-k^2=0$$
         After factoring out difference of two squares, we get
         $$(x-3-k)(x-3+k)=-16$$
         This means $(x-3-k)$ and $(x-3+k)$ must both be integer factors that multiply to $-16$. Furthermore, since $(x-3-k)$ and $(x-3+k)$ share the same parity, they must both be even numbers.<br/><br/>
@@ -150,7 +150,7 @@
         $$(x_1+y+1-x_2)(x_2+y+1-x_1)=0$$
         where $x_1,x_2$ are the parameters and $y$ is the unknown.<br/><br/>
 
-        The equation has a nonnegative integer solution in $x$ if and only if either $x_1\lt x_2$ or $x_2\lt x_1$.</details><br/>
+        The equation has a nonnegative integer solution in $y$ if and only if either $x_1\lt x_2$ or $x_2\lt x_1$.</details><br/>
 
         <h3>The difference between $\mathbb N$ or $\mathbb Z$</h3>
 
@@ -160,7 +160,7 @@
 
         <div class="theorem"><b>$\mathbb N$ is Diophantine.</b><br/>
 
-        There exist a Diophantine equation $P(x,y_1,y_2,\ldots)=0$ such that $x$ is a positive integer if and only if the equation has an integer solution in $y_1,y_2,\ldots$ (possibly negative).</div><br/>
+        There exist a Diophantine equation $P(x,y_1,y_2,\ldots)=0$ such that $x$ is a nonnegative integer if and only if the equation has a (possibly negative) integer solution in $y_1,y_2,\ldots$.</div><br/>
 
         <details><summary><b>Proof.</b></summary>
 
@@ -168,9 +168,30 @@
         $$x-y_1^2-y_2^2-y_3^2-y_4^2=0$$
         where $x$ is the parameter and $y_1,y_2,y_3,y_4$ are the unknowns.<br/><br/>
 
-        Clearly, $x=y_1^2+y_2^2+y_3^2+y_4^2\ge1$, so $x$ is a nonnegative integer.<br/><br/>
+        Clearly, $x=y_1^2+y_2^2+y_3^2+y_4^2\ge0$, so $x$ is a nonnegative integer.<br/><br/>
 
         Conversely, if $x$ is a nonnegative integer, then according to <a href="https://en.wikipedia.org/wiki/Lagrange%27s_four-square_theorem">Lagrange's four-square theorem</a>, $x$ can be represented as a sum of four perfect squares, so $x=y_1^2+y_2^2+y_3^2+y_4^2$.</details><br/>
+
+        So even if we changed the definition for Diophantine sets to be over $\mathbb Z$ instead of $\mathbb N$, we can still force the $\mathbb N$ restriction to be there. For example, take our example from earlier:<br/><br/>
+
+        <div class="theorem"><b>$\lt$ is Diophantine.</b><br/>
+        Let $x_1,x_2$ be integers, and let $S=\{(x_1,x_2)\in\mathbb N^2\mid x_1\lt x_2\}$.<br/>
+        There exist a Diophantine equation $P(x_1,x_2,y_1,y_2,\ldots)=0$ such that $(x_1,x_2)\in S$ if and only if the equation has a (possibly negative) integer solution in $y_1,y_2,\ldots$.</div><br/>
+
+        <details><summary><b>Proof.</b></summary>
+        Earlier we considered the Diophantine equation
+        $$x_1+y+1-x_2=0$$
+        But this only works if $x_1,x_2,y$ are restricted to natural numbers. To fix this, we introduce 4 new unknowns for each variable like this:
+        $$\begin{cases}x_1-w_1^2-w_2^2-w_3^2-w_4^2=0\\x_2-w_5^2-w_6^2-w_7^2-w_8^2=0\\y-w_9^2-w_{10}^2-w_{11}^2-w_{12}^2=0\end{cases}$$
+        Each equation here forces the restriction $x_1,x_2,y\in\mathbb N$.<br/><br/>
+
+        Combining this together, we have the following Diophantine equation in $\mathbb Z$:
+        \begin{align*}
+        &(x_1+y+1-x_2)^2+(x_1-w_1^2-w_2^2-w_3^2-w_4^2)^2\\
+        &+(x_2-w_5^2-w_6^2-w_7^2-w_8^2)^2+(y-w_9^2-w_{10}^2-w_{11}^2-w_{12}^2)^2=0\end{align*}
+        where $x_1,x_2$ are the parameters and $y,w_1,\ldots,w_{12}$ are the unknowns.<br/><br/>
+
+        The Diophantine equation has an integer solution in $y,w_1,\ldots,w_{12}$ if and only if $x_1,x_2,y\in\mathbb N$, and $x_1\lt x_2$.</details><br/>
 
         This means we don't have to worry about negative integers at all.<br/><br/>
 
@@ -349,11 +370,11 @@
         An <b>exponential Diophantine equation</b> is just like a Diophantine equation, but exponentiation is also allowed. Expressions like $x^y$ (where $x,y$ are variables) can now be used in the equation.<br/><br/>
 
         Formally, an exponential Diophantine equation is anything of the form
-        $$P(x_1,\ldots,x_n)=0$$
-        where $P$ is a sum of terms $y_1^{z_1}\cdots y_k^{z_k}$, where each $y_i$ and $z_i$ can be any polynomial expression.<br/><br/>
+        $$Q(x_1,\ldots,x_n)=0$$
+        where $Q$ is a sum of terms $y_1^{z_1}\cdots y_k^{z_k}$, where each $y_i$ and $z_i$ can be any polynomial expression.<br/><br/>
 
         An <b>exponential Diophantine set</b> is a subset $S$ of $\mathbb N^k$ for which there exist an exponential Diophantine equation with integer coefficients such that,
-        $$(x_1,\ldots,x_k)\in S\iff(\exists y_1,\ldots,y_n)P(x_1,\ldots,x_k,y_1,\ldots,y_n)=0$$
+        $$(x_1,\ldots,x_k)\in S\iff(\exists y_1,\ldots,y_n)Q(x_1,\ldots,x_k,y_1,\ldots,y_n)=0$$
         In other words, an exponential Diophantine set is any set of integers (or integer tuples) that could possibly be the answer to the question "For which values of $x_1,\ldots,x_k$ does the exponential Diophantine equation have an integer solution in $y_1,\ldots,y_n$?"<br/><br/>
 
         For example, here are some exponential Diophantine sets:<br/><br/>
@@ -484,7 +505,7 @@
 
 
 <!--
-https://math.uchicago.edu/~shmuel/lg-readings/martin%20davis,%20hilbert%2010.pdf
 https://www.logicmatters.net/resources/pdfs/MRDP.pdf
+https://math.uchicago.edu/~shmuel/lg-readings/martin%20davis,%20hilbert%2010.pdf
 https://www.ps.uni-saarland.de/Publications/documents/Larchey-WendlingForster_2019_H10_in_Coq.pdf
 -->
