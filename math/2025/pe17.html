@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="description" content="Hello! Welcome to my blog (*・ω・)ﾉ I will giv u free Cookies">
+    <title>Project Euler #17: Number Letter Counts</title>
+    <link rel="stylesheet" href="googology.css">
+    <link rel="stylesheet" href="../pygments.css">
+    <style>@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@700&display=swap');</style> <!-- Google font "Josefin Sans" -->
+
+    <style> body{ background-image: url("pe17.png"); }
+            a.image:hover{ text-decoration: none; }</style>
+
+    <!-- Latex stuff -->
+    <script>
+        MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+        }
+        };
+    </script>
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+
+    <script>
+        document.cookie = "freecookie=Heres your free cookie!!! Enjoy ~ヾ(・ω・);";
+    </script>
+</head>
+<body>
+    <a href="../index.html"><img src="../black.png" style="position: fixed; top: 20px; left: 20px;" /></a>
+
+    <div class="entry">
+
+        <h1>Project Euler #17: Number Letter Counts</h1>
+
+        <p class="date">July 1, 2025. 12:00am</p>
+
+        Today we'll be solving one of the early problems of Project Euler. This one is about counting letters in words:<br/><br/>
+
+        <div class="problem"><b>Project Euler #17: Number Letter Counts.</b><br/>
+        <p>If the numbers $1$ to $5$ are written out in words: one, two, three, four, five, then there are $3 + 3 + 5 + 4 + 4 = 19$ letters used in total.</p>
+<p>If all the numbers from $1$ to $1000$ (one thousand) inclusive were written out in words, how many letters would be used? </p><p class="note"><b>NOTE:</b> Do not count spaces or hyphens. For example, $342$ (three hundred and forty-two) contains $23$ letters and $115$ (one hundred and fifteen) contains $20$ letters. The use of 'and' when writing out numbers is in compliance with British usage.</p></div><br/>
+
+        If you want to solve it yourself, you can submit your answer <a href="https://projecteuler.net/problem=17">here</a>. Otherwise, this post will completely spoil the solution to this problem!<br/><br/>
+
+        <h2>Bruteforce</h2>
+
+        Since this is a very early Project Euler problem, bruteforcing all the numbers from 1 to 1000 should suffice.<br/><br/>
+
+        Let's start by writing some program that can convert numbers to words for us. We can begin by listing out all the numbers starting from 1:<br/><br/>
+
+        <div style="margin-left: 24px">one, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve, thirteen, fourteen, fifteen, sixteen, seventeen, eighteen, nineteen, twenty, twenty-one, twenty-two...</div><br/>
+
+        Trying to manually count all the letters would be very time-consuming, so let's start by spotting some patterns.<br/><br/>
+
+        The first 19 integers all have different names from each other, so there's no pattern to spot there. We can go ahead and hardcode them right now:<br/><br/>
+
+        <div class="highlight"><pre><span></span><span class="n">ones</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="s2">&quot;one&quot;</span><span class="p">,</span><span class="s2">&quot;two&quot;</span><span class="p">,</span><span class="s2">&quot;three&quot;</span><span class="p">,</span><span class="s2">&quot;four&quot;</span><span class="p">,</span><span class="s2">&quot;five&quot;</span><span class="p">,</span><span class="s2">&quot;six&quot;</span><span class="p">,</span><span class="s2">&quot;seven&quot;</span><span class="p">,</span><span class="s2">&quot;eight&quot;</span><span class="p">,</span><span class="s2">&quot;nine&quot;</span><span class="p">,</span><span class="s2">&quot;ten&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;eleven&quot;</span><span class="p">,</span><span class="s2">&quot;twelve&quot;</span><span class="p">,</span><span class="s2">&quot;thirteen&quot;</span><span class="p">,</span><span class="s2">&quot;fourteen&quot;</span><span class="p">,</span><span class="s2">&quot;fifteen&quot;</span><span class="p">,</span><span class="s2">&quot;sixteen&quot;</span><span class="p">,</span><span class="s2">&quot;seventeen&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;eighteen&quot;</span><span class="p">,</span><span class="s2">&quot;nineteen&quot;</span><span class="p">]</span>
+
+<span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">ones</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
+</pre></div><br/>
+
+        Next, note that all two-digit numbers starting from 20 onward follow a pretty clear pattern:
+        \begin{align*}
+        20 &= \text{twenty}\\
+        21 &= \text{twenty-one}\\
+        22 &= \text{twenty-two}\\
+        23 &= \text{twenty-three}\\
+        &\vdots\\
+        29 &= \text{twenty-nine}\\
+        30 &= \text{thirty}\\
+        31 &= \text{thirty-one}\\
+        32 &= \text{thirty-two}\\
+        &\vdots\\
+        39 &= \text{thirty-nine}\\
+        40 &= \text{forty}\\
+        &\vdots\\
+        99 &= \text{ninety-nine}\\
+        \end{align*}
+        If we have some two-digit number $XY$, then we just take the word for $X$-ty and the word for $Y$, and combine it with a hyphen.<br/><br/>
+
+        This pattern all holds true for all two-digit numbers from twenty to ninety-nine. In code, it looks like this:<br/>
+
+        <div class="highlight"><pre><span></span><span class="n">ones</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="s2">&quot;one&quot;</span><span class="p">,</span><span class="s2">&quot;two&quot;</span><span class="p">,</span><span class="s2">&quot;three&quot;</span><span class="p">,</span><span class="s2">&quot;four&quot;</span><span class="p">,</span><span class="s2">&quot;five&quot;</span><span class="p">,</span><span class="s2">&quot;six&quot;</span><span class="p">,</span><span class="s2">&quot;seven&quot;</span><span class="p">,</span><span class="s2">&quot;eight&quot;</span><span class="p">,</span><span class="s2">&quot;nine&quot;</span><span class="p">,</span><span class="s2">&quot;ten&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;eleven&quot;</span><span class="p">,</span><span class="s2">&quot;twelve&quot;</span><span class="p">,</span><span class="s2">&quot;thirteen&quot;</span><span class="p">,</span><span class="s2">&quot;fourteen&quot;</span><span class="p">,</span><span class="s2">&quot;fifteen&quot;</span><span class="p">,</span><span class="s2">&quot;sixteen&quot;</span><span class="p">,</span><span class="s2">&quot;seventeen&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;eighteen&quot;</span><span class="p">,</span><span class="s2">&quot;nineteen&quot;</span><span class="p">]</span>
+<span class="n">tens</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="s2">&quot;twenty&quot;</span><span class="p">,</span><span class="s2">&quot;thirty&quot;</span><span class="p">,</span><span class="s2">&quot;forty&quot;</span><span class="p">,</span><span class="s2">&quot;fifty&quot;</span><span class="p">,</span><span class="s2">&quot;sixty&quot;</span><span class="p">,</span><span class="s2">&quot;seventy&quot;</span><span class="p">,</span><span class="s2">&quot;eighty&quot;</span><span class="p">,</span><span class="s2">&quot;ninety&quot;</span><span class="p">]</span>
+
+<span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">ones</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
+<span class="k">elif</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">tens</span><span class="p">[</span><span class="n">n</span> <span class="o">//</span> <span class="mi">10</span><span class="p">]</span> <span class="o">+</span> <span class="n">ones</span><span class="p">[</span><span class="n">n</span> <span class="o">%</span> <span class="mi">10</span><span class="p">]</span>    <span class="c1"># lets save ourselves time by not including hyphens</span>
+</pre></div>
+<br/>
+
+        Then, we continue on from 100.
+        \begin{align*}
+        100 &= \text{one hundred}\\
+        101 &= \text{one hundred one}\\
+        102 &= \text{one hundred two}\\
+        103 &= \text{one hundred three}\\
+        &\vdots\\
+        199 &= \text{one hundred ninety-nine}\\
+        200 &= \text{two hundred}\\
+        201 &= \text{two hundred one}\\
+        &\vdots\\
+        299 &= \text{two hundred ninety-nine}\\
+        \end{align*}
+
+        If we have some three-digit number $XYZ$, then it is called "$X$ hundred $YZ$" whatever $YZ$ is called. This pattern holds up to 999, the last three-digit number.<br/><br/>
+
+        Lastly, we can just hardcode 1000 = "one thousand". All together, it looks like this:<br/><br/>
+
+        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">towords</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">ones</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="s2">&quot;one&quot;</span><span class="p">,</span><span class="s2">&quot;two&quot;</span><span class="p">,</span><span class="s2">&quot;three&quot;</span><span class="p">,</span><span class="s2">&quot;four&quot;</span><span class="p">,</span><span class="s2">&quot;five&quot;</span><span class="p">,</span><span class="s2">&quot;six&quot;</span><span class="p">,</span><span class="s2">&quot;seven&quot;</span><span class="p">,</span><span class="s2">&quot;eight&quot;</span><span class="p">,</span><span class="s2">&quot;nine&quot;</span><span class="p">,</span><span class="s2">&quot;ten&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;eleven&quot;</span><span class="p">,</span><span class="s2">&quot;twelve&quot;</span><span class="p">,</span><span class="s2">&quot;thirteen&quot;</span><span class="p">,</span><span class="s2">&quot;fourteen&quot;</span><span class="p">,</span><span class="s2">&quot;fifteen&quot;</span><span class="p">,</span><span class="s2">&quot;sixteen&quot;</span><span class="p">,</span><span class="s2">&quot;seventeen&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;eighteen&quot;</span><span class="p">,</span><span class="s2">&quot;nineteen&quot;</span><span class="p">]</span>
+    <span class="n">tens</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="s2">&quot;twenty&quot;</span><span class="p">,</span><span class="s2">&quot;thirty&quot;</span><span class="p">,</span><span class="s2">&quot;forty&quot;</span><span class="p">,</span><span class="s2">&quot;fifty&quot;</span><span class="p">,</span><span class="s2">&quot;sixty&quot;</span><span class="p">,</span><span class="s2">&quot;seventy&quot;</span><span class="p">,</span><span class="s2">&quot;eighty&quot;</span><span class="p">,</span><span class="s2">&quot;ninety&quot;</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">ones</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">tens</span><span class="p">[</span><span class="n">n</span> <span class="o">//</span> <span class="mi">10</span><span class="p">]</span> <span class="o">+</span> <span class="n">ones</span><span class="p">[</span><span class="n">n</span> <span class="o">%</span> <span class="mi">10</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">1000</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">ones</span><span class="p">[</span><span class="n">n</span> <span class="o">//</span> <span class="mi">100</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;hundred&quot;</span> <span class="o">+</span> <span class="n">towords</span><span class="p">(</span><span class="n">n</span> <span class="o">%</span> <span class="mi">100</span><span class="p">)</span>   <span class="c1"># lets ignore the spaces</span>
+    <span class="k">elif</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1000</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;onethousand&quot;</span>
+</pre></div>
+<br/>
+
+        By testing out a few numbers, we can see that it works!<br/><br/>
+
+        <div class="highlight"><pre>>>> towords(69)
+'sixtynine'
+>>> towords(420)
+'fourhundredtwenty'
+>>> towords(900)
+'ninehundred'
+>>> towords(1000)
+'onethousand'</div><br/>
+
+        Finally, to solve the Project Euler problem, we simply need to sum up the letter counts from 1 to 1000:<br/><br/>
+
+        <div class="highlight"><pre>>>> sum(len(towords(n)) for n in range(1,1001))
+18451</pre></div><br/>
+
+        Hooray! We're done! Now all we have to do is submit this on Project Euler and...<br/><br/>
+
+        <center><img src="pe17/wa.png"></center>
+
+        Huh? What went wrong?<br/><br/>
+
+        <div class="problem"><b>Project Euler #17: Number Letter Counts.</b><br/>
+        <p>If the numbers $1$ to $5$ are written out in words: one, two, three, four, five, then there are $3 + 3 + 5 + 4 + 4 = 19$ letters used in total.</p>
+<p>If all the numbers from $1$ to $1000$ (one thousand) inclusive were written out in words, how many letters would be used? </p><p class="note"><b>NOTE:</b> Do not count spaces or hyphens. For example, $342$ (three hundred <b><span style="color:red">and</span></b> forty-two) contains $23$ letters and $115$ (one hundred <b><span style="color:red">and</span></b> fifteen) contains $20$ letters. <b><span style="color:red">The use of 'and' when writing out numbers is in compliance with British usage.</span></b></p></div><br/>
+
+        Oh right. Those pesky British people with their 'and's. :mikuangery:<br/><br/>
+
+        Since we're complying with British usage, we're have to use 'and' when writing these numbers out. Fortunately, the only times where we need to use 'and' is when following "hundred".<br/><br/>
+
+        This is an easy fix to our code. $XYZ$ is called "$X$ hundred and $YZ$". However, we have to be very careful with the edge case where $YZ=0$, in which case it's just called "$X$ hundred".<br/><br/>
+
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">towords</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">ones</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="s2">&quot;one&quot;</span><span class="p">,</span><span class="s2">&quot;two&quot;</span><span class="p">,</span><span class="s2">&quot;three&quot;</span><span class="p">,</span><span class="s2">&quot;four&quot;</span><span class="p">,</span><span class="s2">&quot;five&quot;</span><span class="p">,</span><span class="s2">&quot;six&quot;</span><span class="p">,</span><span class="s2">&quot;seven&quot;</span><span class="p">,</span><span class="s2">&quot;eight&quot;</span><span class="p">,</span><span class="s2">&quot;nine&quot;</span><span class="p">,</span><span class="s2">&quot;ten&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;eleven&quot;</span><span class="p">,</span><span class="s2">&quot;twelve&quot;</span><span class="p">,</span><span class="s2">&quot;thirteen&quot;</span><span class="p">,</span><span class="s2">&quot;fourteen&quot;</span><span class="p">,</span><span class="s2">&quot;fifteen&quot;</span><span class="p">,</span><span class="s2">&quot;sixteen&quot;</span><span class="p">,</span><span class="s2">&quot;seventeen&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;eighteen&quot;</span><span class="p">,</span><span class="s2">&quot;nineteen&quot;</span><span class="p">]</span>
+    <span class="n">tens</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="s2">&quot;twenty&quot;</span><span class="p">,</span><span class="s2">&quot;thirty&quot;</span><span class="p">,</span><span class="s2">&quot;forty&quot;</span><span class="p">,</span><span class="s2">&quot;fifty&quot;</span><span class="p">,</span><span class="s2">&quot;sixty&quot;</span><span class="p">,</span><span class="s2">&quot;seventy&quot;</span><span class="p">,</span><span class="s2">&quot;eighty&quot;</span><span class="p">,</span><span class="s2">&quot;ninety&quot;</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">ones</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">tens</span><span class="p">[</span><span class="n">n</span> <span class="o">//</span> <span class="mi">10</span><span class="p">]</span> <span class="o">+</span> <span class="n">ones</span><span class="p">[</span><span class="n">n</span> <span class="o">%</span> <span class="mi">10</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">1000</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">100</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">ones</span><span class="p">[</span><span class="n">n</span> <span class="o">//</span> <span class="mi">100</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;hundred&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">ones</span><span class="p">[</span><span class="n">n</span> <span class="o">//</span> <span class="mi">100</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;hundredand&quot;</span> <span class="o">+</span> <span class="n">towords</span><span class="p">(</span><span class="n">n</span> <span class="o">%</span> <span class="mi">100</span><span class="p">)</span>   <span class="c1"># dont forget &quot;and&quot;</span>
+    <span class="k">elif</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1000</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;onethousand&quot;</span>
+</pre></div><br/>
+
+        This time... Let's see if it's correct.<br/><br/>
+
+        <center><img src="pe17/ac.png"></center>
+
+        Yay! It's correct! We're done! :nanayay: ...or are we?<br/><br/>
+
+        <h2>Beyond 1000</h2>
+
+        Of course, that was too easy! We barely even scratched the surface. Let me introduce to you the rabbit hole I've gotten down to. Let's up this problem a notch:<br/><br/>
+
+        <div class="problem"><b>Project Euler #17 Buffed.</b><br/>
+        If all the numbers from $1$ to $10\,000\,000$ (ten million) inclusive were written out in words, how many letters would be used?
+        </div><br/>
+
+        If we start with 1,000, there's a very easy pattern to spot:
+        \begin{align*}
+        1\,000 &= \text{one thousand}\\
+        1\,001 &= \text{one thousand one}\\
+        1\,002 &= \text{one thousand two}\\
+        1\,003 &= \text{one thousand three}\\
+        &\vdots\\
+        1\,010 &= \text{one thousand ninety-nine}\\
+        1\,011 &= \text{one thousand ninety-nine}\\
+        &\vdots\\
+        1\,099 &= \text{one thousand ninety-nine}\\
+        1\,100 &= \text{one thousand one hundred}\\
+        1\,101 &= \text{one thousand one hundred one}\\
+        &\vdots\\
+        1\,999 &= \text{one thousand nine hundred ninety-nine}\\
+        2\,000 &= \text{two thousand}\\
+        &\vdots\\
+        \end{align*}
+        The pattern is again very clear: If we have a four-digit number $WXYZ$, we write it as "$W$ thousand $XYZ$" whatever $XYZ$ is.<br/><br/>
+
+        Except... we're missing the 'and's again. How exactly should we place the 'and's? Since I'm not British, I don't know. I had to look it up myself:<br/><br/>
+
+        Wikipedia unfortunately doesn't list the exact rules where to place 'and' in a number. One of the only sources I could find is this <a href="https://english.stackexchange.com/questions/71770/usage-of-and-and-comma-when-writing-numbers-uk-style">StackExchange post</a>. According to the accepted answer,<br/>
+        <ul>
+        <li>102: one hundred and two</li>
+        <li>120: one hundred and twenty</li>
+        <li>1,002: one thousand and two</li>
+        <li>1,203: one thousand, two hundred and three</li>
+        <li>102,003: one hundred and two thousand and three</li>
+        <li>102,304: one hundred and two thousand, three hundred and four</li>
+        <li>1,000,002: one million and two</li>
+        <li>1,000,020: one million and twenty</li>
+        <li>1,000,200: one million, two hundred</li>
+        <li>1,002,000: one million, two thousand</li>
+        <li>1,002,003: one million, two thousand and three</li>
+        <li>1,023,045: one million, twenty-three thousand and forty-five</li>
+        <li>1,203,450: one million, two hundred and three thousand, four hundred and fifty</li>
+        <li>100,000,300 : one hundred million, three hundred</li>
+        <li>102,000,003 : one hundred and two million and three</li>
+        <li>102,304,567 : one hundred and two million, three hundred and four thousand, five hundred and sixty-seven</li>
+        </ul>
+        Just based on this, I <i>feel</i> like I know the rule, but I'm not entirely confident. Sometimes they use 'and' after 'thousand', sometimes they don't. Sometimes there's even more than one 'and's in a single number.<br/><br/>
+
+        I'm guessing there are two rules when using 'and':
+        <ol>
+        <li>always use 'and' after 'hundred' when there's something in the ones/tens place (even if it's in the thousands).<br/>
+        Ex. 102,000 = one hundred <b>and</b> two thousand</li>
+        <li>use 'and' just before the thousands place, only if $0\lt n\bmod 1000\lt100$<br/>
+        Ex. 1,000,020 = one million <b>and</b> twenty; 1,000,200 = one million, two hundred</li>
+        </ol>
+        That second rule seems a bit arbitrary to me to be honest, but at least it seems consistent with the examples in the StackExchange post.<br/><br/>
+
+        Fortunately 'thousands' and 'millions' are pretty straightfoward to implement: We simply group the digits of $n$ into chunks of 3, then read them out from left to right. Don't forget to implement the second 'and' rule too.<br/><br/>
+
+        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">towords</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">ones</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="s2">&quot;one&quot;</span><span class="p">,</span><span class="s2">&quot;two&quot;</span><span class="p">,</span><span class="s2">&quot;three&quot;</span><span class="p">,</span><span class="s2">&quot;four&quot;</span><span class="p">,</span><span class="s2">&quot;five&quot;</span><span class="p">,</span><span class="s2">&quot;six&quot;</span><span class="p">,</span><span class="s2">&quot;seven&quot;</span><span class="p">,</span><span class="s2">&quot;eight&quot;</span><span class="p">,</span><span class="s2">&quot;nine&quot;</span><span class="p">,</span><span class="s2">&quot;ten&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;eleven&quot;</span><span class="p">,</span><span class="s2">&quot;twelve&quot;</span><span class="p">,</span><span class="s2">&quot;thirteen&quot;</span><span class="p">,</span><span class="s2">&quot;fourteen&quot;</span><span class="p">,</span><span class="s2">&quot;fifteen&quot;</span><span class="p">,</span><span class="s2">&quot;sixteen&quot;</span><span class="p">,</span><span class="s2">&quot;seventeen&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;eighteen&quot;</span><span class="p">,</span><span class="s2">&quot;nineteen&quot;</span><span class="p">]</span>
+    <span class="n">tens</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="s2">&quot;twenty&quot;</span><span class="p">,</span><span class="s2">&quot;thirty&quot;</span><span class="p">,</span><span class="s2">&quot;forty&quot;</span><span class="p">,</span><span class="s2">&quot;fifty&quot;</span><span class="p">,</span><span class="s2">&quot;sixty&quot;</span><span class="p">,</span><span class="s2">&quot;seventy&quot;</span><span class="p">,</span><span class="s2">&quot;eighty&quot;</span><span class="p">,</span><span class="s2">&quot;ninety&quot;</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">ones</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">tens</span><span class="p">[</span><span class="n">n</span> <span class="o">//</span> <span class="mi">10</span><span class="p">]</span> <span class="o">+</span> <span class="n">ones</span><span class="p">[</span><span class="n">n</span> <span class="o">%</span> <span class="mi">10</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">1000</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">100</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">ones</span><span class="p">[</span><span class="n">n</span> <span class="o">//</span> <span class="mi">100</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;hundred&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">ones</span><span class="p">[</span><span class="n">n</span> <span class="o">//</span> <span class="mi">100</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;hundredand&quot;</span> <span class="o">+</span> <span class="n">towords</span><span class="p">(</span><span class="n">n</span> <span class="o">%</span> <span class="mi">100</span><span class="p">)</span>
+
+    <span class="n">ans</span> <span class="o">=</span> <span class="n">towords</span><span class="p">(</span><span class="n">n</span> <span class="o">%</span> <span class="mi">1000</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">1000</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">:</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="s2">&quot;and&quot;</span> <span class="o">+</span> <span class="n">ans</span>   <span class="c1"># pesky &quot;and&quot; rule</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">//</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">%</span> <span class="mi">1000</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="n">towords</span><span class="p">((</span><span class="n">n</span> <span class="o">//</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">%</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;thousand&quot;</span> <span class="o">+</span> <span class="n">ans</span>
+
+    <span class="k">if</span> <span class="n">n</span> <span class="o">//</span> <span class="mi">10</span><span class="o">**</span><span class="mi">6</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="n">towords</span><span class="p">(</span><span class="n">n</span> <span class="o">//</span> <span class="mi">10</span><span class="o">**</span><span class="mi">6</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;million&quot;</span> <span class="o">+</span> <span class="n">ans</span>
+
+    <span class="k">return</span> <span class="n">ans</span></div><br/>
+
+    Just to be extra sure, I decided to check this code against the <a href="https://pypi.org/project/num2words/">num2words Python library</a>, which happens to use British convention.<br/><br/>
+
+    My code seems to agree with this library for all integers $n\lt 10^7$, so that's a relief. Finally, we add up all the letter counts from 1 to 10,000,000 to get our answer:<br/><br/>
+
+    <div class="highlight"><pre>>>> sum(len(towords(n)) for n in range(1,10000001))
+>>> 604149713</pre></div><br/>
+
+    Yay! :nanayay: This took around 5 seconds to run on my old laptop, which is to be expected of an $O(n)$ algorithm in Python.<br/><br/>
+
+    For completeness, here are the values of <code>answer(10**k)</code> for $k=1,\ldots,7$, where <code>answer(n)</code> is the total number of letters used when writing numbers from 1 to $n$.<br/><br/>
+
+    <div class="highlight"><pre>answer(10**1) = 39
+answer(10**2) = 864
+answer(10**3) = 21124
+answer(10**4) = 321814
+answer(10**5) = 3786721
+answer(10**6) = 50514713
+answer(10**7) = 604149713</pre></div><br/>
+
+    <h2>Beyond 10<sup>7</sup></h2>
+
+    Of course, we're still not done. An $O(n)$ algorithm? That's pathetic. I'm sure we can do much better than that.<br/><br/>
+
+    <div class="problem"><b>Project Euler #17 Super Buffed.</b><br/>
+    If all the numbers from $1$ to $10^{18}$ (one quintillion) inclusive were written out in words, how many letters would be used?
+    </div><br/>
+
+    Now <i>this</i> is a challenge. You can pause reading right now and see if you could figure out the answer yourself.<br/><br/>
+
+    The new bound, $10^{18}$ is pretty much just asking for an $O(\log n)$ algorithm at this point. But how?<br/><br/>
+
+    First, we should start by extending our number-to-words function to include numbers up to $10^{18}$. We're introducing some new words for even bigger powers of 10:
+    \begin{align*}
+    10^3 &= \text{one thousand} \\
+    10^6 &= \text{one million} \\
+    10^9 &= \text{one billion} \\
+    10^{12} &= \text{one trillion} \\
+    10^{15} &= \text{one quadrillion} \\
+    10^{18} &= \text{one quintillion}
+    \end{align*}
+    We can store these '-illion' names into a list, and iterate over powers of 1000.<br/><br/>
+
+    <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">towords</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">ones</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="s2">&quot;one&quot;</span><span class="p">,</span><span class="s2">&quot;two&quot;</span><span class="p">,</span><span class="s2">&quot;three&quot;</span><span class="p">,</span><span class="s2">&quot;four&quot;</span><span class="p">,</span><span class="s2">&quot;five&quot;</span><span class="p">,</span><span class="s2">&quot;six&quot;</span><span class="p">,</span><span class="s2">&quot;seven&quot;</span><span class="p">,</span><span class="s2">&quot;eight&quot;</span><span class="p">,</span><span class="s2">&quot;nine&quot;</span><span class="p">,</span><span class="s2">&quot;ten&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;eleven&quot;</span><span class="p">,</span><span class="s2">&quot;twelve&quot;</span><span class="p">,</span><span class="s2">&quot;thirteen&quot;</span><span class="p">,</span><span class="s2">&quot;fourteen&quot;</span><span class="p">,</span><span class="s2">&quot;fifteen&quot;</span><span class="p">,</span><span class="s2">&quot;sixteen&quot;</span><span class="p">,</span><span class="s2">&quot;seventeen&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;eighteen&quot;</span><span class="p">,</span><span class="s2">&quot;nineteen&quot;</span><span class="p">]</span>
+    <span class="n">tens</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="s2">&quot;twenty&quot;</span><span class="p">,</span><span class="s2">&quot;thirty&quot;</span><span class="p">,</span><span class="s2">&quot;forty&quot;</span><span class="p">,</span><span class="s2">&quot;fifty&quot;</span><span class="p">,</span><span class="s2">&quot;sixty&quot;</span><span class="p">,</span><span class="s2">&quot;seventy&quot;</span><span class="p">,</span><span class="s2">&quot;eighty&quot;</span><span class="p">,</span><span class="s2">&quot;ninety&quot;</span><span class="p">]</span>
+    <span class="n">illions</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;thousand&quot;</span><span class="p">,</span><span class="s2">&quot;million&quot;</span><span class="p">,</span><span class="s2">&quot;billion&quot;</span><span class="p">,</span><span class="s2">&quot;trillion&quot;</span><span class="p">,</span><span class="s2">&quot;quadrillion&quot;</span><span class="p">,</span><span class="s2">&quot;quintillion&quot;</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">ones</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">tens</span><span class="p">[</span><span class="n">n</span> <span class="o">//</span> <span class="mi">10</span><span class="p">]</span> <span class="o">+</span> <span class="n">ones</span><span class="p">[</span><span class="n">n</span> <span class="o">%</span> <span class="mi">10</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">1000</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">100</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">ones</span><span class="p">[</span><span class="n">n</span> <span class="o">//</span> <span class="mi">100</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;hundred&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">ones</span><span class="p">[</span><span class="n">n</span> <span class="o">//</span> <span class="mi">100</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;hundredand&quot;</span> <span class="o">+</span> <span class="n">towords</span><span class="p">(</span><span class="n">n</span> <span class="o">%</span> <span class="mi">100</span><span class="p">)</span>
+
+    <span class="n">ans</span> <span class="o">=</span> <span class="n">towords</span><span class="p">(</span><span class="n">n</span> <span class="o">%</span> <span class="mi">1000</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">1000</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">:</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="s2">&quot;and&quot;</span> <span class="o">+</span> <span class="n">ans</span>
+
+    <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">pow10</span> <span class="o">=</span> <span class="mi">1000</span>
+    <span class="k">while</span> <span class="n">pow10</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">:</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">//</span> <span class="n">pow10</span><span class="p">)</span> <span class="o">%</span> <span class="mi">1000</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">ans</span> <span class="o">=</span> <span class="n">towords</span><span class="p">((</span><span class="n">n</span> <span class="o">//</span> <span class="n">pow10</span><span class="p">)</span> <span class="o">%</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">+</span> <span class="n">illions</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">+</span> <span class="n">ans</span>
+        <span class="n">k</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">pow10</span> <span class="o">*=</span> <span class="mi">1000</span>
+
+    <span class="k">return</span> <span class="n">ans</span>
+</pre></div><br/>
+
+        For this next part, we want to figure out an $O(\log n)$ algorithm. Let's consider dissecting the name of an integer:
+
+        \begin{align*}
+        123,456,789,123,456,078 =\, & \text{one hundred and twenty-three quadrillion},\\
+        &\text{four hundred and fifty-six trillion},\\
+        &\text{seven hundred and eighty-nine billion},\\
+        &\text{one hundred and twenty-three million},\\
+        &\text{four hundred and fifty-six thousand},\\
+        &\text{and}\\
+        &\text{seventy-eight}
+        \end{align*}
+
+        An integer's name consists of multiple parts, which we can obtain by dissecting it into chunks of three:
+        <ol>
+        <li>The lowest chunk is always $\lt1000$. Furthermore, it repeats every 1000 terms.</li>
+        <li>The lone "and", which only appears whenever $n\ge 1000$ and $0\lt n\bmod 1000\lt 100$.</li>
+        <li>The rest of the chunks consist of a small ($\lt1000$) part, and the name for "$k$-illion". It only changes every $10^{3k+3}$ terms, and repeats every $10^{3k+6}$ terms.</li>
+        </ol>
+        Since these parts are independent of each other, we can sum them separately.<br/><br/>
+
+        <h3>Generating functions</h3>
+
+        My favorite way of counting stuff is using <a href="https://math.libretexts.org/Bookshelves/Combinatorics_and_Discrete_Mathematics/Combinatorics_(Morris)/02%3A_Enumeration/07%3A_Generating_Functions/7.01%3A_What_is_a_Generating_Function"><b>generating functions</b></a>. Essentially, a generating function is just a compact way of encoding a sequence of numbers. It also allows you to manipulate these sequences in an easier way.<br/><br/>
+
+        For example, consider any sequence $a_0,a_1,a_2,a_3,\ldots$. Then its generating function is given by
+        $$f(x)=a_0+a_1x+a_2x^2+a_3x^3+\cdots$$
+        Now look what happens if we multiply this with the infinite geometric series,
+        $$\frac1{1-x}=1+x+x^2+x^3+\cdots$$
+        If we try to expand out $(a_0+a_1x+a_2x^2+\cdots)(1+x+x^2+\cdots)$, what we get is
+        $$\frac{f(x)}{1-x}=a_0+(a_0+a_1)x+(a_0+a_1+a_2)x^2+(a_0+a_1+a_2+a_3)x^3+\cdots$$
+        Notice how the $n$th term is $a_0+a_1+\cdots+a_n$, which means $\frac{f(x)}{1-x}$ is the generating function for the <i>partial sums</i> of the sequence $a_0,a_1,a_2,\ldots$! This is exactly the trick we need for this problem because we want to add up all the letter counts from 1 to $n$.<br/><br/>
+
+        Let $A(x)$ be the generating function for "number of letters used when writing $n$". The first few terms of $A(x)$ is:
+        $$A(x)=3x+3x^2+5x^3+4x^4+4x^5+3x^6+5x^7+5x^8+4x^9+3x^{10}+\cdots$$
+        Then, to get the generating function for "number of letters used when writing 1 to $n$", we simply divide it by $(1-x)$:
+        $$\frac{A(x)}{1-x}=3x+6x^2+11x^3+15x^4+19x^5+22x^6+27x^7+32x^8+36x^9+39x^{10}+\cdots$$
+        Getting the answer to this problem becomes a matter of efficiently calculating the coefficient of $x^n$ in $\frac{A(x)}{1-x}$.<br/><br/>
+
+        Now, remember that we can split $A(x)$ into multiple parts.<br/><br/>
+
+        Since the lowest chunk repeats every 1000 terms, its generating function is given by
+        \begin{align*}
+        &(3x+3x^2+5x^3+\cdots+25x^{998}+24x^{999})(1+x^{1000}+x^{2000}+\cdots)\\
+        &=\frac{3x+3x^2+5x^3+\cdots+25x^{998}+24x^{999}}{1-x^{1000}}
+        \end{align*}
+        The numerator's coefficients is just the letter counts for 1, 2, 3, ..., 999, which we can easily compute.
+
+        The lone "and" also repeats every 1000 terms, but only starts appearing at $n=1001$. Its generating function is given by
+        $$3(x+x^2+x^3+\cdots+x^{99})(x^{1000}+x^{2000}+x^{3000}+\cdots)=\frac{3x^{1001}(1-x^{99})}{(1-x)(1-x^{1000})}$$
+        Finally, for the rest of the chunks, let's suppose we're looking at the $k$-illion names. Let $b_k$ be the number of letters used in "$k$-illion". Its generating function is given by
+        \begin{align*}
+        &\left((3x^{10^{3k+3}}+3x^{2\cdot10^{3k+3}}+5x^{3\cdot10^{3k+3}}+\cdots+25x^{998\cdot10^{3k+3}}+24x^{999\cdot10^{3k+3}})\right.\\
+        &\left.+b_k(x^{10^{3k+3}}+x^{2\cdot10^{3k+3}}+x^{3\cdot10^{3k+3}}+\cdots+x^{999\cdot10^{3k+3}})\right)\\
+        &\cdot(1+x+x^2+\cdots+x^{10^{3k+3}-1})(1+x^{10^{3k+6}}+x^{2\cdot10^{3k+6}}+\cdots)\\
+        &=\frac{\left((3+b_k)x^{10^{3k+3}}+(3+b_k)x^{2\cdot10^{3k+3}}+\cdots+(24+b_k)x^{999\cdot10^{3k+3}}\right)(1-x^{10^{3k+3}})}{(1-x)(1-x^{10^{3k+6}})}
+        \end{align*}
+        The numerator's coefficients are also just the letter counts for 1, 2, 3, ..., 999, each with an added $b_k$ for "$k$-illion"<br/><br/>
+
+        Once we combine all of these, we can get a closed-form for the generating function $A(x)$:
+        \begin{align*}
+        A(x) =& \, \frac{3x+3x^2+5x^3+\cdots+25x^{998}+24x^{999}}{1-x^{1000}}+\frac{3x^{1001}(1-x^{99})}{(1-x)(1-x^{1000})}\\
+        &+\sum_{k=0}^\infty\frac{\left((3+b_k)x^{10^{3k+3}}+(3+b_k)x^{2\cdot10^{3k+3}}+\cdots+(24+b_k)x^{999\cdot10^{3k+3}}\right)(1-x^{10^{3k+3}})}{(1-x)(1-x^{10^{3k+6}})}
+        \end{align*}
+        This might look pretty scary to look at, but in reality those denominators are nice enough to make the coefficients easy to compute. The important thing to note is that $\frac{A(x)}{1-x}$ consists entirely of terms of the form
+        $$\frac{x^a}{(1-x)^2(1-x^b)}$$
+        So as long as we can quickly extract the coefficient of $x^n$ from this, that's enough to compute any arbitrary term of $\frac{A(x)}{1-x}$.<br/><br/>
+
+        Notice that, for example when $b=3$,
+        \begin{align*}
+        \tfrac x{(1-x)^2(1-x^3)} &=0 +1x +2x^2 +3x^3 +4x^4 +5x^5 +6x^6 +7x^7 +8x^8 +9x^9 +\cdots\\
+        & \phantom{=0 +1x +2x^2.}+0\phantom{x^2} +1x\phantom{^2} +2x^2 +3x^3 +4x^4 +5x^5 +6x^6 +\cdots\\
+        & \phantom{=0 +1x +2x^2 +3x^3 +4x^4 +5x^5.}+0\phantom{x^2} +1x\phantom{^2} +2x^2 +3x^3 +\cdots\\
+        & \phantom{=0 +1x +2x^2 +3x^3 +4x^4 +5x^5 +6x^6 +7x^7 +8x^8.}+0\phantom{x^2} +\cdots
+        \end{align*}
+        This clearly shows the coefficient of $x^n$ from $\frac{x}{(1-x)^2(1-x^b)}$ can be computed as the sum
+        $$n+(n-b)+(n-2b)+(n-3b)+\cdots+\left(n-\left\lfloor\frac nb\right\rfloor b\right)=\frac{(\lfloor\frac nb\rfloor+1)(2n-\lfloor\frac nb\rfloor b)}2$$
+        If we denote $f(n,b)$ as this value, then the coefficient of $x^n$ from $\frac{x^a}{(1-x)^2(1-x^b)}$ is $f(n-a+1,b)$. Using this, we get a closed form for the coefficient of $x^n$ in $\frac{A(x)}{1-x}$.<br/><br/>
+
+        Let $a_n$ be the number of letters used when writing $n$, and $b_k$ be the number of letters in "$k$-illion" (where 0-illion = "thousand"). Then the answer is
+        \begin{align*}
+        &\sum_{i=1}^{999}\left[a_i\cdot\left(\left\lfloor\frac{n-i}{1000}\right\rfloor+1\right)\right]+3(f(n-1000,1000)-f(n-1099,1000))\\
+        &+\sum_{k=0}^\infty\sum_{i=1}^{999}\left[(a_i+b_k)\cdot\left(f(n-i\cdot10^{3k+3}+1,10^{3k+6})-f(n-(i+1)\cdot10^{3k+3}+1,10^{3k+6})\right)\right]
+        \end{align*}
+
+        Now <i>that</i>'s a closed form! Putting this all into code, we get:<br/><br/>
+
+        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">answer</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">ones</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="s2">&quot;one&quot;</span><span class="p">,</span><span class="s2">&quot;two&quot;</span><span class="p">,</span><span class="s2">&quot;three&quot;</span><span class="p">,</span><span class="s2">&quot;four&quot;</span><span class="p">,</span><span class="s2">&quot;five&quot;</span><span class="p">,</span><span class="s2">&quot;six&quot;</span><span class="p">,</span><span class="s2">&quot;seven&quot;</span><span class="p">,</span><span class="s2">&quot;eight&quot;</span><span class="p">,</span><span class="s2">&quot;nine&quot;</span><span class="p">,</span><span class="s2">&quot;ten&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;eleven&quot;</span><span class="p">,</span><span class="s2">&quot;twelve&quot;</span><span class="p">,</span><span class="s2">&quot;thirteen&quot;</span><span class="p">,</span><span class="s2">&quot;fourteen&quot;</span><span class="p">,</span><span class="s2">&quot;fifteen&quot;</span><span class="p">,</span><span class="s2">&quot;sixteen&quot;</span><span class="p">,</span><span class="s2">&quot;seventeen&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;eighteen&quot;</span><span class="p">,</span><span class="s2">&quot;nineteen&quot;</span><span class="p">]</span>
+    <span class="n">tens</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="s2">&quot;twenty&quot;</span><span class="p">,</span><span class="s2">&quot;thirty&quot;</span><span class="p">,</span><span class="s2">&quot;forty&quot;</span><span class="p">,</span><span class="s2">&quot;fifty&quot;</span><span class="p">,</span><span class="s2">&quot;sixty&quot;</span><span class="p">,</span><span class="s2">&quot;seventy&quot;</span><span class="p">,</span><span class="s2">&quot;eighty&quot;</span><span class="p">,</span><span class="s2">&quot;ninety&quot;</span><span class="p">]</span>
+    <span class="n">illions</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;thousand&quot;</span><span class="p">,</span><span class="s2">&quot;million&quot;</span><span class="p">,</span><span class="s2">&quot;billion&quot;</span><span class="p">,</span><span class="s2">&quot;trillion&quot;</span><span class="p">,</span><span class="s2">&quot;quadrillion&quot;</span><span class="p">,</span><span class="s2">&quot;quintillion&quot;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">towords</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">ones</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">tens</span><span class="p">[</span><span class="n">n</span> <span class="o">//</span> <span class="mi">10</span><span class="p">]</span> <span class="o">+</span> <span class="n">ones</span><span class="p">[</span><span class="n">n</span> <span class="o">%</span> <span class="mi">10</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">1000</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">100</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">ones</span><span class="p">[</span><span class="n">n</span> <span class="o">//</span> <span class="mi">100</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;hundred&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">ones</span><span class="p">[</span><span class="n">n</span> <span class="o">//</span> <span class="mi">100</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;hundredand&quot;</span> <span class="o">+</span> <span class="n">towords</span><span class="p">(</span><span class="n">n</span> <span class="o">%</span> <span class="mi">100</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">b</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span> <span class="k">return</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">n</span><span class="o">//</span><span class="n">b</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">n</span> <span class="o">-</span> <span class="n">n</span><span class="o">//</span><span class="n">b</span> <span class="o">*</span> <span class="n">b</span><span class="p">)</span><span class="o">//</span><span class="mi">2</span>
+
+    <span class="n">lessthan1000</span> <span class="o">=</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">towords</span><span class="p">(</span><span class="n">n</span><span class="p">))</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">)]</span>     <span class="c1"># number of letters when writing n, for n &lt;= 1000</span>
+    <span class="n">illion</span> <span class="o">=</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">illions</span><span class="p">]</span>                      <span class="c1"># k-illion</span>
+
+    <span class="n">ans</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1000</span><span class="p">):</span>
+        <span class="n">ans</span> <span class="o">+=</span> <span class="n">lessthan1000</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="p">((</span><span class="n">n</span><span class="o">-</span><span class="n">i</span><span class="p">)</span> <span class="o">//</span> <span class="mi">1000</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">ans</span> <span class="o">+=</span> <span class="mi">3</span><span class="o">*</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1000</span><span class="p">,</span><span class="mi">1000</span><span class="p">)</span> <span class="o">-</span> <span class="n">f</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1099</span><span class="p">,</span><span class="mi">1000</span><span class="p">))</span>
+
+    <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">pow10</span> <span class="o">=</span> <span class="mi">1000</span>
+    <span class="k">while</span> <span class="n">pow10</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1000</span><span class="p">):</span>
+            <span class="n">ans</span> <span class="o">+=</span> <span class="p">(</span><span class="n">lessthan1000</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">illion</span><span class="p">[</span><span class="n">k</span><span class="p">])</span> <span class="o">*</span> <span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="n">i</span><span class="o">*</span><span class="n">pow10</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1000</span><span class="o">*</span><span class="n">pow10</span><span class="p">)</span> <span class="o">-</span> <span class="n">f</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">pow10</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1000</span><span class="o">*</span><span class="n">pow10</span><span class="p">))</span>
+        <span class="n">k</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">pow10</span> <span class="o">*=</span> <span class="mi">1000</span>
+
+    <span class="k">return</span> <span class="n">ans</span>
+</pre></div><br/>
+
+        If we run this code, we see that it truly runs in $O(\log n)$ time! Here are the values of <code>answer(10**k)</code> for $k=1,\ldots,20$. It spits out these answers pretty much instantly.<br/><br/>
+
+    <div class="highlight"><pre>answer(10**1) = 39
+answer(10**2) = 864
+answer(10**3) = 21124
+answer(10**4) = 321814
+answer(10**5) = 3786721
+answer(10**6) = 50514713
+answer(10**7) = 604149713  &lt;-- our previous record
+answer(10**8) = 6598499720
+answer(10**9) = 78620999713
+answer(10**10) = 885209999713
+answer(10**11) = 9409099999720
+answer(10**12) = 106726999999714
+answer(10**13) = 1175269999999714
+answer(10**14) = 12318699999999721
+answer(10**15) = 135831999999999717
+answer(10**16) = 1493319999999999717
+answer(10**17) = 15526199999999999724
+answer(10**18) = 167933999999999999717
+answer(10**19) = 1814339999999999999717
+answer(10**20) = 18736399999999999999724</pre></div><br/>
+
+Notice how this matches our answers for $n\le10^7$. Yay! :nanayay:<br/><br/>
+
+Also, you might observe that for bigger $k$, <code>answer(10**k)</code> seems to have large blocks of 9s. Later we'll explain why this happens. But for now...<br/><br/>
+
+        <h2>Beyond 10<sup>18</sup></h2>
+
+        Let's go even further! :chokodestroy: :chokodestroy: :chokodestroy:<br/><br/>
+
+        <div class="problem"><b>Project Euler #17 Super Hyper Buffed.</b><br/>
+        If all the numbers from $1$ to $10^{1000}$ inclusive were written out in words, how many letters would be used?
+        </div><br/>
+
+        The only problem with our previous code is that, it fails to print out the answer for <code>answer(10**21)</code> because we haven't defined what $10^{21}$ is called.<br/><br/>
+
+        One option would be to just hardcode the names for $10^{21},10^{24},10^{27},\ldots$, but doing that until $10^{1000}$ means we'd have to hardcode 333 different -illion names! Plus, do those names even exist?<br/><br/>
+
+        Doing a quick Google search for "names of large numbers" gives the following <a href="https://en.wikipedia.org/wiki/Names_of_large_numbers">Wikipedia page</a>. It turns out there's standard dictionary names for all the powers of 10 until $10^{63}$.<br/><br/>
+
+        <center><table style="display: inline-block">
+        <th><td><b>Name</b></td><td><b>Value</b></th>
+        <tr><td><b>1</b></td><td>Million</td><td>10<sup>6</sup></td></tr>
+        <tr><td><b>2</b></td><td>Billion</td><td>10<sup>9</sup></td></tr>
+        <tr><td><b>3</b></td><td>Trillion</td><td>10<sup>12</sup></td></tr>
+        <tr><td><b>4</b></td><td>Quadrillion</td><td>10<sup>15</sup></td></tr>
+        <tr><td><b>5</b></td><td>Quintillion</td><td>10<sup>18</sup></td></tr>
+        <tr><td><b>6</b></td><td>Sextillion</td><td>10<sup>21</sup></td></tr>
+        <tr><td><b>7</b></td><td>Septillion</td><td>10<sup>24</sup></td></tr>
+        <tr><td><b>8</b></td><td>Octillion</td><td>10<sup>27</sup></td></tr>
+        <tr><td><b>9</b></td><td>Nonillion</td><td>10<sup>30</sup></td></tr>
+        <tr><td><b>10</b></td><td>Decillion</td><td>10<sup>33</sup></td></tr></table> <table style="display: inline-block">
+        <th><td><b>Name</b></td><td><b>Value</b></th>
+        <tr><td><b>11</b></td><td>Undecillion</td><td>10<sup>36</sup></td></tr>
+        <tr><td><b>12</b></td><td>Duodecillion</td><td>10<sup>39</sup></td></tr>
+        <tr><td><b>13</b></td><td>Tredecillion</td><td>10<sup>42</sup></td></tr>
+        <tr><td><b>14</b></td><td>Quattuordecillion</td><td>10<sup>45</sup></td></tr>
+        <tr><td><b>15</b></td><td>Quindecillion</td><td>10<sup>48</sup></td></tr>
+        <tr><td><b>16</b></td><td>Sexdecillion</td><td>10<sup>51</sup></td></tr>
+        <tr><td><b>17</b></td><td>Septendecillion</td><td>10<sup>54</sup></td></tr>
+        <tr><td><b>18</b></td><td>Octodecillion</td><td>10<sup>57</sup></td></tr>
+        <tr><td><b>19</b></td><td>Novemdecillion</td><td>10<sup>60</sup></td></tr>
+        <tr><td><b>20</b></td><td>Vigintillion</td><td>10<sup>63</sup></td></tr>
+        </table></center><br/>
+
+        Unfortunately, this isn't enough if we want to go up until $10^{1000}$. There's simply no standard names for numbers beyond $10^{63}$.<br/><br/>
+
+        <h3>Conway–Guy system</h3>
+
+        Once you scroll further down the Wikipedia page, you'll notice a big table with names for even larger numbers. In their book called <a href="https://en.wikipedia.org/wiki/The_Book_of_Numbers_(math_book)"><i>The Book of Numbers</i></a>, two mathematicians <a href="https://en.wikipedia.org/wiki/John_Horton_Conway">John Conway</a> and <a href="https://en.wikipedia.org/wiki/Richard_K._Guy">Richard Guy</a> invented a system that could name large numbers beyond 10<sup>63</sup> using Latin roots.<br/><br/>
+
+        In their system, the names for large numbers are constructed by taking the number $n$ from $10^{3n+3}$, then concatenating Latin roots of its units, tens, and hundreds digit with '-illion' at the end. These Latin prefixes are shown in the table below.<br/><br/>
+
+        <center><table>
+        <th><td><b>Units</b></td><td><b>Tens</b></td><td><b>Hundreds</b></td></th>
+        <tr><td><b>1</b></td><td>Un</td><td><sup>N</sup> Deci</td><td><sup>NX</sup> Centi</td></tr>
+        <tr><td><b>2</b></td><td>Duo</td><td><sup>MS</sup> Viginti</td><td><sup>N</sup> Ducenti</td></tr>
+        <tr><td><b>3</b></td><td>Tre*</td><td><sup>NS</sup> Triginta</td><td><sup>NS</sup> Trecenti</td></tr>
+        <tr><td><b>4</b></td><td>Quattuor</td><td><sup>NS</sup> Quadraginta</td><td><sup>NS</sup> Quadringenti</td></tr>
+        <tr><td><b>5</b></td><td>Quin</td><td><sup>NS</sup> Quinquaginta</td><td><sup>NS</sup> Quingenti</td></tr>
+        <tr><td><b>6</b></td><td>Se*</td><td><sup>N</sup> Sexaginta</td><td><sup>N</sup> Sescenti</td></tr>
+        <tr><td><b>7</b></td><td>Septe*</td><td><sup>N</sup> Septuaginta</td><td><sup>N</sup> Septingenti</td></tr>
+        <tr><td><b>8</b></td><td>Octo</td><td><sup>MX</sup> Octoginta</td><td><sup>MX</sup> Octingenti</td></tr>
+        <tr><td><b>9</b></td><td>Nove*</td><td>Nonaginta</td><td>Nongenti</td></tr>
+        </table></center><br/>
+
+        *Note: when it is immediately before a component marked with <sup>S</sup> or <sup>X</sup>, "tre" increases to "tres" and "se" to "ses" or "sex" as appropriate. Similarly "septe" and "nove" increase to "septem" and "novem" or "septen" and "noven" immediately before components marked with <sup>M</sup> or <sup>N</sup>.<br/><br/>
+
+        For example, in this system the number $10^{3\cdot{\color{red}1}{\color{green}2}{\color{blue}3}+3}$ would be called "one <span style="color:blue">tres</span><span style="color:#008000">viginti</span><span style="color:red">centi</span>llion".<br/>
+        As another example, the number $10^{1000}=10^{(3\cdot{\color{red}3}{\color{green}3}{\color{blue}2}+3)+1}$ would be called "ten <span style="color:blue">duo</span><span style="color:#008000">triginta</span><span style="color:red">trecenti</span>llion".<br/><br/>
+
+        Unfortunately, this system is not perfect. There are some names where this system doesn't agree with standard dictionary numbers. For example, the numbers $10^{51}$ and $10^{60}$ are commonly called 'sexdecillion' and 'novemdecillion', but this system calls them 'sedecillion' and 'novendecillion'.<br/><br/>
+
+        There's also some discrepancies between this system and the num2words Python module:
+        <ul>
+        <li>This system writes "septendecillion" for 17-illion, but num2words writes it as "septdecillion".</li>
+        <li>This system writes "tresvigintillion" for 23-illion, but num2words writes it as "trevigintillion".</li>
+        </ul>
+        When it comes to large numbers, I feel like the most trustworthy source is the Googology wiki. It looks like Googology's system for <a href="https://googology.fandom.com/wiki/-illion">naming -illion numbers</a> is the same as the Conway–Guy system, but they use standard dictionary names for the smaller ones. They also do something else entirely for numbers bigger than $10^{3003}$...<br/><br/>
+
+        Because of this, I'll have to take some liberties. For this blog post, I'll be using the <b>standard dictionary names for numbers under a vigintillion</b> ($10^{63}$), and stick with <b>Wikipedia's naming system for numbers larger than a vigintillion</b>.<br/><br/>
+
+        <div class="highlight"><pre><span></span><span class="n">illions</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;thousand&quot;</span><span class="p">,</span><span class="s2">&quot;million&quot;</span><span class="p">,</span><span class="s2">&quot;billion&quot;</span><span class="p">,</span><span class="s2">&quot;trillion&quot;</span><span class="p">,</span><span class="s2">&quot;quadrillion&quot;</span><span class="p">,</span><span class="s2">&quot;quintillion&quot;</span><span class="p">,</span><span class="s2">&quot;sextillion&quot;</span><span class="p">,</span><span class="s2">&quot;septillion&quot;</span><span class="p">,</span><span class="s2">&quot;octillion&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;nonillion&quot;</span><span class="p">,</span><span class="s2">&quot;decillion&quot;</span><span class="p">,</span><span class="s2">&quot;undecillion&quot;</span><span class="p">,</span><span class="s2">&quot;duodecillion&quot;</span><span class="p">,</span><span class="s2">&quot;tredecillion&quot;</span><span class="p">,</span><span class="s2">&quot;quattuordecillion&quot;</span><span class="p">,</span><span class="s2">&quot;quindecillion&quot;</span><span class="p">,</span><span class="s2">&quot;sexdecillion&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;septendecillion&quot;</span><span class="p">,</span><span class="s2">&quot;octodecillion&quot;</span><span class="p">,</span><span class="s2">&quot;novemdecillion&quot;</span><span class="p">,</span><span class="s2">&quot;vigintillion&quot;</span><span class="p">]</span>
+
+<span class="n">prefixunits</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="s2">&quot;un&quot;</span><span class="p">,</span><span class="s2">&quot;duo&quot;</span><span class="p">,</span><span class="s2">&quot;tre&quot;</span><span class="p">,</span><span class="s2">&quot;quattuor&quot;</span><span class="p">,</span><span class="s2">&quot;quin&quot;</span><span class="p">,</span><span class="s2">&quot;se&quot;</span><span class="p">,</span><span class="s2">&quot;septe&quot;</span><span class="p">,</span><span class="s2">&quot;octo&quot;</span><span class="p">,</span><span class="s2">&quot;nove&quot;</span><span class="p">]</span>
+<span class="n">prefixtens</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="s2">&quot;deci&quot;</span><span class="p">,</span><span class="s2">&quot;viginti&quot;</span><span class="p">,</span><span class="s2">&quot;triginta&quot;</span><span class="p">,</span><span class="s2">&quot;quadraginta&quot;</span><span class="p">,</span><span class="s2">&quot;quinquaginta&quot;</span><span class="p">,</span><span class="s2">&quot;sexaginta&quot;</span><span class="p">,</span><span class="s2">&quot;septuaginta&quot;</span><span class="p">,</span><span class="s2">&quot;octoginta&quot;</span><span class="p">,</span><span class="s2">&quot;nonaginta&quot;</span><span class="p">]</span>
+<span class="n">prefixhundreds</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="s2">&quot;centi&quot;</span><span class="p">,</span><span class="s2">&quot;ducenti&quot;</span><span class="p">,</span><span class="s2">&quot;trecenti&quot;</span><span class="p">,</span><span class="s2">&quot;quadringenti&quot;</span><span class="p">,</span><span class="s2">&quot;quingenti&quot;</span><span class="p">,</span><span class="s2">&quot;sescenti&quot;</span><span class="p">,</span><span class="s2">&quot;septingenti&quot;</span><span class="p">,</span><span class="s2">&quot;octingenti&quot;</span><span class="p">,</span><span class="s2">&quot;nongenti&quot;</span><span class="p">]</span>
+<span class="n">prefixtenscond</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="s2">&quot;N&quot;</span><span class="p">,</span><span class="s2">&quot;MS&quot;</span><span class="p">,</span><span class="s2">&quot;NS&quot;</span><span class="p">,</span><span class="s2">&quot;NS&quot;</span><span class="p">,</span><span class="s2">&quot;NS&quot;</span><span class="p">,</span><span class="s2">&quot;N&quot;</span><span class="p">,</span><span class="s2">&quot;N&quot;</span><span class="p">,</span><span class="s2">&quot;MX&quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">]</span>
+<span class="n">prefixhundredscond</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="s2">&quot;NX&quot;</span><span class="p">,</span><span class="s2">&quot;N&quot;</span><span class="p">,</span><span class="s2">&quot;NS&quot;</span><span class="p">,</span><span class="s2">&quot;NS&quot;</span><span class="p">,</span><span class="s2">&quot;NS&quot;</span><span class="p">,</span><span class="s2">&quot;N&quot;</span><span class="p">,</span><span class="s2">&quot;N&quot;</span><span class="p">,</span><span class="s2">&quot;MX&quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">illion</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="mi">1000</span>
+
+    <span class="k">if</span> <span class="n">k</span> <span class="o">&lt;=</span> <span class="mi">20</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">illions</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+
+    <span class="n">ans</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">prefixcond</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">k</span> <span class="o">&gt;=</span> <span class="mi">100</span><span class="p">:</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="n">prefixhundreds</span><span class="p">[</span><span class="n">k</span> <span class="o">//</span> <span class="mi">100</span><span class="p">]</span> <span class="o">+</span> <span class="n">ans</span>
+        <span class="n">prefixcond</span> <span class="o">=</span> <span class="n">prefixhundredscond</span><span class="p">[</span><span class="n">k</span> <span class="o">//</span> <span class="mi">100</span><span class="p">]</span>
+        <span class="n">k</span> <span class="o">%=</span> <span class="mi">100</span>
+
+    <span class="k">if</span> <span class="n">k</span> <span class="o">&gt;=</span> <span class="mi">10</span><span class="p">:</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="n">prefixtens</span><span class="p">[</span><span class="n">k</span> <span class="o">//</span> <span class="mi">10</span><span class="p">]</span> <span class="o">+</span> <span class="n">ans</span>
+        <span class="n">prefixcond</span> <span class="o">=</span> <span class="n">prefixtenscond</span><span class="p">[</span><span class="n">k</span> <span class="o">//</span> <span class="mi">10</span><span class="p">]</span>
+        <span class="n">k</span> <span class="o">%=</span> <span class="mi">10</span>
+
+    <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span> <span class="n">prefix</span> <span class="o">=</span> <span class="s2">&quot;tre&quot;</span> <span class="o">+</span> <span class="p">(</span><span class="s2">&quot;s&quot;</span> <span class="k">if</span> <span class="s2">&quot;S&quot;</span> <span class="ow">in</span> <span class="n">prefixcond</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="s2">&quot;s&quot;</span> <span class="k">if</span> <span class="s2">&quot;X&quot;</span> <span class="ow">in</span> <span class="n">prefixcond</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">6</span><span class="p">:</span> <span class="n">prefix</span> <span class="o">=</span> <span class="s2">&quot;se&quot;</span> <span class="o">+</span> <span class="p">(</span><span class="s2">&quot;s&quot;</span> <span class="k">if</span> <span class="s2">&quot;S&quot;</span> <span class="ow">in</span> <span class="n">prefixcond</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="s2">&quot;x&quot;</span> <span class="k">if</span> <span class="s2">&quot;X&quot;</span> <span class="ow">in</span> <span class="n">prefixcond</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">7</span><span class="p">:</span> <span class="n">prefix</span> <span class="o">=</span> <span class="s2">&quot;septe&quot;</span> <span class="o">+</span> <span class="p">(</span><span class="s2">&quot;m&quot;</span> <span class="k">if</span> <span class="s2">&quot;M&quot;</span> <span class="ow">in</span> <span class="n">prefixcond</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="s2">&quot;n&quot;</span> <span class="k">if</span> <span class="s2">&quot;N&quot;</span> <span class="ow">in</span> <span class="n">prefixcond</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">9</span><span class="p">:</span> <span class="n">prefix</span> <span class="o">=</span> <span class="s2">&quot;nove&quot;</span> <span class="o">+</span> <span class="p">(</span><span class="s2">&quot;m&quot;</span> <span class="k">if</span> <span class="s2">&quot;M&quot;</span> <span class="ow">in</span> <span class="n">prefixcond</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="s2">&quot;n&quot;</span> <span class="k">if</span> <span class="s2">&quot;N&quot;</span> <span class="ow">in</span> <span class="n">prefixcond</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span> <span class="n">prefix</span> <span class="o">=</span> <span class="n">prefixunits</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+
+    <span class="n">ans</span> <span class="o">=</span> <span class="n">prefix</span> <span class="o">+</span> <span class="n">ans</span>
+    <span class="k">return</span> <span class="n">ans</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;illion&quot;</span>
+</pre></div><br/>
+
+    We see that it works as intended:<br/><br/>
+
+    <div class="highlight"><pre>>>> illion(1)
+'million'
+>>> illion(16)
+'sexdecillion'
+>>> illion(19)
+'novemdecillion'
+>>> illion(23)
+'tresvigintillion'
+>>> illion(69)
+'novensexagintillion'
+>>> illion(123)
+'tresviginticentillion'
+>>> illion(420)
+'vigintiquadringentillion'
+>>> illion(777)
+'septenseptuagintaseptingentillion'
+</pre></div><br/>
+
+        This system lets us name any number we want up to $10^{3003}$, which is enough for now since we only want to compute the answer for $n=10^{1000}$. We can either hardcode all the -illion numbers below $10^{1000}$, or generate them on the fly.<br/><br/>
+
+        We can now obtain <code>answer(10**k)</code> for $k=1,\ldots,1000$. The answers are getting extremely long, with the long blocks of 9s becoming pretty blatant:<br/><br/>
+
+    <div class="highlight"><pre>answer(10**10) = 885209999713
+answer(10**18) = 167933999999999999717
+answer(10**20) = 18736399999999999999724    &lt;-- our previous record
+answer(10**30) = 2923459999999999...9999999999715   (33 digits)
+answer(10**40) = 3990559999999999...9999999999718   (43 digits)
+answer(10**50) = 5103639999999999...9999999999726   (53 digits)
+answer(10**60) = 6263529999999999...9999999999720   (63 digits)
+answer(10**70) = 7467519999999999...9999999999721   (73 digits)
+answer(10**80) = 8683199999999999...9999999999729   (83 digits)
+answer(10**90) = 9933269999999999...9999999999723   (93 digits)
+answer(10**100) = 11196209999999999...9999999999722   (104 digits)
+answer(10**200) = 24590749999999999...9999999999731   (204 digits)
+answer(10**300) = 37739329999999999...9999999999724   (304 digits)
+answer(10**400) = 50735809999999999...9999999999727   (404 digits)
+answer(10**500) = 65783199999999999...9999999999736   (504 digits)
+answer(10**600) = 80580579999999999...9999999999729   (604 digits)
+answer(10**700) = 94264389999999999...9999999999729   (704 digits)
+answer(10**800) = 109972919999999999...9999999999738   (805 digits)
+answer(10**900) = 125429819999999999...9999999999731   (905 digits)
+answer(10**1000) = 139482269999999999...9999999999730   (1005 digits)
+</pre></div><br/>
+
+        My laptop took around 5 seconds to compute <code>answer(10**1000)</code>, which is probably because of the arithmetic with extremely long integers. We can easily speed this up by not having to store all these long strings of 9s.<br/><br/>
+
+        <h2>Beyond 10<sup>1000</sup></h2>
+
+        Let's go... EVEN FURTHER!!! :chokodestroy: :chokodestroy: :chokodestroy: :chokodestroy: :chokodestroy: :chokodestroy: :chokodestroy: :chokodestroy: :chokodestroy: :chokodestroy:<br/><br/>
+
+        <div class="problem"><b>Project Euler #17 Super Hyper Ultra Buffed.</b><br/>
+        If all the numbers from $1$ to $10^{100\,000\,000}$ inclusive were written out in words, how many letters would be used?
+        </div><br/>
+
+        An $O(\log n)$ algorithm still works, but at this point, the number of digits is simply too large to work with. We essentially need closed-form formula which lets us avoid dealing with numbers in its full form.<br/><br/>
+
+        To keep things simple, from this point on we'll only be concerned with computing the answer for powers of 10, $n=10^m$ where $m\ge3$.<br/><br/>
+
+        Let's revisit the formula we used previously. The answer is
+        \begin{align*}
+        &\sum_{i=1}^{999}\left[a_i\cdot\left(\left\lfloor\frac{n-i}{1000}\right\rfloor+1\right)\right]+3(f(n-1000,1000)-f(n-1099,1000))\\
+        &+\sum_{k=0}^\infty\sum_{i=1}^{999}\left[(a_i+b_k)\cdot\left(f(n-i\cdot10^{3k+3}+1,10^{3k+6})-f(n-(i+1)\cdot10^{3k+3}+1,10^{3k+6})\right)\right]
+        \end{align*}
+        where $a_n$ be the number of letters used when writing $n$, and $b_k$ be the number of letters in "$k$-illion" (with 0-illion = "thousand"), and $f(n,b)$ is defined as
+        $$f(n,b)=\frac{(\lfloor\frac nb\rfloor+1)(2n-\lfloor\frac nb\rfloor b)}2$$
+        First, let's evaluate the first summation. Since $n\ge10^3$, it's easy to see that
+        $$\sum_{i=1}^{999}\left[a_i\cdot\left(\left\lfloor\frac{n-i}{1000}\right\rfloor+1\right)\right]=\sum_{i=1}^{999}\left[a_i\cdot\left(\left\lfloor\frac{10^m-i}{1000}\right\rfloor+1\right)\right]=\sum_{i=1}^{999}a_i\cdot10^{m-3}$$
+        This makes sense, since each of "one", "two", "three", ... appears exactly once every 1000 integers, so they each contribute $10^{m-3}$ times to the sum. We might as well hardcode the sum $\sum_{i=1}^{999}a_i=21113$. <br/><br/>
+
+        The next term in the formula handles the 'and's. we have
+        \begin{align*}
+        f(n-1000,1000) &= \frac{(\lfloor\frac{10^m-1000}{1000}\rfloor+1)(2\cdot(10^m-1000)-\lfloor\frac{10^m-1000}{1000}\rfloor 1000)}2\\
+        &= \frac{10^{m-3}(10^m-1000)}2
+        \end{align*}
+        \begin{align*}
+        f(n-1099,1000) &= \frac{(\lfloor\frac{10^m-1099}{1000}\rfloor+1)(2\cdot(10^m-1099)-\lfloor\frac{10^m-1099}{1000}\rfloor 1000)}2\\
+        &= \frac{(10^{m-3}-1)(10^m-198)}2
+        \end{align*}
+        Therefore,
+        $$3(f(n-1000,1000)-f(n-1099,10000))=3(99\cdot10^{m-3}-99)$$
+        This also makes sense, since "and" appears exactly 99 times every 1000 times, except for the first 1000.<br/><br/>
+
+        Finally, the last sum handles the -illion numbers. The answer to that heavily depends on $m\bmod 3$, because it determines whether the last number is "one", "ten", or "one hundred".<br/><br/>
+
+        One way to do this would be to manually simplify the sum
+        $$\sum_{k=0}^\infty\sum_{i=1}^{999}\left[(a_i+b_k)\cdot\left(f(n-i\cdot10^{3k+3}+1,10^{3k+6})-f(n-(i+1)\cdot10^{3k+3}+1,10^{3k+6})\right)\right]$$
+        after substituting $n=10^m$, but it becomes messy once you factor in $m\bmod 3$. Instead, we can take a combinatorial approach.<br/><br/>
+
+        If $k$ is small enough, i.e. $m\ge3k+6$, then for any $i=1,\ldots,999$, the words "$i$ $k$-illion" always appear exactly $10^{3k+3}$ times every $10^{3k+6}$ terms. In other words, it appears in exactly 1/1000 of all integers from 1 to $10^m$, so the contribution of saying "$i$ $k$-illion" would be $(a_i+b_k)\cdot10^{m-3}$. This gives part of the sum,
+        $$\sum_{k=0}^{\lfloor\frac{m-6}3\rfloor}\sum_{i=1}^{999}(a_i+b_k)\cdot10^{m-3}=\left(21113\left\lfloor\frac{m-3}3\right\rfloor+999\sum_{k=0}^{\lfloor\frac{m-6}3\rfloor}b_k\right)10^{m-3}$$
+        On the other hand, if $k$ is too big, i.e. $m\lt3k+3$, then the word "$k$-illion" never appears.<br/><br/>
+
+        Finally, we consider cases depending on $m\bmod 3$.<br/><br/>
+
+        If $m=3k+3$, the highest number, $10^{3k+3}$, is called "one $k$-illion", which only appears once. This contributes
+        $$a_1+b_k=3+b_k$$
+        If $m=3k+4$, the highest number, $10^{3k+4}$, is called "ten $k$-illion", which only appears once. For each $i=1,\ldots,9$, the words "$i$ $k$-illion" also appears exactly $10^{3k+3}$ times each. This contributes
+        $$\left[\sum_{i=1}^9(a_i+b_k)\cdot10^{3k+3}\right]+(a_{10}+b_k)=(36+9b_k)\cdot10^{3k+3}+3+b_k$$
+        If $m=3k+5$, the highest number, $10^{3k+5}$, is called "one hundred $k$-illion", which only appears once. For each $i=1,\ldots,99$, the words "$i$ $k$-illion" also appears exactly $10^{3k+3}$ times each. This contributes
+        $$\left[\sum_{i=1}^{99}(a_i+b_k)\cdot10^{3k+3}\right]+(a_{100}+b_k)=(854+99b_k)\cdot10^{3k+3}+10+b_k$$
+        Putting everything back together, we have the final formula for the answer:
+        \begin{align*}
+        & 21113\cdot10^{m-3}+3(99\cdot10^{m-3}-99)+\left(21113\left\lfloor\frac{m-3}3\right\rfloor+999\sum_{k=0}^{\lfloor\frac{m-6}3\rfloor}b_k\right)\cdot10^{m-3}\\
+        &+\begin{cases}3+b_k & (m=3k+3)\\
+        (36+9b_k)\cdot10^{3k+3}+3+b_k & (m=3k+4)\\
+        (854+99b_k)\cdot10^{3k+3}+10+b_k & (m=3k+5)\end{cases}
+        \end{align*}
+        Separating the $10^m$ terms from the small ones, we have
+        \begin{align*}
+        &\left(297+21113\left\lfloor\frac m3\right\rfloor+999\sum_{k=0}^{\lfloor\frac{m-6}3\rfloor}b_k+
+        \begin{cases}0 & (m\equiv0\pmod3)\\
+        3600+900b_{\lfloor\frac{m-3}3\rfloor} & (m\equiv1\pmod3)\\
+        8540+990b_{\lfloor\frac{m-3}3\rfloor} & (m\equiv2\pmod3)\end{cases}\right)\cdot10^{m-3}\\
+        &-297+b_{\lfloor\frac{m-3}3\rfloor}+\begin{cases}3 & (m\equiv0\pmod3)\\ 3 & (m\equiv1\pmod3)\\ 10 & (m\equiv2\pmod3)\end{cases}
+        \end{align*}
+        This formula is also very nice because we no longer have to care about the spellings of numbers below 1000. All we really need for this formula are the names of -illion numbers! Putting this all into code, we get<br/><br/>
+        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">answer_pow10</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>    <span class="c1"># answer(10**m)</span>
+
+    <span class="n">big</span> <span class="o">=</span> <span class="mi">297</span> <span class="o">+</span> <span class="mi">21113</span> <span class="o">*</span> <span class="p">(</span><span class="n">m</span><span class="o">//</span><span class="mi">3</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">((</span><span class="n">m</span><span class="o">-</span><span class="mi">6</span><span class="p">)</span><span class="o">//</span><span class="mi">3</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">big</span> <span class="o">+=</span> <span class="mi">999</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">illion</span><span class="p">(</span><span class="n">k</span><span class="p">))</span>
+
+    <span class="n">k</span> <span class="o">=</span> <span class="p">(</span><span class="n">m</span><span class="o">-</span><span class="mi">3</span><span class="p">)</span><span class="o">//</span><span class="mi">3</span>
+    <span class="n">small</span> <span class="o">=</span> <span class="o">-</span><span class="mi">297</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">illion</span><span class="p">(</span><span class="n">k</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">m</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">small</span> <span class="o">+=</span> <span class="mi">3</span>
+    <span class="k">elif</span> <span class="n">m</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">big</span> <span class="o">+=</span> <span class="mi">3600</span> <span class="o">+</span> <span class="mi">900</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">illion</span><span class="p">(</span><span class="n">k</span><span class="p">))</span>
+        <span class="n">small</span> <span class="o">+=</span> <span class="mi">3</span>
+    <span class="k">elif</span> <span class="n">m</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">big</span> <span class="o">+=</span> <span class="mi">8540</span> <span class="o">+</span> <span class="mi">990</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">illion</span><span class="p">(</span><span class="n">k</span><span class="p">))</span>
+        <span class="n">small</span> <span class="o">+=</span> <span class="mi">10</span>
+
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">big</span><span class="si">}</span><span class="s2"> * 10**</span><span class="si">{</span><span class="n">m</span><span class="o">-</span><span class="mi">3</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">&#39;+&#39;</span> <span class="k">if</span> <span class="n">small</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="k">else</span> <span class="s1">&#39;-&#39;</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="nb">abs</span><span class="p">(</span><span class="n">small</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>    <span class="c1"># compactify the answer</span>
+</pre></div><br/>
+        If we run this code, it exactly matches the answers we got earlier!<br/><br/>
+        <div class="highlight"><pre>answer(10**10) = 88521 * 10**7 - 287
+answer(10**20) = 187364 * 10**17 - 276
+answer(10**30) = 292346 * 10**27 - 285
+answer(10**40) = 399056 * 10**37 - 282
+answer(10**50) = 510364 * 10**47 - 274
+answer(10**60) = 626353 * 10**57 - 280
+answer(10**70) = 746752 * 10**67 - 279
+answer(10**80) = 868320 * 10**77 - 271
+answer(10**90) = 993327 * 10**87 - 277
+answer(10**100) = 1119621 * 10**97 - 278
+answer(10**200) = 2459075 * 10**197 - 269
+answer(10**300) = 3773933 * 10**297 - 276
+answer(10**400) = 5073581 * 10**397 - 273
+answer(10**500) = 6578320 * 10**497 - 264
+answer(10**600) = 8058058 * 10**597 - 271
+answer(10**700) = 9426439 * 10**697 - 271
+answer(10**800) = 10997292 * 10**797 - 262
+answer(10**900) = 12542982 * 10**897 - 269
+answer(10**1000) = 13948227 * 10**997 - 270
+</pre></div><br/>
+
+        However, this is not yet enough to let us go up to $10^{10\,000\,000}$, since the largest number we can name so far is 999-illion (novenonagintanongentillion). We haven't yet defined what 1000-illion is called.<br/><br/>
+
+        <h3>Extended Conway–Guy system</h3>
+
+        In the same Wikipedia page from earlier: Conway and Guy co-devised with Allan Wechsler the following rule that extends the system indefinitely to name <i>any</i> number, no matter how arbitrarily large it is.<br/><br/>
+
+        <div style="margin-left: 24px">With Allan Wechsler we propose to extend this system indefinitely by combining these according to the convention that "XilliYilliZillion" (say) denotes the (1000000X + 1000Y + Z)th zillion, using "nillion" for the zeroth "zillion" when this is needed as a placeholder. So for example the million-and-third zillion is a "millinillitrillion."</div><br/>
+
+        This means, in order to name the $k$th -illion number, $k$ is first divided into chunks of three, then their -illion names are concatenated with "-illi-".<br/><br/>
+
+        For example, suppose we want to name $10^{3\cdot69\,000\,420+3}$, the 69,000,420-illion. What we first do is take the names for 69-illion, 0-illion, and 420-illion,
+        \begin{align*}
+        \text{69-illion} &= \text{novensexagintillion}\\
+        \text{0-illion} &= \text{nillion}\\
+        \text{420-illion} &= \text{vigintiquadringentillion}
+        \end{align*}
+        then, concatenate them together with -illi-
+        $${\color{red}69},\!{\color{green}000},\!{\color{blue}420}\text{-illion} = {\color{red}\text{novensexagintilli}}{\color{green}\text{nilli}}{\color{blue}\text{vigintiquadringentilli}}\text{on}$$
+        ...Yeah, it's <i>really</i> long. This is to be expected though, as the numbers get larger, we'll run out of "shorter names", so we have no choice but to give longer names to compensate.<br/><br/>
+
+        Fortunately, this is pretty simple to implement in code.<br/><br/>
+
+        <div class="highlight"><pre><span></span><span class="n">illis</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;nilli&quot;</span><span class="p">,</span><span class="s2">&quot;milli&quot;</span><span class="p">,</span><span class="s2">&quot;billi&quot;</span><span class="p">,</span><span class="s2">&quot;trilli&quot;</span><span class="p">,</span><span class="s2">&quot;quadrilli&quot;</span><span class="p">,</span><span class="s2">&quot;quintilli&quot;</span><span class="p">,</span><span class="s2">&quot;sextilli&quot;</span><span class="p">,</span><span class="s2">&quot;septilli&quot;</span><span class="p">,</span><span class="s2">&quot;octilli&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;nonilli&quot;</span><span class="p">,</span><span class="s2">&quot;decilli&quot;</span><span class="p">,</span><span class="s2">&quot;undecilli&quot;</span><span class="p">,</span><span class="s2">&quot;duodecilli&quot;</span><span class="p">,</span><span class="s2">&quot;tredecilli&quot;</span><span class="p">,</span><span class="s2">&quot;quattuordecilli&quot;</span><span class="p">,</span><span class="s2">&quot;quindecilli&quot;</span><span class="p">,</span><span class="s2">&quot;sexdecilli&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;septendecilli&quot;</span><span class="p">,</span><span class="s2">&quot;octodecilli&quot;</span><span class="p">,</span><span class="s2">&quot;novemdecilli&quot;</span><span class="p">,</span><span class="s2">&quot;vigintilli&quot;</span><span class="p">]</span>
+
+<span class="n">prefixunits</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="s2">&quot;un&quot;</span><span class="p">,</span><span class="s2">&quot;duo&quot;</span><span class="p">,</span><span class="s2">&quot;tre&quot;</span><span class="p">,</span><span class="s2">&quot;quattuor&quot;</span><span class="p">,</span><span class="s2">&quot;quin&quot;</span><span class="p">,</span><span class="s2">&quot;se&quot;</span><span class="p">,</span><span class="s2">&quot;septe&quot;</span><span class="p">,</span><span class="s2">&quot;octo&quot;</span><span class="p">,</span><span class="s2">&quot;nove&quot;</span><span class="p">]</span>
+<span class="n">prefixtens</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="s2">&quot;deci&quot;</span><span class="p">,</span><span class="s2">&quot;viginti&quot;</span><span class="p">,</span><span class="s2">&quot;triginta&quot;</span><span class="p">,</span><span class="s2">&quot;quadraginta&quot;</span><span class="p">,</span><span class="s2">&quot;quinquaginta&quot;</span><span class="p">,</span><span class="s2">&quot;sexaginta&quot;</span><span class="p">,</span><span class="s2">&quot;septuaginta&quot;</span><span class="p">,</span><span class="s2">&quot;octoginta&quot;</span><span class="p">,</span><span class="s2">&quot;nonaginta&quot;</span><span class="p">]</span>
+<span class="n">prefixhundreds</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="s2">&quot;centi&quot;</span><span class="p">,</span><span class="s2">&quot;ducenti&quot;</span><span class="p">,</span><span class="s2">&quot;trecenti&quot;</span><span class="p">,</span><span class="s2">&quot;quadringenti&quot;</span><span class="p">,</span><span class="s2">&quot;quingenti&quot;</span><span class="p">,</span><span class="s2">&quot;sescenti&quot;</span><span class="p">,</span><span class="s2">&quot;septingenti&quot;</span><span class="p">,</span><span class="s2">&quot;octingenti&quot;</span><span class="p">,</span><span class="s2">&quot;nongenti&quot;</span><span class="p">]</span>
+<span class="n">prefixtenscond</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="s2">&quot;N&quot;</span><span class="p">,</span><span class="s2">&quot;MS&quot;</span><span class="p">,</span><span class="s2">&quot;NS&quot;</span><span class="p">,</span><span class="s2">&quot;NS&quot;</span><span class="p">,</span><span class="s2">&quot;NS&quot;</span><span class="p">,</span><span class="s2">&quot;N&quot;</span><span class="p">,</span><span class="s2">&quot;N&quot;</span><span class="p">,</span><span class="s2">&quot;MX&quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">]</span>
+<span class="n">prefixhundredscond</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="s2">&quot;NX&quot;</span><span class="p">,</span><span class="s2">&quot;N&quot;</span><span class="p">,</span><span class="s2">&quot;NS&quot;</span><span class="p">,</span><span class="s2">&quot;NS&quot;</span><span class="p">,</span><span class="s2">&quot;NS&quot;</span><span class="p">,</span><span class="s2">&quot;N&quot;</span><span class="p">,</span><span class="s2">&quot;N&quot;</span><span class="p">,</span><span class="s2">&quot;MX&quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">illi</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">k</span> <span class="o">&lt;=</span> <span class="mi">20</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">illis</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+
+    <span class="n">ans</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">prefixcond</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">k</span> <span class="o">&gt;=</span> <span class="mi">100</span><span class="p">:</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="n">prefixhundreds</span><span class="p">[</span><span class="n">k</span> <span class="o">//</span> <span class="mi">100</span><span class="p">]</span> <span class="o">+</span> <span class="n">ans</span>
+        <span class="n">prefixcond</span> <span class="o">=</span> <span class="n">prefixhundredscond</span><span class="p">[</span><span class="n">k</span> <span class="o">//</span> <span class="mi">100</span><span class="p">]</span>
+        <span class="n">k</span> <span class="o">%=</span> <span class="mi">100</span>
+
+    <span class="k">if</span> <span class="n">k</span> <span class="o">&gt;=</span> <span class="mi">10</span><span class="p">:</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="n">prefixtens</span><span class="p">[</span><span class="n">k</span> <span class="o">//</span> <span class="mi">10</span><span class="p">]</span> <span class="o">+</span> <span class="n">ans</span>
+        <span class="n">prefixcond</span> <span class="o">=</span> <span class="n">prefixtenscond</span><span class="p">[</span><span class="n">k</span> <span class="o">//</span> <span class="mi">10</span><span class="p">]</span>
+        <span class="n">k</span> <span class="o">%=</span> <span class="mi">10</span>
+
+    <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span> <span class="n">prefix</span> <span class="o">=</span> <span class="s2">&quot;tre&quot;</span> <span class="o">+</span> <span class="p">(</span><span class="s2">&quot;s&quot;</span> <span class="k">if</span> <span class="s2">&quot;S&quot;</span> <span class="ow">in</span> <span class="n">prefixcond</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="s2">&quot;s&quot;</span> <span class="k">if</span> <span class="s2">&quot;X&quot;</span> <span class="ow">in</span> <span class="n">prefixcond</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">6</span><span class="p">:</span> <span class="n">prefix</span> <span class="o">=</span> <span class="s2">&quot;se&quot;</span> <span class="o">+</span> <span class="p">(</span><span class="s2">&quot;s&quot;</span> <span class="k">if</span> <span class="s2">&quot;S&quot;</span> <span class="ow">in</span> <span class="n">prefixcond</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="s2">&quot;x&quot;</span> <span class="k">if</span> <span class="s2">&quot;X&quot;</span> <span class="ow">in</span> <span class="n">prefixcond</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">7</span><span class="p">:</span> <span class="n">prefix</span> <span class="o">=</span> <span class="s2">&quot;septe&quot;</span> <span class="o">+</span> <span class="p">(</span><span class="s2">&quot;m&quot;</span> <span class="k">if</span> <span class="s2">&quot;M&quot;</span> <span class="ow">in</span> <span class="n">prefixcond</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="s2">&quot;n&quot;</span> <span class="k">if</span> <span class="s2">&quot;N&quot;</span> <span class="ow">in</span> <span class="n">prefixcond</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">9</span><span class="p">:</span> <span class="n">prefix</span> <span class="o">=</span> <span class="s2">&quot;nove&quot;</span> <span class="o">+</span> <span class="p">(</span><span class="s2">&quot;m&quot;</span> <span class="k">if</span> <span class="s2">&quot;M&quot;</span> <span class="ow">in</span> <span class="n">prefixcond</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="s2">&quot;n&quot;</span> <span class="k">if</span> <span class="s2">&quot;N&quot;</span> <span class="ow">in</span> <span class="n">prefixcond</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span> <span class="n">prefix</span> <span class="o">=</span> <span class="n">prefixunits</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+
+    <span class="n">ans</span> <span class="o">=</span> <span class="n">prefix</span> <span class="o">+</span> <span class="n">ans</span>
+    <span class="k">return</span> <span class="n">ans</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;illi&quot;</span>
+
+<span class="k">def</span> <span class="nf">illion</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;thousand&quot;</span>
+    <span class="n">ans</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">while</span> <span class="n">k</span><span class="p">:</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="n">illi</span><span class="p">(</span><span class="n">k</span> <span class="o">%</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">+</span> <span class="n">ans</span>
+        <span class="n">k</span> <span class="o">//=</span> <span class="mi">1000</span>
+    <span class="k">return</span> <span class="n">ans</span> <span class="o">+</span> <span class="s2">&quot;on&quot;</span>
+</pre></div><br/>
+
+        Another way to do this would be to just hardcode all 1000 -illi prefixes, then construct the name for $k$-illion by just combining chunks together via a lookup table.<br/><br/>
+
+        Now that that's done, we can obtain <code>answer(10**10**i)</code> for $i=1,\ldots,8$.<br/><br/>
+
+        <div class="highlight"><pre>answer(10**10) = 88521 * 10**7 - 287
+answer(10**100) = 1119621 * 10**97 - 278
+answer(10**1000) = 13948227 * 10**997 - 270    &lt;-- our previous record
+answer(10**10000) = 162971862 * 10**9997 - 264
+answer(10**100000) = 1875008244 * 10**99997 - 255
+answer(10**1000000) = 21477589488 * 10**999997 - 247
+answer(10**10000000) = 238209040896 * 10**9999997 - 241
+answer(10**100000000) = 2627301577008 * 10**99999997 - 232
+</pre></div><br/>
+
+        That last one took around 21 seconds to compute on my laptop. :nanayay:<br/><br/>
+
+        <h2>Beyond 10<sup>100,000,000</sup></h2>
+
+        Let's go... EEEVVVEEENNN FFFUUURRRTTTHHHEEERRR!!!! :chokodestroy: :chokodestroy: :chokodestroy: :chokodestroy: :chokodestroy: :chokodestroy: :chokodestroy: :chokodestroy: :chokodestroy: :chokodestroy: :chokodestroy: :chokodestroy: :chokodestroy: :chokodestroy: :chokodestroy: HAHAHAHAHAHAHAHAHAHFHJAFHJLDAFKPSDAGDSAGHADSFFDKG;'HJK';F;DSGJSDFG';;'' *cough cough*<br/><br/>
+
+        Okay, okay! I promise this is the last one. :kanadepien:<br/><br/>
+
+        <div class="problem"><b>Project Euler #17 Hell.</b><br/>
+        If all the numbers from $1$ to $10^{10^{100}}$ (one googolplex) inclusive were written out in words, how many letters would be used?
+        </div><br/>
+
+        This might seem intimidating: Our $O(\log n)$ algorithm no longer works! We need an $O(\log\log n)$ algorithm, but how?<br/><br/>
+
+        Let's take one last look at our formula.
+        \begin{align*}
+        &\left(297+21113\left\lfloor\frac m3\right\rfloor+999\sum_{k=0}^{\lfloor\frac{m-6}3\rfloor}b_k+
+        \begin{cases}0 & (m\equiv0\pmod3)\\
+        3600+900b_{\lfloor\frac{m-3}3\rfloor} & (m\equiv1\pmod3)\\
+        8540+990b_{\lfloor\frac{m-3}3\rfloor} & (m\equiv2\pmod3)\end{cases}\right)\cdot10^{m-3}\\
+        &-297+b_{\lfloor\frac{m-3}3\rfloor}+\begin{cases}3 & (m\equiv0\pmod3)\\ 3 & (m\equiv1\pmod3)\\ 10 & (m\equiv2\pmod3)\end{cases}
+        \end{align*}
+        Most of these terms are relatively easy to compute, considering that $m=10^{100}$. The only difficult one is computing that sum over there,
+        $$\sum_{k=0}^{\lfloor\frac{m-6}3\rfloor}b_k$$
+        which seemingly requires an $O(m)$ algorithm. This requires us to sum the letter counts of "$k$-illion", from $k=0$ to around $10^{100}$!<br/><br/>
+
+        Luckily, we already solved this exact kind of problem before. This is just Project Euler #17 all over again, but this time for the -illion numbers!<br/><br/>
+
+        Earlier, we named a $k$-illion number by dividing $k$ into chunks of three, converting them into -illi- names, then adding "on" at the end.
+        $${\color{red}69},\!{\color{green}000},\!{\color{blue}420}\text{-illion} = {\color{red}\text{novensexagintilli}}{\color{green}\text{nilli}}{\color{blue}\text{vigintiquadringentilli}}\text{on}$$
+        So really, any -illion name can be dissected into chunks:
+        <ol>
+        <li>The lowest chunk is the "on" at the end.</li>
+        <li>The rest of the chunks consists of a small $(\lt1000)$ -illi- part, which only changes every $10^{3i}$ terms, and repeats every $10^{3i+3}$ terms.</li>
+        </ol>
+        Since these parts are independent of each other, we can sum them separately.<br/><br/>
+
+        Let $B(x)$ be the generating function for "number of letters used when writing $n$-illion". The first few terms of $B(x)$ is:
+        $$B(x)=8+7x+7x^2+8x^3+11x^4+11x^5+10x^6+10x^7+9x^8+9x^9+9x^{10}+\cdots$$
+        To get the generating function for "number of letters used when writing -illions from 0 to $n$", we simply divide by $(1-x)$.
+        $$\frac{B(x)}{1-x}=8+15x+22x^2+30x^3+41x^4+52x^5+62x^6+72x^7+81x^8+90x^9+99x^{10}+\cdots$$
+        The generating function $B(x)$ will look nearly identical to $A(x)$:<br/><br/>
+
+        First, we have "thousand" which has 8 letters, then every -illion name after that always has "on" at the end, which contributes a constant 2.
+        $$8+2x+2x^2+2x^3+\cdots=8+\frac{2x}{1-x}$$
+        Next, since the lowest chunk repeats every 1000 terms, its generating function is given by
+        \begin{align*}
+        &(5x+5x^2+6x^3+\cdots+24x^{998}+24x^{999}+5x^{1000})(1+x^{1000}+x^{2000}+\cdots)\\
+        &=\frac{5x+5x^2+6x^3+\cdots+24x^{998}+24x^{999}+5x^{1000}}{1-x^{1000}}
+        \end{align*}
+        The coefficients of the numerator are the letter counts of "milli-", "billi-", ... until 999-illi, then "nilli-".<br/><br/>
+
+        Finally, the $k$th lowest chunk only changes every $10^{3k}$, and repeats every $10^{3k+3}$.
+        \begin{align*}
+        &(5x^{10^{3k}}+5x^{2\cdot10^{3k}}+6x^{3\cdot10^{3k}}+\cdots+24x^{998\cdot10^{3k}}+24x^{999\cdot10^{3k}}+5x^{1000\cdot10^{3k}})\\
+        &\cdot(1+x+x^2+x^3+\cdots+x^{10^{3k}-1})(1+x^{10^{3k+3}}+x^{2\cdot10^{3k+3}}+\cdots)\\
+        &=\frac{(5x^{10^{3k}}+5x^{2\cdot10^{3k}}+6x^{3\cdot10^{3k}}+\cdots+24x^{998\cdot10^{3k}}+24x^{999\cdot10^{3k}}+5x^{1000\cdot10^{3k}})(1-x^{10^{3k}})}{(1-x)(1-x^{10^{3k+3}})}
+        \end{align*}
+        Once we combine all of these, we get the closed form for $B(x)$:
+        \begin{align*}B(x) =&\, 8+\frac{2x}{1-x} + \frac{5x+5x^2+6x^3+\cdots+24x^{998}+24x^{999}+5x^{1000}}{1-x^{1000}}\\
+        &+\sum_{k=1}^\infty\frac{(5x^{10^{3k}}+5x^{2\cdot10^{3k}}+6x^{3\cdot10^{3k}}+\cdots+24x^{998\cdot10^{3k}}+24x^{999\cdot10^{3k}}+5x^{1000\cdot10^{3k}})(1-x^{10^{3k}})}{(1-x)(1-x^{10^{3k+3}})}
+        \end{align*}
+        Then to get the answer, we extract the coefficient of $x^n$ from $\frac{B(x)}{1-x}$ like we did before.<br/><br/>
+
+        Let $c_k$ be the number of letters used in $k$-illi- (where 1000-illi- = "nilli"), and denote $f(n,b)$ same as before,
+        $$f(n,b)=\frac{(\lfloor\frac nb\rfloor+1)(2n-\lfloor\frac nb\rfloor b)}{2}$$
+        The formula for the total number of letters from "thousand" up to "$n$-illion" is
+        \begin{align*}
+        &8+2n+\sum_{i=1}^{1000}\left[c_i\cdot\left(\left\lfloor\frac{n-i}{1000}\right\rfloor+1\right)\right]\\
+        &+\sum_{k=1}^\infty\sum_{i=1}^{1000}\left[c_i\cdot\left(f(n-i\cdot10^{3k}+1,10^{3k+3})-f(n-(i+1)\cdot10^{3k}+1,10^{3k+3}\right)\right]
+        \end{align*}
+        And finally, we put this into code:<br/><br/>
+        <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">illionsum</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">b</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span> <span class="k">return</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">n</span><span class="o">//</span><span class="n">b</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">n</span> <span class="o">-</span> <span class="n">n</span><span class="o">//</span><span class="n">b</span> <span class="o">*</span> <span class="n">b</span><span class="p">)</span><span class="o">//</span><span class="mi">2</span>
+
+    <span class="n">lessthan1000</span> <span class="o">=</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">illi</span><span class="p">(</span><span class="n">n</span><span class="p">))</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">)]</span> <span class="o">+</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">illi</span><span class="p">(</span><span class="mi">0</span><span class="p">))]</span>     <span class="c1"># milli, billi, ..., 999-illi, nilli</span>
+
+    <span class="n">ans</span> <span class="o">=</span> <span class="mi">8</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">n</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1001</span><span class="p">):</span>
+        <span class="n">ans</span> <span class="o">+=</span> <span class="n">lessthan1000</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="p">((</span><span class="n">n</span><span class="o">-</span><span class="n">i</span><span class="p">)</span> <span class="o">//</span> <span class="mi">1000</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">pow10</span> <span class="o">=</span> <span class="mi">1000</span>
+    <span class="k">while</span> <span class="n">pow10</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1001</span><span class="p">):</span>
+            <span class="n">ans</span> <span class="o">+=</span> <span class="n">lessthan1000</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="n">i</span><span class="o">*</span><span class="n">pow10</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1000</span><span class="o">*</span><span class="n">pow10</span><span class="p">)</span> <span class="o">-</span> <span class="n">f</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">pow10</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1000</span><span class="o">*</span><span class="n">pow10</span><span class="p">))</span>
+        <span class="n">pow10</span> <span class="o">*=</span> <span class="mi">1000</span>
+
+    <span class="k">return</span> <span class="n">ans</span>
+
+<span class="k">def</span> <span class="nf">answer_pow10</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>    <span class="c1"># answer(10**m)</span>
+    <span class="k">assert</span> <span class="n">m</span> <span class="o">&gt;=</span> <span class="mi">3</span>
+
+    <span class="n">big</span> <span class="o">=</span> <span class="mi">297</span> <span class="o">+</span> <span class="mi">21113</span> <span class="o">*</span> <span class="p">(</span><span class="n">m</span><span class="o">//</span><span class="mi">3</span><span class="p">)</span> <span class="o">+</span> <span class="mi">999</span> <span class="o">*</span> <span class="n">illionsum</span><span class="p">((</span><span class="n">m</span><span class="o">-</span><span class="mi">6</span><span class="p">)</span><span class="o">//</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="p">(</span><span class="n">m</span><span class="o">-</span><span class="mi">3</span><span class="p">)</span><span class="o">//</span><span class="mi">3</span>
+    <span class="n">small</span> <span class="o">=</span> <span class="o">-</span><span class="mi">297</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">illion</span><span class="p">(</span><span class="n">k</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">m</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">small</span> <span class="o">+=</span> <span class="mi">3</span>
+    <span class="k">elif</span> <span class="n">m</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">big</span> <span class="o">+=</span> <span class="mi">3600</span> <span class="o">+</span> <span class="mi">900</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">illion</span><span class="p">(</span><span class="n">k</span><span class="p">))</span>
+        <span class="n">small</span> <span class="o">+=</span> <span class="mi">3</span>
+    <span class="k">elif</span> <span class="n">m</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">big</span> <span class="o">+=</span> <span class="mi">8540</span> <span class="o">+</span> <span class="mi">990</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">illion</span><span class="p">(</span><span class="n">k</span><span class="p">))</span>
+        <span class="n">small</span> <span class="o">+=</span> <span class="mi">10</span>
+
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">big</span><span class="si">}</span><span class="s2"> * 10**</span><span class="si">{</span><span class="n">m</span><span class="o">-</span><span class="mi">3</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">&#39;+&#39;</span> <span class="k">if</span> <span class="n">small</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="k">else</span> <span class="s1">&#39;-&#39;</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="nb">abs</span><span class="p">(</span><span class="n">small</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+</pre></div><br/>
+
+        Thus, we are finally able to obtain the value of <code>answer(10**10**i)</code> for $i=1,\ldots,100$!!!<br/><br/>
+
+        <div class="highlight"><pre>answer(10**10**1) = 88521 * 10**7 - 287
+answer(10**10**2) = 1119621 * 10**97 - 278
+answer(10**10**3) = 13948227 * 10**997 - 270
+answer(10**10**4) = 162971862 * 10**9997 - 264
+answer(10**10**5) = 1875008244 * 10**99997 - 255
+answer(10**10**6) = 21477589488 * 10**999997 - 247
+answer(10**10**7) = 238209040896 * 10**9999997 - 241
+answer(10**10**8) = 2627301577008 * 10**99999997 - 232    &lt;-- our previous record
+answer(10**10**9) = 29000408973552 * 10**999999997 - 224
+answer(10**10**10) = 313437089970960 * 10**9999999997 - 218
+answer(10**10**20) = 5636422799999999999937264 * 10**99999...999997 - 140
+answer(10**10**30) = 8166002999999...99999904000 * 10**99999...999997 - 63
+answer(10**10**40) = 10657173899999...99999871600 * 10**99999...999997 + 12
+answer(10**10**50) = 13159225799999...99999837904 * 10**99999...999997 + 90
+answer(10**10**60) = 15688805999999...99999804640 * 10**99999...999997 + 167
+answer(10**10**70) = 18179976899999...99999772240 * 10**99999...999997 + 242
+answer(10**10**80) = 20682028799999...99999738544 * 10**99999...999997 + 320
+answer(10**10**90) = 23211608999999...99999705280 * 10**99999...999997 + 397
+answer(10**10**100) = 25702779899999...99999672880 * 10**99999...999997 + 472
+</pre></div><br/>
+        We can even write down the exact value of the answer for this problem:<br/><br/>
+
+        <div class="theorem"><b>Project Euler #17 Hell.</b><br/>
+        If all the numbers from $1$ to $10^{10^{100}}$ (one googolplex) inclusive were written out in words, the number of letters used is exactly
+        $$(257027799\cdot10^{97}-327120)\cdot10^{10^{100}-3}+472.$$</div><br/>
+
+        And with that, we are <i>finally</i> done with this problem. We've defeated the final boss. :nanayay: :pekoded:<br/><br/>
+
+        <h2>Conclusion</h2>
+
+        If you've reached this far, then congratulations! :nanaclap:<br/><br/>
+
+        This blog post idea came to me while I was trying to generalize every Project Euler problem as much as possible, starting from Problem #1.<br/><br/>
+
+        I'm surprised nobody else have thought of generalizing Problem #17 to at least $10^{18}$. You've seen the rabbit hole I went down when trying to do this: it's very different from the usual math problem, it even dips a bit into linguistics!<br/><br/>
+
+        I had to research about how British people use 'and's in their numbers, which I feel isn't really documented anywhere. I also had to learn how naming -illion numbers worked, and not everyone agrees on which system to use. :heh:<br/><br/>
+
+        Initially, I thought of using Googology wiki's system for naming illion numbers. For numbers bigger than $10^{3003}$, they completely differ from the Conway–Guy system:
+        \begin{align*}
+        1,\!000\text{-illion} &= \text{millillion}\\
+        2,\!000\text{-illion} &= \text{dumillillion}\\
+        3,\!000\text{-illion} &= \text{trimillillion}\\
+        &\vdots\\
+        10,\!000\text{-illion} &= \text{myrillion}\\
+        1,\!000,\!000\text{-illion} &= \text{milli-millillion}\\
+        &\vdots\\
+        10^9\text{-illion} &= \text{nanillion}\\
+        10^{12}\text{-illion} &= \text{picillion}\\
+        10^{30}\text{-illion} &= \text{quectillion}\\
+        \end{align*}
+        But I couldn't find the exact rules for how this naming works, and I figured its probably too weird to include anyways.<br/><br/>
+
+        As you may have observed, the answer for $n=10^{10^k}$ still have lots and lots of 9s which could be compressed further. You could probably compute the exact answer for $n=10^{10^{10^{100}}}$ if you want, but I'm too lazy to do that now.<br/><br/>
+
+        Here are some questions for further exploration:
+        <ol>
+        <li>Consider this problem in other languages. For example, how many <b>strokes</b> do you need to write every number from $1$ to $10^{100}$ in <b>Japanese</b>?<br/>
+        In Japanese, 694,201,337 is written as 六億九千四百二十万千三百三十七 which requires 61 strokes.</li>
+        <li>If all numbers from $1$ to $10^{100}$ are sorted in alphabetical order, the first ones in the list are: 8 (eight), 8,000,000,000 (eight billion), 8,000,000,008 (eight billion and eight), ... Given an integer $n$, which number appears $n$th in this list?</li>
+        </ol>
+        I don't think there's anything else much to add. Thank you for reading, and I hope you learned something new! :bebelove: :nanahug:
+    </div>
+</body>
+
+<script src="../../emojis/script.js"></script>
+
+
+
+
+<!--
+https://www.logicmatters.net/resources/pdfs/MRDP.pdf
+https://math.uchicago.edu/~shmuel/lg-readings/martin%20davis,%20hilbert%2010.pdf
+https://www.ps.uni-saarland.de/Publications/documents/Larchey-WendlingForster_2019_H10_in_Coq.pdf
+-->

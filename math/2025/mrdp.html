@@ -282,7 +282,7 @@
         where $a,b,c$ are parameters and $x,y$ are unknowns.<br/><br/>
 
         For the equation to be satisfied, we need both of these to be true for some $x,y$:
-        $$\begin{cases}b=a^2-x\\(a+1)^2=b-y-1\end{cases}$$
+        $$\begin{cases}a^2=b-x\\b=(a+1)^2-y-1\end{cases}$$
         The first one ensures $a^2\le b$, while the second one ensures $b\lt(a+1)^2$.<br/><br/>
 
         The Diophantine equation has a nonnegative integer solution in $x,y$ if and only if $a^2\le b\lt(a+1)^2$, or equivalently, $a=\lfloor\sqrt b\rfloor$.</details><br/>
@@ -457,7 +457,7 @@
 
         We showed that it's possible to take the <a href="#mod">mod</a> and <a href="#floordiv">floordiv</a> of any number, so it's easy to convert this into an exponential Diophatine equation with $x,n,r$ as parameters and $b$ as an unknown.</details><br/>
 
-        <div class="theorem"><b>Factorial is exponential Diophantine.</b><br/>
+        <div class="theorem" id="factorial"><b>Factorial is exponential Diophantine.</b><br/>
         The set $\{(x,n)\mid x=n!\}$ is exponential Diophantine.</div><br/>
 
         <details><summary><b>Proof.</b></summary>
@@ -468,13 +468,39 @@
 
         To ensure that such $b$ works, we want to make sure $n!\le b^n/\binom bn\lt n!+1$.<br/><br/>
 
-        It's easy to show that $b^n/\binom bn\ge n!$ for all $b$, and it also turns out that choosing $b\gt(2n)^{n+1}$ already guarantees that $b^n/\binom bn\lt n!+1$. (Left as an exercise to the reader :menherateehee:)<br/><br/>
+        It's easy to show that $b^n/\binom bn\ge n!$ for all $b$, and it also turns out that choosing any $b\gt(2n)^{n+1}$ already guarantees that $b^n/\binom bn\lt n!+1$. (Left as an exercise to the reader :menherateehee:)<br/><br/>
 
         Consider the following statement
         $$(b>(2n)^{n+1})\land\left(x=\left\lfloor\frac{b^n}{\binom bn}\right\rfloor\right)$$
         The first clause ensures that $b$ is big enough, and the second clause is what gives $x=n!$.<br/><br/>
 
         We previously showed that it's possible to take the <a href="#floordiv">floordiv</a> of any number as well as <a href="#binom">binomial coefficients</a>, so it's easy to convert this into an exponential Diophantine equation with $x,n$ as parameters and $b$ as an unknown.</details><br/>
+
+        <div class="theorem" id="arith-seq"><b>Product of arithmetic sequence is exponential Diophantine.</b><br/>
+        The set $\{(x,a,d,n)\mid x=a(a+d)(a+2d)\cdots(a+(n-1)d)\}$ is exponential Diophantine.</div><br/>
+
+        <details><summary><b>Proof.</b></summary>
+
+        Observe that
+        \begin{align*}
+        a(a+d)(a+2d)\cdots(a+(n-1)d)&=d^n\cdot \tfrac ad(\tfrac ad+1)(\tfrac ad+2)\cdots(\tfrac ad+n-1)\\
+        &=d^n\cdot n!\binom{\frac ad+n-1}n
+        \end{align*}
+        so it's as if we could just use the fact that the binomial coefficient is exponential Diophantine to finish this off. Unfortunately, our proof for that doesn't quite work with fractional arguments.<br/><br/>
+
+        However, we could get around this using a mod. If we let $M$ be some really large modulo and $q$ an integer such that $q\equiv\tfrac ad\pmod M$, then
+        \begin{align*}
+        a(a+d)(a+2d)\cdots(a+(n-1)d)&=d^n\cdot \tfrac ad(\tfrac ad+1)(\tfrac ad+2)\cdots(\tfrac ad+n-1)\\
+        &\equiv d^n\cdot q(q+1)(q+2)\cdots(q+n-1)\pmod M\\
+        &= d^n\cdot n!\binom{q+n-1}n
+        \end{align*}
+        Thus, we only need to compute $d^n\cdot n!\binom{q+n-1}n$ mod $M$ to obtain the product we want.<br/><br/>
+
+        Consider the following statement
+        $$(M>(a+nd)^n)\land(qd\bmod M=a)\land\left(x=d^n\cdot n!\binom{q-n-1}n\bmod M\right)$$
+        The first one ensures $M$ is big enough, the second is for $q\equiv\tfrac ad\pmod M$, and the last clause is what gives $x=a(a+d)(a+2d)\cdots(a+(n-1)d)$.<br/><br/>
+
+        We previously showed that it's possible to obtain <a href="#binom">binomial coefficients</a> and <a href="#factorial">factorials</a>, so it's easy to convert this into an exponential Diophantine equation with $x,a,d,n$ as parameters and $M,q$ asunknowns.</details><br/>
 
         <div class="theorem"><b>PRIME is exponential Diophantine.</b><br/>
         The set of prime numbers, $\{2,3,5,7,11,13,\ldots\}$ is exponential Diophantine.</div><br/>
@@ -485,17 +511,229 @@
         $$(n>1)\land((n-1)!+1\equiv0\pmod n)$$
         We previously showed that it's possible to take the <a href="#factorial">factorial</a> of any number, so it's easy to convert this into an exponential Diophantine equation.</details><br/>
 
+        <h2>Diophantine $\iff$ Exponential Diophantine</h2>
+
+        Surprise surprise! It turns out, Diophantine sets and exponential Diophantine sets are <b>the exact same thing</b>! There's actually a way to express exponentiation using just polynomial equations.<br/><br/>
+
+        <div class="theorem"><b>Exponentiation is Diophantine</b>.<br/>
+        The set $\{(x,y,z)\mid x=y^z\}$ is Diophantine.</div><br/>
+
+        However, the proof of this is... very <i>very</i> hard, but I'll try my best to explain the motivations behind them.<br/><br/>
+
+        <h3>Pell equations</h3>
+
+        Remember Pell equations? I briefly alluded to this at the introduction. Whenever you see any Diophantine equation of the form
+        $$x^2-ny^2=1$$
+        where $x$ and $y$ are unknowns, that's called a Pell equation. These kinds of equations are interesting, since their solutions follow a strange pattern.<br/><br/>
+
+        For example, let's take a look at $x^2-2y^2=1$. Its first few solutions are
+        $$(x,y)=(1,0),(3,2),(17,12),(99,70),(577,408),(3363,2378),(19601,13860),\ldots$$
+        The solution set might look like a mess, but there's actually a nice way of generating this sequence:<br/><br/>
+
+        Let's look at numbers of the form $a+b\sqrt2$. Every number of this form has its own <i>conjugate</i>, $a-b\sqrt2$. If you multiply this number with its conjugate, you get
+        $$(a+b\sqrt2)(a-b\sqrt2)=a^2-2b^2$$
+        Let's call this number the "norm" of $a+b\sqrt2$. Notice how $a^2-2b^2$ is exactly the same as our Pell equation!<br/><br/>
+
+        The solutions to the Pell equation $x^2-2y^2=1$, are exactly the numbers of the form $x+y\sqrt2$ which has norm 1.<br/><br/>
+
+        A very nice property of the norm is that it is <i>multiplicative</i>. In other words, if we had two numbers $a+b\sqrt2$ and $c+d\sqrt2$, then the norm of their product is equal to the product of their norms:
+        \begin{align*}
+        (a+b\sqrt2)(c+d\sqrt2) &= (ac+2bd)+(ad+bc)\sqrt2\\
+        \text{norm of }a+b\sqrt2 &= a^2-2b^2\\
+        \text{norm of }c+d\sqrt2 &= c^2-2d^2\\
+        \text{norm of }(ac+2bd)+(ad+bc)\sqrt2 &= (ac+2bd)^2-2(ad+bc)^2=(a^2-2b^2)(c^2-2d^2)
+        \end{align*}
+        As an example, consider the number $(3-2\sqrt2)^n$. Its first few values are:
+        \begin{align*}
+        (3-2\sqrt2)^0 &= 1-0\sqrt2\\
+        (3-2\sqrt2)^1 &= 3-2\sqrt2\\
+        (3-2\sqrt2)^2 &= 17-12\sqrt2\\
+        (3-2\sqrt2)^3 &= 99-70\sqrt2
+        \end{align*}
+        What's the norm of $(3-2\sqrt2)^n$? Since the norm of $3-2\sqrt2$ is $3^2-2\cdot2^2=1$, that means the norm of $(3-2\sqrt2)^n$ is always 1. Thus, the solutions of $x^2-2y^2=1$ are $(1,0),(3,2),(17,12),(99,70),\ldots$, are actually obtained by expanding $(3-2\sqrt2)^n$ for $n=0,1,2,\ldots$!<br/><br/>
+
+        Pell equations may also come in other varieties. An equation of the form
+        $$x^2-axy+y^2=1$$
+        may also be called a Pell equation.<br/><br/>
+
+        :todo:
+
+        <h2>"For all" quantifiers</h2>
+
+        So far, everything we know about Diophantine sets has to involve the "there exists" quantifier $\exists$. Every Diophantine set can be written as a formula in the form
+        $$(\exists y_1,\ldots,y_n)[P(x_1,\ldots,x_k,y_1,\ldots,y_n)=0]$$
+        However, there are some times where we might need the "for all" quantifier $\forall$.<br/><br/>
+
+        For example, suppose we want to show that the set of all squarefree numbers $\{1,2,3,5,6,7,10,\ldots\}$ is a Diophantine set. The statement "$n$ is squarefree" may be written as
+        $$(\forall k)\,[n\bmod (k+2)^2\ne0]$$
+        We could write "$n\bmod (k+2)^2\ne0$" as
+        $$(n-x-(k+2)^2y)^2+(z+1-x)^2+(x+w+1-(k+2)^2)^2=0$$
+        But if we need this to be satisfied for all $k$, we'd need to combine infinitely many different equations together,
+        $$\begin{cases}(n-x_0-4y_0)^2+(z_0+1-x_0)^2+(x_0+w_0-3)^2=0\\(n-x_1-9y_1)^2+(z_1+1-x_1)^2+(x_1+w_1-8)^2=0\\(n-x_2-16y_2)^2+(z_2+1-x_2)^2+(x_2+w_2-15)^2=0\\\vdots\end{cases}$$
+        Something like this isn't possible, since that would require infinitely many variables!<br/><br/>
+
+        It seems like there is no way to write "for all" using a Diophantine equation. After all, using just "there exists" statements can't let us talk about "for all $k$"... right?<br/><br/>
+
+        Well, it turns out it's possible... kind of.<br/><br/>
+
+        <h3>Bounded quantifiers</h3>
+
+        There's a weaker version of quantifiers, where the quantified variable is being bounded. They're denoted as $(\forall k)_{\le N}$, which means, instead of the statement needing to be true for <i>all</i> $k\in N$, it only needs to be true under a certain bound $m$.<br/><br/>
+
+        Using bounded quantifiers, the statement "$n$ is squarefree" can be written as
+        $$(\forall k)_{\le n}\,[n\bmod (k+2)^2\ne0]$$
+        since we only need to check for divisors under $n$.<br/><br/>
+
+        This is a slight improvement from checking every single $k\in\mathbb N$, since now there's only finitely many cases. It also turns out that,<br/><br/>
+
+        <div class="theorem"><b>Diophantine sets are closed under bounded quantifiers.</b><br/>
+
+        Let $P(x,y_1,\ldots,y_k)=0$ be a Diophantine equation. Then the set
+        $$\{n\in\mathbb N\mid (\forall x)_{\le n}(\exists y_1,\ldots,y_k)[P(x,y_1,\ldots,y_k)=0]\}$$
+        is Diophantine.</div><br/>
+
+        This opens up even more possibilities for Diophantine sets. For example:<br/><br/>
+
+        The set $\{n\in\mathbb N\mid n\text{ does not contain the digit }6\}$ is Diophantine, because we can write it as
+        $$(\forall k)_{\le n}\left(\left\lfloor\frac n{10^k}\right\rfloor\bmod10\ne6\right)$$
+        This theorem is also what will allow us to prove that "polynomial equations are Turing-complete".<br/><br/>
+
+        The proof of this theorem is pretty complicated, and requires lots of clever tricks, but I'll try my best to explain the motivations behind them.<br/><br/>
+
+        <h3>Chinese Remainder Theorem</h3>
+
+        One of those tricks is the <a href="https://en.wikipedia.org/wiki/Chinese_remainder_theorem">Chinese remainder theorem</a>, which states that for any integers $a_0,\ldots,a_n$, and pairwise coprime moduli $m_0,m_1,\ldots,m_n$, there always exists an integer $x$ such that
+        $$\begin{cases}x\equiv a_0\pmod{m_0}\\x\equiv a_1\pmod{m_1}\\\vdots\\x\equiv a_k\pmod{m_k}\end{cases}$$
+        How does this help? Well, we can use this to simulate "arbitrarily many equations". For example, suppose we wanted to show that
+        $$(\forall k)_{\le n}[P(k,x,y,z)=0]$$
+        is Diophantine. To do this, we need to somehow combine the equations
+        $$\begin{cases}P(0,x_0,y_0,z_0)=0\\P(1,x_1,y_1,z_1)=0\\\vdots\\P(n,x_n,y_n,z_n)=0\end{cases}$$
+        If we can somehow choose suitable moduli $m_0,m_1,\ldots,m_{n}$ that are large enough, and construct integers $k,x,y,z$ such that
+        $$\begin{cases}k\equiv0\pmod{m_0}\\k\equiv1\pmod{m_1}\\\vdots\\k\equiv n\pmod{m_n}\end{cases}
+        \begin{cases}x\equiv x_0\pmod{m_0}\\x\equiv x_1\pmod{m_1}\\\vdots\\x\equiv x_n\pmod{m_n}\end{cases}
+        \begin{cases}y\equiv y_0\pmod{m_0}\\y\equiv y_1\pmod{m_1}\\\vdots\\y\equiv y_n\pmod{m_n}\end{cases}
+        \begin{cases}z\equiv z_0\pmod{m_0}\\z\equiv z_1\pmod{m_1}\\\vdots\\z\equiv z_n\pmod{m_n}\end{cases}$$
+        In a way, we're just "packaging" arbitrarily many integer solutions $x_0,x_1,x_2,\ldots$ into just a single variable $x$. Then, since $P$ is a polynomial, our equations from earlier is just equivalent to checking the same equation for different moduli,
+        $$\begin{cases}P(0,x_0,y_0,z_0)\equiv0\pmod{m_1}\\P(1,x_1,y_1,z_1)\equiv0\pmod{m_2}\\\vdots\\P(n,x_n,y_n,z_n)\equiv0\pmod{m_{n}}\end{cases}$$
+        All this can just be compressed into a single equation!
+        $$P(k,x,y,z)\equiv0\pmod{m_1\cdots m_{n}}$$
+        From here, we can see that each of $x_1,\ldots,x_{n}$ exists if and only if $x$ itself exists.<br/><br/>
+
+        And with that, we've managed to simulate the "for all" quantifier as a Diophantine equation. Though, there's still a lot of details we have to fill in, such as exactly what moduli to be used:
+
+        <ol>
+        <li>How do we find these pairwise coprime modulo $m_1,\ldots,m_n$?</li>
+        <li>How do we ensure that each modulo is "big enough"? That $P(i,x_i,y_i,z_i)$ does not exceed $m_i$? (Otherwise, $P(i,x_i,y_i,z_i)\equiv0\pmod{m_i}$ wouldn't necessarily mean $P(i,x_i,y_i,z_i)=0$ for example)</li>
+        <li>How do we obtain $k$ such that $k\equiv i\pmod{m_i}$ for all $i$?</li>
+        <li>How do we obtain the product $m_1\cdots m_n$?</li>
+        </ol>
+
+        For the first one, we can easily obtain a sequence of pairwise coprime modulo using factorials:<br/><br/>
+
+        <div class="theorem" id="lemma-2-1"><b>Lemma 2.1.</b>
+        Let $N$ be a positive integer, and define $m_i=1+(i+1)\cdot N!$ for all $i=0,\ldots,N$. Then $m_0,\ldots,m_N$ are pairwise coprime.</div><br/>
+
+        <details><summary><b>Proof.</b></summary>
+
+        For every $0\le i\lt j\le N$,
+        \begin{align*}
+        \gcd(m_i,m_j) &= \gcd(1+(i+1)\cdot N!,1+(j+1)\cdot N!)\\
+        &= \gcd(1+(i+1)\cdot N!,(j-i)\cdot N!)
+        \end{align*}
+        but $0\lt j-i\le N$, so $(j-i)\cdot N!$ is coprime to $1+(i+1)\cdot N!$. Therefore, $\gcd(m_i,m_j)=1$.</details><br/>
+
+        We already showed that <a href="#factorial">factorial</a> is Diophantine, so this is fine. More importantly, these moduli are in an arithmetic sequence, and it turns out the product of an arithmetic sequence is also Diophantine.<br/><br/>
+
+        For the second one, we can set a "max limit" $M$ for the variables, so that the solution should guarantee that $x_i\le M$ for all $i$. Then, each modulo $m_1,\ldots,m_n$ should be bigger than the max possible value of the expression.<br/><br/>
+
+        For the third one, since we defined $m_0,\ldots,m_n$ to be an arithmetic sequence, there's a very nice way to express $k$. Notice that for any $i$, we have
+        $$1+(i+1)\cdot N!\equiv0\pmod{m_i}\quad\implies\quad i\equiv-\frac1{N!}-1\pmod{m_i}$$
+        Therefore, we just need to pick $k$ such that
+        $$k\equiv-\frac1{N!}-1\pmod{m_1\cdots m_{N}}$$
+        And finally, we know that <a href="#arith-seq">product of an arithmetic sequence</a> is Diophantine, so we can construct the product $m_1\cdots m_n$ as a Diophantine expression too.<br/><br/>
+
+        With all the preparations complete, we are ready to prove the theorem.<br/><br/>
+
+        <div class="theorem"><b>Diophantine sets are closed under bounded quantifiers.</b><br/>
+
+        Let $P(x,y_1,\ldots,y_k)=0$ be a Diophantine equation. The set
+        $$\{n\in\mathbb N\mid (\forall x)_{\le n}(\exists y_1,\ldots,y_k)[P(x,y_1,\ldots,y_k)=0]\}$$
+        is Diophantine.</div><br/>
+
+        <details><summary><b>Proof.</b></summary>
+
+        Let $t$ be the sum of absolute values of coefficients in polynomial $P$ when it is fully expanded, and let $d$ be the max degree of any term in polynomial $P$. It's easy to see that if $|x|,|y_1|,\ldots,|y_k|\le M$, then
+        $$|P(x,y_1,\ldots,y_k)|\le t\cdot M^d$$
+        Consider the following system of equations
+        $$\left\{\begin{array}{rl}
+        N&\!\!\!\!=t\cdot M^d+1\\
+        m&\!\!\!\!=(1+N!)(1+2N!)\cdots(1+(n+1)N!)\\
+        ((x+1)\cdot N!+1)\bmod m&\!\!\!\!=0\\
+        y_1(y_1-1)(y_1-2)\cdots(y_1-M)\bmod m&\!\!\!\!=0\\
+        y_2(y_2-1)(y_2-2)\cdots(y_2-M)\bmod m&\!\!\!\!=0\\
+        &\!\!\!\!\vdots\\
+        y_k(y_k-1)(y_k-2)\cdots(y_k-M)\bmod m&\!\!\!\!=0\\
+        P(x,y_1,\ldots,y_k)\bmod m&\!\!\!\!=0\end{array}\right.$$
+        where $n$ is the parameter, and all the other variables are unknowns.<br/><br/>
+
+        We know how to write <a href="#factorial">factorials</a> and <a href="#arith-seq">products of arithmetic sequences</a>, so we know this system of equations can easily be written as a Diophantine equation.<br/><br/>
+
+        The system of equations will only have a solution in $n$ if and only if there exists some upper bound $M$, such that for every $i=0,1,\ldots,n$, the equation $P(i,y_1,\ldots,y_k)=0$ is satisfied by some $y_1,\ldots,y_k\le M$.<br/><br/>
+
+        Note that this is equivalent to saying: "for every $i=0,1,\ldots,n$, the equation $P(i,y_1,\ldots,y_k)=0$ is satisfied by some $y_1,\ldots,y_k\in\mathbb N$," because we could just set $M$ to be maximum value that $y_1,\ldots,y_k$ attains over all $i=0,1,\ldots,n$.<br/><br/>
+
+        To see how the system works, for each $i=0,1,\ldots,n$ let $m_i=1+(i+1)\cdot N!$, and let $p_i$ be any prime divisor of $m_i$. Since $m_i$ is coprime with $N!$, we have $p_i>N$.<br/><br/>
+
+        Consider looking at the mod equations in a smaller mod $p_i$. Since these equations are true for mod $m$, and $p_i$ divides $m$, these mod equations should also hold mod $p_i$ too.
+        $$\left\{\begin{array}{rl}
+        ((x+1)\cdot N!+1)\bmod p_i&\!\!\!\!=0\\
+        y_1(y_1-1)(y_1-2)\cdots(y_1-M)\bmod p_i&\!\!\!\!=0\\
+        y_2(y_2-1)(y_2-2)\cdots(y_2-M)\bmod p_i&\!\!\!\!=0\\
+        &\!\!\!\!\vdots\\
+        y_k(y_k-1)(y_k-2)\cdots(y_k-M)\bmod p_i&\!\!\!\!=0\\
+        P(x,y_1,\ldots,y_k)\bmod p_i&\!\!\!\!=0\end{array}\right.$$
+        Notice that the first mod equation, $((x+1)\cdot N!+1)\bmod m_i=0$, is equivalent to saying
+        \begin{align*}
+        (x+1)\cdot N!+1 &\equiv 0\pmod{1+(i+1)\cdot N!}\\
+        (x+1)\cdot (i+1)\cdot N!+(i+1) &\equiv 0\pmod{1+(i+1)\cdot N!}\\
+        (x+1)\cdot (-1) +(i+1)&\equiv 0\pmod{1+(i+1)\cdot N!}\\
+        x &\equiv i\pmod{1+(i+1)\cdot N!}
+        \end{align*}
+        Thus $x\equiv i\pmod{m_i}$, and therefore $x\equiv i\pmod{p_i}$.<br/><br/>
+
+        For each of the middle equations, We have
+        $$y_j(y_j-1)(y_j-2)\cdots(y_j-M)\equiv0\pmod{p_i}$$
+        Since $p_i$ is prime, this equation only holds if and only if $y_j\bmod{p_i}\in\{0,1,\ldots,M\}$.<br/><br/>
+
+        Let $y_j^{(i)}$ denote the remainder when $y_j$ is divided by $p_i$. By looking at the final equation mod $p_i$, we see that it's equivalent to saying
+        $$P(i,y_1^{(i)},\ldots,y_k^{(i)})\equiv0\pmod{p_i}$$
+        But since $i,y_1^{(i)},\ldots,y_k^{(i)}\le M$, that means $|P(i,y_1^{(i)},\ldots,y_k^{(i)})|\lt N\lt p_i$. The only way this could happen is when
+        $$P(i,y_1^{(i)},\ldots,y_k^{(i)})=0$$
+        In other words, there exists an integer solution to $P(x,y_1,\ldots,y_k)=0$ when $x=i$.<br/><br/>
+
+        Finally, by putting together what we learned from mod $p_i$ for each $i=0,1,\ldots,n$, we discover that: the original system of equations can only hold true if for every $i=0,1,\ldots,n$, the equation $P(i,y_1,\ldots,y_k)=0$ is satisfied for some integers $y_1,\ldots,y_k\le M$.<br/><br/>
+
+        Conversely, if we know that $P(i,y_1^{(i)},\ldots,y_k^{(i)})=0$ has a solution for every $i=0,1,\ldots,n$, we can just combine the solutions together using Chinese remainder theorem, and combine each $y_j^{(i)}$ into a single variable $y_j$ by doing
+        $$\begin{cases}y_j\equiv y_j^{(0)}\pmod{m_0}\\y_j\equiv y_j^{(1)}\pmod{m_1}\\\vdots\\y_j\equiv y_j^{(n)}\pmod{m_n}\end{cases}$$
+        which always exists because $m_0,\ldots,m_n$ are pairwise coprime. By substituting this back into the system, we see that it satisfies all the equations.<br/><br/>
+
+        Thus, the system has an integer solution if $P(x,y_1,\ldots,y_k)=0$ has a solution for all $x=0,\ldots,n$. This completes the proof that
+        $$\{n\in\mathbb N\mid (\forall x)_{\le n}(\exists y_1,\ldots,y_k)[P(x,y_1,\ldots,y_k)=0]\}$$
+        is Diophantine.
+
+        </details><br/>
+
         <h2>Recursively enumerable</h2>
+
+        :todo:<br/><br/>
 
         introduce turing machines and define recursively enumerable<br/><br/>
 
         <h2>Exponential Diophantine $\iff$ Recursively enumerable</h2>
 
+        :todo:<br/><br/>
+
         proof<br/><br/>
-
-        <h2>Diophantine $\iff$ Exponential Diophantine</h2>
-
-        introduce pell equations, proof<br/><br/>
     </div>
 </body>
 

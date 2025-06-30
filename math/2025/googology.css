@@ -74,6 +74,10 @@ h1, h2, h3 {
     background-color: rgb(10,5,10,0.95);
     white-space: pre;
 }
+code {
+    font-family: 'Comic Mono';
+    font-size: 19px;
+}
 .date {
     font-size: 18px;
 }
