@@ -80,5 +80,7 @@ def answer_pow10(m):    # answer(10**m)
 
     return f"{big} * 10**{m-3} {'+' if small >= 0 else '-'} {abs(small)}"   # print out  [big * 10**(m-3) + small]  in a nicer format
 
+print(illion((10**100-3)//3))
+
 for i in range(10,101,10):
     print(f"answer(10**10**{i}) = {answer_pow10(10**i)}")
