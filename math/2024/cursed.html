@@ -232,16 +232,50 @@
         <h2>COMBINATORICS</h2>
 
         <ol>
+        <li>Define sequence $a(n)$ as follows:<br/>
+        <ul>
+        <li>$a(1)=1$</li>
+        <li>$a(n)$ is the largest integer $k$ such that the word $a(1)a(2)a(3)\cdots a(n-1)$ can be written as $xy^k$ for some words $x$ and $y$.</li>
+        </ul>
+        For example, the sequence begins 1, 1, 2, 1, 1, 2, 2, 2, 3, 1, 1, 2, 1, 1, 2, 2, 2, 3, 2, 1, ...<br/>
+        The first time number 4 appears in this sequence is at the 220th term.<br/><br/>
+
+        Does the number 5 ever appear in this sequence? If yes, when does it appear for the first time?
+
+        <details><summary>Answer</summary><br/>
+        The earliest index at which number 5 appears in the sequence is approximately
+        $$3.271904422329\times 10^{125857689874791897769333}$$
+        In fact, every positive integer eventually appears in the sequence, but the first occurrence of any natural $n$ is at approximately $2^{2^{3^{4^{5^{.^{.^{.^{n-1}}}}}}}}$.<br/><br/>
+
+        This is <a href="https://en.wikipedia.org/wiki/Gijswijt's_sequence">Gijswijt's sequence</a>, and is an example of a sequence that grows super-logarithmically.<br/><br/>
+        </details>
+
+
+
         <li>Denote the "hereditary base-$n$ notation" of an integer $m$ as writing it in base-$n$, then its exponents in base-$n$, and its exponents' exponents in base-$n$, etc. For example, the hereditary base-3 notation of 100 is
         $$100=3^{3^1+1}+2\cdot3^2+1$$
-        Let $m$ be a positive integer. Perform the following step repeatedly until the result is 0 starting with Step 1:<br/><br/>
+        Let $m$ be a positive integer. Perform the following step repeatedly until the result is 0, starting with Step 1:<br/><br/>
 
         "In the $n^{th}$ step, express the current value using base-$(n+1)$ notation. Then replace each occurrence of $(n+1)$ with $(n+2)$, and finally subtract 1 from the resulting new number."<br/><br/>
 
-        Does this algorithm eventually halt for every positive integer $m$?
+        If we start with $m=8$, the sequence goes
+        \begin{align*}a_1 &= 2^{2^1+1} &&= 8\\
+        a_2 &= 2\cdot3^{3^1}+2\cdot3^2+2\cdot3+2 &&= 80\\
+        a_3 &= 2\cdot4^{4^1}+2\cdot4^2+2\cdot4+1 &&= 553\\
+        a_4 &= 2\cdot5^{5^1}+2\cdot5^2+2\cdot5 &&= 6310\\
+        a_5 &= 2\cdot6^{6^1}+2\cdot6^2+6+5 &&= 93395\\
+        a_6 &= 2\cdot7^{7^1}+2\cdot7^2+7+4 &&= 1647195\\
+        &\vdots
+        \end{align*}
+
+        Does this sequence eventually reach 0? If yes, after how many steps?
 
         <details><summary>Answer</summary><br/>
-        Yes. Even though it seems to grow without bound, it will eventually halt after finitely many steps. This is <a href="https://en.wikipedia.org/wiki/Goodstein's_theorem">Goodstein's theorem</a>, and is an example of a sequence that grows absurdly fast.
+        Yes. Even though it seems to grow without bound, it will eventually halt after finitely many steps. In fact, this is always true regardless of the starting point $m$. This is <a href="https://en.wikipedia.org/wiki/Goodstein's_theorem">Goodstein's theorem</a>, and is an example of a sequence that grows absurdly fast.<br/><br/>
+
+        If we start with $m=8$, then the sequence will eventually reach 0 after more than
+        $$A^3(3,3)=A(A(61),A(61))$$
+        steps, where $A(m,n)$ is the <a href="https://en.wikipedia.org/wiki/Ackermann_function">Ackermann function</a>.
         </details>
 
 
@@ -331,7 +365,13 @@
 
 
 
-                </ol><br/>
+        <li>Can every infinite set be partitioned into two disjoint infinite sets?
+
+        <details><summary>Answer</summary><br/>
+        The answer is Yes, but it relies on Axiom of Choice. In ZF (without Choice), there exist models where this statement does not hold. Infinite sets which cannot be partitioned into two disjoint infinite sets are called <a href="https://en.wikipedia.org/wiki/Amorphous_set">amorphous sets</a>.
+        </details>
+
+        </ol><br/>
 
         <h2>LOGIC / GAME THEORY</h2>
 
@@ -375,7 +415,7 @@
         <h2>COMPUTER SCIENCE</h2>
 
         <ol>
-        <li>Does the following six-state Turing machine halt?<br/><br/>
+        <li>Does the following six-state Turing machine halt? If yes, after how many steps?<br/><br/>
 
         <center><table style="font-family: Comic Mono">
         <tr><td rowspan=2><b>State</b></td><td colspan=2><b>Symbol</b></td></tr>

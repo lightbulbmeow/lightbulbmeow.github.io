@@ -5,7 +5,7 @@ let scripts = document.getElementsByTagName('script');
 let path = scripts[scripts.length-1].src;
 let mydir = path.split('/').slice(0, -1).join('/')+'/';
 
-let webpemojis = /:(akarinope|akarismug|akariyep|bebelove|chokocheer|chokodestroy|hacker|heh|ikuwow|kanadecry|kanadepien|kanaderamen|koishibaka|matelove|menheranerdglasses|menherateehee|mikuangery|mikuexcited|nanaadmire|nanaadmiresanta|nanabday|nanableh|nanacry|nanagrrr|nanahug|nanakiss|nanasmirk|nanastare|nanawave|nanaxd|neko|niko|pekoded|pien|pomicry|pomihappy|pominervous|serikalong|tere|vodkahug|zoneadmire|zonelmao|zonepeek|zonesad):/g
+let webpemojis = /:(akarinope|akarismug|akariyep|bebelove|chokocheer|chokodestroy|hacker|heh|ikuwow|kanadecry|kanadepien|kanaderamen|kanadespittake|koishibaka|matelove|menheranerdglasses|menherateehee|mikuangery|mikuexcited|mikuhehe|nanaadmire|nanaadmiresanta|nanabday|nanableh|nanacry|nanagrrr|nanahug|nanakiss|nanasmirk|nanastare|nanathink|nanawave|nanaxd|neko|niko|pekoded|pien|pomicry|pomihappy|pominervous|serikalong|tere|vodkahug|zoneadmire|zonelmao|zonepeek|zonesad):/g
 let gifemojis = /:(bocchihide|nanaaaa|nanaclap|nanayay):/g
 
 document.body.innerHTML = document.body.innerHTML.replace(webpemojis, '<img src="' + mydir + '$1.webp" height="24" />');
