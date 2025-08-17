@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta name="description" content="Hello! Welcome to my blog (*・ω・)ﾉ I will giv u free Cookies">
-    <title>My... blog... I guess?</title>
+    <title>CCBC 16 Reflection</title>
     <link rel="stylesheet" href="blog.css">
     <link rel="stylesheet" href="pygments.css">
     <style>@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@700&display=swap');</style> <!-- Google font "Josefin Sans" -->
@@ -37,7 +37,7 @@
         <p class="date">August 17, 2025. 10:00pm</p>
 
         <center>
-            <a href="https://ccbc16.cipherpuzzles.com"><img src="ccbc16.png" /></a>
+            <a href="https://ccbc16.cipherpuzzles.com"><img src="ccbc16/ccbc16.png" /></a>
         </center><br/>
 
         I tried the <a href="https://ccbc16.cipherpuzzles.com">16th CCBC hunt</a>... solo... without knowing any Chinese. :mikuhehe: I thought it would be a nice challenge. After all, I managed to finish three puzzle hunts solo before: <a href="https://2025.teammatehunt.com">Teammate Hunt</a>, <a href="https://www.brownpuzzlehunt.com">Brown Puzzlehunt</a> and <a href="https://silphpuzzlehunt.com/">Silph Puzzlehunt</a>.<br/><br/>
@@ -63,7 +63,7 @@
         This was the first puzzle in the hunt. As soon as I opened the puzzle, I instantly recognized what to do. These are all Chinese characters as if they were written with a single stroke! I tried out the puzzle for quite a while, struggling to figure out the Chinese characters they're trying to draw. <a href="https://qhanzi.com">Qhazi.com</a> carried me a lot here. I also had my cousin (who apparently had a tiny bit of Chinese writing experience) help me with some of the simpler Chinese characters.<br/><br/>
 
         <center>
-            <img src="ccbc16_qhanzi.png" width="25%" />
+            <img src="ccbc16/ccbc16_qhanzi.png" width="25%" />
         </center><br/>
 
         I experimented with different combinations of Chinese characters, entering partial phrases to ChatGPT or Gemini until something coherent came up. After lots of trials and tribulations, Gemini came up with "末句六字" for the third line, and "秋收起义" for the second line. Some Google told me the poem I needed was "西江月·秋收起义", so I submitted the final line of the poem, and it was correct.<br/>
@@ -110,14 +110,14 @@
         Fun logic puzzle. The Penpa controls for this one are a bit awkward, so I did this entirely in Paint. The extraction part is pretty funny, my friend helped me with this one. Who would expect there to be <i>Korean</i> in a <i>Chinese</i> puzzlehunt?
 
         <center>
-            <img src="ccbc16_galaxy.png" width="25%" />
+            <img src="ccbc16/ccbc16_galaxy.png" width="25%" />
         </center><br/>
 
         <h3>你想Roll出怎样的比赛: What game do you roll?</h3>
         This one is really nice. The story is small enough that mapping out the entire thing is not too tedious. I also used <span class="code">graphviz</span> to create a pretty diagram for this puzzle.<br/><br/>
 
         <center>
-            <img src="ccbc16_roll.png" width="33%" />
+            <img src="ccbc16/ccbc16_roll.png" width="33%" />
         </center><br/>
 
         Then I had an idea to figure out the probabilities of getting each ending. I did this in a very lazy way: I encoded the Markov chain as a matrix $M$, then just raised the matrix to the power of 1000, hoping that the values of $M^n$ quickly converge to something nice.<br/>
@@ -145,7 +145,7 @@
         Nice simple logic puzzle. The idea is that you're given an isometric view of some skyscrapers, and your goal is to reconstruct the actual thing. I'm really bad at visualizing 3D, so I booted up Minecraft to help me visualize the skyscrapers. I used different colored wool for different skyscraper heights, in order to easily distinguish them for extraction.<br/><br/>
 
         <center>
-            <img src="ccbc16_mc.png" width="33%" />
+            <img src="ccbc16/ccbc16_mc.png" width="33%" />
         </center><br/>
 
         <h3>META: 指南</h3>
@@ -170,7 +170,7 @@
         I also loved this one a lot. Previously in round 1, there was a logic puzzle that required non-uniqueness to extract the answer. This one takes it to another level! Now you <i>have</i> to ensure that each logic puzzle is unique by inserting the appropriate clues. The final grid spelling out LETO was a very nice touch.<br/><br/>
 
         <center>
-            <img src="ccbc16_leto.png" width="33%" />
+            <img src="ccbc16/ccbc16_leto.png" width="33%" />
         </center><br/>
 
         <h3>先有鸡还是先有蛋？: The chicken or the egg?</h3>
@@ -212,7 +212,7 @@
         Finally, I constructed the dodecahedron. The flavortext says to take the differences between antipodes, and the answer becomes like that. I'm surprised how they even managed to construct this puzzle to begin with.<br/>
 
         <center>
-            <img src="ccbc16_dodeca.png" width="33%" />
+            <img src="ccbc16/ccbc16_dodeca.png" width="33%" />
         </center>
 
         But, the next puzzle, ？？？式相爱, is even more insane. There are 10 pentagons left over from the previous puzzle, but what solid must be formed now? A dodecahedron wouldn't be possible since it run into contradictions, so maybe there's a solid that requires 10 pentagons and some other shaped-faces.<br/><br/>
@@ -222,7 +222,7 @@
         The final step is what kinda amazing: To extract the final answer, each hexagon should be filled in with an integer. It turns out, if you take the three pentagon sides in line of sight of each hexagon, there is a <i>unique</i> integer (in most cases) which satisfies all three conditions! Just... how did they manage to construct all that?! That must be some pure sorcery...<br/><br/>
 
         <center>
-            <img src="ccbc16_soccer.png" width="25%" />
+            <img src="ccbc16/ccbc16_soccer.png" width="25%" />
         </center><br/>
 
         This might be my new favorite "construct the polyhedron" puzzle of all time. :ikuwow: The "mindblowingness" of the final step more than makes up for the tedium of the initial steps of the puzzle.<br/>

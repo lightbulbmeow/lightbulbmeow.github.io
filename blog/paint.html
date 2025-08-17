@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta name="description" content="Hello! Welcome to my blog (*・ω・)ﾉ I will giv u free Cookies">
-    <title>My... blog... I guess?</title>
+    <title>New 'Paint' program I made in Pygame</title>
     <link rel="stylesheet" href="blog.css">
     <link rel="stylesheet" href="pygments.css">
     <style>@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@700&display=swap');</style> <!-- Google font "Josefin Sans" -->
@@ -44,19 +44,19 @@
         <p>Here is what it looks like right now, there's not much:</p>
 
         <center>
-            <img src="paint-1.png" width="50%"/>
+            <img src="paint/paint-1.png" width="50%"/>
         </center>
 
         <p>Currently, it has a Layers system, a color picker, and some tools. The most useful feature I have here so far is the background removal tool. Basically, it allows you to click on an area on an image and make it transparent. <span style="color:rgb(255,128,255); font-style:italic">(Hover on the images to make it easier to see.)</span></p>
 
         <center>
-            <img src="paint-2.png" width="33%" class="image" />
+            <img src="paint/paint-2.png" width="33%" class="image" />
         </center>
 
         <p>The algorithm is more complicated than it seems. I have to account for anti-aliased edges so I don't get weird gray pixels around the edge. Look at the image below to see what I mean.</p>
 
         <center>
-            <img src="paint-3.png" width="25%" class="image" />
+            <img src="paint/paint-3.png" width="25%" class="image" />
         </center>
 
         <p>The first one is the original image. The second one simply changes the alpha values of each pixel depending on how 'white' that pixel is. This leaves some pixels gray-colored, which is bad. The third one fixes this by changing the RGB value of the pixel to also match its surroundings.</p>
@@ -64,19 +64,19 @@
         <p>There's one issue with this approach. The image I showed above is very simple; there's only a single black object on a white background, so we can easily just set all RGB values as black and be done. Unfortunately, most images aren't so simple. Consider for example,</p>
 
         <center>
-            <img src="paint-4.png" width="50%" class="image" />
+            <img src="paint/paint-4.png" width="50%" class="image" />
         </center>
 
         <p>The original image contains three objects: a black one, a gray one, and a light gray one. We expect the background removal tool to give the image on the right. How would we determine the RGB values for each pixel in this image?</p>
 
         <center>
-            <img src="paint-5.png" width="33%" />
+            <img src="paint/paint-5.png" width="33%" />
         </center>
 
         <p>These two pixels here have the exact same RGB value. Yet, we want to set them to different alpha values since they belong to shapes of different color. We have to somehow tell that the top one belongs to the 'gray' shape, and the bottom one belongs to the 'black' shape. Even worse, how would we handle pixels in the intersection?</p>
 
         <center>
-            <img src="paint-6.png" width="33%" />
+            <img src="paint/paint-6.png" width="33%" />
         </center>
 
         <p>It would need to somehow take the color from the "solid" portion of the image.</p>
@@ -84,7 +84,7 @@
         <p>An idea that popped up to me was to use a <i>Voronoi-esque</i> diagram. Essentially, we only take the "solid" portion of the image, and spread the colors to the entire image. This way, a pixel will take the RGB value of the nearest 'solid' pixel it finds.</p>
 
         <center>
-            <img src="paint-7.png" width="50%" />
+            <img src="paint/paint-7.png" width="50%" />
         </center>
 
         <p>Using this idea, the algorithm would be:</p>
@@ -100,7 +100,7 @@
         <p>This a lot of steps to implement, so I tested it out with a grayscale image first. It worked surprisingly better than I expected! :ikuwow:</p>
 
         <center>
-            <img src="paint-8.png" width="75%" class="image" />
+            <img src="paint/paint-8.png" width="75%" class="image" />
 
             <p><b>Left image:</b> original; &nbsp; &nbsp; &nbsp; <b>Middle image:</b> "Voronoi" version; &nbsp; &nbsp; &nbsp; <b>Right image:</b> Final output</p>
         </center>
@@ -108,7 +108,7 @@
         <p>The final output has a couple of issues. When you zoom in on the image, you can see some of the "Voronoi" artifacts. It should be easily fixable by adjusting the threshold. After a couple of tweaks and making it work for RGB, here is the result I got:</p>
 
         <center>
-            <img src="paint-9.png" width="50%" class="image" />
+            <img src="paint/paint-9.png" width="50%" class="image" />
         </center>
 
         <p>I think I'm satisfied with this result. It still feels pretty trial-and-error-y to find the perfect threshold for the tool. All that's left for me to implement for this tol is a slider to easily change the threshold and feather radius.</p>
