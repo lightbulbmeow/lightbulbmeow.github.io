@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta name="description" content="Copy-pastable Python snippets for various ciphers">
+    <title>Puzzlehunt copy-pasteables</title>
+    <style>
+        body{
+            background-color: black;
+            color: white;
+        }
+        a{
+            color: #ff99ff;
+            font-weight: bold;
+        }
+        a:hover{
+            color: #ff9999;
+            text-decoration: underline;
+        }
+        div{
+            border-radius: 5px;
+            padding: 10px;
+            background-color: #000022;
+        }
+        textarea, code, #output{
+            font-family: "Comic Mono";
+            white-space: pre-wrap;
+            width: 100vw;
+        }
+        @font-face{
+            font-family: 'Comic Mono';
+            src: url("../../fonts/ComicMono.ttf");
+        }
+    </style>
+</head>
+<body>
+<h1>Puzzlehunt copy-pasteables</h1>
+
+Below are some copy-pastable Python snippets for easy access. A version for <a href="sheets.html">Google Sheets</a> with tables and formulas is also available.</p>
+
+<p>Click to jump:</p>
+
+<ol>
+<li>Alphabets
+<ol>
+<li><a href="#morse">Morse</a></li>
+<li><a href="#semaphore">Semaphore</a></li>
+<li><a href="#braille">Braille</a></li>
+<li><a href="#scrabble">Scrabble</a></li>
+<li><a href="#codons">Amino acid codons</a></li>
+</ol></li>
+<li>Sets
+<ol>
+<li><a href="#periodic_table">Periodic table</a></li>
+<li><a href="#us_states">US states</a></li>
+<li><a href="#countries">Countries</a></li>
+</ol></li>
+</ol>
+
+<h2 id="morse">Morse</h2>
+
+<img src="morse.jpg" height="200px" />
+
+<div><code># dict: {letter: code}
+
+{"A": ".-", "B": "-...", "C": "-.-.", "D": "-..", "E": ".", "F": "..-.", "G": "--.", "H": "....", "I": "..", "J": ".---", "K": "-.-", "L": ".-..", "M": "--", "N": "-.", "O": "---", "P": ".--.", "Q": "--.-", "R": ".-.", "S": "...", "T": "-", "U": "..-", "V": "...-", "W": ".--", "X": "-..-", "Y": "-.--", "Z": "--.."}
+
+# dict: {code: letter}
+
+{".-": "A", "-...": "B", "-.-.": "C", "-..": "D", ".": "E", "..-.": "F", "--.": "G", "....": "H", "..": "I", ".---": "J", "-.-": "K", ".-..": "L", "--": "M", "-.": "N", "---": "O", ".--.": "P", "--.-": "Q", ".-.": "R", "...": "S", "-": "T", "..-": "U", "...-": "V", ".--": "W", "-..-": "X", "-.--": "Y", "--..": "Z"}
+
+# list: code
+
+[".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..", ".---", "-.-", ".-..", "--", "-.", "---", ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--", "-..-", "-.--", "--.."]</code></div>
+
+<h2 id="semaphore">Semaphore</h2>
+
+<img src="semaphore.jpg" height="300px" />
+
+<div><code># dict: {letter: (compass1, compass2)}
+
+{"A": ("S", "SW"), "B": ("S", "W"), "C": ("S", "NW"), "D": ("S", "N"), "E": ("S", "NE"), "F": ("S", "E"), "G": ("S", "SE"), "H": ("SW", "W"), "I": ("SW", "NW"), "J": ("N", "E"), "K": ("SW", "N"), "L": ("SW", "NE"), "M": ("SW", "E"), "N": ("SW", "SE"), "O": ("W", "NW"), "P": ("W", "N"), "Q": ("W", "NE"), "R": ("W", "E"), "S": ("W", "SE"), "T": ("NW", "N"), "U": ("NW", "NE"), "V": ("N", "SE"), "W": ("NE", "E"), "X": ("NE", "SE"), "Y": ("NW", "E"), "Z": ("E", "SE")}
+
+# dict: {letter: (num1, num2)}, where 0 = north, going clockwise
+
+{"A": (4, 5), "B": (4, 6), "C": (4, 7), "D": (0, 4), "E": (1, 4), "F": (2, 4), "G": (3, 4), "H": (5, 6), "I": (5, 7), "J": (0, 2), "K": (0, 5), "L": (1, 5), "M": (2, 5), "N": (3, 5), "O": (6, 7), "P": (0, 6), "Q": (1, 6), "R": (2, 6), "S": (3, 6), "T": (0, 7), "U": (1, 7), "V": (0, 3), "W": (1, 2), "X": (1, 3), "Y": (2, 7), "Z": (2, 3)}
+
+# dict: {(num1, num2): letter}
+
+{(4, 5): "A", (5, 4): "A", (4, 6): "B", (6, 4): "B", (4, 7): "C", (7, 4): "C", (0, 4): "D", (4, 0): "D", (1, 4): "E", (4, 1): "E", (2, 4): "F", (4, 2): "F", (3, 4): "G", (4, 3): "G", (5, 6): "H", (6, 5): "H", (5, 7): "I", (7, 5): "I", (0, 2): "J", (2, 0): "J", (0, 5): "K", (5, 0): "K", (1, 5): "L", (5, 1): "L", (2, 5): "M", (5, 2): "M", (3, 5): "N", (5, 3): "N", (6, 7): "O", (7, 6): "O", (0, 6): "P", (6, 0): "P", (1, 6): "Q", (6, 1): "Q", (2, 6): "R", (6, 2): "R", (3, 6): "S", (6, 3): "S", (0, 7): "T", (7, 0): "T", (1, 7): "U", (7, 1): "U", (0, 3): "V", (3, 0): "V", (1, 2): "W", (2, 1): "W", (1, 3): "X", (3, 1): "X", (2, 7): "Y", (7, 2): "Y", (2, 3): "Z", (3, 2): "Z"}</code></div>
+
+<h2 id="braille">Braille</h2>
+
+<img src="braille.jpg" height="300px" />
+
+<div><code># READ FROM TOP-TO-DOWN, LEFT-TO-RIGHT (e.g. L = 111000)
+# dict: {letter: code}, where code is read from top-to-down, left-to-right (e.g.
+
+{"A": "100000", "B": "110000", "C": "100100", "D": "100110", "E": "100010", "F": "110100", "G": "110110", "H": "110010", "I": "010100", "J": "010110", "K": "101000", "L": "111000", "M": "101100", "N": "101110", "O": "101010", "P": "111100", "Q": "111110", "R": "111010", "S": "011100", "T": "011110", "U": "101001", "V": "111001", "W": "010111", "X": "101101", "Y": "101111", "Z": "101011"}
+
+# dict: {code: letter}
+
+{"100000": "A", "110000": "B", "100100": "C", "100110": "D", "100010": "E", "110100": "F", "110110": "G", "110010": "H", "010100": "I", "010110": "J", "101000": "K", "111000": "L", "101100": "M", "101110": "N", "101010": "O", "111100": "P", "111110": "Q", "111010": "R", "011100": "S", "011110": "T", "101001": "U", "111001": "V", "010111": "W", "101101": "X", "101111": "Y", "101011": "Z"}
+
+# list: code
+
+["100000", "110000", "100100", "100110", "100010", "110100", "110110", "110010", "010100", "010110", "101000", "111000", "101100", "101110", "101010", "111100", "111110", "111010", "011100", "011110", "101001", "111001", "010111", "101101", "101111", "101011"]
+
+
+# READ FROM LEFT-TO-RIGHT, TOP-TO-DOWN (e.g. L = 101010)
+# dict: {letter: code}
+
+{"A": "100000", "B": "101000", "C": "110000", "D": "110100", "E": "100100", "F": "111000", "G": "111100", "H": "101100", "I": "011000", "J": "011100", "K": "100010", "L": "101010", "M": "110010", "N": "110110", "O": "100110", "P": "111010", "Q": "111110", "R": "101110", "S": "011010", "T": "011110", "U": "100011", "V": "101011", "W": "011101", "X": "110011", "Y": "110111", "Z": "100111"}
+
+# dict: {code: letter}
+
+{"100000": "A", "101000": "B", "110000": "C", "110100": "D", "100100": "E", "111000": "F", "111100": "G", "101100": "H", "011000": "I", "011100": "J", "100010": "K", "101010": "L", "110010": "M", "110110": "N", "100110": "O", "111010": "P", "111110": "Q", "101110": "R", "011010": "S", "011110": "T", "100011": "U", "101011": "V", "011101": "W", "110011": "X", "110111": "Y", "100111": "Z"}
+
+
+# list: code in binary, read from left-to-right", top-to-down (e.g. O = 100110)
+
+["100000", "101000", "110000", "110100", "100100", "111000", "111100", "101100", "011000", "011100", "100010", "101010", "110010", "110110", "100110", "111010", "111110", "101110", "011010", "011110", "100011", "101011", "011101", "110011", "110111", "100111"]</code></div>
+
+<h2 id="scrabble">Scrabble</h2>
+
+<img src="scrabble.jpg" height="300px" />
+
+<div><code># dict: {letter: score}
+
+{"A": 1, "B": 3, "C": 3, "D": 2, "E": 1, "F": 4, "G": 2, "H": 4, "I": 1, "J": 8, "K": 5, "L": 1, "M": 3, "N": 1, "O": 1, "P": 3, "Q": 10, "R": 1, "S": 1, "T": 1, "U": 1, "V": 4, "W": 4, "X": 8, "Y": 4, "Z": 10}
+
+# list: score
+
+[1, 3, 3, 2, 1, 4, 2, 4, 1, 8, 5, 1, 3, 1, 1, 3, 10, 1, 1, 1, 1, 4, 4, 8, 4, 10]
+
+# string: letters by frequency
+
+"EEEEEEEEEEEEAAAAAAAAAIIIIIIIIIOOOOOOOONNNNNNRRRRRRTTTTTTLLLLSSSSUUUUDDDDGGGBBCCMMPPFFHHVVWWYYKJXQZ"
+
+# string: letters by alphabetical
+
+"AAAAAAAAABBCCDDDDEEEEEEEEEEEEFFGGGHHIIIIIIIIIJKLLLLMMNNNNNNOOOOOOOOPPQRRRRRRSSSSTTTTTTUUUUVVWWXYYZ"
+</code></div>
+
+<h2 id="codons">Amino acid codons</h2>
+
+<img src="codons.jpg" height="300px" />
+
+<div><code># dict: {sequence: codon}
+
+{"GCU": "Ala", "GCC": "Ala", "GCA": "Ala", "GCG": "Ala", "CGU": "Arg", "CGC": "Arg", "CGA": "Arg", "CGG": "Arg", "AGA": "Arg", "AGG": "Arg", "AAU": "Asn", "AAC": "Asn", "GAU": "Asp", "GAC": "Asp", "UGU": "Cys", "UGC": "Cys", "CAA": "Gln", "CAG": "Gln", "GAA": "Glu", "GAG": "Glu", "GGU": "Gly", "GGC": "Gly", "GGA": "Gly", "GGG": "Gly", "CAU": "His", "CAC": "His", "AUU": "Ile", "AUC": "Ile", "AUA": "Ile", "UUA": "Leu", "UUG": "Leu", "CUU": "Leu", "CUC": "Leu", "CUA": "Leu", "CUG": "Leu", "AAA": "Lys", "AAG": "Lys", "AUG": "Met", "UUU": "Phe", "UUC": "Phe", "CCU": "Pro", "CCC": "Pro", "CCA": "Pro", "CCG": "Pro", "UCU": "Ser", "UCC": "Ser", "UCA": "Ser", "UCG": "Ser", "AGU": "Ser", "AGC": "Ser", "ACU": "Thr", "ACC": "Thr", "ACA": "Thr", "ACG": "Thr", "UGG": "Trp", "UAU": "Tyr", "UAC": "Tyr", "GUU": "Val", "GUC": "Val", "GUA": "Val", "GUG": "Val", "UAA": "Stop", "UAG": "Stop", "UGA": "Stop"}
+
+# dict: {sequence: letter}, stop = "!"
+
+{"GCU": "A", "GCC": "A", "GCA": "A", "GCG": "A", "CGU": "R", "CGC": "R", "CGA": "R", "CGG": "R", "AGA": "R", "AGG": "R", "AAU": "N", "AAC": "N", "GAU": "D", "GAC": "D", "UGU": "C", "UGC": "C", "CAA": "Q", "CAG": "Q", "GAA": "E", "GAG": "E", "GGU": "G", "GGC": "G", "GGA": "G", "GGG": "G", "CAU": "H", "CAC": "H", "AUU": "I", "AUC": "I", "AUA": "I", "UUA": "L", "UUG": "L", "CUU": "L", "CUC": "L", "CUA": "L", "CUG": "L", "AAA": "K", "AAG": "K", "AUG": "M", "UUU": "F", "UUC": "F", "CCU": "P", "CCC": "P", "CCA": "P", "CCG": "P", "UCU": "S", "UCC": "S", "UCA": "S", "UCG": "S", "AGU": "S", "AGC": "S", "ACU": "T", "ACC": "T", "ACA": "T", "ACG": "T", "UGG": "W", "UAU": "Y", "UAC": "Y", "GUU": "V", "GUC": "V", "GUA": "V", "GUG": "V", "UAA": "!", "UAG": "!", "UGA": "!"}</code></div>
+
+<h2 id="periodic_table">Periodic table</h2>
+
+<img src="periodic_table.jpg" height="300px" />
+
+<div><code># list: (symbol, element)
+
+[("H", "Hydrogen"), ("He", "Helium"), ("Li", "Lithium"), ("Be", "Beryllium"), ("B", "Boron"), ("C", "Carbon"), ("N", "Nitrogen"), ("O", "Oxygen"), ("F", "Fluorine"), ("Ne", "Neon"), ("Na", "Sodium"), ("Mg", "Magnesium"), ("Al", "Aluminum"), ("Si", "Silicon"), ("P", "Phosphorus"), ("S", "Sulfur"), ("Cl", "Chlorine"), ("Ar", "Argon"), ("K", "Potassium"), ("Ca", "Calcium"), ("Sc", "Scandium"), ("Ti", "Titanium"), ("V", "Vanadium"), ("Cr", "Chromium"), ("Mn", "Manganese"), ("Fe", "Iron"), ("Co", "Cobalt"), ("Ni", "Nickel"), ("Cu", "Copper"), ("Zn", "Zinc"), ("Ga", "Gallium"), ("Ge", "Germanium"), ("As", "Arsenic"), ("Se", "Selenium"), ("Br", "Bromine"), ("Kr", "Krypton"), ("Rb", "Rubidium"), ("Sr", "Strontium"), ("Y", "Yttrium"), ("Zr", "Zirconium"), ("Nb", "Niobium"), ("Mo", "Molybdenum"), ("Tc", "Technetium"), ("Ru", "Ruthenium"), ("Rh", "Rhodium"), ("Pd", "Palladium"), ("Ag", "Silver"), ("Cd", "Cadmium"), ("In", "Indium"), ("Sn", "Tin"), ("Sb", "Antimony"), ("Te", "Tellurium"), ("I", "Iodine"), ("Xe", "Xenon"), ("Cs", "Cesium"), ("Ba", "Barium"), ("La", "Lanthanum"), ("Ce", "Cerium"), ("Pr", "Praseodymium"), ("Nd", "Neodymium"), ("Pm", "Promethium"), ("Sm", "Samarium"), ("Eu", "Europium"), ("Gd", "Gadolinium"), ("Tb", "Terbium"), ("Dy", "Dysprosium"), ("Ho", "Holmium"), ("Er", "Erbium"), ("Tm", "Thulium"), ("Yb", "Ytterbium"), ("Lu", "Lutetium"), ("Hf", "Hafnium"), ("Ta", "Tantalum"), ("W", "Tungsten"), ("Re", "Rhenium"), ("Os", "Osmium"), ("Ir", "Iridium"), ("Pt", "Platinum"), ("Au", "Gold"), ("Hg", "Mercury"), ("Tl", "Thallium"), ("Pb", "Lead"), ("Bi", "Bismuth"), ("Po", "Polonium"), ("At", "Astatine"), ("Rn", "Radon"), ("Fr", "Francium"), ("Ra", "Radium"), ("Ac", "Actinium"), ("Th", "Thorium"), ("Pa", "Protactinium"), ("U", "Uranium"), ("Np", "Neptunium"), ("Pu", "Plutonium"), ("Am", "Americium"), ("Cm", "Curium"), ("Bk", "Berkelium"), ("Cf", "Californium"), ("Es", "Einsteinium"), ("Fm", "Fermium"), ("Md", "Mendelevium"), ("No", "Nobelium"), ("Lr", "Lawrencium"), ("Rf", "Rutherfordium"), ("Db", "Dubnium"), ("Sg", "Seaborgium"), ("Bh", "Bohrium"), ("Hs", "Hassium"), ("Mt", "Meitnerium"), ("Ds", "Darmstadtium"), ("Rg", "Roentgenium"), ("Cn", "Copernicium"), ("Nh", "Nihonium"), ("Fl", "Flerovium"), ("Mc", "Moscovium"), ("Lv", "Livermorium"), ("Ts", "Tennessine"), ("Og", "Oganesson")]
+
+# list: symbol
+
+["H", "He", "Li", "Be", "B", "C", "N", "O", "F", "Ne", "Na", "Mg", "Al", "Si", "P", "S", "Cl", "Ar", "K", "Ca", "Sc", "Ti", "V", "Cr", "Mn", "Fe", "Co", "Ni", "Cu", "Zn", "Ga", "Ge", "As", "Se", "Br", "Kr", "Rb", "Sr", "Y", "Zr", "Nb", "Mo", "Tc", "Ru", "Rh", "Pd", "Ag", "Cd", "In", "Sn", "Sb", "Te", "I", "Xe", "Cs", "Ba", "La", "Ce", "Pr", "Nd", "Pm", "Sm", "Eu", "Gd", "Tb", "Dy", "Ho", "Er", "Tm", "Yb", "Lu", "Hf", "Ta", "W", "Re", "Os", "Ir", "Pt", "Au", "Hg", "Tl", "Pb", "Bi", "Po", "At", "Rn", "Fr", "Ra", "Ac", "Th", "Pa", "U", "Np", "Pu", "Am", "Cm", "Bk", "Cf", "Es", "Fm", "Md", "No", "Lr", "Rf", "Db", "Sg", "Bh", "Hs", "Mt", "Ds", "Rg", "Cn", "Nh", "Fl", "Mc", "Lv", "Ts", "Og"]
+
+# 2d table: symbol
+
+[
+    ["H", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "He"],
+    ["Li", "Be", "", "", "", "", "", "", "", "", "", "", "B", "C", "N", "O", "F", "Ne"],
+    ["Na", "Mg", "", "", "", "", "", "", "", "", "", "", "Al", "Si", "P", "S", "Cl", "Ar"],
+    ["K", "Ca", "Sc", "Ti", "V", "Cr", "Mn", "Fe", "Co", "Ni", "Cu", "Zn", "Ga", "Ge", "As", "Se", "Br", "Kr"],
+    ["Rb", "Sr", "Y", "Zr", "Nb", "Mo", "Tc", "Ru", "Rh", "Pd", "Ag", "Cd", "In", "Sn", "Sb", "Te", "I", "Xe"],
+    ["Cs", "Ba", "", "Hf", "Ta", "W", "Re", "Os", "Ir", "Pt", "Au", "Hg", "Tl", "Pb", "Bi", "Po", "At", "Rn"],
+    ["Fr", "Ra", "", "Rf", "Db", "Sg", "Bh", "Hs", "Mt", "Ds", "Rg", "Cn", "Nh", "Fl", "Mc", "Lv", "Ts", "Og"],
+    ["", "", "La", "Ce", "Pr", "Nd", "Pm", "Sm", "Eu", "Gd", "Tb", "Dy", "Ho", "Er", "Tm", "Yb", "Lu", ""],
+    ["", "", "Ac", "Th", "Pa", "U", "Np", "Pu", "Am", "Cm", "Bk", "Cf", "Es", "Fm", "Md", "No", "Lr", ""]
+]</code></div>
+
+<h2 id="us_states">US states</h2>
+
+<img src="us_states.jpg" height="300px" />
+
+<div><code># list: (abbr, name)
+
+[("AL", "Alabama"), ("AK", "Alaska"), ("AZ", "Arizona"), ("AR", "Arkansas"), ("CA", "California"), ("CO", "Colorado"), ("CT", "Connecticut"), ("DE", "Delaware"), ("FL", "Florida"), ("GA", "Georgia"), ("HI", "Hawaii"), ("ID", "Idaho"), ("IL", "Illinois"), ("IN", "Indiana"), ("IA", "Iowa"), ("KS", "Kansas"), ("KY", "Kentucky"), ("LA", "Louisiana"), ("ME", "Maine"), ("MD", "Maryland"), ("MA", "Massachusetts"), ("MI", "Michigan"), ("MN", "Minnesota"), ("MS", "Mississippi"), ("MO", "Missouri"), ("MT", "Montana"), ("NE", "Nebraska"), ("NV", "Nevada"), ("NH", "New Hampshire"), ("NJ", "New Jersey"), ("NM", "New Mexico"), ("NY", "New York"), ("NC", "North Carolina"), ("ND", "North Dakota"), ("OH", "Ohio"), ("OK", "Oklahoma"), ("OR", "Oregon"), ("PA", "Pennsylvania"), ("RI", "Rhode Island"), ("SC", "South Carolina"), ("SD", "South Dakota"), ("TN", "Tennessee"), ("TX", "Texas"), ("UT", "Utah"), ("VT", "Vermont"), ("VA", "Virginia"), ("WA", "Washington"), ("WV", "West Virginia"), ("WI", "Wisconsin"), ("WY", "Wyoming")]
+</div></code>
+
+<h2 id="countries">Countries</h2>
+
+<img src="countries.jpg" height="300px" />
+
+<div><code># list: (2-letter abbr, 3-letter abbr, name)
+
+[("AF", "AFG", "Afghanistan"), ("AL", "ALB", "Albania"), ("DZ", "DZA", "Algeria"), ("AS", "ASM", "American Samoa"), ("AD", "AND", "Andorra"), ("AO", "AGO", "Angola"), ("AI", "AIA", "Anguilla"), ("AQ", "ATA", "Antarctica"), ("AG", "ATG", "Antigua and Barbuda"), ("AR", "ARG", "Argentina"), ("AM", "ARM", "Armenia"), ("AW", "ABW", "Aruba"), ("AU", "AUS", "Australia"), ("AT", "AUT", "Austria"), ("AZ", "AZE", "Azerbaijan"), ("BS", "BHS", "Bahamas"), ("BH", "BHR", "Bahrain"), ("BD", "BGD", "Bangladesh"), ("BB", "BRB", "Barbados"), ("BY", "BLR", "Belarus"), ("BE", "BEL", "Belgium"), ("BZ", "BLZ", "Belize"), ("BJ", "BEN", "Benin"), ("BM", "BMU", "Bermuda"), ("BT", "BTN", "Bhutan"), ("BO", "BOL", "Bolivia"), ("BQ", "BES", "Bonaire, Sint Eustatius and Saba"), ("BA", "BIH", "Bosnia and Herzegovina"), ("BW", "BWA", "Botswana"), ("BV", "BVT", "Bouvet Island"), ("BR", "BRA", "Brazil"), ("IO", "IOT", "British Indian Ocean Territory"), ("BN", "BRN", "Brunei Darussalam"), ("BG", "BGR", "Bulgaria"), ("BF", "BFA", "Burkina Faso"), ("BI", "BDI", "Burundi"), ("CV", "CPV", "Cabo Verde"), ("KH", "KHM", "Cambodia"), ("CM", "CMR", "Cameroon"), ("CA", "CAN", "Canada"), ("KY", "CYM", "Cayman Islands"), ("CF", "CAF", "Central African Republic"), ("TD", "TCD", "Chad"), ("CL", "CHL", "Chile"), ("CN", "CHN", "China"), ("CX", "CXR", "Christmas Island"), ("CC", "CCK", "Cocos (Keeling) Islands"), ("CO", "COL", "Colombia"), ("KM", "COM", "Comoros"), ("CD", "COD", "Congo (the Democratic Republic of the)"), ("CG", "COG", "Congo"), ("CK", "COK", "Cook Islands"), ("CR", "CRI", "Costa Rica"), ("HR", "HRV", "Croatia"), ("CU", "CUB", "Cuba"), ("CW", "CUW", "Curaçao"), ("CY", "CYP", "Cyprus"), ("CZ", "CZE", "Czechia"), ("CI", "CIV", "Côte d'Ivoire"), ("DK", "DNK", "Denmark"), ("DJ", "DJI", "Djibouti"), ("DM", "DMA", "Dominica"), ("DO", "DOM", "Dominican Republic"), ("EC", "ECU", "Ecuador"), ("EG", "EGY", "Egypt"), ("SV", "SLV", "El Salvador"), ("GQ", "GNQ", "Equatorial Guinea"), ("ER", "ERI", "Eritrea"), ("EE", "EST", "Estonia"), ("SZ", "SWZ", "Eswatini"), ("ET", "ETH", "Ethiopia"), ("FK", "FLK", "Falkland Islands [Malvinas]"), ("FO", "FRO", "Faroe Islands"), ("FJ", "FJI", "Fiji"), ("FI", "FIN", "Finland"), ("FR", "FRA", "France"), ("GF", "GUF", "French Guiana"), ("PF", "PYF", "French Polynesia"), ("TF", "ATF", "French Southern Territories"), ("GA", "GAB", "Gabon"), ("GM", "GMB", "Gambia"), ("GE", "GEO", "Georgia"), ("DE", "DEU", "Germany"), ("GH", "GHA", "Ghana"), ("GI", "GIB", "Gibraltar"), ("GR", "GRC", "Greece"), ("GL", "GRL", "Greenland"), ("GD", "GRD", "Grenada"), ("GP", "GLP", "Guadeloupe"), ("GU", "GUM", "Guam"), ("GT", "GTM", "Guatemala"), ("GG", "GGY", "Guernsey"), ("GW", "GNB", "Guinea-Bissau"), ("GN", "GIN", "Guinea"), ("GY", "GUY", "Guyana"), ("HT", "HTI", "Haiti"), ("HM", "HMD", "Heard Island and McDonald Islands"), ("VA", "VAT", "Holy See"), ("HN", "HND", "Honduras"), ("HK", "HKG", "Hong Kong"), ("HU", "HUN", "Hungary"), ("IS", "ISL", "Iceland"), ("IN", "IND", "India"), ("ID", "IDN", "Indonesia"), ("IR", "IRN", "Iran"), ("IQ", "IRQ", "Iraq"), ("IE", "IRL", "Ireland"), ("IM", "IMN", "Isle of Man"), ("IL", "ISR", "Israel"), ("IT", "ITA", "Italy"), ("JM", "JAM", "Jamaica"), ("JP", "JPN", "Japan"), ("JE", "JEY", "Jersey"), ("JO", "JOR", "Jordan"), ("KZ", "KAZ", "Kazakhstan"), ("KE", "KEN", "Kenya"), ("KI", "KIR", "Kiribati"), ("KW", "KWT", "Kuwait"), ("KG", "KGZ", "Kyrgyzstan"), ("LA", "LAO", "Laos"), ("LV", "LVA", "Latvia"), ("LB", "LBN", "Lebanon"), ("LS", "LSO", "Lesotho"), ("LR", "LBR", "Liberia"), ("LY", "LBY", "Libya"), ("LI", "LIE", "Liechtenstein"), ("LT", "LTU", "Lithuania"), ("LU", "LUX", "Luxembourg"), ("MO", "MAC", "Macao"), ("MG", "MDG", "Madagascar"), ("MW", "MWI", "Malawi"), ("MY", "MYS", "Malaysia"), ("MV", "MDV", "Maldives"), ("ML", "MLI", "Mali"), ("MT", "MLT", "Malta"), ("MH", "MHL", "Marshall Islands"), ("MQ", "MTQ", "Martinique"), ("MR", "MRT", "Mauritania"), ("MU", "MUS", "Mauritius"), ("YT", "MYT", "Mayotte"), ("MX", "MEX", "Mexico"), ("FM", "FSM", "Micronesia"), ("MD", "MDA", "Moldova"), ("MC", "MCO", "Monaco"), ("MN", "MNG", "Mongolia"), ("ME", "MNE", "Montenegro"), ("MS", "MSR", "Montserrat"), ("MA", "MAR", "Morocco"), ("MZ", "MOZ", "Mozambique"), ("MM", "MMR", "Myanmar"), ("NA", "NAM", "Namibia"), ("NR", "NRU", "Nauru"), ("NP", "NPL", "Nepal"), ("NL", "NLD", "Netherlands"), ("NC", "NCL", "New Caledonia"), ("NZ", "NZL", "New Zealand"), ("NI", "NIC", "Nicaragua"), ("NE", "NER", "Niger"), ("NG", "NGA", "Nigeria"), ("NU", "NIU", "Niue"), ("NF", "NFK", "Norfolk Island"), ("KP", "PRK", "North Korea"), ("MP", "MNP", "Northern Mariana Islands"), ("NO", "NOR", "Norway"), ("OM", "OMN", "Oman"), ("PK", "PAK", "Pakistan"), ("PW", "PLW", "Palau"), ("PS", "PSE", "Palestine, State of"), ("PA", "PAN", "Panama"), ("PG", "PNG", "Papua New Guinea"), ("PY", "PRY", "Paraguay"), ("PE", "PER", "Peru"), ("PH", "PHL", "Philippines"), ("PN", "PCN", "Pitcairn"), ("PL", "POL", "Poland"), ("PT", "PRT", "Portugal"), ("PR", "PRI", "Puerto Rico"), ("QA", "QAT", "Qatar"), ("MK", "MKD", "Republic of North Macedonia"), ("RO", "ROU", "Romania"), ("RU", "RUS", "Russian Federation"), ("RW", "RWA", "Rwanda"), ("RE", "REU", "Réunion"), ("BL", "BLM", "Saint Barthélemy"), ("SH", "SHN", "Saint Helena, Ascension and Tristan da Cunha"), ("KN", "KNA", "Saint Kitts and Nevis"), ("LC", "LCA", "Saint Lucia"), ("MF", "MAF", "Saint Martin (French part)"), ("PM", "SPM", "Saint Pierre and Miquelon"), ("VC", "VCT", "Saint Vincent and the Grenadines"), ("WS", "WSM", "Samoa"), ("SM", "SMR", "San Marino"), ("ST", "STP", "Sao Tome and Principe"), ("SA", "SAU", "Saudi Arabia"), ("SN", "SEN", "Senegal"), ("RS", "SRB", "Serbia"), ("SC", "SYC", "Seychelles"), ("SL", "SLE", "Sierra Leone"), ("SG", "SGP", "Singapore"), ("SX", "SXM", "Sint Maarten"), ("SK", "SVK", "Slovakia"), ("SI", "SVN", "Slovenia"), ("SB", "SLB", "Solomon Islands"), ("SO", "SOM", "Somalia"), ("ZA", "ZAF", "South Africa"), ("GS", "SGS", "South Georgia and the South Sandwich Islands"), ("KR", "KOR", "South Korea"), ("SS", "SSD", "South Sudan"), ("ES", "ESP", "Spain"), ("LK", "LKA", "Sri Lanka"), ("SD", "SDN", "Sudan"), ("SR", "SUR", "Suriname"), ("SJ", "SJM", "Svalbard and Jan Mayen"), ("SE", "SWE", "Sweden"), ("CH", "CHE", "Switzerland"), ("SY", "SYR", "Syrian Arab Republic"), ("TW", "TWN", "Taiwan"), ("TJ", "TJK", "Tajikistan"), ("TZ", "TZA", "Tanzania, United Republic of"), ("TH", "THA", "Thailand"), ("TL", "TLS", "Timor-Leste"), ("TG", "TGO", "Togo"), ("TK", "TKL", "Tokelau"), ("TO", "TON", "Tonga"), ("TT", "TTO", "Trinidad and Tobago"), ("TN", "TUN", "Tunisia"), ("TR", "TUR", "Turkey"), ("TM", "TKM", "Turkmenistan"), ("TC", "TCA", "Turks and Caicos Islands"), ("TV", "TUV", "Tuvalu"), ("UG", "UGA", "Uganda"), ("UA", "UKR", "Ukraine"), ("AE", "ARE", "United Arab Emirates"), ("GB", "GBR", "United Kingdom"), ("UM", "UMI", "United States Minor Outlying Islands"), ("US", "USA", "United States of America"), ("UY", "URY", "Uruguay"), ("UZ", "UZB", "Uzbekistan"), ("VU", "VUT", "Vanuatu"), ("VE", "VEN", "Venezuela"), ("VN", "VNM", "Viet Nam"), ("VG", "VGB", "Virgin Islands (British)"), ("VI", "VIR", "Virgin Islands (U.S.)"), ("WF", "WLF", "Wallis and Futuna"), ("EH", "ESH", "Western Sahara"), ("YE", "YEM", "Yemen"), ("ZM", "ZMB", "Zambia"), ("ZW", "ZWE", "Zimbabwe"), ("AX", "ALA", "Åland Islands")]</code></div>
+
+</body>
+</html>
