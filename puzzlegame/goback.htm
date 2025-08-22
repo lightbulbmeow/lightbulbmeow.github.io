@@ -1,0 +1,22 @@
+<html>
+<head>
+<title>Go back</title>
+<link rel="stylesheet" href="style.css">
+<script>
+    window.onload = function() {
+      history.pushState(null, "", location.href);
+      window.onpopstate = function () {
+        window.location.href = "gobackevenfurther.htm";
+      };
+    };
+</script>
+</head>
+<body>
+</div>
+<center>
+<h1>Level 24</h1>
+<p>If we could turn <b>back</b> time, to the good old days...</p>
+<img src="back.png">
+</center>
+</body>
+</html>
