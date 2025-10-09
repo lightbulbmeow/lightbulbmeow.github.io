@@ -1,4 +1,4 @@
- Level ideas:
+Level ideas:
 1. Let box fall on you where box is push
 2. Deactivate/activate a rule using gravity
 3. text stacking

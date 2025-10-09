@@ -1,3 +1,5 @@
+// script that handles updates according to rules
+
 function windowkill(){
     if(windowhasrules.length > 0){
         window.resizeTo(lh*24 + 35,lh*24 + 110);

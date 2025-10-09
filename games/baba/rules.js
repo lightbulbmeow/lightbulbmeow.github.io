@@ -1,3 +1,5 @@
+// script that handles all rule parsing and interpreting
+
 class ruletile{
     constructor(name,texttype,id){
         this.name = name;

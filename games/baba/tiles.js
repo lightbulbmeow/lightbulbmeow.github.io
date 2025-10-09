@@ -1,3 +1,5 @@
+// script handling the physics
+
 function smaller(a,b){                //return the number with the smaller absolute value
     if(Math.abs(a) < Math.abs(b)){    //used for determining xspeed/yspeed of objects when it hits solids
         return a;

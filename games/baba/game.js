@@ -1,3 +1,5 @@
+// script handling game controls and display
+
 var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
 
@@ -23,7 +25,7 @@ for(i = 2; i < leveldata.length - 1; i += 5){
 canvas.width = lw*24;
 canvas.height = lh*24;
 
-function make_base(link,x,y) 
+function make_base(link,x,y)
 {
   base_image = new Image();
   base_image.src = "sprites/" + link + ".png";
@@ -109,7 +111,7 @@ var undos = [];
 var undotime = 0;
 
 function draw(){
-    
+
     //simulate the shake animation
     if(!pause){
         if(shakeduration > 0){
@@ -127,7 +129,7 @@ function draw(){
             }
         }
     }
-    
+
     if(undotime <= 0){
         undotime = 50;
         var tilesclone = [];
@@ -146,7 +148,7 @@ function draw(){
     if(!pause){
         undotime--;
     }
-    
+
     //update tilegrid;
     tilegrid = [];
     for(var i = 0; i < lw; i ++){
@@ -163,7 +165,7 @@ function draw(){
         }
         tilegrid[Math.round(a.x/24)][Math.round(a.y/24)].push(i);
     }
-    
+
     //rule parse and interpret
     //fix TextHasMoved soon.
     if(texthasmoved){
@@ -171,7 +173,7 @@ function draw(){
         ruleinterpret();
     }
     texthasmoved = true; //change to false
-    
+
     if(pause){
         updatelvl("zawarudo",false);
     }else{
@@ -199,16 +201,16 @@ function draw(){
             updatelvl("slow",true);
         }
         slowturn ^= true;
-        
+
         updatelvl("fast",false);
     }
-    
+
     movejump = false;
     movejump2 = false;
-    
+
     //draw canvas
     ctx.clearRect(0,0,24*lw,24*lh);
-    
+
     //TEST ONLY!!!
     /*ctx.fillStyle="#333333";
     for(var i = 0; i < 40; i ++){
@@ -219,7 +221,7 @@ function draw(){
         }
     }*/
     //
-    
+
     if(!windowrules.includes("hide")){
         for(var i = 0; i < tiles.length; i ++){
             var a = tiles[i]
@@ -266,13 +268,18 @@ function draw(){
             }
         }
     }
-    
+
     if(pause){
         ctx.globalAlpha = 0.5;
         make_base("gamepause",lw*12-200,lh*12-50);
     }
-    
-    window.requestAnimationFrame(draw);
 }
 
-window.requestAnimationFrame(draw);
+async function loop(){
+    while(true){
+        await new Promise(r => setTimeout(r, 20));
+        window.requestAnimationFrame(draw);
+    }
+}
+
+loop();

@@ -1,3 +1,5 @@
+// script that handles the level editor
+
 var lw = 30;
 var lh = 15;
 
