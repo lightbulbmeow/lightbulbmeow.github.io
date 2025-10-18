@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  body {
+    font-size: 20px;
+  }
+
+  .container {
+    position: relative;
+    display: inline-block;
+  }
+
+  #holdButton {
+    position: absolute;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .mined {
+    color: gray;
+    text-decoration: line-through;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  Jackdaws love my big sphinx of <span id="mineable-word">quartz</span>.
+  <button id="holdButton">
+    <img id="btnImage" src="empty.png" alt="button" width="100%" height="100%">
+  </button>
+</div>
+
+<script>
+  const button = document.getElementById("holdButton");
+  const image = document.getElementById("btnImage");
+  const word = document.getElementById("mineable-word");
+
+  let holdTime = 0;
+  let holdTimer;
+
+  // ✨ Position button exactly over "quartz"
+  function positionButton() {
+    const rect = word.getBoundingClientRect();
+    const containerRect = word.closest('.container').getBoundingClientRect();
+    button.style.left = (rect.left - containerRect.left - 2) + "px";
+    button.style.top = (rect.top - containerRect.top - 2) + "px";
+    button.style.width = (rect.width + 4) + "px";
+    button.style.height = (rect.height + 4) + "px";
+  }
+
+  // Recalculate position when window resizes
+  window.addEventListener('resize', positionButton);
+  window.addEventListener('load', positionButton);
+
+  button.addEventListener("mousedown", () => {
+    index = 0;
+    holdTimer = setInterval(() => {
+      if (index <= 9) {
+        image.src = "destroy_stage_" + index + ".png";
+      } else if (index == 10){
+        button.style.display = "none";
+        word.classList.add("mined");
+        alert("congrats you have quartz");
+      }
+      index ++;
+    }, 300);
+  });
+
+  const resetImage = () => {
+    clearInterval(holdTimer);
+    image.src = "empty.png";
+  };
+
+  button.addEventListener("mouseup", resetImage);
+  button.addEventListener("mouseleave", resetImage);
+</script>
+
+</body>
+</html>
