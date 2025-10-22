@@ -20,6 +20,7 @@ var tilegrid = [];
 var windowrules = [];
 var windowconverts = [];
 var windowhasrules = [];
+var wonthelevel = false;
 
 function updatelvl(condition,not){
     
@@ -424,31 +425,33 @@ function updatelvl(condition,not){
     }
     
     //you win!
-    var youexist = false;
-    for(var i = 0; i < tilecount; i ++){
-        var a = tiles[i];
-        if(a == null){
-            continue;
-        }
-        if(a.rules.includes("you") || a.rules.includes("you2") & (a.rules.includes(condition) ^ not)){
-            youexist = true;
-            if(a.rules.includes("win")){
-                alert("Congratulations!");
-                window.close();
+    if(!wonthelevel){
+        var youexist = false;
+        for(var i = 0; i < tilecount; i ++){
+            var a = tiles[i];
+            if(a == null){
+                continue;
             }
-            var idinside = a.idinside();
-            for(var j = 0; j < idinside.length; j ++){
-                var b = tiles[idinside[j]];
-                if(b.rules.includes("win") & a.isinside(b)){
-                    alert("Congratulations!");
-                    window.close();
+            if(a.rules.includes("you") || a.rules.includes("you2") & (a.rules.includes(condition) ^ not)){
+                youexist = true;
+                if(a.rules.includes("win")){
+                    win();
+                    break;
                 }
+                var idinside = a.idinside();
+                for(var j = 0; j < idinside.length; j ++){
+                    var b = tiles[idinside[j]];
+                    if(b.rules.includes("win") & a.isinside(b)){
+                        win();
+                        break;
+                    }
+                }
+                if(wonthelevel) break;
             }
         }
-    }
-    if(youexist & windowrules.includes("win")){
-        alert("Congratulations!");
-        window.close();
+        if(youexist & windowrules.includes("win")){
+            win();
+        }
     }
     //
     
@@ -468,5 +471,42 @@ function updatelvl(condition,not){
             doneobjects.push(new doneobject(a.name,a.x,a.y));
             tiles[i] = null;
         }
+    }
+}
+
+async function win(){
+    pause = true;
+    wonthelevel = true;
+    validwin = false;
+    var tilecount = tiles.length;
+    for(var i = 0; i < tilecount; i ++){
+        var a = tiles[i];
+        if(a == null){
+            continue;
+        }
+        if(a.rules.includes("you") || a.rules.includes("you2")){
+            youexist = true;
+            if(a.rules.includes("win")){
+                validwin = true;
+                break;
+            }
+            var idinside = a.idinside();
+            for(var j = 0; j < idinside.length; j ++){
+                var b = tiles[idinside[j]];
+                if(b.rules.includes("win") & a.isinside(b)){
+                    validwin = true;
+                    break;
+                }
+            }
+            if(validwin) break;
+        }
+    }
+    if(youexist & windowrules.includes("win")){
+        validwin = true;
+    }
+    if(validwin){
+        console.log(windowurl.slice(windowurl.indexOf("?")+1));
+        await new Promise(r => setTimeout(r, 1000));
+        window.close();
     }
 }

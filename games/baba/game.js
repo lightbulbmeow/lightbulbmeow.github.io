@@ -45,6 +45,7 @@ var moveup2 = 0;
 var slowmovejump = false;
 var slowmovejump2 = false;
 var pause = false;
+var validwin = false;
 
 window.addEventListener('keydown',this.movechar,false);
 window.addEventListener('keyup',this.stopchar,false);
@@ -59,7 +60,7 @@ function movechar(e){
     if(String.fromCharCode(e.keyCode) == "D"){ moveright2 = 3}
     if(String.fromCharCode(e.keyCode) == "S"){ movedown2 = 3}
     if(String.fromCharCode(e.keyCode) == "R"){ window.location.reload()}
-    if(String.fromCharCode(e.keyCode) == "P"){ pause ^= true}
+    if(String.fromCharCode(e.keyCode) == "P"){ if(!wonthelevel) pause ^= true}
     if(String.fromCharCode(e.keyCode) == "Z"){
         if(undos.length > 1){
             tiles = undos.pop();
@@ -231,7 +232,7 @@ function draw(){
             if(a.rules.includes("hide")){
                 continue;
             }
-            if(pause & !a.rules.includes("zawarudo")){
+            if(pause & !wonthelevel & !a.rules.includes("zawarudo")){
                 ctx.globalAlpha = 0.5;
             }else{
                 ctx.globalAlpha = 1;
@@ -269,9 +270,17 @@ function draw(){
         }
     }
 
-    if(pause){
+    if(pause && !wonthelevel){
         ctx.globalAlpha = 0.5;
         make_base("gamepause",lw*12-200,lh*12-50);
+    }
+
+    if(wonthelevel){
+        if(validwin){
+            make_base("youwin",lw*12-150,lh*12-90);
+        }else{
+            make_base("youwin2",lw*12-150,lh*12-90);
+        }
     }
 }
 
