@@ -9,6 +9,8 @@ var lw = Number(leveldata[0]);
 var lh = Number(leveldata[1]);
 var tiles = [];
 var allobjects = [];
+var preloadedimages = Object();
+
 for(i = 2; i < leveldata.length - 1; i += 5){
     var objname = leveldata[i];
     var texttype = Number(leveldata[i+3]);
@@ -27,9 +29,12 @@ canvas.height = lh*24;
 
 function make_base(link,x,y)
 {
-  base_image = new Image();
-  base_image.src = "sprites/" + link + ".png";
-  ctx.drawImage(base_image, x, y);
+    if(!Object.hasOwn(preloadedimages, link)){
+        base_image = new Image();
+        base_image.src = "sprites/" + link + ".png";
+        preloadedimages[link] = base_image;
+    }
+    ctx.drawImage(preloadedimages[link], x, y);
 }
 
 var moveleft = 0;

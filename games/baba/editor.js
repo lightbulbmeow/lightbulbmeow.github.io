@@ -84,12 +84,16 @@ class tile{
 
 var canvas = document.getElementById('canvas')
 var ctx = canvas.getContext('2d');
+var preloadedimages = Object();
 
 function make_base(link,x,y)
 {
-  base_image = new Image();
-  base_image.src = "sprites/" + link + ".png";
-  ctx.drawImage(base_image, x, y);
+    if(!Object.hasOwn(preloadedimages, link)){
+        base_image = new Image();
+        base_image.src = "sprites/" + link + ".png";
+        preloadedimages[link] = base_image;
+    }
+    ctx.drawImage(preloadedimages[link], x, y);
 }
 
 window.addEventListener('keydown',this.changedirec,false);
