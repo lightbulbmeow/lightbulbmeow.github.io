@@ -11,6 +11,14 @@ var tiles = [];
 var allobjects = [];
 var preloadedimages = Object();
 
+function preload(link){
+    if(!Object.hasOwn(preloadedimages, link)){
+        base_image = new Image();
+        base_image.src = "sprites/" + link + ".png";
+        preloadedimages[link] = base_image;
+    }
+}
+
 for(i = 2; i < leveldata.length - 1; i += 5){
     var objname = leveldata[i];
     var texttype = Number(leveldata[i+3]);
@@ -24,16 +32,24 @@ for(i = 2; i < leveldata.length - 1; i += 5){
         allobjects.push(objname);
     }
 }
+
+for(const objname of allobjects){
+    preload(objname);
+    preload("text_" + objname);
+    if(objname == "baba" || objname == "skull" || objname == "ghost" || objname == "belt" || objname == "keke"){
+        preload(objname + "_l")
+    }
+}
+preload("youwin");
+preload("youwin2");
+preload("gamepause");
+
 canvas.width = lw*24;
 canvas.height = lh*24;
 
 function make_base(link,x,y)
 {
-    if(!Object.hasOwn(preloadedimages, link)){
-        base_image = new Image();
-        base_image.src = "sprites/" + link + ".png";
-        preloadedimages[link] = base_image;
-    }
+    preload(link);
     ctx.drawImage(preloadedimages[link], x, y);
 }
 
