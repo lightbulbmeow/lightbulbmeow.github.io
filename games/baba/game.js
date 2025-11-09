@@ -67,6 +67,7 @@ var slowmovejump = false;
 var slowmovejump2 = false;
 var pause = false;
 var validwin = false;
+var shiftkeyheld = false;
 
 window.addEventListener('keydown',this.movechar,false);
 window.addEventListener('keyup',this.stopchar,false);
@@ -90,6 +91,7 @@ function movechar(e){
         }
         undotime = 50;
     }
+    if(e.keyCode == 16){ shiftkeyheld = true}
 }
 
 function stopchar(e){
@@ -101,6 +103,7 @@ function stopchar(e){
     if(String.fromCharCode(e.keyCode) == "W"){ moveup2 = 0}
     if(String.fromCharCode(e.keyCode) == "D"){ moveright2 = 0}
     if(String.fromCharCode(e.keyCode) == "S"){ movedown2 = 0}
+    if(e.keyCode == 16){ shiftkeyheld = false}
 }
 
 var shakeduration = 0;
@@ -302,6 +305,9 @@ function draw(){
         }else{
             make_base("youwin2",lw*12-150,lh*12-90);
         }
+    }
+    if(shiftkeyheld){
+        moveleft = 0; moveright = 0; moveup = 0; movedown = 0;
     }
 }
 

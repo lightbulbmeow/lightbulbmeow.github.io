@@ -1,0 +1,64 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Endgame</title>
+<link rel="stylesheet" href="../style.css">
+<style>
+    body {
+      height: 100vh;
+      background: linear-gradient(to right, white 50%, black 50%);
+    }
+    .pieces td{
+      width: 120px;
+      text-align: center;
+      font-size: 18px;
+    }
+    .pieces td:first-child, .pieces td:nth-child(2) {
+      color:black;
+    }
+    .pieces td:nth-child(2){
+      text-align: left;
+      font-family: monospace;
+      width: 200px;
+    }
+    .pieces td:nth-child(3){
+      text-align: right;
+      font-family: monospace;
+      width: 200px;
+    }
+    .follow td{
+      text-align: center;
+      width: 400px;
+      font-size: 18px;
+    }
+    .follow td:first-child{
+      color:black;
+    }
+</style>
+</head>
+<body>
+<center>
+<h1><span style="color:black">Lev</span>el -<i>i</i></h1>
+<p><span style="color:black">Since you're here, it's ti</span>me for the grand finale.</p>
+<img src="chess.png">
+<p><span style="color:black">Put all the pieces in left to</span> right, top to bottom order.</p>
+<table class="pieces">
+<tr><td>-1 + <i>i</i></td><td>♙♙♙♙-</td><td>♙♙♙♙</td><td>1 + <i>i</i></td></tr>
+<tr><td>-2 + <i>i</i></td><td>-----♘♘♘♘♘♘</td><td>----♘♘♘-♘</td><td>2 + <i>i</i></td></tr>
+<tr><td>-3 + <i>i</i></td><td>♗♗♗♗♗♗</td><td>♗♗♗♗♗♗</td><td>3 + <i>i</i></td></tr>
+<tr><td>-4 + <i>i</i></td><td>♖♖♖♖♖♖--</td><td>♖♖♖♖♖♖-</td><td>4 + <i>i</i></td></tr>
+<tr><td>-5 + <i>i</i></td><td>♕♕♕♕♕♕--</td><td>♕♕♕-♕♕♕</td><td>5 + <i>i</i></td></tr>
+<tr><td>-6 + <i>i</i></td><td>♔♔♔♔-</td><td>♔♔♔♔♔♔</td><td>6 + <i>i</i></td></tr>
+</table>
+<p><span style="color:black">Can you follow</span> the instructions?</p>
+<table class="follow">
+<tr><td>♕I → ♗R → ♜I → ♖S → ♞I → ♕I</td><td>♗A → ♛U → ♝A → ♚A → ♔N → ♗A</td></tr>
+<tr><td>♖G → ♟️K → ♘T → ♙E</td><td>♗O → ♕D → ♖G → ♝I → ♖G → ♜H → ♘G</td></tr>
+<tr><td>♝N → ♖L → ♕T → ♛A</td><td>♙R → ♘E → ♗T ; ♕I → ♛A</td></tr>
+<tr><td>♘I → ♖A → ♜E → ♗H</td><td>♛N → ♖S → ♞G → ♕L</td></tr>
+<tr><td>♘E → ♕Q → ♙A → ♜T → ♙A → ♚D → ♗U</td><td>♖P → ♞W → ♘N → ♕T → ♘N → ♔I → ♔E</td></tr>
+<tr><td>♙V → ♟️D → ♔T → ♝B → ♘H</td><td>♚Y → ♜F → ♚S → ♕G → ♗I → ♝U</td></tr>
+</table>
+</center>
+</body>
+</html>
