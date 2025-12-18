@@ -17,7 +17,7 @@ data = [
     {
         file: "salt_maimai.jpg",
         source: "https://www.pixiv.net/en/artworks/126816990",
-        artist: "青葉もち", pixiv: "27236214",
+        artist: "青葉もち", twitter: "AlicitruSalt",
         tags: "salt, maimai, pajamas, plushie, cat ears, fluffy, stars",
     },
     {
