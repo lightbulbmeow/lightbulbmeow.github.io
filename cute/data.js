@@ -15,10 +15,10 @@ data = [
         tags: "catgirl, animal ears, plush, hugging, sleep, bed, blanket, pawprints",
     },
     {
-        file: "yuru_yuri_hug.jpg",
-        source: "https://www.pixiv.net/en/artworks/53550685",
-        artist: "ばふぁこ", twitter: "_yurubafa_",
-        tags: "yuru yuri, kyoko toshino, yui funami, hugging, bow",
+        file: "salt_maimai.jpg",
+        source: "https://www.pixiv.net/en/artworks/126816990",
+        artist: "青葉もち", pixiv: "27236214",
+        tags: "salt, maimai, pajamas, plushie, cat ears, fluffy, stars",
     },
     {
         file: "niko_tail.png",
@@ -61,6 +61,12 @@ data = [
         source: "https://x.com/cho_v_ko/status/1625333795623952391",
         artist: "三尾じゅん太", twitter: "miojun_nono",
         tags: "chokottodake, denpa singer, vtuber, twintails, heart, strawberry",
+    },
+    {
+        file: "yuru_yuri_hug.jpg",
+        source: "https://www.pixiv.net/en/artworks/53550685",
+        artist: "ばふぁこ", twitter: "_yurubafa_",
+        tags: "yuru yuri, kyoko toshino, yui funami, hugging, bow",
     },
     {
         file: "kokona.jpg",

@@ -20,6 +20,10 @@ td {
     vertical-align: top;
     text-align: center;
 }
+.hunts td {
+    vertical-align: center;
+    text-align: left;
+}
 a{
     color: rgb(255,69,255);
     text-decoration: none;
@@ -27,6 +31,9 @@ a{
 a:hover{
     color: #ff9999;
     text-decoration: underline;
+}
+.date {
+    font-size: 12px;
 }
 ::-webkit-scrollbar{
     width: 30px;
