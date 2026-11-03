@@ -1,0 +1,101 @@
+<style>
+.nonogram {
+    --nonogram-cell-size: 24px;
+    --nonogram-line: 1px;
+    --nonogram-thick-line: 2px;
+    --nonogram-clue-rows: 4;
+    border-collapse: collapse;
+    table-layout: fixed;
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+    color: #222;
+}
+
+.nonogram th,
+.nonogram td {
+    box-sizing: border-box;
+    border: var(--nonogram-line) solid #333;
+    padding: 0;
+    text-align: center;
+    font-weight: normal;
+}
+
+.nonogram .nonogram-corner {
+    border: none;
+    width: 32px;
+    min-width: 32px;
+}
+
+.nonogram .nonogram-column-clue {
+    width: var(--nonogram-cell-size);
+    min-width: var(--nonogram-cell-size);
+    height: calc(var(--nonogram-cell-size) * var(--nonogram-clue-rows));
+    border: none;
+    vertical-align: bottom;
+}
+
+.nonogram .nonogram-column-clue-inner {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    line-height: var(--nonogram-cell-size);
+}
+
+.nonogram .nonogram-row-clue {
+    width: 100px;
+    min-width: 100px;
+    padding-right: 4px;
+    text-align: right;
+    white-space: nowrap;
+    border: none;
+    line-height: var(--nonogram-cell-size);
+}
+
+.nonogram .nonogram-cell {
+    width: var(--nonogram-cell-size);
+    min-width: var(--nonogram-cell-size);
+    height: var(--nonogram-cell-size);
+}
+
+.nonogram .nonogram-cell.group-right {
+    border-right: var(--nonogram-thick-line) solid #222;
+}
+
+.nonogram tr.group-bottom > td:not(.nonogram-row-clue):not(.nonogram-column-clue),
+.nonogram tr.group-bottom > th:not(.nonogram-row-clue):not(.nonogram-column-clue) {
+    border-bottom: var(--nonogram-thick-line) solid #222;
+}
+
+.nonogram .nonogram-column-clue.group-bottom {
+    border-bottom: var(--nonogram-thick-line) solid #222;
+}
+
+#puzzle-index {
+    width: 50px;
+}
+
+#play-puzzle {
+    margin-left: 20px;
+}
+</style>
+
+<center>
+<div id="puzzle"></div>
+
+<br/><br/>
+
+<button id="previous-puzzle">&lt;</button>
+<input id="puzzle-index" placeholder="1"> / 6572
+<button id="next-puzzle">&gt;</button>
+<button id="play-puzzle">▶</button>
+<button id="pause-puzzle">⏸</button>
+</center>
+
+<script src="nonogram.js"></script>
+<script src="nonogram_data.js"></script>
+
+<script>
+playPuzzle();
+</script>
